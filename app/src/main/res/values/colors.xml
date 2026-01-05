@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="main_black">#111111</color>
+    <color name="sub_gray_1">#505050</color>
+    <color name="sub_gray_2">#767676</color>
+    <color name="disabled">#999999</color>
+    <color name="error">#EF2B2A</color>
+    <color name="active">#2569F2</color>
 </resources>
