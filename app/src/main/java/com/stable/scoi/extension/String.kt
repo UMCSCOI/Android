@@ -1,4 +1,4 @@
-package com.stable.scoi.extention
+package com.stable.scoi.extension
 
 fun String?.isJsonObject(): Boolean = this?.startsWith("{") == true && this.endsWith("}")
 fun String?.isJsonArray(): Boolean = this?.startsWith("[") == true && this.endsWith("]")

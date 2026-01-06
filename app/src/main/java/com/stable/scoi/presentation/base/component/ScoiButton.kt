@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.base.componant
+package com.stable.scoi.presentation.base.component
 
 import android.content.Context
 import android.graphics.Color
