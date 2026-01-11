@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/Transfer_backArrow_IV"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/Transfer_title_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이체"
+        android:textColor="@color/black"
+        android:fontFamily="@font/pretendard_semibold"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@id/Transfer_backArrow_IV"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="5dp"/>
+    
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_mypage"/>
+
+
+    <TextView
+        android:id="@+id/Transfer_subTitle1_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="누구에게"
+        android:fontFamily="@font/pretendard_semibold"
+        android:textSize="22sp"
+        android:textColor="@color/active"
+        app:layout_constraintTop_toBottomOf="@id/Transfer_backArrow_IV"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/Transfer_subTitle2_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="보내시겠어요?"
+        android:fontFamily="@font/pretendard_semibold"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/Transfer_backArrow_IV"
+        app:layout_constraintStart_toEndOf="@id/Transfer_subTitle1_TV"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="10dp"/>
+
+
+    <TextView
+        android:id="@+id/Transfer_name_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="성명"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/Transfer_subTitle1_TV"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"/>
+
+    <EditText
+        android:id="@+id/Transfer_inputName_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/Transfer_name_TV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <TextView
+        android:id="@+id/Transfer_recieverType_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="개인"
+        app:layout_constraintTop_toTopOf="@id/Transfer_inputName_ET"
+        app:layout_constraintEnd_toEndOf="@id/Transfer_inputName_ET"
+        app:layout_constraintBottom_toBottomOf="@id/Transfer_inputName_ET"
+        android:padding="10dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone"/>
+
+
+    <TextView
+        android:id="@+id/Transfer_adress_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="지갑 주소"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/Transfer_inputName_ET"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"/>
+
+    <EditText
+        android:id="@+id/Transfer_inputAdress_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/Transfer_adress_TV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+
+    <TextView
+        android:id="@+id/Transfer_corpName_KOR_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="법인 국문명"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@id/Transfer_inputAdress_ET"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/Transfer_corpName_KOR_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/Transfer_corpName_KOR_TV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"/>
+
+
+    <TextView
+        android:id="@+id/Transfer_corpName_ENG_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="법인 영문명"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@id/Transfer_corpName_KOR_ET"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/Transfer_corpName_ENG_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/Transfer_corpName_ENG_TV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"/>
+
+
+    <EditText
+        android:id="@+id/Transfer_inputExchange_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="거래소"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="20sp"
+        android:textColor="@color/disabled"
+        app:layout_constraintTop_toBottomOf="@+id/Transfer_corpName_ENG_ET"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:id="@+id/Transfer_next_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="다음"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

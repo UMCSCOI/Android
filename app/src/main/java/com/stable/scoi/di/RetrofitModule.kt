@@ -4,8 +4,8 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
-import com.stable.scoi.extension.isJsonArray
-import com.stable.scoi.extension.isJsonObject
+import com.stable.scoi.extention.isJsonArray
+import com.stable.scoi.extention.isJsonObject
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
