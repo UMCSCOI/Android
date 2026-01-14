@@ -15,6 +15,11 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <com.stable.scoi.presentation.base.component.ScoiTitleBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftClick="@{()->vm.test()}" />
+
 
         <LinearLayout
             android:id="@+id/persistent_bottom_sheet"
@@ -107,17 +112,19 @@
 
                 <EditText
                     android:id="@+id/edit_money"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="12dp"
                     android:background="@null"
                     android:textAppearance="@style/f1m"
+                    app:layout_constraintEnd_toStartOf="@id/image_input_mode"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_tab"
                     tools:text="1,449원" />
 
                 <ImageView
+                    android:id="@+id/image_input_mode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="17dp"
@@ -131,7 +138,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_charge_count"
@@ -180,9 +187,10 @@
 
                 <EditText
                     android:id="@+id/edit_count"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="9dp"
                     android:background="@null"
                     android:hint="얼마나 충전할까요?"

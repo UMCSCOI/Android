@@ -18,33 +18,9 @@ class ScoiTitleBar @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(mContext, attrs, defStyle) {
 
-    companion object {
-        @BindingAdapter("title")
-        fun bindScoiTitleBarTitle(view: ScoiTitleBar, title: String?) {
-            val hasTitle = !title.isNullOrBlank()
-            view.label.visibility = if (hasTitle) View.VISIBLE else View.GONE
-            if (hasTitle) view.label.text = title
-        }
-
-        @BindingAdapter("leftClick")
-        fun bindScoiTitleBarLeftClick(view: ScoiTitleBar, listener: View.OnClickListener?) {
-            val hasClick = listener != null
-            view.back.visibility = if (hasClick) View.VISIBLE else View.GONE
-            view.back.setOnClickListener(listener)
-        }
-
-        @BindingAdapter("rightClick")
-        fun bindScoiTitleBarRightClick(view: ScoiTitleBar, listener: View.OnClickListener?) {
-            val hasClick = listener != null
-            view.my.visibility = if (hasClick) View.VISIBLE else View.GONE
-            view.my.setOnClickListener(listener)
-        }
-    }
-
-    private val label: TextView
-    private val back: ImageView
-    private val my: ImageView
-
+    internal val label: TextView
+    internal val back: ImageView
+    internal val my: ImageView
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_top_bar, this, true)
         label = findViewById(R.id.title)
@@ -61,4 +37,25 @@ class ScoiTitleBar @JvmOverloads constructor(
             a.recycle()
         }
     }
+}
+
+@BindingAdapter("title")
+fun bindScoiTitleBarTitle(view: ScoiTitleBar, title: String?) {
+    val hasTitle = !title.isNullOrBlank()
+    view.label.visibility = if (hasTitle) View.VISIBLE else View.GONE
+    if (hasTitle) view.label.text = title
+}
+
+@BindingAdapter("leftClick")
+fun bindScoiTitleBarLeftClick(view: ScoiTitleBar, listener: View.OnClickListener?) {
+    val hasClick = listener != null
+    view.back.visibility = if (hasClick) View.VISIBLE else View.GONE
+    view.back.setOnClickListener(listener)
+}
+
+@BindingAdapter("rightClick")
+fun bindScoiTitleBarRightClick(view: ScoiTitleBar, listener: View.OnClickListener?) {
+    val hasClick = listener != null
+    view.my.visibility = if (hasClick) View.VISIBLE else View.GONE
+    view.my.setOnClickListener(listener)
 }

@@ -14,7 +14,9 @@ constructor() : BaseViewModel<ChargeUiState, ChargeEvent>(
 ) {
     init {
     }
+    fun test() {
 
+    }
 }
 
 data class ChargeUiState(
