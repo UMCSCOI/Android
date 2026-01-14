@@ -12,4 +12,11 @@
 
         <attr name="cornerRadius" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="ScoiTitleBar">
+        <attr name="leftClick" format="reference"/>
+        <attr name="rightClick" format="reference"/>
+        <attr name="title" format="string"/>
+
+    </declare-styleable>
 </resources>
