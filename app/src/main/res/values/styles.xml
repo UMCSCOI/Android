@@ -35,6 +35,13 @@
         <item name="fontFamily">@font/pretendard_semibold</item>
     </style>
 
+    <style name="b2sm">
+        <item name="android:textSize">20sp</item>
+        <item name="lineHeight">28sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+    </style>
+
     <style name="b3">
         <item name="android:textSize">14sp</item>
         <item name="lineHeight">20sp</item>
@@ -43,10 +50,17 @@
     </style>
 
     <style name="f1">
-        <item name="android:textSize">22sp</item>
-        <item name="lineHeight">26sp</item>
+        <item name="android:textSize">26sp</item>
+        <item name="lineHeight">31sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
+    <style name="f1m">
+        <item name="android:textSize">26sp</item>
+        <item name="lineHeight">31sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="f2">
@@ -54,6 +68,20 @@
         <item name="lineHeight">24sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
+    <style name="f3m">
+        <item name="android:textSize">20sp</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
+
+    <style name="f4m">
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">17sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="l1m">
