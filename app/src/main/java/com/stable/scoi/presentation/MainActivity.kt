@@ -1,11 +1,13 @@
 package com.stable.scoi.presentation
 
+import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.stable.scoi.R
 import com.stable.scoi.databinding.ActivityMainBinding
 import com.stable.scoi.presentation.base.BaseActivity
+import com.stable.scoi.presentation.base.TransferFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -15,6 +17,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
 ) {
     override val viewModel: MainActivityViewModel by viewModels()
     private lateinit var navController: NavController
+
 
     override fun initView() {
         binding.apply {
@@ -44,8 +47,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            //changeBottomNavigationView(destination.id)
-            //TODO navController.navigate(R.id.calendarFragment) 이런식으로 navigation 이동
+//            when (destination.id) {
+//
+//            }
         }
     }
 }
