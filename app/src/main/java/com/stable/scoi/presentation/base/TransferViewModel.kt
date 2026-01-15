@@ -52,12 +52,12 @@ class TransferViewModel : BaseViewModel<TransferState, TransferEvent>(initialPag
     //RecieverType
     fun setRecieverTypeIndividual() {
         _recieverType.value = RecieverType.Individual
-        Log.d("recieverType", "indiv")
+        Log.d("recieverType", recieverType.value.toString())
     }
 
     fun setRecieverTypeCorporation() {
         _recieverType.value = RecieverType.Corporation
-        Log.d("recieverType", "corp")
+        Log.d("recieverType", recieverType.value.toString())
 
     }
 

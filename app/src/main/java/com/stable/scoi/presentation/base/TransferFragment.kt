@@ -1,5 +1,6 @@
 package com.stable.scoi.presentation.base
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -18,9 +19,26 @@ import kotlinx.coroutines.launch
 class TransferFragment : BaseFragment<FragmentTransferBinding, TransferState, TransferEvent, TransferViewModel>(
     FragmentTransferBinding::inflate
 ) {
-    override val viewModel: TransferViewModel by viewModels()
+    override val viewModel: TransferViewModel by activityViewModels()
 
     override fun initView() {
+        binding.TransferInputNameET.setOnClickListener {
+            viewModel.onRecieverTypeClicked()
+        }
+
+        binding.TransferRecieverTypeTV.setOnClickListener {
+            viewModel.onRecieverTypeChange()
+        }
+
+        binding.TransferInputExchangeET.isFocusable = false
+        binding.TransferInputExchangeET.setOnClickListener {
+            viewModel.onExchangeClicked()
+        }
+
+        binding.TransferNextTV.setOnClickListener {
+            viewModel.onClickNextButton()
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.recieverType.collect { recieverType ->
@@ -53,23 +71,6 @@ class TransferFragment : BaseFragment<FragmentTransferBinding, TransferState, Tr
                     }
                 }
             }
-        }
-
-        binding.TransferInputNameET.setOnClickListener {
-            viewModel.onRecieverTypeClicked()
-        }
-
-        binding.TransferRecieverTypeTV.setOnClickListener {
-            viewModel.onRecieverTypeChange()
-        }
-
-        binding.TransferInputExchangeET.isFocusable = false
-        binding.TransferInputExchangeET.setOnClickListener {
-            viewModel.onExchangeClicked()
-        }
-
-        binding.TransferNextTV.setOnClickListener {
-            viewModel.onClickNextButton()
         }
 
         viewModel.nextEvent.observe(viewLifecycleOwner) { nextEvent ->
