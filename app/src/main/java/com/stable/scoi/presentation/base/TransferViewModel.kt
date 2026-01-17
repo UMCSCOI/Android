@@ -4,39 +4,60 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class TransferViewModel : BaseViewModel<TransferState, TransferEvent>(initialPageState) {
-    private val _recieverTypeEvent = MutableLiveData<TransferEvent>()
-    val recieverTypeEvent: LiveData<TransferEvent> = _recieverTypeEvent
+@HiltViewModel
+class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, TransferEvent>(
+    TransferState()
+) {
+    private val _receiverTypeEvent = MutableLiveData<TransferEvent>()
+    val receiverTypeEvent: LiveData<TransferEvent> = _receiverTypeEvent
 
     private val _exchangeEvent = MutableLiveData<TransferEvent>()
     val exchangeEvent: LiveData<TransferEvent> = _exchangeEvent
 
-    private val _exchangeType = MutableLiveData<Exchange>()
+    private val _exchangeType = MutableLiveData<Exchange>(Exchange.Null)
     val exchangeType: LiveData<Exchange> = _exchangeType
 
     private val _nextEvent = MutableLiveData<TransferEvent>()
     val nextEvent: LiveData<TransferEvent> = _nextEvent
 
 
-    private val _recieverType = MutableStateFlow<RecieverType>(RecieverType.Null)
-    val recieverType = _recieverType.asStateFlow()
+    private val _receiverType = MutableStateFlow<ReceiverType>(ReceiverType.Null)
+    val receiverType = _receiverType.asStateFlow()
+
+    private val _receiver = MutableStateFlow<Receiver>(Receiver())
+    val receiver = _receiver.asStateFlow()
 
 
     //Event
-    fun onRecieverTypeClicked() { //초기 recieverType 결정
-        when (recieverType.value) {
-            RecieverType.Null -> {
-                _recieverTypeEvent.value = TransferEvent.Submit
+    fun onReceiverTypeClicked() { //초기 receiverType 결정
+        when (receiverType.value) {
+            ReceiverType.Null -> {
+                _receiverTypeEvent.value = TransferEvent.Submit
             }
             else -> Unit
         }
     }
 
-    fun onRecieverTypeChange() { //우측 recieverType 결정 메뉴
-        _recieverTypeEvent.value = TransferEvent.Submit
+
+
+
+    fun submitReceiver(receiverName: String, receiverAddress: String) {
+        _receiver.value = _receiver.value.copy(
+            receiverName,
+            receiverAddress,
+            _receiverType.value
+        )
+    }
+
+
+
+
+    fun onReceiverTypeChange() { //우측 receiverType 결정 메뉴
+        _receiverTypeEvent.value = TransferEvent.Submit
     }
 
     fun onExchangeClicked() {
@@ -44,20 +65,20 @@ class TransferViewModel : BaseViewModel<TransferState, TransferEvent>(initialPag
     }
 
     fun eventCancel() {
-        _recieverTypeEvent.value = TransferEvent.Cancel
+        _receiverTypeEvent.value = TransferEvent.Cancel
         _exchangeEvent.value = TransferEvent.Cancel
         _nextEvent.value = TransferEvent.Cancel
     }
 
-    //RecieverType
+    //ReceiverType
     fun setRecieverTypeIndividual() {
-        _recieverType.value = RecieverType.Individual
-        Log.d("recieverType", recieverType.value.toString())
+        _receiverType.value = ReceiverType.Individual
+        Log.d("receiverType", receiverType.value.toString())
     }
 
     fun setRecieverTypeCorporation() {
-        _recieverType.value = RecieverType.Corporation
-        Log.d("recieverType", recieverType.value.toString())
+        _receiverType.value = ReceiverType.Corporation
+        Log.d("receiverType", receiverType.value.toString())
 
     }
 
@@ -66,17 +87,27 @@ class TransferViewModel : BaseViewModel<TransferState, TransferEvent>(initialPag
     fun setExchangeUpbit() {
         _exchangeType.value = Exchange.Upbit
     }
-
     fun setExchangeBithumb() {
         _exchangeType.value = Exchange.Bithumb
     }
-
     fun setExchangeBinance() {
         _exchangeType.value = Exchange.Binance
+    }
+    fun setExchange() {
+        _exchangeType.value = Exchange.Unselected
     }
 
     //NextButton
     fun onClickNextButton() {
-        _nextEvent.value = TransferEvent.Submit
+        if(_receiver.value.receiverName == null ||
+            _receiver.value.receiverName == "" ||
+            _receiver.value.receiverAddress == null ||
+            _receiver.value.receiverAddress == "" ||
+            _exchangeType.value == Exchange.Null ||
+            _receiverType.value == ReceiverType.Null
+        ) {
+           Unit
+        }
+        else _nextEvent.value = TransferEvent.Submit
     }
 }
