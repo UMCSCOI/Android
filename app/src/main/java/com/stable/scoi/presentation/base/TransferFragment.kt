@@ -34,7 +34,6 @@ class TransferFragment : BaseFragment<FragmentTransferBinding, TransferState, Tr
 
         binding.TransferInputExchangeET.isFocusable = false
         binding.TransferInputExchangeET.setOnClickListener {
-            viewModel.setExchange()
             viewModel.onExchangeClicked()
         }
 

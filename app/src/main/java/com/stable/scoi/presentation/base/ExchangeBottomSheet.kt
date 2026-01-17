@@ -48,6 +48,7 @@ class ExchangeBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.bottomsheetExchangeCloseIv.setOnClickListener {
+            viewModel.setExchange()
             viewModel.eventCancel()
             dismiss()
         }

@@ -104,6 +104,7 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
             _receiver.value.receiverAddress == null ||
             _receiver.value.receiverAddress == "" ||
             _exchangeType.value == Exchange.Null ||
+            _exchangeType.value == Exchange.Unselected ||
             _receiverType.value == ReceiverType.Null
         ) {
            Unit
