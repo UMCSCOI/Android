@@ -84,6 +84,13 @@
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
+    <style name="l1">
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">19sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
     <style name="l1m">
         <item name="android:textSize">16sp</item>
         <item name="lineHeight">19sp</item>

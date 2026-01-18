@@ -11,6 +11,9 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.card.MaterialCardView
 import com.stable.scoi.R
+import com.stable.scoi.extension.gone
+import com.stable.scoi.extension.visible
+import com.stable.scoi.util.SLOG
 
 class ScoiTitleBar @JvmOverloads constructor(
     mContext: Context,
@@ -30,7 +33,13 @@ class ScoiTitleBar @JvmOverloads constructor(
         val a = context.obtainStyledAttributes(attrs, R.styleable.ScoiTitleBar, defStyle, 0)
 
         try {
-            label.visibility = View.GONE
+            val text = a.getText(R.styleable.ScoiTitleBar_title)
+            if (text.isNotEmpty()) {
+                label.text = text
+                label.visible()
+            } else {
+                label.gone()
+            }
             back.visibility = View.GONE
             my.visibility = View.GONE
         } finally {

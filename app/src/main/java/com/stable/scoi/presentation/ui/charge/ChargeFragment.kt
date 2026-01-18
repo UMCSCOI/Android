@@ -1,8 +1,17 @@
 package com.stable.scoi.presentation.ui.charge
 
+import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
+import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentChargeBinding
+import com.stable.scoi.domain.model.enums.ChargeInputType
+import com.stable.scoi.extension.gone
+import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.util.Format.formatWon
+import com.stable.scoi.util.Format.unformatWon
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -15,6 +24,50 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
     override fun initView() {
         binding.apply {
             vm = viewModel
+            setSummaryCountUi()
+
+            layoutChargeMoney.setOnClickListener {
+                setEditingUi()
+
+                editMoney.isFocusableInTouchMode = true
+                editMoney.requestFocus()
+                showKeyboard(editMoney)
+            }
+
+            layoutChargeCount.setOnClickListener {
+                setEditingCountUi()
+
+                editCount.isFocusableInTouchMode = true
+                editCount.requestFocus()
+                showKeyboard(editCount)
+            }
+
+            editMoney.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    layoutChargeMoney.setBackgroundResource(R.drawable.bg_rect_white_stroke_disable_radius10)
+                    setSummaryUi()
+                    val current = editMoney.text?.toString().orEmpty()
+                    val formatted = formatWon(current)
+
+                    if (!formatted.isNullOrBlank()) {
+                        viewModel.updateMoney(formatted)
+                    }
+                } else {
+                    layoutChargeMoney.setBackgroundResource(R.drawable.bg_rect_white_stroke_active_radius10)
+                    val current = viewModel.uiState.value.money
+                    val formatted = unformatWon(current)
+                    viewModel.updateMoney(formatted)
+                }
+            }
+
+            editCount.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    layoutChargeCount.setBackgroundResource(R.drawable.bg_rect_white_stroke_disable_radius10)
+                    setSummaryCountUi()
+                } else {
+                    layoutChargeCount.setBackgroundResource(R.drawable.bg_rect_white_stroke_active_radius10)
+                }
+            }
         }
     }
 
@@ -30,9 +83,96 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
 
             launch {
                 viewModel.uiState.collect {
-                    // TODO 상태 관리
+                    if (it.inputType == ChargeInputType.SELECT ) {
+                        showBottomLayout()
+                    } else {
+                        hideBottomLayout()
+                    }
                 }
             }
+        }
+    }
+
+    private fun showBottomLayout() {
+        binding.apply {
+            if (editMoney.hasFocus()) {
+                layoutTotalAmount.visible()
+                layoutRecentAmount.gone()
+            } else {
+                hideBottomLayout()
+            }
+        }
+    }
+
+    private fun hideBottomLayout() {
+        binding.apply {
+            layoutTotalAmount.gone()
+            layoutRecentAmount.visible()
+        }
+    }
+
+    private fun showKeyboard(target: View) {
+        target.post {
+            val imm = target.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(target, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
+
+    private fun hideKeyboard(target: View) {
+        val imm = target.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(target.windowToken, 0)
+    }
+
+    fun setEditingUi() {
+        binding.apply {
+            textInputSelf.visible()
+            textInputSelect.visible()
+            editMoney.visible()
+            imageInputMode.visible()
+
+            textInputMoney.gone()
+        }
+    }
+
+    fun setSummaryUi() {
+        binding.apply {
+            if (viewModel.uiState.value.inputType == ChargeInputType.SELF) {
+                textInputSelf.visible()
+                textInputSelect.gone()
+            } else {
+                textInputSelf.gone()
+                textInputSelect.visible()
+            }
+
+            textInputMoney.visible()
+
+            editMoney.gone()
+            imageInputMode.gone()
+
+            hideKeyboard(editMoney)
+            editMoney.clearFocus()
+        }
+    }
+
+    fun setEditingCountUi() {
+        binding.apply {
+            textMax.visible()
+            editCount.visible()
+            textTotal.visible()
+
+            textCount.gone()
+        }
+    }
+
+    fun setSummaryCountUi() {
+        binding.apply {
+            textMax.gone()
+            textCount.visible()
+            textTotal.gone()
+
+            editCount.gone()
+            hideKeyboard(editCount)
+            editCount.clearFocus()
         }
     }
 }
