@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <!-- 지금은 비워둬도 됨 -->
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

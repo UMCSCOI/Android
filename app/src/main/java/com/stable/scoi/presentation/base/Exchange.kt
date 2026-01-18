@@ -7,3 +7,9 @@ sealed class Exchange {
     object Null: Exchange()
     object Unselected: Exchange()
 }
+
+sealed class AssetSymbol {
+    object USDT: AssetSymbol()
+    object USDC: AssetSymbol()
+    object Null: AssetSymbol()
+}

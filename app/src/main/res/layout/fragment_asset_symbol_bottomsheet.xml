@@ -11,21 +11,20 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/bottomsheet_exchange_tv"
+            android:id="@+id/bottomsheet_assetSymbol_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="거래소"
+            android:text="스테이블 코인"
             android:textSize="22sp"
-            android:textStyle="bold"
             android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"/>
 
         <ImageView
-            android:id="@+id/bottomsheet_exchange_close_iv"
+            android:id="@+id/bottomsheet_assetSymbol_close_iv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_close_small"
@@ -35,10 +34,10 @@
             android:layout_marginTop="16dp"/>
 
         <LinearLayout
-            android:id="@+id/bottomsheet_exchange_upbit_ll"
+            android:id="@+id/bottomsheet_assetSymbol_USDT_LL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/bottomsheet_exchange_tv"
+            app:layout_constraintTop_toBottomOf="@id/bottomsheet_assetSymbol_TV"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp"
@@ -47,28 +46,26 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/bottomsheet_exchange_upbit_iv"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/upbit_logo"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/logo_usdt"/>
 
             <TextView
-                android:id="@+id/bottomsheet_exchange_upbit_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_medium"
+                android:text="USDT"
                 android:textSize="16sp"
-                android:text="업비트"
-                android:textColor="@color/black"
+                android:layout_marginTop="4dp"
                 android:layout_marginStart="5dp"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/bottomsheet_exchange_bithumb_ll"
+            android:id="@+id/bottomsheet_assetSymbol_USDC_LL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/bottomsheet_exchange_upbit_ll"
+            app:layout_constraintTop_toBottomOf="@id/bottomsheet_assetSymbol_USDT_LL"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="14dp"
@@ -77,49 +74,17 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/bottomsheet_exchange_bithumb_iv"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/bithumb_logo"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/logo_usdc"/>
 
             <TextView
-                android:id="@+id/bottomsheet_exchange_bithumb_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="빗썸"
-                android:textColor="@color/black"
+                android:text="USDC"
                 android:textSize="16sp"
-                android:layout_marginStart="5dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bottomsheet_exchange_binance_ll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/bottomsheet_exchange_bithumb_ll"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/bottomsheet_exchange_binance_iv"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@color/black"/>
-
-            <TextView
-                android:id="@+id/bottomsheet_exchange_binance_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="BINANCE"
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:layout_marginTop="4dp"
                 android:layout_marginStart="5dp"/>
 
         </LinearLayout>
