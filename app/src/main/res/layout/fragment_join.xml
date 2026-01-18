@@ -38,6 +38,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="국문 성명"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/join_intro_tv" />
 
@@ -47,114 +48,362 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:hint="홍길동"
         android:inputType="text"
+        android:paddingEnd="40dp"
         android:textColor="@color/disabled"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/korean_name_tv" />
+        app:layout_constraintTop_toBottomOf="@id/korean_name_tv"
+        android:background="@android:color/transparent"
+        />
+
+    <View
+        android:id="@+id/korean_name_line"
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="1.0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/disabled"
+        app:layout_constraintTop_toBottomOf="@id/korean_name_et"
+        android:visibility="visible"
+        />
+
+    <View
+        android:id="@+id/korean_error_name_line"
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="1.2dp"
+        android:background="@color/error"
+        app:layout_constraintTop_toBottomOf="@id/korean_name_et"
+        android:visibility="invisible"
+        />
+
+    <View
+        android:id="@+id/korean_selectedname_line"
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="1.2dp"
+        android:background="@color/main_black"
+        app:layout_constraintTop_toBottomOf="@id/korean_name_et"
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:id="@+id/korean_error_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="국문만 입력 가능합니다."
+        android:textColor="@color/error"
+        android:textSize="13dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintStart_toStartOf="@id/korean_name_et"
+        app:layout_constraintTop_toBottomOf="@id/korean_name_et"
+        android:visibility="invisible"
+        />
+
+
+    <ImageView
+        android:id="@+id/korean_name_clear_iv"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/no_m"
+        app:layout_constraintBottom_toBottomOf="@id/korean_name_et"
+        app:layout_constraintEnd_toEndOf="@id/korean_name_et"
+        app:layout_constraintTop_toTopOf="@id/korean_name_et"
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:id="@+id/eng_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="영문 성명"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/korean_error_tv"
+        app:layout_constraintTop_toBottomOf="@id/korean_error_tv"/>
 
     <LinearLayout
         android:id="@+id/eng_name_layout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/korean_name_et">
+        app:layout_constraintTop_toBottomOf="@id/eng_name_tv"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/eng_name_tv"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="영문 성명" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            >
 
             <EditText
                 android:id="@+id/eng_last_name_et"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="HONG"
                 android:inputType="text"
-                android:textSize="20sp" />
+                android:paddingEnd="35dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@android:color/transparent"/>
+
+            <View
+                android:id="@+id/eng_last_name_line"
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="1.0dp"
+                android:background="@color/disabled"
+                app:layout_constraintTop_toBottomOf="@id/eng_last_name_et"
+                android:visibility="visible"
+                />
+
+            <View
+                android:id="@+id/eng_error_last_name_line"
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="1.2dp"
+                android:background="@color/error"
+                app:layout_constraintTop_toBottomOf="@id/eng_last_name_et"
+                android:visibility="invisible"
+                />
+
+            <View
+                android:id="@+id/eng_selected_last_name_line"
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="1.2dp"
+                android:background="@color/main_black"
+                app:layout_constraintTop_toBottomOf="@id/eng_last_name_et"
+                android:visibility="invisible"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="영문만 입력 가능합니다."
+                android:textColor="@color/error"
+                android:textSize="13dp"
+                android:layout_marginStart="2dp"
+                app:layout_constraintStart_toStartOf="@id/eng_last_name_et"
+                app:layout_constraintTop_toBottomOf="@id/eng_last_name_et"
+                android:visibility="invisible"
+                />
+
+            <ImageView
+                android:id="@+id/eng_last_name_clear_iv"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/no_m"
+                app:layout_constraintBottom_toBottomOf="@id/eng_last_name_et"
+                app:layout_constraintEnd_toEndOf="@id/eng_last_name_et"
+                app:layout_constraintTop_toTopOf="@id/eng_last_name_et"
+                android:visibility="invisible"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+
+            android:layout_weight="1.5">
 
             <EditText
                 android:id="@+id/eng_first_name_et"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1.5"
                 android:hint="GILDONG"
+                android:layout_marginEnd="16dp"
                 android:inputType="text"
-                android:textSize="20sp" />
-        </LinearLayout>
-    </LinearLayout>
+                android:paddingEnd="35dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@android:color/transparent"/>
 
-    <LinearLayout
-        android:id="@+id/reg_num_total_container"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/eng_name_layout">
+            <View
+                android:id="@+id/eng_first_name_line"
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="1.0dp"
+                android:background="@color/disabled"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@id/eng_first_name_et"
+                android:visibility="visible"/>
 
-        <TextView
-            android:id="@+id/reg_num_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="주민등록번호 앞 7자리"
-            android:textColor="#333333"
-            android:textSize="14sp" />
+            <View
+                android:id="@+id/eng_error_first_name_line"
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="1.2dp"
+                android:background="@color/error"
+                app:layout_constraintTop_toBottomOf="@id/eng_first_name_et"
+                android:visibility="invisible"
+                />
 
-        <LinearLayout
-            android:id="@+id/reg_num_input_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/reg_num_front_et"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="●●●●●●"
-                android:inputType="number"
-                android:maxLength="6"
-                android:textSize="20sp" />
+            <View
+                android:id="@+id/eng_selected_first_name_line"
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="1.2dp"
+                android:background="@color/main_black"
+                app:layout_constraintTop_toBottomOf="@id/eng_first_name_et"
+                android:visibility="invisible"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
-                android:text=" - "
-                android:textSize="20sp" />
+                android:text="영문만 입력 가능합니다."
+                android:textColor="@color/error"
+                android:textSize="13dp"
+                android:layout_marginStart="2dp"
+                app:layout_constraintStart_toStartOf="@id/eng_first_name_et"
+                app:layout_constraintTop_toBottomOf="@id/eng_first_name_et"
+                android:visibility="invisible"
+                />
+
+            <ImageView
+                android:id="@+id/eng_first_name_clear_iv"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/no_m"
+                app:layout_constraintBottom_toBottomOf="@id/eng_first_name_et"
+                app:layout_constraintEnd_toEndOf="@id/eng_first_name_et"
+                app:layout_constraintTop_toTopOf="@id/eng_first_name_et"
+                android:visibility="invisible"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/reg_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="주민등록번호 앞 7자리"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/eng_name_layout"
+        app:layout_constraintTop_toBottomOf="@id/eng_name_layout"/>
+
+
+    <LinearLayout
+        android:id="@+id/reg_num_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/reg_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/reg_num_front_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="●●●●●●"
+                android:inputType="number"
+                android:maxLength="6"
+                android:paddingVertical="8dp"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/reg_num_front_line"
+                android:layout_width="match_parent"
+                android:layout_height="1.0dp"
+                android:background="@color/disabled"
+                app:layout_constraintTop_toBottomOf="@id/reg_num_front_et"
+                android:visibility="visible"/>
+
+            <View
+                android:id="@+id/reg_num_front_line"
+                android:layout_width="match_parent"
+                android:layout_height="1.2dp"
+                android:background="@color/main_black"
+                app:layout_constraintTop_toBottomOf="@id/reg_num_front_et"
+                android:visibility="invisible"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:text=" - "
+            android:textSize="20sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <EditText
                 android:id="@+id/reg_num_rear_et"
-                android:layout_width="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:hint="●"
-                android:layout_weight="1"
                 android:inputType="numberPassword"
                 android:maxLength="1"
-                android:textSize="20sp" />
-        </LinearLayout>
+                android:paddingVertical="8dp"
+                android:paddingEnd="30dp"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/reg_eye_iv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/eye"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/reg_num_rear_et"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/reg_num_rear_et" />
+
+            <View
+                android:id="@+id/reg_num_rear_line"
+                android:layout_width="match_parent"
+                android:layout_height="1.0dp"
+                android:background="@color/disabled"
+                app:layout_constraintTop_toBottomOf="@id/reg_num_rear_et"
+                android:visibility="visible"/>
+
+            <View
+                android:id="@+id/reg_num_selected_rear_line"
+                android:layout_width="match_parent"
+                android:layout_height="1.2dp"
+                android:background="@color/main_black"
+                app:layout_constraintTop_toBottomOf="@id/reg_num_rear_et"
+                android:visibility="invisible"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -162,7 +411,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/reg_num_total_container">
+            app:layout_constraintTop_toBottomOf="@id/reg_num_input_layout">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_personal_member"
