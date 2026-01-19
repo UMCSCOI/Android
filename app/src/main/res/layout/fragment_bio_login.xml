@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    android:paddingBottom="16dp">
 
     <ImageView
         android:id="@+id/login_bio_symbol_iv"
@@ -13,7 +13,7 @@
         android:layout_marginTop="104dp"
         android:src="@drawable/symbol"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/login_bio_intro_tv"
@@ -25,84 +25,141 @@
         android:fontFamily="@font/pretendard_medium"
         android:text="@string/scoi_pin_intro"
         android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_bio_symbol_iv" />
-
 
     <ImageView
         android:id="@+id/login_bio_uncheck_iv"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="44dp"
         android:src="@drawable/bio_untouch"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
-        android:visibility="visible"/>
+        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv" />
 
     <ImageView
-        android:id="@+id/login_bio_check_iv"
+        android:id="@+id/login_bio_touch_iv"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="44dp"
         android:src="@drawable/bio_touch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
+        app:layout_constraintStart_toStartOf="@id/login_bio_uncheck_iv"
+        app:layout_constraintTop_toTopOf="@id/login_bio_uncheck_iv" />
 
     <ImageView
         android:id="@+id/login_bio_touch_error_iv"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="44dp"
         android:src="@drawable/bio_touch_error"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
+        app:layout_constraintStart_toStartOf="@id/login_bio_uncheck_iv"
+        app:layout_constraintTop_toTopOf="@id/login_bio_uncheck_iv" />
 
     <ImageView
-        android:id="@+id/login_bio_check_iv"
+        android:id="@+id/login_bio_success_iv"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="44dp"
         android:src="@drawable/bio_check"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
+        app:layout_constraintStart_toStartOf="@id/login_bio_uncheck_iv"
+        app:layout_constraintTop_toTopOf="@id/login_bio_uncheck_iv" />
 
     <ImageView
         android:id="@+id/login_bio_error_iv"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="44dp"
         android:src="@drawable/bio_error"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
-        android:visibility="gone"/>
-
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
+        app:layout_constraintStart_toStartOf="@id/login_bio_uncheck_iv"
+        app:layout_constraintTop_toTopOf="@id/login_bio_uncheck_iv" />
 
     <TextView
         android:id="@+id/login_bio_pin_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:textSize="14sp"
-        android:textColor="@color/disabled"
         android:background="@drawable/bg_pin_full_underline"
         android:text="PIN번호 사용"
-        app:layout_constraintTop_toBottomOf="@id/login_bio_uncheck_iv"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/disabled"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_bio_uncheck_iv" />
 
-        />
+    <LinearLayout
+        android:id="@+id/bottom_btn_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/login_pin_input_inactive_cv"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/disabled"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="0dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="1dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="60dp"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="나중에"
+                    android:textColor="@color/disabled"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/login_pin_input_active_cv"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_weight="1.5"
+            app:cardBackgroundColor="@color/active"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="0dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="1dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="60dp"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="재등록"
+                    android:textColor="@color/active"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
