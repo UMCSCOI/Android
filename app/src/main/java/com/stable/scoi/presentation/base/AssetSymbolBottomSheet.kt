@@ -35,7 +35,7 @@ class AssetSymbolBottomSheet: BottomSheetDialogFragment() {
         }
 
         binding.bottomsheetAssetSymbolUSDCLL.setOnClickListener {
-            viewModel.setAssetSymbolUSTC()
+            viewModel.setAssetSymbolUSDC()
             viewModel.eventCancel()
             dismiss()
         }

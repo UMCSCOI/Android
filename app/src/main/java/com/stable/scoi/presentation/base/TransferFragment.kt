@@ -109,6 +109,7 @@ class TransferFragment : BaseFragment<FragmentTransferBinding, TransferState, Tr
             when (nextEvent) {
                 TransferEvent.Submit -> {
                     findNavController().navigate(R.id.transfer_amount_fragment)
+                    viewModel.eventCancel()
                 }
                 else -> Unit
             }

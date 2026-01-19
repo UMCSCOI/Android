@@ -6,6 +6,12 @@ data class Receiver(
     var receiverType: ReceiverType = ReceiverType.Null
 )
 
+data class Information(
+    var exchangeType: String = "",
+    var assetSymbol: String = "",
+    var amount: String = ""
+)
+
 sealed class ReceiverType {
     object Individual: ReceiverType()
     object Corporation: ReceiverType()

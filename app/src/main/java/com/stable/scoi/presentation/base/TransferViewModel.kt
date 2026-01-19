@@ -14,6 +14,8 @@ import java.util.Locale
 class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, TransferEvent>(
     TransferState()
 ) {
+    private var exType: String = ""
+    private var asSymb: String = ""
     //LiveData
     private val _receiverTypeEvent = MutableLiveData<TransferEvent>()
     val receiverTypeEvent: LiveData<TransferEvent> = _receiverTypeEvent
@@ -33,12 +35,18 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private val _nextEvent = MutableLiveData<TransferEvent>()
     val nextEvent: LiveData<TransferEvent> = _nextEvent
 
+    private val _sendCheckEvent = MutableLiveData<TransferEvent>()
+    val sendCheckEvent: LiveData<TransferEvent> = _sendCheckEvent
+
     //StateFlow
     private val _receiverType = MutableStateFlow<ReceiverType>(ReceiverType.Null)
     val receiverType = _receiverType.asStateFlow()
 
     private val _receiver = MutableStateFlow<Receiver>(Receiver())
     val receiver = _receiver.asStateFlow()
+
+    private val _information = MutableStateFlow<Information>(Information())
+    val information = _information.asStateFlow()
 
 
     //Event
@@ -62,11 +70,16 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         _assetSymbolEvent.value = TransferEvent.Submit
     }
 
+    fun onSendCheckClicked() {
+        _sendCheckEvent.value = TransferEvent.Submit
+    }
+
     fun eventCancel() {
         _receiverTypeEvent.value = TransferEvent.Cancel
         _exchangeEvent.value = TransferEvent.Cancel
         _nextEvent.value = TransferEvent.Cancel
         _assetSymbolEvent.value = TransferEvent.Cancel
+        _sendCheckEvent.value = TransferEvent.Cancel
     }
 
     //ReceiverType
@@ -85,12 +98,15 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     //ExchangeType
     fun setExchangeUpbit() {
         _exchangeType.value = Exchange.Upbit
+        exType = "UPBIT"
     }
     fun setExchangeBithumb() {
         _exchangeType.value = Exchange.Bithumb
+        exType = "BITHUMB"
     }
     fun setExchangeBinance() {
         _exchangeType.value = Exchange.Binance
+        exType = "BINANCE"
     }
     fun setExchange() {
         _exchangeType.value = Exchange.Unselected
@@ -99,10 +115,12 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     //AssetSymbolType
     fun setAssetSymbolUSDT() {
         _assetSymbolType.value = AssetSymbol.USDT
+        asSymb = "USDT"
     }
 
-    fun setAssetSymbolUSTC() {
+    fun setAssetSymbolUSDC() {
         _assetSymbolType.value = AssetSymbol.USDC
+        asSymb = "USDC"
     }
 
     //NextButton
@@ -129,6 +147,18 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         )
     }
 
+    fun typeToString() {
+
+    }
+
+    fun submitInformation(amount: String) {
+        _information.value = _information.value.copy(
+            exType,
+            asSymb,
+            amount
+        )
+    }
+
     //ETC
     fun addressLineChange(address: String): String {
         return address.chunked(22)
@@ -136,7 +166,13 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     }
 
     fun addComma(amount: String): String {
-        return NumberFormat.getNumberInstance(Locale.US)
-            .format(amount)
+        if (amount.isBlank()) return ""
+
+        return try {
+            NumberFormat.getNumberInstance(Locale.US)
+                .format(amount.toLong())
+        } catch (e: NumberFormatException) {
+            ""
+        }
     }
 }
