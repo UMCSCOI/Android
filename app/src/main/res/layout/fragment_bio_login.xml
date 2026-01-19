@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <ImageView
+        android:id="@+id/login_bio_symbol_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="104dp"
+        android:src="@drawable/symbol"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/login_bio_intro_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="@string/scoi_pin_intro"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_bio_symbol_iv" />
+
+
+    <ImageView
+        android:id="@+id/login_bio_uncheck_iv"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/bio_untouch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
+        android:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/login_bio_check_iv"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/bio_touch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/login_bio_touch_error_iv"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/bio_touch_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/login_bio_check_iv"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/bio_check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/login_bio_error_iv"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/bio_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"
+        android:visibility="gone"/>
+
+
+    <TextView
+        android:id="@+id/login_bio_pin_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:textSize="14sp"
+        android:textColor="@color/disabled"
+        android:background="@drawable/bg_pin_full_underline"
+        android:text="PIN번호 사용"
+        app:layout_constraintTop_toBottomOf="@id/login_bio_uncheck_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
