@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageButton
+        android:id="@+id/phone_auth_back_btn"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/back2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/phone_auth_intro_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="휴대폰 번호 인증을\n진행해주세요."
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_back_btn" />
+
+    <TextView
+        android:id="@+id/phone_auth_number_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="휴대폰 번호"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_intro_tv" />
+
+    <EditText
+        android:id="@+id/phone_auth_number_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:hint="010-0000-0000"
+        android:inputType="phone"
+        android:paddingVertical="8dp"
+        android:background="@android:color/transparent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_tv" />
+
+    <ImageView
+        android:id="@+id/phone_auth_number_clear_iv"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/no_m"
+        app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/phone_auth_number_send_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_marginEnd="40dp"
+        android:text="전송하기"
+        android:src="@drawable/no_m"
+        android:textColor="@color/active"
+        app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/phone_auth_number_retry_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_marginEnd="40dp"
+        android:textColor="@color/disabled"
+        android:text="재전송"
+        android:src="@drawable/no_m"
+        app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
+        android:visibility="gone"
+        />
+
+
+    <View
+        android:id="@+id/phone_auth_number_line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@color/disabled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_et"
+        android:visibility="visible"
+        />
+
+    <View
+        android:id="@+id/phone_auth_selected_number_line"
+        android:layout_width="0dp"
+        android:layout_height="1.2dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@color/main_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_et"
+        android:visibility="gone"
+        />
+
+
+    <TextView
+        android:id="@+id/phone_auth_code_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="인증 번호"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_line" />
+
+        <EditText
+        android:id="@+id/phone_auth_code_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:hint="인증번호 6자리"
+        android:inputType="number"
+        android:maxLength="6"
+        android:paddingVertical="8dp"
+        android:background="@android:color/transparent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_tv" />
+
+    <View
+        android:id="@+id/phone_auth_code_line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@color/disabled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_et"
+        android:visibility="visible"
+        />
+
+    <View
+        android:id="@+id/phone_auth_selected_code_line"
+        android:layout_width="0dp"
+        android:layout_height="1.2dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@color/main_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_et"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/phone_auth_code_check_iv"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/non_check"
+        android:layout_marginEnd="22dp"
+        app:layout_constraintBottom_toBottomOf="@id/phone_auth_code_et"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_code_et"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/phone_auth_code_active_check_iv"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/active_check"
+        android:layout_marginEnd="22dp"
+        app:layout_constraintBottom_toBottomOf="@id/phone_auth_code_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_code_et"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/phone_auth_code_active_timer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="22dp"
+        android:text="5:00"
+        android:textsize="13sp"
+        android:textColor="@color/active"
+        app:layout_constraintBottom_toBottomOf="@id/phone_auth_code_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_code_et"
+        android:visibility="gone"/>
+
+
+    <TextView
+        android:id="@+id/phone_auth_helper_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:text="발송된 인증번호 6자리를 입력해주세요."
+        android:textColor="@color/disabled"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_line" />
+
+    <TextView
+        android:id="@+id/phone_auth_check_helper_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:text="인증 번호가 일치합니다."
+        android:textColor="@color/disabled"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_line" />
+
+    <TextView
+        android:id="@+id/phone_auth_error_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:text="인증번호가 일치하지 않습니다"
+        android:textColor="@color/error"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_line" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

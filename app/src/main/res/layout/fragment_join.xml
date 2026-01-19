@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/back"
+        android:src="@drawable/back2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,6 +77,8 @@
         android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="1.2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@color/error"
         app:layout_constraintTop_toBottomOf="@id/korean_name_et"
         android:visibility="invisible"
@@ -87,6 +89,8 @@
         android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="1.2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@color/main_black"
         app:layout_constraintTop_toBottomOf="@id/korean_name_et"
         android:visibility="invisible"
