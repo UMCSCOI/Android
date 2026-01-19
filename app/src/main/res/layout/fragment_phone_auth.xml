@@ -216,7 +216,33 @@
         android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
         android:text="발송된 인증번호 6자리를 입력해주세요."
-        android:textColor="@color/disabled"
+        android:textColor="@color/main_black"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_line" />
+
+    <TextView
+        android:id="@+id/phone_auth_code_retry_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:text="인증번호가 재발송되었습니다."
+        android:textColor="@color/main_black"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_line" />
+
+    <TextView
+        android:id="@+id/phone_auth_expired_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:text="인증번호가 만료되었습니다. 인증 번호를 재발송해주세요."
+        android:textColor="@color/error"
         android:textSize="12sp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
