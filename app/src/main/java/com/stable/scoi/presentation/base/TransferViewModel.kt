@@ -147,10 +147,6 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         )
     }
 
-    fun typeToString() {
-
-    }
-
     fun submitInformation(amount: String) {
         _information.value = _information.value.copy(
             exType,

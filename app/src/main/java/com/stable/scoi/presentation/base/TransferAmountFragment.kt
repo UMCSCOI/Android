@@ -32,6 +32,8 @@ class TransferAmountFragment : BaseFragment<FragmentTransferAmountBinding, Trans
             viewModel.onSendCheckClicked()
         }
 
+        viewModel.setAssetSymbolUSDT() //기본 assetSymbol
+
 
 
         //output
@@ -88,6 +90,7 @@ class TransferAmountFragment : BaseFragment<FragmentTransferAmountBinding, Trans
         }
 
         viewModel.assetSymbolType.observe(viewLifecycleOwner) { assetSymbol ->
+            Log.d("assetSymbol",assetSymbol.toString())
             when (assetSymbol) {
                 AssetSymbol.USDT -> {
                     binding.TransferAmountCoinTypeTV.text = "USDT"
