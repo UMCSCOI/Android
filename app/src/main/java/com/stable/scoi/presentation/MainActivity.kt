@@ -2,6 +2,7 @@ package com.stable.scoi.presentation
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.stable.scoi.R

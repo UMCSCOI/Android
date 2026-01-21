@@ -9,7 +9,11 @@ data class Receiver(
 data class Information(
     var exchangeType: String = "",
     var assetSymbol: String = "",
-    var amount: String = ""
+    var amount: String = "",
+)
+
+data class Execute(
+    var simplePassword: String = ""
 )
 
 sealed class ReceiverType {

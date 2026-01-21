@@ -48,6 +48,9 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private val _information = MutableStateFlow<Information>(Information())
     val information = _information.asStateFlow()
 
+    private val _execute = MutableStateFlow<Execute>(Execute())
+    val execute = _execute.asStateFlow()
+
 
     //Event
     fun onReceiverTypeClicked() { //초기 receiverType 결정
@@ -152,6 +155,15 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
             exType,
             asSymb,
             amount
+        )
+    }
+
+    fun submitPassword(
+        first: String, second: String, third:String, fourth: String, fifth: String, sixth: String) {
+        val simplePassword = first + second + third + fourth + fifth + sixth
+
+        _execute.value = _execute.value.copy(
+            simplePassword
         )
     }
 
