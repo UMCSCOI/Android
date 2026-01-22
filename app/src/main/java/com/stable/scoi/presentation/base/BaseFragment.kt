@@ -52,6 +52,7 @@ abstract class BaseFragment<B : ViewDataBinding, STATE: UiState, EVENT: UiEvent,
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
         initView()
         initStates()
+
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {

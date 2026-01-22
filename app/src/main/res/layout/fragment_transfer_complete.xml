@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/Transfer_complete_check_IV"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo_check"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="190dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출금 신청이 완료되었어요"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textSize="24sp"
+            android:textColor="@color/main_black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="310dp"/>
+
+        <LinearLayout
+            android:id="@+id/LL1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="361dp">
+
+            <TextView
+                android:id="@+id/Transfer_complete_receiverName_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="홍길동"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="16sp"
+                android:textColor="@color/main_black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="님"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="16sp"
+                android:textColor="@color/main_black"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="에게"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="16sp"
+                android:textColor="@color/main_black"/>
+
+            <TextView
+                android:id="@+id/Transfer_complete_amount_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="금액"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="16sp"
+                android:textColor="@color/active"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/Transfer_complete_assetSymbol_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USDT"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="16sp"
+                android:textColor="@color/active"
+                android:layout_marginStart="4dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/LL1">
+
+            <TextView
+                android:id="@+id/Transfer_complete_exchange_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="업비트"
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/disabled"/>
+
+            <TextView
+                android:id="@+id/Transfer_complete_address_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주소"
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/disabled"
+                android:layout_marginStart="4dp"/>
+
+        </LinearLayout>
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -26,17 +26,6 @@
             app:layout_constraintTop_toTopOf="parent">
         </androidx.fragment.app.FragmentContainerView>
 
-        <com.stable.scoi.presentation.base.component.ScoiButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:borderColor="@color/active"
-            app:borderWidth="2dp"
-            app:buttonText="하이요"
-            app:cornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:textColor="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
