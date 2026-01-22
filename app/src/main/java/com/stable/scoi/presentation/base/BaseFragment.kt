@@ -53,7 +53,6 @@ abstract class BaseFragment<B : ViewDataBinding, STATE: UiState, EVENT: UiEvent,
         initView()
         initStates()
 
-
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {

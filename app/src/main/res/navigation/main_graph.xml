@@ -20,4 +20,8 @@
         android:id="@+id/transfer_password_fragment"
         android:name="com.stable.scoi.presentation.base.TransferPasswordFragment"/>
 
+    <fragment
+        android:id="@+id/transfer_complete_fragment"
+        android:name="com.stable.scoi.presentation.base.TransferCompleteFragment"/>
+
 </navigation>

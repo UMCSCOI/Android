@@ -6,13 +6,9 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.view.inspector.WindowInspector
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.stable.scoi.databinding.FragmentTransferBinding
-import com.stable.scoi.databinding.FragmentTransferBinding.inflate
+import androidx.navigation.fragment.findNavController
+import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
@@ -119,6 +115,7 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
         binding.TransferPasswordInputTV.setOnClickListener {
             viewModel.submitPassword(passwordFirst, passwordSecond, passwordThird, passwordFourth, passwordFifth, passwordSixth)
             Log.d("password", viewModel.execute.value.simplePassword)
+            findNavController().navigate(R.id.transfer_complete_fragment)
         }
     }
 }
