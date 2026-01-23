@@ -13,26 +13,36 @@ import com.stable.scoi.databinding.FragmentTransferAmountBinding
 import com.stable.scoi.databinding.FragmentTransferBinding
 import com.stable.scoi.databinding.FragmentTransferBinding.inflate
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TransferAmountFragment : BaseFragment<FragmentTransferAmountBinding, TransferState, TransferEvent, TransferViewModel>(
+class TransferAmountFragment : SetAssetSymbol, BaseFragment<FragmentTransferAmountBinding, TransferState, TransferEvent, TransferViewModel>(
     FragmentTransferAmountBinding::inflate
 ) {
     override val viewModel: TransferViewModel by activityViewModels()
 
+
+
     override fun initView() {
         //input
         binding.TransferAmountCoinTypeChangeIV.setOnClickListener {
-            viewModel.onAssetSymbolClicked()
+            AssetSymbolBottomSheet().show(
+                childFragmentManager,
+                "BottomSheet"
+            )
         }
 
         binding.TransferNextTV.setOnClickListener {
             viewModel.submitInformation(binding.TransferAmountET.text.toString())
-            Log.d("information", viewModel.information.toString())
-            viewModel.onSendCheckClicked()
+
+            SendCheckBottomSheet().show(
+                parentFragmentManager,
+                "bottomsheet"
+            )
         }
 
         viewModel.setAssetSymbolUSDT() //기본 assetSymbol
+        viewModel.focusRemove(binding.TransferAmountET)
 
 
 
@@ -52,7 +62,9 @@ class TransferAmountFragment : BaseFragment<FragmentTransferAmountBinding, Trans
         binding.TransferAmountET.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 val raw = p0.toString().replace(",", "")
+
                 binding.TransferAmountET.removeTextChangedListener(this)
+
                 if (raw.isNotEmpty()) {
                     val formatted = viewModel.addComma(raw)
                     binding.TransferAmountET.setText(formatted)
@@ -77,46 +89,31 @@ class TransferAmountFragment : BaseFragment<FragmentTransferAmountBinding, Trans
             ) {}
         })
 
-        viewModel.assetSymbolEvent.observe(viewLifecycleOwner) { event ->
-            when (event) {
-                TransferEvent.Submit -> {
-                    AssetSymbolBottomSheet().show(
-                        parentFragmentManager,
-                        "BottomSheet"
-                    )
+        repeatOnStarted(viewLifecycleOwner) {
+            launch {
+                viewModel.assetSymbolType.collect { assetSymbol ->
+                    when (assetSymbol) {
+                        AssetSymbol.USDT -> {
+                            binding.TransferAmountCoinTypeTV.text = "USDT"
+                            binding.TransferAmountAvailableCoinTypeTV.text = "USDT"
+                        }
+                        AssetSymbol.USDC -> {
+                            binding.TransferAmountCoinTypeTV.text = "USDC"
+                            binding.TransferAmountAvailableCoinTypeTV.text = "USDC"
+                        }
+                        else -> Unit
+                    }
                 }
-                else -> Unit
             }
         }
+    }
 
-        viewModel.assetSymbolType.observe(viewLifecycleOwner) { assetSymbol ->
-            Log.d("assetSymbol",assetSymbol.toString())
-            when (assetSymbol) {
-                AssetSymbol.USDT -> {
-                    binding.TransferAmountCoinTypeTV.text = "USDT"
-                    binding.TransferAmountAvailableCoinTypeTV.text = "USDT"
-                }
-                AssetSymbol.USDC -> {
-                    binding.TransferAmountCoinTypeTV.text = "USDC"
-                    binding.TransferAmountAvailableCoinTypeTV.text = "USDC"
-                }
-                else -> Unit
-            }
-        }
+    override fun typeUSDT() {
+        viewModel.setAssetSymbolUSDT()
+    }
 
-        viewModel.sendCheckEvent.observe(viewLifecycleOwner) { event ->
-            when (event) {
-                TransferEvent.Submit -> {
-                    SendCheckBottomSheet().show(
-                        parentFragmentManager,
-                        "bottomsheet"
-                    )
-                }
-                else -> Unit
-            }
-        }
-
-
+    override fun typeUSDC() {
+        viewModel.setAssetSymbolUSDC()
     }
 
 }

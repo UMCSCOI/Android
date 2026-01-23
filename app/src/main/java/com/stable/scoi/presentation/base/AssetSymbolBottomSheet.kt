@@ -1,5 +1,6 @@
 package com.stable.scoi.presentation.base
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +16,7 @@ import kotlin.getValue
 @AndroidEntryPoint
 class AssetSymbolBottomSheet: BottomSheetDialogFragment() {
     lateinit var binding: FragmentAssetSymbolBottomsheetBinding
-    private val viewModel: TransferViewModel by activityViewModels()
+    private lateinit var setAssetSymbol: SetAssetSymbol
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,24 +27,29 @@ class AssetSymbolBottomSheet: BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        setAssetSymbol = parentFragment as SetAssetSymbol
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.bottomsheetAssetSymbolUSDTLL.setOnClickListener {
-            viewModel.setAssetSymbolUSDT()
-            viewModel.eventCancel()
-            dismiss()
-        }
+        binding.apply {
+            bottomsheetAssetSymbolUSDTLL.setOnClickListener {
+                setAssetSymbol.typeUSDT()
+                dismiss()
+            }
 
-        binding.bottomsheetAssetSymbolUSDCLL.setOnClickListener {
-            viewModel.setAssetSymbolUSDC()
-            viewModel.eventCancel()
-            dismiss()
-        }
+            bottomsheetAssetSymbolUSDCLL.setOnClickListener {
+                setAssetSymbol.typeUSDC()
+                dismiss()
+            }
 
-        binding.bottomsheetAssetSymbolCloseIv.setOnClickListener {
-            viewModel.eventCancel()
-            dismiss()
+            bottomsheetAssetSymbolCloseIv.setOnClickListener {
+                dismiss()
+            }
         }
     }
 }

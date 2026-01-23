@@ -97,7 +97,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:maxLines="1"/>
+                android:inputType="text"
+                android:maxLines="1"
+                android:imeOptions="actionDone"/>
 
             <TextView
                 android:id="@+id/Transfer_inputName_warning_TV"
@@ -148,7 +150,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"/>
+                android:inputType="text"
+                android:layout_marginEnd="16dp"
+                android:imeOptions="actionDone"/>
 
             <TextView
                 android:id="@+id/Transfer_inputAddress_warning_TV"
@@ -187,7 +191,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:imeOptions="actionDone"/>
 
 
             <TextView
@@ -213,7 +218,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:imeOptions="actionDone"/>
 
 
             <EditText
