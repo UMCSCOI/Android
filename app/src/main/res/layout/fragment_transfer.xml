@@ -191,6 +191,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:inputType="text"
                 android:visibility="gone"
                 android:imeOptions="actionDone"/>
 
@@ -218,6 +219,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:inputType="text"
                 android:visibility="gone"
                 android:imeOptions="actionDone"/>
 

@@ -22,19 +22,18 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private var exType: String = ""
     private var asSymb: String = ""
 
-
-
-    private val _assetSymbolEvent = MutableLiveData<TransferEvent>(TransferEvent.Null)
-    val assetSymbolEvent: LiveData<TransferEvent> = _assetSymbolEvent
-
-    private val _sendCheckEvent = MutableLiveData<TransferEvent>()
-    val sendCheckEvent: LiveData<TransferEvent> = _sendCheckEvent
-
+    //bottomSheet Type 선택
     private val _receiverType = MutableStateFlow<ReceiverType>(ReceiverType.Empty)
     val receiverType = _receiverType.asStateFlow()
 
     private val _exchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
     val exchangeType = _exchangeType.asStateFlow()
+
+    private val _assetSymbolType = MutableStateFlow<AssetSymbol>(AssetSymbol.Empty)
+    val assetSymbolType = _assetSymbolType.asStateFlow()
+
+
+    //API 요구 정보
     private val _receiver = MutableStateFlow(Receiver())
     val receiver = _receiver.asStateFlow()
 
@@ -44,34 +43,21 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private val _execute = MutableStateFlow(Execute())
     val execute = _execute.asStateFlow()
 
-    private val _assetSymbolType = MutableStateFlow<AssetSymbol>(AssetSymbol.Empty)
-    val assetSymbolType = _assetSymbolType.asStateFlow()
-
-
-    //Event -> emitEvent로 교체 필요
-    private val _nextEvent = MutableStateFlow<TransferEvent>(TransferEvent.Null)
-    val nextEvent = _nextEvent.asStateFlow()
-
-    private val _receiverTypeEvent = MutableStateFlow<TransferEvent>(TransferEvent.Null)
-    val receiverTypeEvent = _receiverTypeEvent.asStateFlow()
 
 
     //Event
     fun onReceiverTypeClicked() { //초기 receiverType 결정
         when (receiverType.value) {
             ReceiverType.Empty -> {
-                _receiverTypeEvent.value = TransferEvent.Submit
+                emitEvent(TransferEvent.OpenReceiverType)
             }
             else -> Unit
         }
     }
     fun onReceiverTypeChange() { //우측 receiverType 결정 메뉴
-        _receiverTypeEvent.value = TransferEvent.Submit
+        emitEvent(TransferEvent.OpenReceiverType)
     }
 
-    fun eventCancel() {
-        _nextEvent.value = TransferEvent.Cancel
-    }
 
     //ReceiverType
     fun setReceiverTypeIndividual() {
@@ -128,7 +114,7 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         ) {
            Unit
         }
-        else _nextEvent.value = TransferEvent.Submit
+        else emitEvent(TransferEvent.NavigateToNextPage)
     }
 
 

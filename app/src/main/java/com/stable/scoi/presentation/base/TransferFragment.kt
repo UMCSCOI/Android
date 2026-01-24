@@ -130,27 +130,17 @@ class TransferFragment : SetReceiverType, SetExchangeType ,BaseFragment<Fragment
             }
 
             launch {
-                viewModel.nextEvent.collect { nextEvent ->
-                    when (nextEvent) {
-                        TransferEvent.Submit -> {
-                            findNavController().navigate(R.id.transfer_amount_fragment)
-                            viewModel.eventCancel()
-                        }
-                        else -> Unit
-                    }
-                }
-            }
-
-            launch {
-                viewModel.receiverTypeEvent.collect { event ->
+                viewModel.uiEvent.collect { event ->
                     when (event) {
-                        TransferEvent.Submit -> {
+                        TransferEvent.OpenReceiverType -> {
                             ReceiverTypeBottomSheet().show(
                                 childFragmentManager,
                                 "BottomSheet"
                             )
                         }
-                        else -> Unit
+                        TransferEvent.NavigateToNextPage -> {
+                            findNavController().navigate(R.id.transfer_amount_fragment)
+                        }
                     }
                 }
             }
