@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation
+package com.stable.scoi.presentation.base
 
 import android.view.LayoutInflater
 import android.view.View

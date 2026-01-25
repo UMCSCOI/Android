@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Scoi">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.base.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

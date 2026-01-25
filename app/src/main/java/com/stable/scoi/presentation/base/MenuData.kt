@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation
+package com.stable.scoi.presentation.base
 
 data class MenuData(
     val title: String,
