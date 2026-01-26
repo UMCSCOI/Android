@@ -1,17 +1,15 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.transfer
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
-import com.stable.scoi.databinding.FragmentSendcheckBottomsheetBinding
 import com.stable.scoi.databinding.FragmentTransferAmountBinding
-import com.stable.scoi.databinding.FragmentTransferBinding
-import com.stable.scoi.databinding.FragmentTransferBinding.inflate
+import com.stable.scoi.presentation.ui.transfer.bottomsheet.AssetSymbolBottomSheet
+import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.transfer.bottomsheet.SendCheckBottomSheet
+import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetAssetSymbol
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -39,6 +37,10 @@ class TransferAmountFragment : SetAssetSymbol, BaseFragment<FragmentTransferAmou
                 parentFragmentManager,
                 "bottomsheet"
             )
+        }
+
+        binding.TransferAmountBackArrowIV.setOnClickListener {
+            findNavController().popBackStack()
         }
 
         viewModel.setAssetSymbolUSDT() //기본 assetSymbol
@@ -69,6 +71,22 @@ class TransferAmountFragment : SetAssetSymbol, BaseFragment<FragmentTransferAmou
                     val formatted = viewModel.addComma(raw)
                     binding.TransferAmountET.setText(formatted)
                     binding.TransferAmountET.setSelection(formatted.length)
+                }
+
+                binding.apply {
+                    val rawInt = raw.toInt()
+                    TransferAmountAmountPlus1BT.setOnClickListener {
+                        addButtonClicked(rawInt, 10000)
+                    }
+                    TransferAmountAmountPlus5BT.setOnClickListener {
+                        addButtonClicked(rawInt, 50000)
+                    }
+                    TransferAmountAmountPlus10BT.setOnClickListener {
+                        addButtonClicked(rawInt, 100000)
+                    }
+                    TransferAmountAmountPlusAllBT.setOnClickListener {
+                        //API 연동 후 추가 예정 (전체 금액)
+                    }
                 }
 
                 binding.TransferAmountET.addTextChangedListener(this)
@@ -106,6 +124,12 @@ class TransferAmountFragment : SetAssetSymbol, BaseFragment<FragmentTransferAmou
                 }
             }
         }
+    }
+
+    private fun addButtonClicked(rawInt: Int, plus: Int) {
+        val added = (rawInt + plus).toString()
+        binding.TransferAmountET.setText(added)
+        binding.TransferAmountET.setSelection(added.length+1)
     }
 
     override fun typeUSDT() {

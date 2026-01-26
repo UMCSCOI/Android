@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.transfer
 
 import android.content.Context
 import android.text.Editable
@@ -6,16 +6,14 @@ import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferPasswordBinding
+import com.stable.scoi.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.getValue
 
 @AndroidEntryPoint
 class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, TransferState, TransferEvent, TransferViewModel>(
@@ -81,7 +79,7 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
         requestText: EditText,
         onPasswordEntered: (String) -> Unit)
     {
-        editText.addTextChangedListener(object: TextWatcher{
+        editText.addTextChangedListener(object: TextWatcher {
 
             override fun afterTextChanged(p0: Editable?)
             {

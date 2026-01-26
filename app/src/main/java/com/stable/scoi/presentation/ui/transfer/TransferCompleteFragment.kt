@@ -1,9 +1,11 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.transfer
 
 import androidx.fragment.app.activityViewModels
 import com.stable.scoi.databinding.FragmentTransferCompleteBinding
+import com.stable.scoi.presentation.base.BaseFragment
 
-class TransferCompleteFragment :BaseFragment<FragmentTransferCompleteBinding, TransferState, TransferEvent, TransferViewModel>(
+class TransferCompleteFragment :
+    BaseFragment<FragmentTransferCompleteBinding, TransferState, TransferEvent, TransferViewModel>(
     FragmentTransferCompleteBinding::inflate) {
     override val viewModel: TransferViewModel by activityViewModels()
 

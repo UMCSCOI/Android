@@ -179,6 +179,71 @@
                 app:layout_constraintStart_toEndOf="@+id/Transfer_amount_available_amount_TV"
                 android:layout_marginStart="4dp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_available_amount_TV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Transfer_amount_amount_plus1_BT"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/select_exchange"
+                    android:text="+1만"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"/>
+
+                <Space
+                    android:layout_width="6dp"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Transfer_amount_amount_plus5_BT"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/select_exchange"
+                    android:text="+5만"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"/>
+
+                <Space
+                    android:layout_width="6dp"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Transfer_amount_amount_plus10_BT"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/select_exchange"
+                    android:text="+10만"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"/>
+
+                <Space
+                    android:layout_width="6dp"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Transfer_amount_amount_plusAll_BT"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/select_exchange"
+                    android:text="+전체"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+
+
             <TextView
                 android:id="@+id/Transfer_amount_network_TV"
                 android:layout_width="wrap_content"
@@ -250,19 +315,22 @@
 
             </LinearLayout>
 
-
-            <com.stable.scoi.presentation.base.componant.ScoiButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/Transfer_next_TV"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:padding="10dp"
-                app:borderColor="@color/active"
-                app:borderWidth="1dp"
-                app:buttonText="다음"
-                app:cornerRadius="10dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@null"
+                android:background="@drawable/selector_button_submit"
+                android:text="다음"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="16sp"
+                android:textColor="@color/active"
                 app:layout_constraintTop_toBottomOf="@id/Transfer_amount_networkType_LL"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="20dp"
-                app:textColor="@color/active" />
+                android:layout_marginBottom="10dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

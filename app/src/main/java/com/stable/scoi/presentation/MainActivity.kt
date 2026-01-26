@@ -1,14 +1,11 @@
 package com.stable.scoi.presentation
 
-import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.stable.scoi.R
 import com.stable.scoi.databinding.ActivityMainBinding
 import com.stable.scoi.presentation.base.BaseActivity
-import com.stable.scoi.presentation.base.TransferFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.transfer.bottomsheet
 
 interface SetAssetSymbol {
     fun typeUSDT()
@@ -16,3 +16,6 @@ interface SetExchangeType {
     fun binance()
     fun empty()
 }
+
+
+

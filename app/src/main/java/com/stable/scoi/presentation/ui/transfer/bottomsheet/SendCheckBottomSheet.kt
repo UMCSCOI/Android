@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.transfer.bottomsheet
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentSendcheckBottomsheetBinding
+import com.stable.scoi.presentation.ui.transfer.TransferViewModel
 
 class SendCheckBottomSheet: BottomSheetDialogFragment() {
     lateinit var binding : FragmentSendcheckBottomsheetBinding
