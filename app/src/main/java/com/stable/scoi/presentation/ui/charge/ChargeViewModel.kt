@@ -1,7 +1,12 @@
 package com.stable.scoi.presentation.ui.charge
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.viewModelScope
+import com.stable.scoi.domain.model.CandleStreamEvent
 import com.stable.scoi.domain.model.enums.ChargeInputType
 import com.stable.scoi.domain.model.enums.ChargePageType
+import com.stable.scoi.domain.repository.DummyRepository
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.base.UiEvent
 import com.stable.scoi.presentation.base.UiState
@@ -9,17 +14,38 @@ import com.stable.scoi.util.Format.formatWon
 import com.stable.scoi.util.Format.unformatWon
 import com.stable.scoi.util.SLOG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ChargeViewModel
-@Inject
-constructor() : BaseViewModel<ChargeUiState, ChargeEvent>(
+class ChargeViewModel @Inject constructor(
+    private val dummyRepository: DummyRepository
+) : BaseViewModel<ChargeUiState, ChargeEvent>(
     ChargeUiState(),
 ) {
     init {
     }
-    fun test() {
+
+    private val _candleEvents = MutableSharedFlow<CandleStreamEvent>(
+        replay = 0,
+        extraBufferCapacity = 64
+    )
+    val candleEvents: SharedFlow<CandleStreamEvent> = _candleEvents
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun test(market: String, unitMinutes: Int = 1) = viewModelScope.launch {
+        dummyRepository.streamMinuteCandles(
+            market = market,
+            unitMinutes = unitMinutes,
+            initialCount = 200
+        ).collect { ev ->
+            _candleEvents.emit(ev)
+        }
+    }
+
+    fun test2() {
 
     }
 
@@ -47,7 +73,8 @@ constructor() : BaseViewModel<ChargeUiState, ChargeEvent>(
     }
 
     fun updateInputMode() {
-        val mode = if(uiState.value.inputType == ChargeInputType.SELF) ChargeInputType.SELECT else ChargeInputType.SELF
+        val mode =
+            if (uiState.value.inputType == ChargeInputType.SELF) ChargeInputType.SELECT else ChargeInputType.SELF
         updateState { copy(inputType = mode) }
     }
 
@@ -55,7 +82,7 @@ constructor() : BaseViewModel<ChargeUiState, ChargeEvent>(
         updateState { copy(money = money) }
     }
 
-    fun updatePageType(type: ChargePageType){
+    fun updatePageType(type: ChargePageType) {
         updateState { copy(pageType = type) }
     }
 

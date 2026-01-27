@@ -1,13 +1,19 @@
 package com.stable.scoi.presentation.ui.charge
 
 import android.content.Context
+import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentChargeBinding
+import com.stable.scoi.domain.model.CandleStreamEvent
 import com.stable.scoi.domain.model.enums.ChargeInputType
 import com.stable.scoi.extension.gone
+import com.stable.scoi.extension.setupTvChart
+import com.stable.scoi.extension.tvSetData
+import com.stable.scoi.extension.tvUpdate
 import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.util.Format.formatWon
@@ -21,10 +27,15 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
 ) {
     override val viewModel: ChargeViewModel by viewModels()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initView() {
         binding.apply {
             vm = viewModel
             setSummaryCountUi()
+
+            binding.tvChartWebView.setupTvChart() // 네가 만든 setup 함수
+
+            viewModel.test("KRW-BTC", 1)
 
             layoutChargeMoney.setOnClickListener {
                 setEditingUi()
@@ -77,6 +88,16 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
         repeatOnStarted(viewLifecycleOwner) {
             launch {
                 viewModel.uiEvent.collect {
+
+                }
+            }
+
+            launch {
+                viewModel.candleEvents.collect { ev ->
+                    when (ev) {
+                        is CandleStreamEvent.Snapshot -> binding.tvChartWebView.tvSetData(ev.candles)
+                        is CandleStreamEvent.Update -> binding.tvChartWebView.tvUpdate(ev.candle)
+                    }
 
                 }
             }

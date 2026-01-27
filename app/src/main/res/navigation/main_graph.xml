@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/tansfer_fragment">
+    app:startDestination="@id/homeFragment">
 
     <activity
         android:id="@+id/mainActivity"
@@ -23,9 +24,6 @@
     <fragment
         android:id="@+id/transfer_complete_fragment"
         android:name="com.stable.scoi.presentation.base.TransferCompleteFragment"/>
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_graph"
-    app:startDestination="@id/homeFragment"/>
 
     <fragment
         android:id="@+id/homeFragment"

@@ -16,430 +16,446 @@
             type="com.stable.scoi.presentation.ui.charge.ChargeViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:clipChildren="false"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        android:orientation="vertical">
 
         <com.stable.scoi.presentation.base.component.ScoiTitleBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:rightClick="@{()->vm.test()}"
+            app:rightClick="@{()->vm.test2()}"
             app:title="충전" />
 
-
-        <LinearLayout
-            android:id="@+id/persistent_bottom_sheet"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_bottom_nav_white_radius20"
-            android:elevation="12dp"
-            android:orientation="vertical"
-            app:behavior_expandedOffset="35dp"
-            app:behavior_fitToContents="false"
-            app:behavior_peekHeight="96dp">
+            android:background="@color/white"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="43dp" />
+            <WebView
+                android:id="@+id/tvChartWebView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
 
             <LinearLayout
+                android:id="@+id/persistent_bottom_sheet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{()->vm.updatePageType(ChargePageType.CHARGE)}"
-                    android:text="충전하기"
-                    android:textAppearance="@style/b2sm"
-                    android:textColor="@{vm.uiState.pageType == ChargePageType.CHARGE ? @color/main_black : @color/disabled}" />
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_bottom_nav_white_radius20"
+                android:elevation="12dp"
+                android:orientation="vertical"
+                app:behavior_expandedOffset="35dp"
+                app:behavior_fitToContents="false"
+                app:behavior_peekHeight="96dp"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
                 <Space
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
                     android:layout_width="wrap_content"
+                    android:layout_height="43dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->vm.updatePageType(ChargePageType.CHANGE)}"
-                    android:text="원화로 바꾸기"
-                    android:textAppearance="@style/b2sm"
-                    android:textColor="@{vm.uiState.pageType == ChargePageType.CHANGE ? @color/main_black : @color/disabled}" />
+                    android:layout_marginStart="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{()->vm.updatePageType(ChargePageType.CHARGE)}"
+                        android:text="충전하기"
+                        android:textAppearance="@style/b2sm"
+                        android:textColor="@{vm.uiState.pageType == ChargePageType.CHARGE ? @color/main_black : @color/disabled}" />
+
+                    <Space
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{()->vm.updatePageType(ChargePageType.CHANGE)}"
+                        android:text="원화로 바꾸기"
+                        android:textAppearance="@style/b2sm"
+                        android:textColor="@{vm.uiState.pageType == ChargePageType.CHANGE ? @color/main_black : @color/disabled}" />
+
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_charge_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/bg_rect_white_stroke_active_radius10"
+                    android:paddingVertical="18dp">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/text_input_self"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text='@{vm.uiState.pageType == ChargePageType.CHARGE ? "즉시 충전" : "즉시 교환"}'
+                            android:textAppearance="@style/f4m"
+                            android:textColor="@{vm.uiState.inputType == ChargeInputType.SELF ? @color/main_black : @color/disabled}" />
+
+                        <TextView
+                            android:id="@+id/text_input_select"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text='@{vm.uiState.pageType == ChargePageType.CHARGE ? "목표 가격 충전" : "목표 가격 교환"}'
+                            android:textAppearance="@style/f4m"
+                            android:textColor="@{vm.uiState.inputType == ChargeInputType.SELECT ? @color/main_black : @color/disabled}" />
+
+                        <TextView
+                            android:id="@+id/text_input_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{vm.uiState.money}"
+                            android:textAppearance="@style/f3m"
+                            android:textColor="@color/main_black"
+                            android:visibility="gone"
+                            tools:text="1,449원" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_money"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="12dp"
+                        android:afterTextChanged="@{()->vm.updateMoneyChanged()}"
+                        android:background="@null"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="@{vm.uiState.money}"
+                        android:textAppearance="@style/f1m"
+                        app:layout_constraintEnd_toStartOf="@id/image_input_mode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout_tab"
+                        tools:text="1,449원" />
+
+                    <ImageView
+                        android:id="@+id/image_input_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="17dp"
+                        android:onClick="@{()->vm.updateInputMode()}"
+                        android:src="@{vm.uiState.inputType == ChargeInputType.SELF ? @drawable/ic_input_direct : @drawable/ic_choice_amout}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_charge_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/bg_rect_white_stroke_disable_radius10"
+                    android:paddingVertical="18dp">
+
+
+                    <LinearLayout
+                        android:id="@+id/layout_charge_count_tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text="수량"
+                            android:textAppearance="@style/f4m"
+                            android:textColor="@color/main_black" />
+
+                        <TextView
+                            android:id="@+id/text_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text="최대 0개 충전 가능"
+                            android:textAppearance="@style/f4m"
+                            android:textColor="@color/disabled" />
+
+                        <TextView
+                            android:id="@+id/text_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{vm.uiState.count}"
+                            android:textAppearance="@style/f3m"
+                            android:textColor="@color/main_black"
+                            android:visibility="gone"
+                            tools:text="3,200" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="9dp"
+                        android:afterTextChanged="@{()->vm.updateCountChanged()}"
+                        android:background="@null"
+                        android:hint='@{vm.uiState.pageType == ChargePageType.CHARGE ? "얼마나 충전할까요?" : "얼마나 교환할까요?"}'
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="@={vm.uiState.count}"
+                        android:textAppearance="@style/f1m"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout_charge_count_tab" />
+
+                    <TextView
+                        android:id="@+id/text_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@{vm.uiState.total}"
+                        android:textAppearance="@style/f4m"
+                        android:textColor="@color/sub_gray_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edit_count" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="@{(!vm.uiState.count.empty &amp;&amp; !vm.uiState.money.empty) ? @drawable/bg_rect_active_stroke_active_fill_radius60 : @drawable/bg_rect_white_stroke_disable_radius60}"
+                    android:elevation="4dp">
+
+                    <TextView
+                        android:id="@+id/text_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{!vm.uiState.count.empty &amp;&amp; !vm.uiState.money.empty}"
+                        android:text='@{vm.uiState.pageType == ChargePageType.CHARGE ? "충전 예약하기" : "원화 교환 예약하기"}'
+                        android:textAppearance="@style/l1"
+                        android:textColor="@{(!vm.uiState.count.empty &amp;&amp; !vm.uiState.money.empty) ? @color/active : @color/disabled}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_total_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_weight="1">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray300"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_total_analyze"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/disabled_fill"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="거래량(24H)"
+                            android:textAppearance="@style/l3"
+                            android:textColor="@color/sub_gray_2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="83,199,136 USDC"
+                            android:textAppearance="@style/l3"
+                            android:textColor="@color/sub_gray_2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="거래 금액(24H)"
+                            android:textAppearance="@style/l3"
+                            android:textColor="@color/sub_gray_2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="고가(당일) 1,487"
+                            android:textAppearance="@style/l3"
+                            android:textColor="@color/sub_gray_2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="저가(당일) 1,487"
+                            android:textAppearance="@style/l3"
+                            android:textColor="@color/sub_gray_2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="전일종가    1,487"
+                            android:textAppearance="@style/l3"
+                            android:textColor="@color/sub_gray_2" />
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/layout_total_analyze"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:itemCount="6"
+                        tools:listitem="@layout/item_recent_analyze" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_recent_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="89dp"
+                    tools:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray300"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/text_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="20dp"
+                        android:text="최근 체결 내역"
+                        android:textAppearance="@style/l1"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/text_time"
+                        android:layout_width="63dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="15dp"
+                        android:text="시간"
+                        android:textAppearance="@style/l3"
+                        android:textColor="@color/sub_gray_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+                    <TextView
+                        android:id="@+id/text_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="86dp"
+                        android:layout_marginTop="15dp"
+                        android:text="가격(원)"
+                        android:textAppearance="@style/l3"
+                        android:textColor="@color/sub_gray_2"
+                        app:layout_constraintStart_toEndOf="@id/text_time"
+                        app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+                    <TextView
+                        android:id="@+id/text_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="체결량(USDT)"
+                        android:textAppearance="@style/l3"
+                        android:textColor="@color/sub_gray_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_recent_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/text_time"
+                        tools:itemCount="6"
+                        tools:listitem="@layout/item_recent_amount" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </LinearLayout>
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="40dp" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_charge_money"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:animateLayoutChanges="true"
-                android:background="@drawable/bg_rect_white_stroke_active_radius10"
-                android:paddingVertical="18dp">
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_tab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/text_input_self"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text='@{vm.uiState.pageType == ChargePageType.CHARGE ? "즉시 충전" : "즉시 교환"}'
-                        android:textAppearance="@style/f4m"
-                        android:textColor="@{vm.uiState.inputType == ChargeInputType.SELF ? @color/main_black : @color/disabled}" />
-
-                    <TextView
-                        android:id="@+id/text_input_select"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text='@{vm.uiState.pageType == ChargePageType.CHARGE ? "목표 가격 충전" : "목표 가격 교환"}'
-                        android:textAppearance="@style/f4m"
-                        android:textColor="@{vm.uiState.inputType == ChargeInputType.SELECT ? @color/main_black : @color/disabled}" />
-
-                    <TextView
-                        android:id="@+id/text_input_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{vm.uiState.money}"
-                        android:textAppearance="@style/f3m"
-                        android:textColor="@color/main_black"
-                        android:visibility="gone"
-                        tools:text="1,449원" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/edit_money"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="12dp"
-                    android:afterTextChanged="@{()->vm.updateMoneyChanged()}"
-                    android:background="@null"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:text="@{vm.uiState.money}"
-                    android:textAppearance="@style/f1m"
-                    app:layout_constraintEnd_toStartOf="@id/image_input_mode"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_tab"
-                    tools:text="1,449원" />
-
-                <ImageView
-                    android:id="@+id/image_input_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="17dp"
-                    android:onClick="@{()->vm.updateInputMode()}"
-                    android:src="@{vm.uiState.inputType == ChargeInputType.SELF ? @drawable/ic_input_direct : @drawable/ic_choice_amout}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="10dp" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_charge_count"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:animateLayoutChanges="true"
-                android:background="@drawable/bg_rect_white_stroke_disable_radius10"
-                android:paddingVertical="18dp">
-
-
-                <LinearLayout
-                    android:id="@+id/layout_charge_count_tab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="수량"
-                        android:textAppearance="@style/f4m"
-                        android:textColor="@color/main_black" />
-
-                    <TextView
-                        android:id="@+id/text_max"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="최대 0개 충전 가능"
-                        android:textAppearance="@style/f4m"
-                        android:textColor="@color/disabled" />
-
-                    <TextView
-                        android:id="@+id/text_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{vm.uiState.count}"
-                        android:textAppearance="@style/f3m"
-                        android:textColor="@color/main_black"
-                        android:visibility="gone"
-                        tools:text="3,200" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/edit_count"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="9dp"
-                    android:afterTextChanged="@{()->vm.updateCountChanged()}"
-                    android:background="@null"
-                    android:hint='@{vm.uiState.pageType == ChargePageType.CHARGE ? "얼마나 충전할까요?" : "얼마나 교환할까요?"}'
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:text="@={vm.uiState.count}"
-                    android:textAppearance="@style/f1m"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_charge_count_tab" />
-
-                <TextView
-                    android:id="@+id/text_total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="@{vm.uiState.total}"
-                    android:textAppearance="@style/f4m"
-                    android:textColor="@color/sub_gray_2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edit_count" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="30dp" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="16dp"
-                android:background="@{(!vm.uiState.count.empty &amp;&amp; !vm.uiState.money.empty) ? @drawable/bg_rect_active_stroke_active_fill_radius60 : @drawable/bg_rect_white_stroke_disable_radius60}"
-                android:elevation="4dp">
-
-                <TextView
-                    android:id="@+id/text_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:enabled="@{!vm.uiState.count.empty &amp;&amp; !vm.uiState.money.empty}"
-                    android:text='@{vm.uiState.pageType == ChargePageType.CHARGE ? "충전 예약하기" : "원화 교환 예약하기"}'
-                    android:textAppearance="@style/l1"
-                    android:textColor="@{(!vm.uiState.count.empty &amp;&amp; !vm.uiState.money.empty) ? @color/active : @color/disabled}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_total_amount"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="25dp"
-                android:layout_weight="1">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray300"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:id="@+id/layout_total_analyze"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/disabled_fill"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="거래량(24H)"
-                        android:textAppearance="@style/l3"
-                        android:textColor="@color/sub_gray_2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="83,199,136 USDC"
-                        android:textAppearance="@style/l3"
-                        android:textColor="@color/sub_gray_2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="거래 금액(24H)"
-                        android:textAppearance="@style/l3"
-                        android:textColor="@color/sub_gray_2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="고가(당일) 1,487"
-                        android:textAppearance="@style/l3"
-                        android:textColor="@color/sub_gray_2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="저가(당일) 1,487"
-                        android:textAppearance="@style/l3"
-                        android:textColor="@color/sub_gray_2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="전일종가    1,487"
-                        android:textAppearance="@style/l3"
-                        android:textColor="@color/sub_gray_2" />
-
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/layout_total_analyze"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:itemCount="6"
-                    tools:listitem="@layout/item_recent_analyze" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_recent_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="89dp"
-                tools:visibility="gone">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray300"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/text_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="20dp"
-                    android:text="최근 체결 내역"
-                    android:textAppearance="@style/l1"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/text_time"
-                    android:layout_width="63dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="15dp"
-                    android:text="시간"
-                    android:textAppearance="@style/l3"
-                    android:textColor="@color/sub_gray_2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_title" />
-
-                <TextView
-                    android:id="@+id/text_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="86dp"
-                    android:layout_marginTop="15dp"
-                    android:text="가격(원)"
-                    android:textAppearance="@style/l3"
-                    android:textColor="@color/sub_gray_2"
-                    app:layout_constraintStart_toEndOf="@id/text_time"
-                    app:layout_constraintTop_toBottomOf="@id/text_title" />
-
-                <TextView
-                    android:id="@+id/text_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="체결량(USDT)"
-                    android:textAppearance="@style/l3"
-                    android:textColor="@color/sub_gray_2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_title" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_recent_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/text_time"
-                    tools:itemCount="6"
-                    tools:listitem="@layout/item_recent_amount" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        </LinearLayout>
-
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>
