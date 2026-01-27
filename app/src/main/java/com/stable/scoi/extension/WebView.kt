@@ -2,6 +2,7 @@ package com.stable.scoi.extension
 
 import android.annotation.SuppressLint
 import android.content.pm.ApplicationInfo
+import android.graphics.Color
 import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -20,6 +21,8 @@ fun WebView.setupTvChart(
     val isDebuggable =
         (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
     if (isDebuggable) WebView.setWebContentsDebuggingEnabled(true)
+
+    setBackgroundColor(Color.WHITE) // 필요 없으면 삭제해도 됨
 
     settings.apply {
         javaScriptEnabled = true

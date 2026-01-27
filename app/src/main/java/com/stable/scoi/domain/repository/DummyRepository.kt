@@ -6,11 +6,16 @@ import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
 import com.stable.scoi.data.api.UpbitQuotationRestApi
 import com.stable.scoi.data.dto.response.UpbitMinuteCandleDto.Companion.toTvCandle
 import com.stable.scoi.domain.model.CandleStreamEvent
+import com.stable.scoi.domain.model.ParsedUpbitWs
+import com.stable.scoi.domain.model.RecentTrade
 import com.stable.scoi.domain.model.TvCandle
 import com.stable.scoi.domain.model.UpbitWsEvent
 import com.stable.scoi.util.SLOG
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -26,61 +31,152 @@ class DummyRepository @Inject constructor(
 ) {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun streamMinuteCandles(
+    fun streamMarket(
         market: String,
         unitMinutes: Int,
         initialCount: Int
     ): Flow<CandleStreamEvent> = channelFlow {
 
-        // 1) REST로 분봉 200개 먼저 받기 (최신→과거로 내려오는 경우가 많아서 reverse)
-        val snapshot: List<TvCandle> = rest.getMinuteCandles(
+        // 1) REST 분봉 200개 스냅샷
+        val snapshot = rest.getMinuteCandles(
             unit = unitMinutes,
             market = market,
             count = initialCount.coerceAtMost(200),
-        ).asReversed()
+        )
+            .asReversed() // 오래된 -> 최신
             .map { it.toTvCandle() }
 
         send(CandleStreamEvent.Snapshot(snapshot))
 
-        // 2) WS로 실시간 업데이트 계속 받기
-        wsApi.streamMinuteCandle(unitMinutes, market).collect { ev ->
-            when (ev) {
-                is UpbitWsEvent.Message -> {
-                    val candle = ev.rawJson.parseWsCandleOrNull(market) ?: return@collect
-                    send(CandleStreamEvent.Update(candle))
+        // 2) WS 통합 스트림 (candle + trade)
+        val wsJob = launch {
+            wsApi.streamMinuteCandle(
+                markets = listOf(market),
+                unitMinutes = unitMinutes,
+                subscribeCandle = true,
+                subscribeTrade = true
+            )
+                .catch { e ->
+                    SLOG.D("Repo: WS error $e")
                 }
-                else -> Unit
-            }
+                .collect { ev ->
+                    when (ev) {
+                        is UpbitWsEvent.Message -> {
+                            val parsed = parseUpbitWsMessage(ev.rawJson, expectedMarket = market)
+                                ?: return@collect
+
+                            when (parsed) {
+                                is ParsedUpbitWs.Candle ->
+                                    send(CandleStreamEvent.Update(parsed.value))
+
+                                is ParsedUpbitWs.Trade ->
+                                    send(CandleStreamEvent.TradeUpdate(parsed.value))
+                            }
+                        }
+
+                        is UpbitWsEvent.Failure -> {
+                            SLOG.D("Repo: WS failure=$ev")
+                        }
+
+                        is UpbitWsEvent.Closing -> {
+                            SLOG.D("Repo: WS closing=$ev")
+                        }
+
+                        else -> Unit
+                    }
+                }
+        }
+
+        awaitClose {
+            wsJob.cancel()
+            wsApi.close()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun String.parseWsCandleOrNull(expectedMarket: String): TvCandle? {
-        // 메시지가 candle이 아닐 수도 있으니 방어적으로 파싱
-        val obj = runCatching { JSONObject(this) }.getOrNull() ?: return null
-        if (obj.optString("type") != "candle") return null
-        if (obj.optString("code") != expectedMarket) return null
+    private val UPBIT_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
 
-        val utc = obj.getString("candle_date_time_utc")
-        val open = obj.getDouble("opening_price")
-        val high = obj.getDouble("high_price")
-        val low = obj.getDouble("low_price")
-        val close = obj.getDouble("trade_price")
-        val volume = obj.getDouble("candle_acc_trade_volume")
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun parseUpbitWsMessage(
+        rawJson: String,
+        expectedMarket: String,
+    ): ParsedUpbitWs? {
+        val obj = runCatching { JSONObject(rawJson) }.getOrNull() ?: return null
 
-        val t = upbitUtcToEpochSeconds(utc)
+        val type = obj.optString("type") // "candle.1m" or "trade"
+        val code = obj.optString("code")
+        if (code != expectedMarket) return null
 
-        val isUp = close >= open
-        val volumeColor = if (isUp) "#ff4d4f" else "#2f7cff"
+        return when {
+            type.startsWith("candle.") -> {
+                parseCandle(obj)?.let { ParsedUpbitWs.Candle(it) }
+            }
+
+            type == "trade" -> {
+                parseTrade(obj)?.let { ParsedUpbitWs.Trade(it) }
+            }
+
+            else -> null
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun parseCandle(obj: JSONObject): TvCandle? {
+        val utc = obj.optString("candle_date_time_utc")
+        if (utc.isBlank()) return null
+
+        val timeSec = LocalDateTime.parse(utc, UPBIT_FMT).toEpochSecond(ZoneOffset.UTC)
+
+        val open = obj.optDouble("opening_price", Double.NaN)
+        val high = obj.optDouble("high_price", Double.NaN)
+        val low = obj.optDouble("low_price", Double.NaN)
+        val close = obj.optDouble("trade_price", Double.NaN)
+        val volume = obj.optDouble("candle_acc_trade_volume", Double.NaN)
+
+        if (open.isNaN() || high.isNaN() || low.isNaN() || close.isNaN() || volume.isNaN()) return null
+
+        val volumeColor = if (close >= open) "#ff4d4f" else "#2f7cff"
 
         return TvCandle(
-            time = t,
+            time = timeSec,
             open = open,
             high = high,
             low = low,
             close = close,
             volume = volume,
             volumeColor = volumeColor
+        )
+    }
+
+    private fun parseTrade(obj: JSONObject): RecentTrade? {
+        val market = obj.optString("code")
+        if (market.isBlank()) return null
+
+        // 업비트 trade 메시지엔 trade_timestamp(ms)가 보통 있음
+        val tsMs = when {
+            obj.has("trade_timestamp") -> obj.optLong("trade_timestamp", 0L)
+            obj.has("timestamp") -> obj.optLong("timestamp", 0L)
+            else -> 0L
+        }
+        if (tsMs <= 0L) return null
+
+        val price = obj.optDouble("trade_price", Double.NaN)
+        val volume = obj.optDouble("trade_volume", Double.NaN)
+        if (price.isNaN() || volume.isNaN()) return null
+
+        val askBid = obj.optString("ask_bid") // "ASK"(매도) / "BID"(매수)
+        if (askBid.isBlank()) return null
+
+        // 색상 룰(원하는대로 바꾸면 됨)
+        val color = if (askBid == "BID") "#EF2B2A" else "#2569F2"
+
+        return RecentTrade(
+            market = market,
+            timestampMs = tsMs,
+            price = price,
+            volume = volume,
+            askBid = askBid,
+            color = color
         )
     }
 
@@ -95,17 +191,4 @@ class DummyRepository @Inject constructor(
             LocalDateTime.parse(utc, fmt).toEpochSecond(ZoneOffset.UTC)
         }
     }
-
-//
-//    suspend fun test() {
-//        privateWsApi.stream("CdNpXH9T7CuDhPqXDngAeraClaRa1AE2htKOSRfr", "nxnlIRX2MKI9Y0Fgdc0EObhlbv8kVgpUJFLlbfxV", listOf("USDT-BTC", "USDT-ETH")).collect { event ->
-//            SLOG.D("event = $event")
-//        }
-//    }
-//
-//    suspend fun test2() {
-//        privateWsApi.stream("CdNpXH9T7CuDhPqXDngAeraClaRa1AE2htKOSRfr", "nxnlIRX2MKI9Y0Fgdc0EObhlbv8kVgpUJFLlbfxV", listOf("KRW-USDC", "USDT-USDC")).collect { event ->
-//            SLOG.D("event = $event")
-//        }
-//    }
 }

@@ -6,9 +6,11 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentChargeBinding
 import com.stable.scoi.domain.model.CandleStreamEvent
+import com.stable.scoi.domain.model.RecentTrade
 import com.stable.scoi.domain.model.enums.ChargeInputType
 import com.stable.scoi.extension.gone
 import com.stable.scoi.extension.setupTvChart
@@ -16,8 +18,10 @@ import com.stable.scoi.extension.tvSetData
 import com.stable.scoi.extension.tvUpdate
 import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.charge.adapter.ChargeRecentTradeAdapter
 import com.stable.scoi.util.Format.formatWon
 import com.stable.scoi.util.Format.unformatWon
+import com.stable.scoi.util.SLOG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,15 +31,19 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
 ) {
     override val viewModel: ChargeViewModel by viewModels()
 
+    private val chargeRecentTradeAdapter : ChargeRecentTradeAdapter by lazy {
+        ChargeRecentTradeAdapter()
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initView() {
         binding.apply {
             vm = viewModel
             setSummaryCountUi()
 
-            binding.tvChartWebView.setupTvChart() // 네가 만든 setup 함수
-
-            viewModel.test("KRW-BTC", 1)
+            binding.tvChartWebView.setupTvChart(onReady = {
+                viewModel.test("KRW-USDC", 1)
+            })
 
             layoutChargeMoney.setOnClickListener {
                 setEditingUi()
@@ -79,9 +87,16 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
                     layoutChargeCount.setBackgroundResource(R.drawable.bg_rect_white_stroke_active_radius10)
                 }
             }
+
+            recyclerRecentAmount.apply {
+                adapter = chargeRecentTradeAdapter
+                layoutManager = LinearLayoutManager(context)
+                itemAnimator = null
+            }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initStates() {
         super.initStates()
 
@@ -97,6 +112,9 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
                     when (ev) {
                         is CandleStreamEvent.Snapshot -> binding.tvChartWebView.tvSetData(ev.candles)
                         is CandleStreamEvent.Update -> binding.tvChartWebView.tvUpdate(ev.candle)
+                        is CandleStreamEvent.TradeUpdate -> {
+                            updateTradeList(ev.trade)
+                        }
                     }
 
                 }
@@ -195,5 +213,18 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
             hideKeyboard(editCount)
             editCount.clearFocus()
         }
+    }
+
+    private fun updateTradeList(trade: RecentTrade) {
+        val old = chargeRecentTradeAdapter.currentList
+
+        val newList = ArrayList<RecentTrade>(minOf(old.size + 1, 20))
+        newList.add(trade)
+
+        for (i in 0 until minOf(old.size, 20 - 1)) {
+            newList.add(old[i])
+        }
+
+        chargeRecentTradeAdapter.submitList(newList)
     }
 }
