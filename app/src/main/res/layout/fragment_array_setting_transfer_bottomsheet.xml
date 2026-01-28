@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/bottomsheet_array_setting_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="조회 기간 설정"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:textAppearance="@style/t1_sb"/>
+
+        <ImageView
+            android:id="@+id/bottomsheet_array_setting_close_IV"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_close_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <LinearLayout
+            android:id="@+id/bottomsheet_array_setting_1_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/bottomsheet_array_setting_TV"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:id="@+id/bottomsheet_array_setting_arrayRecent_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최신순"/>
+            
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/bottomsheet_array_setting_arrayPast_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="과거순"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomsheet_array_setting_2_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/bottomsheet_array_setting_1_LL"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:id="@+id/bottomsheet_array_setting_arrayPeriod_today_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오늘"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/bottomsheet_array_setting_arrayPeriod_1month_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1개월"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/bottomsheet_array_setting_arrayPeriod_3month_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3개월"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/bottomsheet_array_setting_arrayPeriod_6month_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6개월"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomsheet_array_setting_3_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/bottomsheet_array_setting_2_LL"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:id="@+id/bottomsheet_array_setting_arrayType_receive_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="입금"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/bottomsheet_array_setting_arrayType_send_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="출금"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/bottomsheet_array_setting_arrayType_all_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전체"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toBottomOf="@id/bottomsheet_array_setting_3_LL"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/button_submit"
+            android:text="조회"
+            android:textColor="#4A4AFA"
+            android:textAppearance="@style/l1m"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

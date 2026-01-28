@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/Wallet_deposit_backArrow_IV"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/Wallet_deposit_title_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원화 입금"
+            app:layout_constraintStart_toEndOf="@id/Wallet_deposit_backArrow_IV"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="5dp"
+            android:textAppearance="@style/t1_sb"/>
+
+        <ImageView
+            android:id="@+id/Wallet_deposit_receieverExchange_IV"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/upbit_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="100dp"/>
+
+        <TextView
+            android:id="@+id/Wallet_deposit_receiverName_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="업비트"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textSize="22sp"
+            android:textColor="@color/active"
+            app:layout_constraintStart_toEndOf="@id/Wallet_deposit_receieverExchange_IV"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="4dp"/>
+
+        <TextView
+            android:id="@+id/Wallet_deposit_receiver_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내 계좌에서"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textSize="22sp"
+            android:textColor="@color/main_black"
+            app:layout_constraintStart_toEndOf="@id/Wallet_deposit_receiverName_TV"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="4dp"/>
+
+        <EditText
+            android:id="@+id/Wallet_deposit_amount_ET"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="192dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="number"
+            android:textSize="32sp"
+            android:fontFamily="@font/pretendard_medium"
+            android:maxLines="1"
+            android:imeOptions="actionDone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원"
+            android:fontFamily="@font/pretendard_regular"
+            android:textSize="20sp"
+            android:textColor="@color/main_black"
+            app:layout_constraintTop_toTopOf="@id/Wallet_deposit_amount_ET"
+            app:layout_constraintBottom_toBottomOf="@id/Wallet_deposit_amount_ET"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="274dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Wallet_deposit_amount_plus1_BT"
+                android:layout_width="60dp"
+                android:layout_height="28dp"
+                android:backgroundTint="@null"
+                android:background="@drawable/select_exchange"
+                android:text="+1만"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="16sp"/>
+
+            <Space
+                android:layout_width="6dp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Wallet_deposit_amount_plus5_BT"
+                android:layout_width="60dp"
+                android:layout_height="28dp"
+                android:backgroundTint="@null"
+                android:background="@drawable/select_exchange"
+                android:text="+5만"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="16sp"/>
+
+            <Space
+                android:layout_width="6dp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Wallet_deposit_amount_plus10_BT"
+                android:layout_width="60dp"
+                android:layout_height="28dp"
+                android:backgroundTint="@null"
+                android:background="@drawable/select_exchange"
+                android:text="+10만"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="16sp"/>
+
+            <Space
+                android:layout_width="6dp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Wallet_deposit_amount_plusAll_BT"
+                android:layout_width="60dp"
+                android:layout_height="28dp"
+                android:backgroundTint="@null"
+                android:background="@drawable/select_exchange"
+                android:text="+전체"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Wallet_deposit_next_TV"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="@null"
+            android:background="@drawable/selector_button_submit"
+            android:text="입금하기"
+            android:fontFamily="@font/pretendard_medium"
+            android:textSize="16sp"
+            android:textColor="@color/active"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
