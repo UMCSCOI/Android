@@ -18,5 +18,9 @@ class MyPageFragment : Fragment(R.layout.fragment_mypage) {
         view.findViewById<View>(R.id.menu_api_setting).setOnClickListener {
             findNavController().navigate(R.id.action_mypage_to_apiSetting)
         }
+
+        view.findViewById<View>(R.id.menu_password_change).setOnClickListener {
+            findNavController().navigate(R.id.action_mypage_to_changePassword)
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.stable.scoi.presentation.base
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
@@ -23,8 +24,25 @@ class ApiSettingFragment : Fragment(R.layout.fragment_api_setting) {
         setFragmentResultListener("requestKey") { key, bundle ->
             val isUpdated = bundle.getBoolean("isUpdated")
             if (isUpdated) {
-                // 실제로 바뀐 데이터 불러오는 코드 적어야함
-                // 바뀐 데이터 ui에 갱신하는 코드 적기!!
+                val bithumbPublic = bundle.getString("bithumbPublicKey")
+                val bithumbSecret = bundle.getString("bithumbSecretKey")
+
+                if (!bithumbPublic.isNullOrEmpty()) {
+                    view.findViewById<TextView>(R.id.tv_bithumb_public)?.text = bithumbPublic
+                }
+                if (!bithumbSecret.isNullOrEmpty()) {
+                    view.findViewById<TextView>(R.id.tv_bithumb_secret)?.text = bithumbSecret
+                }
+
+                val upbitPublic = bundle.getString("upbitPublicKey")
+                val upbitSecret = bundle.getString("upbitSecretKey")
+
+                if (!upbitPublic.isNullOrEmpty()) {
+                    view.findViewById<TextView>(R.id.tv_upbit_public)?.text = upbitPublic
+                }
+                if (!upbitSecret.isNullOrEmpty()) {
+                    view.findViewById<TextView>(R.id.tv_upbit_secret)?.text = upbitSecret
+                }
             }
         }
     }

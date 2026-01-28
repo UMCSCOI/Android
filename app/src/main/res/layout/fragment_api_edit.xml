@@ -17,7 +17,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/arrow_left"
+            android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,28 +29,16 @@
             android:fontFamily="@font/pretendard_semibold"
             android:text="API 연동 변경"
             android:textColor="#111111"
-            android:textSize="20sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnBack_edit"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_user"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@id/btn_save_changes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_container_edit">
 
         <LinearLayout
@@ -62,181 +50,134 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginTop="40dp"
-                android:fontFamily="@font/pretendard_semibold"
-                android:text="빗썸 API"
-                android:textColor="#111111"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/pretendard_regular"
-                android:text="PUBLIC KEY"
-                android:textColor="#505050"
-                android:textSize="16sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="4dp"
-                android:background="@null"
-                android:fontFamily="@font/pretendard_regular"
-                android:paddingVertical="8dp"
-                android:text="11111111"
-                android:textColor="#111111"
-                android:textSize="20sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#767676" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="SECRET KEY"
-                android:textColor="#505050"
-                android:textSize="16sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="4dp"
-                android:background="@null"
-                android:fontFamily="@font/pretendard_regular"
-                android:paddingVertical="8dp"
-                android:text="11111111"
-                android:textColor="#111111"
-                android:textSize="20sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#767676" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginTop="40dp"
-                android:fontFamily="@font/pretendard_semibold"
-                android:text="업비트 API"
-                android:textColor="#111111"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/pretendard_regular"
-                android:text="PUBLIC KEY"
-                android:textColor="#505050"
-                android:textSize="16sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="4dp"
-                android:background="@null"
-                android:fontFamily="@font/pretendard_regular"
-                android:paddingVertical="8dp"
-                android:text="11111111"
-                android:textColor="#111111"
-                android:textSize="20sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#767676" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/pretendard_regular"
-                android:text="SECRET KEY"
-                android:textColor="#505050"
-                android:textSize="16sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:fontFamily="@font/pretendard_regular"
-                android:paddingVertical="8dp"
-                android:text="11111111"
-                android:textColor="#111111"
-                android:textSize="20sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#767676" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginTop="40dp"
-                android:fontFamily="@font/pretendard_semibold"
-                android:text="업비트 API"
-                android:textColor="#111111"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/pretendard_regular"
-                android:text="PUBLIC KEY"
-                android:textColor="#505050"
-                android:textSize="16sp" />
-
-            <EditText
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:fontFamily="@font/pretendard_regular"
-                android:paddingVertical="8dp"
-                android:text="11111111"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="빗썸 (Bithumb)"
                 android:textColor="#111111"
-                android:textSize="20sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#767676" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginTop="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/pretendard_regular"
-                android:text="SECRET KEY"
+                android:text="Connect Key"
                 android:textColor="#505050"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <EditText
+                android:id="@+id/et_bithumb_public"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:background="@null"
                 android:fontFamily="@font/pretendard_regular"
-                android:paddingVertical="8dp"
-                android:text="11111111"
+                android:gravity="center_vertical|start"
+                android:hint="Connect Key를 입력하세요"
+                android:inputType="textVisiblePassword"
+                android:maxLines="1"
                 android:textColor="#111111"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#767676" />
+                android:background="#DDDDDD" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="Secret Key"
+                android:textColor="#505050"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_bithumb_secret"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:background="@null"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center_vertical|start"
+                android:hint="Secret Key를 입력하세요"
+                android:inputType="textVisiblePassword"
+                android:maxLines="1"
+                android:textColor="#111111"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="업비트 (Upbit)"
+                android:textColor="#111111"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="Access Key"
+                android:textColor="#505050"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_upbit_public"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:background="@null"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center_vertical|start"
+                android:hint="Access Key를 입력하세요"
+                android:inputType="textVisiblePassword"
+                android:maxLines="1"
+                android:textColor="#111111"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="Secret Key"
+                android:textColor="#505050"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_upbit_secret"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:background="@null"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center_vertical|start"
+                android:hint="Secret Key를 입력하세요"
+                android:inputType="textVisiblePassword"
+                android:maxLines="1"
+                android:textColor="#111111"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD" />
 
         </LinearLayout>
     </ScrollView>
@@ -245,11 +186,11 @@
         android:id="@+id/btn_save_changes"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/pretendard_medium"
-        android:text="저장"
+        android:text="저장하기"
         android:textColor="#5C78FF"
         android:textSize="16sp"
         android:insetTop="0dp"

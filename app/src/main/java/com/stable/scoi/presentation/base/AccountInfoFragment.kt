@@ -40,7 +40,6 @@ class AccountInfoFragment : Fragment(R.layout.fragment_account_info) {
         }
 
         btnSave.setOnClickListener {
-            // 서버 저장 코드 넣기
 
             findNavController().popBackStack()
         }

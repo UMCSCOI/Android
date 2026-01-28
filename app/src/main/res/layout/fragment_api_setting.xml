@@ -17,7 +17,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/arrow_left"
+            android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -105,6 +105,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_bithumb_public"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="4dp"
@@ -126,6 +127,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_bithumb_secret"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="4dp"
@@ -162,6 +164,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_upbit_public"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="4dp"
@@ -183,57 +186,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="4dp"
-                android:background="#F5F5F5"
-                android:fontFamily="@font/pretendard_regular"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="4dp"
-                android:text="11111111"
-                android:textColor="#111111"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="23dp"
-                android:fontFamily="@font/pretendard_semibold"
-                android:text="업비트 API"
-                android:textColor="#111111"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/pretendard_regular"
-                android:text="PUBLIC KEY"
-                android:textColor="#505050"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="4dp"
-                android:background="#F5F5F5"
-                android:fontFamily="@font/pretendard_regular"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="4dp"
-                android:text="11111111"
-                android:textColor="#111111"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/pretendard_regular"
-                android:text="SECRET KEY"
-                android:textColor="#505050"
-                android:textSize="16sp" />
-
-            <TextView
+                android:id="@+id/tv_upbit_secret"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="4dp"
@@ -247,4 +200,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

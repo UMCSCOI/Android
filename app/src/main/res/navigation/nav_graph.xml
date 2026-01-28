@@ -16,6 +16,10 @@
         <action
             android:id="@+id/action_mypage_to_apiSetting"
             app:destination="@id/apiSettingFragment" />
+
+        <action
+            android:id="@+id/action_mypage_to_changePassword"
+            app:destination="@id/changePasswordFragment" />
     </fragment>
 
     <fragment
@@ -39,5 +43,37 @@
         android:name="com.stable.scoi.presentation.ApiEditFragment"
         android:label="ApiEditFragment"
         tools:layout="@layout/fragment_api_edit" />
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.stable.scoi.presentation.base.ChangePasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password" />
+
+    <fragment
+        android:id="@+id/phoneAuthFragment"
+        android:name="com.stable.scoi.presentation.base.PhoneAuthFragment"
+        android:label="PhoneAuthFragment"
+        tools:layout="@layout/fragment_phone_auth">
+        <action
+            android:id="@+id/action_phoneAuth_to_code"
+            app:destination="@id/phoneAuthCodeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/phoneAuthCodeFragment"
+        android:name="com.stable.scoi.presentation.base.PhoneAuthCodeFragment"
+        android:label="PhoneAuthCodeFragment"
+        tools:layout="@layout/fragment_phone_auth_code">
+        <action
+            android:id="@+id/action_code_to_complete"
+            app:destination="@id/phoneAuthCompleteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/phoneAuthCompleteFragment"
+        android:name="com.stable.scoi.presentation.base.PhoneAuthCompleteFragment"
+        android:label="PhoneAuthCompleteFragment"
+        tools:layout="@layout/fragment_phone_auth_complete" />
 
 </navigation>
