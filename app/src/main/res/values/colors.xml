@@ -9,4 +9,8 @@
     <color name="disabled">#999999</color>
     <color name="error">#EF2B2A</color>
     <color name="active">#2569F2</color>
+    <color name="sub_text1">#505050</color>
+    <color name="btn_disabled_fill">#F5F5F5</color>
+    <color name="sky_blue">#F2F6FF</color>
+    <color name="activated_text">#2569F2</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation
+package com.stable.scoi.presentation.base
 
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.base.UiEvent
