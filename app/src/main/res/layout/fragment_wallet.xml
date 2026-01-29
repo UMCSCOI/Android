@@ -47,6 +47,10 @@
                 android:layout_height="20dp"
                 android:src="@drawable/bithumb_logo"/>
 
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="wrap_content"/>
+
             <TextView
                 android:id="@+id/Wallet_exchange_TV"
                 android:layout_width="wrap_content"
@@ -182,6 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="입출금"
+                android:background="@drawable/toggle_disabled"
                 android:textColor="@color/disabled"
                 android:textAppearance="@style/l3"/>
 
