@@ -1,5 +1,6 @@
 package com.stable.scoi.presentation.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,7 @@ import kotlin.getValue
 class ExchangeBottomSheet : BottomSheetDialogFragment() {
 
     lateinit var binding: FragmentExchangeBottomsheetBinding
-
+    private lateinit var setExchange: SetExchangeType
     private val viewModel: TransferViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -26,30 +27,32 @@ class ExchangeBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        setExchange = parentFragment as SetExchangeType
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.bottomsheetExchangeUpbitLl.setOnClickListener {
-            viewModel.setExchangeUpbit()
-            viewModel.eventCancel()
+            setExchange.upbit()
             dismiss()
         }
 
         binding.bottomsheetExchangeBithumbLl.setOnClickListener {
-            viewModel.setExchangeBithumb()
-            viewModel.eventCancel()
+            setExchange.bithumb()
             dismiss()
         }
 
         binding.bottomsheetExchangeBinanceLl.setOnClickListener {
-            viewModel.setExchangeBinance()
-            viewModel.eventCancel()
+            setExchange.binance()
             dismiss()
         }
 
         binding.bottomsheetExchangeCloseIv.setOnClickListener {
-            viewModel.setExchange()
-            viewModel.eventCancel()
+            setExchange.empty()
             dismiss()
         }
     }

@@ -1,5 +1,6 @@
 package com.stable.scoi.presentation.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,10 @@ import com.stable.scoi.databinding.FragmentRecieverTypeBottomsheetBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecieverTypeBottomSheet : BottomSheetDialogFragment() {
+class ReceiverTypeBottomSheet : BottomSheetDialogFragment() {
     lateinit var binding : FragmentRecieverTypeBottomsheetBinding
     private val viewModel : TransferViewModel by activityViewModels()
+    private lateinit var setReceiverType: SetReceiverType
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,18 +26,22 @@ class RecieverTypeBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        setReceiverType = parentFragment as SetReceiverType
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.bottomsheetRecievertypeIndividualLl.setOnClickListener {
-            viewModel.setRecieverTypeIndividual()
-            viewModel.eventCancel()
+            setReceiverType.individual()
             dismiss()
         }
 
         binding.bottomsheetRecievertypeCorporationLl.setOnClickListener {
-            viewModel.setRecieverTypeCorporation()
-            viewModel.eventCancel()
+            setReceiverType.corporation()
             dismiss()
         }
 

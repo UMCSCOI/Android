@@ -1,6 +1,11 @@
 package com.stable.scoi.presentation.base
 
+import android.content.Context
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,82 +21,51 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
 ) {
     private var exType: String = ""
     private var asSymb: String = ""
-    //LiveData
-    private val _receiverTypeEvent = MutableLiveData<TransferEvent>()
-    val receiverTypeEvent: LiveData<TransferEvent> = _receiverTypeEvent
 
-    private val _exchangeEvent = MutableLiveData<TransferEvent>()
-    val exchangeEvent: LiveData<TransferEvent> = _exchangeEvent
-
-    private val _exchangeType = MutableLiveData<Exchange>(Exchange.Null)
-    val exchangeType: LiveData<Exchange> = _exchangeType
-
-    private val _assetSymbolEvent = MutableLiveData<TransferEvent>(TransferEvent.Null)
-    val assetSymbolEvent: LiveData<TransferEvent> = _assetSymbolEvent
-
-    private val _assetSymbolType = MutableLiveData<AssetSymbol>(AssetSymbol.Null)
-    val assetSymbolType: LiveData<AssetSymbol> = _assetSymbolType
-
-    private val _nextEvent = MutableLiveData<TransferEvent>()
-    val nextEvent: LiveData<TransferEvent> = _nextEvent
-
-    private val _sendCheckEvent = MutableLiveData<TransferEvent>()
-    val sendCheckEvent: LiveData<TransferEvent> = _sendCheckEvent
-
-    //StateFlow
-    private val _receiverType = MutableStateFlow<ReceiverType>(ReceiverType.Null)
+    //bottomSheet Type 선택
+    private val _receiverType = MutableStateFlow<ReceiverType>(ReceiverType.Empty)
     val receiverType = _receiverType.asStateFlow()
 
-    private val _receiver = MutableStateFlow<Receiver>(Receiver())
+    private val _exchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
+    val exchangeType = _exchangeType.asStateFlow()
+
+    private val _assetSymbolType = MutableStateFlow<AssetSymbol>(AssetSymbol.Empty)
+    val assetSymbolType = _assetSymbolType.asStateFlow()
+
+
+    //API 요구 정보
+    private val _receiver = MutableStateFlow(Receiver())
     val receiver = _receiver.asStateFlow()
 
-    private val _information = MutableStateFlow<Information>(Information())
+    private val _information = MutableStateFlow(Information())
     val information = _information.asStateFlow()
 
-    private val _execute = MutableStateFlow<Execute>(Execute())
+    private val _execute = MutableStateFlow(Execute())
     val execute = _execute.asStateFlow()
+
 
 
     //Event
     fun onReceiverTypeClicked() { //초기 receiverType 결정
         when (receiverType.value) {
-            ReceiverType.Null -> {
-                _receiverTypeEvent.value = TransferEvent.Submit
+            ReceiverType.Empty -> {
+                emitEvent(TransferEvent.OpenReceiverType)
             }
             else -> Unit
         }
     }
     fun onReceiverTypeChange() { //우측 receiverType 결정 메뉴
-        _receiverTypeEvent.value = TransferEvent.Submit
+        emitEvent(TransferEvent.OpenReceiverType)
     }
 
-    fun onExchangeClicked() {
-        _exchangeEvent.value = TransferEvent.Submit
-    }
-
-    fun onAssetSymbolClicked() {
-        _assetSymbolEvent.value = TransferEvent.Submit
-    }
-
-    fun onSendCheckClicked() {
-        _sendCheckEvent.value = TransferEvent.Submit
-    }
-
-    fun eventCancel() {
-        _receiverTypeEvent.value = TransferEvent.Cancel
-        _exchangeEvent.value = TransferEvent.Cancel
-        _nextEvent.value = TransferEvent.Cancel
-        _assetSymbolEvent.value = TransferEvent.Cancel
-        _sendCheckEvent.value = TransferEvent.Cancel
-    }
 
     //ReceiverType
-    fun setRecieverTypeIndividual() {
+    fun setReceiverTypeIndividual() {
         _receiverType.value = ReceiverType.Individual
         Log.d("receiverType", receiverType.value.toString())
     }
 
-    fun setRecieverTypeCorporation() {
+    fun setReceiverTypeCorporation() {
         _receiverType.value = ReceiverType.Corporation
         Log.d("receiverType", receiverType.value.toString())
 
@@ -115,6 +89,7 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         _exchangeType.value = Exchange.Unselected
     }
 
+
     //AssetSymbolType
     fun setAssetSymbolUSDT() {
         _assetSymbolType.value = AssetSymbol.USDT
@@ -126,20 +101,22 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         asSymb = "USDC"
     }
 
+
     //NextButton
     fun onClickNextButton() {
         if(_receiver.value.receiverName == null ||
             _receiver.value.receiverName == "" ||
             _receiver.value.receiverAddress == null ||
             _receiver.value.receiverAddress == "" ||
-            _exchangeType.value == Exchange.Null ||
+            _exchangeType.value == Exchange.Empty ||
             _exchangeType.value == Exchange.Unselected ||
-            _receiverType.value == ReceiverType.Null
+            _receiverType.value == ReceiverType.Empty
         ) {
            Unit
         }
-        else _nextEvent.value = TransferEvent.Submit
+        else emitEvent(TransferEvent.NavigateToNextPage)
     }
+
 
     //Receiver
     fun submitReceiver(receiverName: String, receiverAddress: String) {
@@ -150,6 +127,7 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         )
     }
 
+    //Information
     fun submitInformation(amount: String) {
         _information.value = _information.value.copy(
             exType,
@@ -158,6 +136,7 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         )
     }
 
+    //Password
     fun submitPassword(
         first: String, second: String, third:String, fourth: String, fifth: String, sixth: String) {
         val simplePassword = first + second + third + fourth + fifth + sixth
@@ -183,4 +162,23 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
             ""
         }
     }
+
+    fun focusRemove(editText: EditText) {
+        editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                editText.clearFocus()
+                editText.hideKeyboard()
+                true
+            }
+            else {
+                false
+            }
+        }
+    }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
 }

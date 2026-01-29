@@ -3,7 +3,7 @@ package com.stable.scoi.presentation.base
 data class Receiver(
     var receiverName: String? = null,
     var receiverAddress: String? = null,
-    var receiverType: ReceiverType = ReceiverType.Null
+    var receiverType: ReceiverType = ReceiverType.Empty
 )
 
 data class Information(
@@ -19,6 +19,6 @@ data class Execute(
 sealed class ReceiverType {
     object Individual: ReceiverType()
     object Corporation: ReceiverType()
-    object Null: ReceiverType()
+    object Empty: ReceiverType()
 }
 

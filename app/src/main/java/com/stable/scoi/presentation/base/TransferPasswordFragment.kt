@@ -1,11 +1,15 @@
 package com.stable.scoi.presentation.base
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
@@ -28,94 +32,80 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
 
     override fun initView() {
 
-        fun View.hideKeyboard() {
-            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(windowToken, 0)
+        moveNext(
+            binding.TransferPasswordInputPassword1ET,
+            binding.TransferPasswordInputPassword2ET) { password ->
+            passwordFirst = password
         }
 
-        binding.TransferPasswordInputPassword1ET.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                binding.TransferPasswordInputPassword1ET.transformationMethod = PasswordTransformationMethod.getInstance()
-                passwordFirst = binding.TransferPasswordInputPassword1ET.text.toString()
-                binding.TransferPasswordInputPassword1ET.clearFocus()
-                binding.TransferPasswordInputPassword2ET.requestFocus()
-                true
-            }
-            else {
-                false
-            }
+        moveNext(
+            binding.TransferPasswordInputPassword2ET,
+            binding.TransferPasswordInputPassword3ET) { password ->
+            passwordSecond = password
         }
 
-        binding.TransferPasswordInputPassword2ET.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                binding.TransferPasswordInputPassword2ET.transformationMethod = PasswordTransformationMethod.getInstance()
-                passwordSecond = binding.TransferPasswordInputPassword2ET.text.toString()
-                binding.TransferPasswordInputPassword2ET.clearFocus()
-                binding.TransferPasswordInputPassword3ET.requestFocus()
-                true
-            }
-            else {
-                false
-            }
+        moveNext(
+            binding.TransferPasswordInputPassword3ET,
+            binding.TransferPasswordInputPassword4ET) { password ->
+            passwordThird = password
         }
 
-        binding.TransferPasswordInputPassword3ET.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                binding.TransferPasswordInputPassword3ET.transformationMethod = PasswordTransformationMethod.getInstance()
-                passwordThird = binding.TransferPasswordInputPassword3ET.text.toString()
-                binding.TransferPasswordInputPassword3ET.clearFocus()
-                binding.TransferPasswordInputPassword4ET.requestFocus()
-                true
-            }
-            else {
-                false
-            }
+        moveNext(
+            binding.TransferPasswordInputPassword4ET,
+            binding.TransferPasswordInputPassword5ET) { password ->
+            passwordFourth = password
         }
 
-        binding.TransferPasswordInputPassword4ET.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                binding.TransferPasswordInputPassword4ET.transformationMethod = PasswordTransformationMethod.getInstance()
-                passwordFourth = binding.TransferPasswordInputPassword4ET.text.toString()
-                binding.TransferPasswordInputPassword4ET.clearFocus()
-                binding.TransferPasswordInputPassword5ET.requestFocus()
-                true
-            }
-            else {
-                false
-            }
+        moveNext(
+            binding.TransferPasswordInputPassword5ET,
+            binding.TransferPasswordInputPassword6ET) { password ->
+            passwordFifth = password
         }
 
-        binding.TransferPasswordInputPassword5ET.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                binding.TransferPasswordInputPassword5ET.transformationMethod = PasswordTransformationMethod.getInstance()
-                passwordFifth = binding.TransferPasswordInputPassword5ET.text.toString()
-                binding.TransferPasswordInputPassword5ET.clearFocus()
-                binding.TransferPasswordInputPassword6ET.requestFocus()
-                true
-            }
-            else {
-                false
-            }
+        moveNext(
+            binding.TransferPasswordInputPassword6ET,
+            binding.focusDummy) { password ->
+            passwordSixth = password
         }
 
-        binding.TransferPasswordInputPassword6ET.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                binding.TransferPasswordInputPassword6ET.transformationMethod = PasswordTransformationMethod.getInstance()
-                passwordSixth = binding.TransferPasswordInputPassword6ET.text.toString()
-                binding.TransferPasswordInputPassword6ET.clearFocus()
-                binding.focusDummy.requestFocus()
-                binding.TransferPasswordInputPassword6ET.hideKeyboard()
-                true
-            }
-            else {
-                false
-            }
-        }
 
         binding.TransferPasswordInputTV.setOnClickListener {
             viewModel.submitPassword(passwordFirst, passwordSecond, passwordThird, passwordFourth, passwordFifth, passwordSixth)
             Log.d("password", viewModel.execute.value.simplePassword)
             findNavController().navigate(R.id.transfer_complete_fragment)
         }
+    }
+
+    fun moveNext(
+        editText: EditText,
+        requestText: EditText,
+        onPasswordEntered: (String) -> Unit)
+    {
+        editText.addTextChangedListener(object: TextWatcher{
+
+            override fun afterTextChanged(p0: Editable?)
+            {
+                if (!p0.isNullOrEmpty())
+                {
+                    editText.transformationMethod = PasswordTransformationMethod.getInstance()
+                    onPasswordEntered(p0.toString())
+                    editText.clearFocus()
+                    requestText.requestFocus()
+
+                    if (requestText == binding.focusDummy) {
+                        Log.d("action", "action")
+                        binding.focusDummy.hideKeyboard()
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        })
+    }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
