@@ -5,21 +5,29 @@
     android:id="@+id/main_graph"
     app:startDestination="@id/homeFragment">
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.stable.scoi.presentation.MainActivity"/>
-
     <fragment
         android:id="@+id/tansfer_fragment"
-        android:name="com.stable.scoi.presentation.ui.transfer.TransferFragment"/>
+        android:name="com.stable.scoi.presentation.ui.transfer.TransferFragment">
+        <action
+            android:id="@+id/action_tansfer_fragment_to_transfer_amount_fragment"
+            app:destination="@id/transfer_amount_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/transfer_amount_fragment"
-        android:name="com.stable.scoi.presentation.ui.transfer.TransferAmountFragment"/>
+        android:name="com.stable.scoi.presentation.ui.transfer.TransferAmountFragment">
+        <action
+            android:id="@+id/action_transfer_amount_fragment_to_transfer_password_fragment"
+            app:destination="@id/transfer_password_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/transfer_password_fragment"
-        android:name="com.stable.scoi.presentation.ui.transfer.TransferPasswordFragment"/>
+        android:name="com.stable.scoi.presentation.ui.transfer.TransferPasswordFragment">
+        <action
+            android:id="@+id/action_transfer_password_fragment_to_transfer_complete_fragment"
+            app:destination="@id/transfer_complete_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/transfer_complete_fragment"
@@ -35,7 +43,11 @@
         android:id="@+id/homeFragment"
         android:name="com.stable.scoi.presentation.ui.home.HomeFragment"
         android:label="홈 화면"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_tansfer_fragment"
+            app:destination="@id/tansfer_fragment" />
+    </fragment>
 
 
 </navigation>

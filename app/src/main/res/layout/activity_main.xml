@@ -49,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:onClick="@{()->vm.onClickHome()}"
                 android:orientation="vertical"
                 android:paddingVertical="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -59,13 +60,17 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bottom_nav_doller" />
+                    android:src="@drawable/ic_bottom_nav_doller"
+                    android:tint="@{vm.uiState.home ? @color/active : @color/disabled}"
+                    tools:ignore="UseAppTint" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="송금" />
+                    android:text="송금"
+                    android:textAppearance="@style/m_11"
+                    android:textColor="@{vm.uiState.home ? @color/active : @color/disabled}" />
             </LinearLayout>
 
             <LinearLayout
@@ -73,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:onClick="@{()->vm.onClickCharge()}"
                 android:orientation="vertical"
                 android:paddingVertical="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -84,14 +90,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_bottom_nav_database"
-                    app:tint="@color/active" />
+                    android:tint="@{vm.uiState.charge ? @color/active : @color/disabled}"
+                    app:tint="@color/active"
+                    tools:ignore="UseAppTint" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:text="충전"
-                    android:textColor="@color/active" />
+                    android:textAppearance="@style/m_11"
+                    android:textColor="@{vm.uiState.charge ? @color/active : @color/disabled}" />
             </LinearLayout>
 
             <LinearLayout
@@ -99,47 +108,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:onClick="@{()->vm.onClickWallet()}"
                 android:orientation="vertical"
                 android:paddingVertical="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/layout_analyze"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/layout_charge"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bottom_nav_credit_card" />
+                    android:src="@drawable/ic_bottom_nav_credit_card"
+                    android:tint="@{vm.uiState.wallet ? @color/active : @color/disabled}"
+                    tools:ignore="UseAppTint" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="송금" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_analyze"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingVertical="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/layout_my_wallet"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bottom_nav_activity" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:text="송금" />
+                    android:text="내 지갑"
+                    android:textAppearance="@style/m_11"
+                    android:textColor="@{vm.uiState.wallet ? @color/active : @color/disabled}" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

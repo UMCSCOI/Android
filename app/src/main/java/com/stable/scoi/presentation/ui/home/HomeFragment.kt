@@ -8,6 +8,7 @@ import android.view.animation.AccelerateInterpolator
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.stable.scoi.databinding.FragmentHomeBinding
@@ -18,7 +19,7 @@ import com.stable.scoi.R
 import com.stable.scoi.extension.inVisible
 import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.ui.home.adapter.AccountCardAdapter
-import kotlin.text.toInt
+import com.stable.scoi.util.SLOG
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, HomeViewModel>(
@@ -64,7 +65,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
         repeatOnStarted(viewLifecycleOwner) {
             launch {
                 viewModel.uiEvent.collect {
-
+                    handleEvent(it)
                 }
             }
 
@@ -74,6 +75,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
                 }
             }
         }
+    }
+
+    private fun handleEvent(event: HomeEvent) {
+        when (event) {
+            HomeEvent.MoveToTransferEvent -> {
+                navigateToTransfer()
+            }
+        }
+    }
+
+    private fun navigateToTransfer() {
+        findNavController().navigate(R.id.tansfer_fragment)
     }
 
     private fun startAnimation() {
@@ -171,6 +184,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
     }
     private fun Int.dpToPx(): Int {
         return (this * resources.displayMetrics.density).toInt()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val activityRootView = requireActivity().findViewById<View>(R.id.main)
+        activityRootView.setBackgroundColor(Color.WHITE)
     }
 
 }

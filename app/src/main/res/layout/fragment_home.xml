@@ -264,6 +264,7 @@
             android:visibility="gone"
             android:background="@drawable/bg_rect_skyblue_radius60"
             android:paddingHorizontal="65dp"
+            android:onClick="@{()->vm.onClickSelect()}"
             android:paddingVertical="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

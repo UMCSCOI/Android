@@ -46,12 +46,16 @@ class HomeViewModel @Inject constructor(
             )
         )
     }
+
+    fun onClickSelect() {
+        emitEvent(HomeEvent.MoveToTransferEvent)
+    }
 }
 
 data class HomeUiState(
     val accountList: List<AccountCard> = emptyList(),
 ) : UiState
 
-sealed class HomeEvent : UiEvent {
-
+sealed interface HomeEvent : UiEvent {
+    data object MoveToTransferEvent: HomeEvent
 }
