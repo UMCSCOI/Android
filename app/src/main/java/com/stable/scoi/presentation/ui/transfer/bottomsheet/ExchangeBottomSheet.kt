@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.transfer.bottomsheet
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.stable.scoi.databinding.FragmentExchangeBottomsheetBinding
+import com.stable.scoi.presentation.ui.transfer.TransferViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 

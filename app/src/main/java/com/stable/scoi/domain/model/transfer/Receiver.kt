@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.domain.model.transfer
 
 data class Receiver(
     var receiverName: String? = null,
@@ -21,4 +21,10 @@ sealed class ReceiverType {
     object Corporation: ReceiverType()
     object Empty: ReceiverType()
 }
+
+data class BookMarkReceiver(
+    var receiverName: String? = null,
+    var receiverAddress: String? = null,
+    var exchangeType: String? = null
+)
 

@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.transfer
 
 import android.content.Context
 import android.util.Log
@@ -6,8 +6,12 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.stable.scoi.presentation.base.BaseViewModel
+import com.stable.scoi.domain.model.transfer.BookMarkReceiver
+import com.stable.scoi.domain.model.transfer.Execute
+import com.stable.scoi.domain.model.transfer.Information
+import com.stable.scoi.domain.model.transfer.Receiver
+import com.stable.scoi.domain.model.transfer.ReceiverType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +26,8 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private var exType: String = ""
     private var asSymb: String = ""
 
+    private var bExType: String = ""
+
     //bottomSheet Type 선택
     private val _receiverType = MutableStateFlow<ReceiverType>(ReceiverType.Empty)
     val receiverType = _receiverType.asStateFlow()
@@ -31,6 +37,10 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
 
     private val _assetSymbolType = MutableStateFlow<AssetSymbol>(AssetSymbol.Empty)
     val assetSymbolType = _assetSymbolType.asStateFlow()
+
+    //DialogFragment Type 선택
+    private val _bookMarkExchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
+    val bookMarkExchangeType = _bookMarkExchangeType.asStateFlow()
 
 
     //API 요구 정보
@@ -42,6 +52,9 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
 
     private val _execute = MutableStateFlow(Execute())
     val execute = _execute.asStateFlow()
+
+    private val _bookMarkReceiver = MutableStateFlow(BookMarkReceiver())
+    val bookMarkReceiver = _bookMarkReceiver.asStateFlow()
 
 
 
@@ -144,6 +157,29 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         _execute.value = _execute.value.copy(
             simplePassword
         )
+    }
+
+    //BookMark
+    fun setBookMarkExchangeUpbit() {
+        _bookMarkExchangeType.value = Exchange.Upbit
+        bExType = "UPBIT"
+    }
+    fun setBookMarkExchangeBithumb() {
+        _bookMarkExchangeType.value = Exchange.Bithumb
+        bExType = "BITHUMB"
+    }
+    fun setBookMarkExchangeBinance() {
+        _bookMarkExchangeType.value = Exchange.Binance
+        bExType = "BINANCE"
+    }
+
+    fun submitBookMarkReceiver(name: String, address: String) {
+        _bookMarkReceiver.value = _bookMarkReceiver.value.copy(
+            name,
+            address,
+            bExType
+        )
+        Log.d("bookmark",bookMarkReceiver.value.toString())
     }
 
     //ETC

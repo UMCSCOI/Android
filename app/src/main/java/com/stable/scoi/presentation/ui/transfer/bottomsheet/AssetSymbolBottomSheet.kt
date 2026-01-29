@@ -1,17 +1,13 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.transfer.bottomsheet
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.stable.scoi.databinding.FragmentAssetSymbolBottomsheetBinding
-import com.stable.scoi.databinding.FragmentExchangeBottomsheetBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.getValue
 
 @AndroidEntryPoint
 class AssetSymbolBottomSheet: BottomSheetDialogFragment() {

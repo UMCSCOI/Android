@@ -1,30 +1,38 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.transfer
 
-import android.content.Context
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferBinding
+import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.transfer.dialog.BookMarkDialogFragment
+import com.stable.scoi.presentation.ui.transfer.recyclerview.BookMarkOnClickListener
+import com.stable.scoi.presentation.ui.transfer.recyclerview.BookMarkRVAdapter
+import com.stable.scoi.presentation.ui.transfer.bottomsheet.ExchangeBottomSheet
+import com.stable.scoi.domain.model.transfer.ReceiverType
+import com.stable.scoi.presentation.ui.transfer.bottomsheet.ReceiverTypeBottomSheet
+import com.stable.scoi.presentation.ui.transfer.recyclerview.RecentOnCliCKListener
+import com.stable.scoi.presentation.ui.transfer.recyclerview.RecentRVAdapter
+import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetExchangeType
+import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetReceiverType
+import com.stable.scoi.presentation.ui.transfer.dialog.SetBookmark
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import okhttp3.internal.cache.DiskLruCache
 
 @AndroidEntryPoint
-class TransferFragment : SetReceiverType, SetExchangeType ,BaseFragment<FragmentTransferBinding, TransferState, TransferEvent, TransferViewModel>(
+class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBookmark,
+    SetReceiverType, SetExchangeType,
+    BaseFragment<FragmentTransferBinding, TransferState, TransferEvent, TransferViewModel>(
     FragmentTransferBinding::inflate
 ) {
+    private var bookmarkData = ArrayList<BookMark>()
+    private var recentData = ArrayList<Recent>()
+
     override val viewModel: TransferViewModel by activityViewModels()
 
     override fun initView() {
@@ -52,6 +60,10 @@ class TransferFragment : SetReceiverType, SetExchangeType ,BaseFragment<Fragment
             val address: String = binding.TransferInputAddressET.text.toString()
             viewModel.submitReceiver(name,address)
             viewModel.onClickNextButton()
+        }
+
+        binding.TransferBackArrowIV.setOnClickListener {
+            //main으로 이동
         }
 
         viewModel.focusRemove(binding.TransferInputNameET)
@@ -145,6 +157,62 @@ class TransferFragment : SetReceiverType, SetExchangeType ,BaseFragment<Fragment
                 }
             }
         }
+
+        bookmarkData.apply {
+            add(BookMark("1", "홍길동", "주소", "UPBIT", true))
+            add(BookMark("2", "홍길동", "주소", "UPBIT", true))
+            add(BookMark("3", "홍길동", "주소", "UPBIT", true))
+            add(BookMark("4", "홍길동", "주소", "UPBIT", true))
+            add(BookMark("5", "홍길동", "주소", "UPBIT", true))
+        }
+            //더미 데이터1
+
+
+        recentData.apply {
+            add(Recent("1", "홍길동", "주소", "UPBIT", true))
+            add(Recent("2", "홍길동", "주소", "UPBIT", true))
+            add(Recent("3", "홍길동", "주소", "UPBIT", true))
+            add(Recent("4", "홍길동", "주소", "UPBIT", true))
+            add(Recent("5", "홍길동", "주소", "UPBIT", true))
+        }
+            //더미 데이터2
+
+        val bookMarkRVAdapter = BookMarkRVAdapter(bookmarkData, this)
+        val recentRVAdapter = RecentRVAdapter(recentData, this)
+        binding.TransferBookmarkRV.adapter = bookMarkRVAdapter
+        binding.TransferBookmarkRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+
+        binding.TransferBookmarkTV.setOnClickListener {
+            binding.apply {
+                TransferRecentTV.typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
+                TransferBookmarkTV.typeface = ResourcesCompat.getFont(requireContext(),R.font.pretendard_semibold)
+                TransferRecentTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
+                TransferBookmarkTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
+                //TextAppearance로 통합 예정
+                TransferBookmarkRV.adapter = bookMarkRVAdapter
+                TransferBookmarkRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            }
+        }
+
+        binding.TransferRecentTV.setOnClickListener {
+            binding.apply {
+                TransferRecentTV.typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_semibold)
+                TransferBookmarkTV.typeface = ResourcesCompat.getFont(requireContext(),R.font.pretendard_regular)
+                TransferRecentTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
+                TransferBookmarkTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
+                //TextAppearance로 통합 예정
+                TransferBookmarkRV.adapter = recentRVAdapter
+                TransferBookmarkRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            }
+        }
+
+        binding.TransferBookmarkAddTV.setOnClickListener {
+            BookMarkDialogFragment().show(
+                childFragmentManager,
+                "Dialogfragment"
+            )
+        }
     }
 
     fun individualTypeView() {
@@ -174,6 +242,8 @@ class TransferFragment : SetReceiverType, SetExchangeType ,BaseFragment<Fragment
         }
     }
 
+
+    //ReceiverTypeBottomSheet
     override fun individual() {
         viewModel.setReceiverTypeIndividual()
     }
@@ -182,6 +252,8 @@ class TransferFragment : SetReceiverType, SetExchangeType ,BaseFragment<Fragment
         viewModel.setReceiverTypeCorporation()
     }
 
+
+    //ExchangeTypeBottomSheet
     override fun upbit() {
         viewModel.setExchangeUpbit()
     }
@@ -197,4 +269,55 @@ class TransferFragment : SetReceiverType, SetExchangeType ,BaseFragment<Fragment
     override fun empty() {
         viewModel.setExchange()
     }
+
+
+    //BookMarkDialog
+    override fun inputString(name: String, address: String) {
+        viewModel.submitBookMarkReceiver(name,address)
+    }
+
+    override fun setExchangeUPBIT() {
+        viewModel.setBookMarkExchangeUpbit()
+    }
+
+    override fun setExchangeBITHUMB() {
+        viewModel.setBookMarkExchangeBithumb()
+    }
+
+    override fun setExchangeBINANCE() {
+        viewModel.setBookMarkExchangeBinance()
+    }
+
+    override fun removeFocus(editText: EditText) {
+        viewModel.focusRemove(editText)
+    }
+
+
+    //RVAdatper
+    override fun rcOnclickListener(recent: Recent) {
+        viewModel.submitReceiver(recent.recipientName, recent.walletAddress)
+        changeStringToExchangeType(recent.exchangeType)
+        findNavController().navigate(R.id.transfer_amount_fragment)
+    }
+
+    override fun bmOnclickListener(bookMark: BookMark) {
+        viewModel.submitReceiver(bookMark.recipientName, bookMark.walletAddress)
+        changeStringToExchangeType(bookMark.exchangeType)
+        findNavController().navigate(R.id.transfer_amount_fragment)
+    }
+
+    private fun changeStringToExchangeType(exchange: String) {
+        when (exchange) {
+            "UPBIT" -> {
+                viewModel.setExchangeUpbit()
+            }
+            "BITHUMB" -> {
+                viewModel.setExchangeBithumb()
+            }
+            "BINANCE" -> {
+                viewModel.setExchangeBinance()
+            }
+        }
+    }
+
 }
