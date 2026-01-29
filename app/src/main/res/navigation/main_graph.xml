@@ -26,10 +26,16 @@
         android:name="com.stable.scoi.presentation.ui.transfer.TransferCompleteFragment"/>
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/chargeFragment"
         android:name="com.stable.scoi.presentation.ui.charge.ChargeFragment"
-        android:label="홈 화면"
+        android:label="충전 화면"
         tools:layout="@layout/fragment_charge"/>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.stable.scoi.presentation.ui.home.HomeFragment"
+        android:label="홈 화면"
+        tools:layout="@layout/fragment_home"/>
 
 
 </navigation>

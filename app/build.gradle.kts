@@ -78,4 +78,6 @@ dependencies {
     // NAVIGATION
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    implementation("com.tbuonomo:dotsindicator:5.0")
 }

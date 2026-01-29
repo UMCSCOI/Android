@@ -1,6 +1,9 @@
 package com.stable.scoi.presentation
 
+import android.graphics.Color
+import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.stable.scoi.R
@@ -15,6 +18,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
 ) {
     override val viewModel: MainActivityViewModel by viewModels()
     private lateinit var navController: NavController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        window.navigationBarColor = Color.WHITE
+        controller.isAppearanceLightNavigationBars = true
+    }
 
 
     override fun initView() {
