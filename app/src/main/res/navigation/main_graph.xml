@@ -20,6 +20,10 @@
         android:id="@+id/wallet_withdraw_fragment"
         android:name="com.stable.scoi.presentation.ui.wallet.WithdrawFragment"/>
 
+    <fragment
+        android:id="@+id/wallet_detail_fragment"
+        android:name="com.stable.scoi.presentation.ui.wallet.WalletDetailFragment"/>
+
 
 
     <fragment

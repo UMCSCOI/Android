@@ -3,19 +3,29 @@ package com.stable.scoi.presentation.ui.wallet
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentWalletBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.transfer.Exchange
 import com.stable.scoi.presentation.ui.wallet.bottomsheet.ExchangeBottomSheet
 import com.stable.scoi.presentation.ui.wallet.bottomsheet.SetExchangeType
+import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeList
+import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeListOnClickListener
+import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeListRVAdapter
+import com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.RecentTransferList
+import com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.RecentTransferListOnClickListener
+import com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.RecentTransferListRVAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class WalletFragment: SetExchangeType, BaseFragment<FragmentWalletBinding, WalletState, WalletEvent, WalletViewModel>(
+class WalletFragment: RecentChargeListOnClickListener, RecentTransferListOnClickListener, SetExchangeType, BaseFragment<FragmentWalletBinding, WalletState, WalletEvent, WalletViewModel>(
     FragmentWalletBinding::inflate
 ) {
+    private var recentTransferListData = ArrayList<RecentTransferList>()
+    private var recentChargeListData = ArrayList<RecentChargeList>()
+
     override val viewModel: WalletViewModel by activityViewModels()
 
     override fun initView() {
@@ -73,7 +83,14 @@ class WalletFragment: SetExchangeType, BaseFragment<FragmentWalletBinding, Walle
     }
 
     private fun setToggleAction() {
+
+        val recentTransferListAdapter = RecentTransferListRVAdapter(recentTransferListData,this)
+        val recentChargeListAdapter = RecentChargeListRVAdapter(recentChargeListData, this)
+
         binding.apply {
+            WalletRecentListVP.adapter = recentTransferListAdapter
+            WalletRecentListVP.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
             WalletRecentToggle1TV.setOnClickListener {
                 WalletRecentToggle1TV.apply {
                     setBackgroundResource(R.drawable.toggle_activated)
@@ -83,8 +100,10 @@ class WalletFragment: SetExchangeType, BaseFragment<FragmentWalletBinding, Walle
                     setBackgroundResource(R.drawable.toggle_disabled)
                     setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
                 }
-                //Adapter 추가
+                WalletRecentListVP.adapter = recentTransferListAdapter
+                WalletRecentListVP.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
+
             WalletRecentToggle2TV.setOnClickListener {
                 WalletRecentToggle1TV.apply {
                     setBackgroundResource(R.drawable.toggle_disabled)
@@ -94,7 +113,8 @@ class WalletFragment: SetExchangeType, BaseFragment<FragmentWalletBinding, Walle
                     setBackgroundResource(R.drawable.toggle_activated)
                     setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 }
-                //Adapter 추가
+                WalletRecentListVP.adapter = recentChargeListAdapter
+                WalletRecentListVP.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
         }
     }
@@ -113,5 +133,15 @@ class WalletFragment: SetExchangeType, BaseFragment<FragmentWalletBinding, Walle
 
     override fun empty() {
         viewModel.setExchange()
+    }
+
+    override fun RTLOnClickListener(recentTransferData: RecentTransferList) {
+        viewModel.submitTransferDetails(recentTransferData)
+        findNavController().navigate(R.id.wallet_detail_fragment)
+    }
+
+    override fun RCLOnClickListener(recentChargeData: RecentChargeList) {
+        viewModel.submitChargeDetails(recentChargeData)
+        findNavController().navigate(R.id.wallet_detail_fragment)
     }
 }

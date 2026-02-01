@@ -12,6 +12,7 @@ import com.stable.scoi.domain.model.transfer.Execute
 import com.stable.scoi.domain.model.transfer.Information
 import com.stable.scoi.domain.model.transfer.Receiver
 import com.stable.scoi.domain.model.transfer.ReceiverType
+import com.stable.scoi.domain.repository.transfer.TransferRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -159,6 +160,8 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         )
     }
 
+
+
     //BookMark
     fun setBookMarkExchangeUpbit() {
         _bookMarkExchangeType.value = Exchange.Upbit
@@ -181,6 +184,14 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         )
         Log.d("bookmark",bookMarkReceiver.value.toString())
     }
+
+
+    //API
+//    fun setRecentList() {
+//        resultResponse(
+//            response = TransferRepository.
+//        )
+//    }
 
     //ETC
     fun addressLineChange(address: String): String {

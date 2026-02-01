@@ -7,6 +7,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.ui.transfer.Exchange
+import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeList
+import com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.RecentTransferList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +22,12 @@ class WalletViewModel @Inject constructor(): BaseViewModel<WalletState, WalletEv
     private var exType: String = ""
     private val _exchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
     val exchangeType = _exchangeType.asStateFlow()
+
+    private val _transferDetail = MutableStateFlow<RecentTransferList>(RecentTransferList())
+    val transferDetail = _transferDetail.asStateFlow()
+
+    private val _chargeDetail = MutableStateFlow<RecentChargeList>(RecentChargeList())
+    val chargeDetail = _chargeDetail.asStateFlow()
 
     fun setExchangeUpbit() {
         _exchangeType.value = Exchange.Upbit
@@ -37,6 +45,16 @@ class WalletViewModel @Inject constructor(): BaseViewModel<WalletState, WalletEv
         _exchangeType.value = Exchange.Unselected
     }
 
+    fun submitTransferDetails(detail: RecentTransferList) {
+        _transferDetail.value = detail
+    }
+
+    fun submitChargeDetails(detail: RecentChargeList) {
+        _chargeDetail.value = detail
+    }
+
+
+    //ETC
     fun addComma(amount: String): String {
         if (amount.isBlank()) return ""
 

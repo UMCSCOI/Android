@@ -186,8 +186,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="입출금"
-                android:background="@drawable/toggle_disabled"
-                android:textColor="@color/disabled"
+                android:background="@drawable/toggle_activated"
+                android:textColor="@color/white"
                 android:textAppearance="@style/l3"/>
 
             <Space
@@ -200,8 +200,8 @@
                 android:layout_height="wrap_content"
                 android:text="충전"
                 android:textAppearance="@style/l3"
-                android:textColor="@color/white"
-                android:background="@drawable/toggle_activated"/>
+                android:textColor="@color/disabled"
+                android:background="@drawable/toggle_disabled"/>
         </LinearLayout>
 
         <LinearLayout
@@ -312,6 +312,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Wallet_recentList_VP"
             android:layout_width="match_parent"
             android:layout_height="222dp"
             app:layout_constraintTop_toTopOf="parent"

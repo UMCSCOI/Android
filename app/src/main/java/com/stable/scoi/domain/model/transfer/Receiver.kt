@@ -3,7 +3,7 @@ package com.stable.scoi.domain.model.transfer
 data class Receiver(
     var receiverName: String? = null,
     var receiverAddress: String? = null,
-    var receiverType: ReceiverType = ReceiverType.Empty
+    var receiverType: ReceiverType = ReceiverType.Empty,
 )
 
 data class Information(
