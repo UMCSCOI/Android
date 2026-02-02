@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/Transfer_amount_backArrow_IV"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"/>
+
+            <TextView
+                android:id="@+id/Transfer_amount_title_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이체"
+                android:textColor="@color/main_black"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="22sp"
+                app:layout_constraintStart_toEndOf="@id/Transfer_amount_backArrow_IV"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="5dp"/>
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_mypage"/>
+
+            <ImageView
+                android:id="@+id/Transfer_amount_receieverExchange_IV"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/upbit_logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="100dp"/>
+
+            <TextView
+                android:id="@+id/Transfer_amount_receiverName_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="홍길동"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="22sp"
+                android:textColor="@color/active"
+                app:layout_constraintStart_toEndOf="@id/Transfer_amount_receieverExchange_IV"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="100dp"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/Transfer_amount_receiver_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="님에게"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="22sp"
+                android:textColor="@color/main_black"
+                app:layout_constraintStart_toEndOf="@id/Transfer_amount_receiverName_TV"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="100dp"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/Transfer_amount_receiverAddress_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주소"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="13sp"
+                android:textColor="@color/sub_gray_2"
+                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_receiverName_TV"
+                app:layout_constraintStart_toStartOf="@id/Transfer_amount_receiverName_TV"/>
+
+            <TextView
+                android:id="@+id/Transfer_amount_receiverAddress_change_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="변경"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="13sp"
+                android:textColor="@color/sub_gray_2"
+                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_receiverName_TV"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"/>
+
+            <EditText
+                android:id="@+id/Transfer_amount_ET"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="215dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:inputType="number"
+                android:textSize="32sp"
+                android:fontFamily="@font/pretendard_medium"
+                android:maxLines="1"
+                android:imeOptions="actionDone"/>
+
+            <TextView
+                android:id="@+id/Transfer_amount_coinType_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USDT"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="20sp"
+                android:textColor="@color/main_black"
+                app:layout_constraintTop_toTopOf="@id/Transfer_amount_ET"
+                app:layout_constraintBottom_toBottomOf="@id/Transfer_amount_ET"
+                app:layout_constraintEnd_toStartOf="@id/Transfer_amount_coinType_Change_IV" />
+
+            <ImageView
+                android:id="@+id/Transfer_amount_coinType_Change_IV"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="18dp"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintTop_toTopOf="@id/Transfer_amount_ET"
+                app:layout_constraintBottom_toBottomOf="@id/Transfer_amount_ET"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"/>
+
+            <TextView
+                android:id="@+id/Transfer_amount_available_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="출금 가능"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="16sp"
+                android:textColor="@color/main_black"
+                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_ET"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"/>
+
+            <TextView
+                android:id="@+id/Transfer_amount_available_amount_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="금액"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="16sp"
+                android:textColor="@color/active"
+                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_ET"
+                app:layout_constraintStart_toEndOf="@+id/Transfer_amount_available_TV"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/Transfer_amount_available_coinType_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USDT"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="16sp"
+                android:textColor="@color/active"
+                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_ET"
+                app:layout_constraintStart_toEndOf="@+id/Transfer_amount_available_amount_TV"
+                android:layout_marginStart="4dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_available_amount_TV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Transfer_amount_amount_plus1_BT"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/select_exchange"
+                    android:text="+1만"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"/>
+
+                <Space
+                    android:layout_width="6dp"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Transfer_amount_amount_plus5_BT"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/select_exchange"
+                    android:text="+5만"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"/>
+
+                <Space
+                    android:layout_width="6dp"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Transfer_amount_amount_plus10_BT"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/select_exchange"
+                    android:text="+10만"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"/>
+
+                <Space
+                    android:layout_width="6dp"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Transfer_amount_amount_plusAll_BT"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/select_exchange"
+                    android:text="+전체"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/Transfer_amount_network_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="네트워크"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="16sp"
+                android:textColor="#555555"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="585dp"
+                android:layout_marginStart="16dp"/>
+
+            <ImageView
+                android:id="@+id/Transfer_amount_network_IV"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_alert"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/Transfer_amount_network_TV"
+                android:layout_marginTop="588dp"
+                android:layout_marginStart="4dp"/>
+
+            <LinearLayout
+                android:id="@+id/Transfer_amount_networkType_LL"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_network_TV">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tron"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:textSize="20sp"
+                    android:textColor="@color/main_black"/>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수수료"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"
+                    android:textColor="@color/disabled" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="금액"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="16sp"
+                    android:textColor="@color/main_black"
+                    android:layout_marginStart="4dp"/>
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="18dp"
+                    android:src="@drawable/ic_arrow_down" />
+
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Transfer_next_TV"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@null"
+                android:background="@drawable/selector_button_submit"
+                android:text="다음"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="16sp"
+                android:textColor="@color/active"
+                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_networkType_LL"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -4,11 +4,13 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="main_black">#111111</color>
+    <color name="black_m3">#1D1B20</color>
     <color name="sub_gray_1">#505050</color>
     <color name="sub_gray_2">#767676</color>
+    <color name="gray300">#E0E0E0</color>
     <color name="disabled">#999999</color>
+    <color name="disabled_fill">#F5F5F5</color>
     <color name="error">#EF2B2A</color>
     <color name="active">#2569F2</color>
-    <color name="disabled_fill">#F5F5F5</color>
-    <color name="activated_fill">#F2F6FF</color>
+    <color name="active_fill">#F2F6FF</color>
 </resources>

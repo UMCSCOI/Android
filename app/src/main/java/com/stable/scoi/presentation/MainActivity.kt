@@ -16,6 +16,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
     override val viewModel: MainActivityViewModel by viewModels()
     private lateinit var navController: NavController
 
+
     override fun initView() {
         binding.apply {
             vm = viewModel
@@ -44,8 +45,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            //changeBottomNavigationView(destination.id)
-            //TODO navController.navigate(R.id.calendarFragment) 이런식으로 navigation 이동
+//            when (destination.id) {
+//
+//            }
         }
     }
 }

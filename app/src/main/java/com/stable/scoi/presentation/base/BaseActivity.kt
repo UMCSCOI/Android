@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.stable.scoi.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
