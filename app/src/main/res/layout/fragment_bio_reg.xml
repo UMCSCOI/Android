@@ -6,7 +6,7 @@
     android:paddingBottom="16dp">
 
     <ImageButton
-        android:id="@+id/bio_scan_back_btn"
+        android:id="@+id/bio_reg_back_btn"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
@@ -17,49 +17,51 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/bio_scan_intro_tv"
+        android:id="@+id/bio_reg_success_tv"
         android:layout_width="wrap_content"
         android:layout_height="62dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/pretendard_medium"
-        android:text="@string/bio_scan_intro"
+        android:text="@string/bio_reg_success"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bio_scan_back_btn" />
-
-    <TextView
-        android:id="@+id/bio_scan_detail_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:layout_marginHorizontal="16dp"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp"
-        android:text="@string/bio_scan_detail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bio_scan_intro_tv"/>
+        app:layout_constraintTop_toBottomOf="@id/bio_reg_back_btn" />
 
     <ImageView
-        android:id="@+id/bio_scan_uncheck_iv"
+        android:id="@+id/bio_reg_success_iv"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="75dp"
-        android:src="@drawable/bio_untouch"
+        android:src="@drawable/bio_success"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bio_scan_detail_tv" />
+        app:layout_constraintTop_toBottomOf="@id/bio_reg_success_tv" />
+
+    <TextView
+        android:id="@+id/bio_reg_fail_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="62dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="@string/bio_reg_failed"
+        android:visibility="gone"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bio_reg_back_btn" />
 
     <ImageView
-        android:id="@+id/bio_scan_touching_iv"
+        android:id="@+id/bio_reg_fail_iv"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="75dp"
-        android:src="@drawable/touching"
+        android:src="@drawable/bio_error"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bio_scan_detail_tv" />
+        app:layout_constraintTop_toBottomOf="@id/bio_reg_fail_tv" />
 
     <ImageView
         android:id="@+id/bio_scan_touch_done_iv"
@@ -134,7 +136,9 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/bio_scan_input_inactive_cv"
@@ -158,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="다음에"
+                    android:text="나중에"
                     android:textColor="@color/disabled"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -186,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="등록하기"
+                    android:text="재등록"
                     android:textColor="@color/active"
                     android:textSize="16sp"
                     android:textStyle="bold" />
