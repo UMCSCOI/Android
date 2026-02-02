@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.android.ksp)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -37,6 +38,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
 }
 
@@ -48,6 +50,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.identity.jvm)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -55,10 +58,15 @@ dependencies {
     // HILT
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation("com.auth0:java-jwt:4.5.0")
 
     // RETROFIT
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.android)
+    implementation(libs.retrofit.converter.moshi)
+
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
 
     // OKHTTP
     implementation(libs.okhttp.android)
