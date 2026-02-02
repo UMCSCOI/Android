@@ -137,11 +137,11 @@ class WalletFragment: RecentChargeListOnClickListener, RecentTransferListOnClick
 
     override fun RTLOnClickListener(recentTransferData: RecentTransferList) {
         viewModel.submitTransferDetails(recentTransferData)
-        findNavController().navigate(R.id.wallet_detail_fragment)
+        findNavController().navigate(R.id.wallet_transfer_detail_fragment)
     }
 
     override fun RCLOnClickListener(recentChargeData: RecentChargeList) {
         viewModel.submitChargeDetails(recentChargeData)
-        findNavController().navigate(R.id.wallet_detail_fragment)
+        findNavController().navigate(R.id.wallet_charge_detail_fragment)
     }
 }

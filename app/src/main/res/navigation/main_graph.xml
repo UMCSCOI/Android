@@ -21,8 +21,12 @@
         android:name="com.stable.scoi.presentation.ui.wallet.WithdrawFragment"/>
 
     <fragment
-        android:id="@+id/wallet_detail_fragment"
-        android:name="com.stable.scoi.presentation.ui.wallet.WalletDetailFragment"/>
+        android:id="@+id/wallet_transfer_detail_fragment"
+        android:name="com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.WalletTransferDetailFragment"/>
+
+    <fragment
+        android:id="@+id/wallet_charge_detail_fragment"
+        android:name="com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.WalletChargeDetailFragment"/>
 
 
 
