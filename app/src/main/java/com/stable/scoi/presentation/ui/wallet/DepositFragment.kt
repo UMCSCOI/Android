@@ -18,16 +18,16 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
 
         when (viewModel.exchangeType.value) {
             Exchange.Upbit -> {
-                binding.WalletDepositReceieverExchangeIV.setImageResource(R.drawable.upbit_logo)
-                binding.WalletDepositReceiverNameTV.text = "업비트"
+                binding.WalletDepositExchangeIV.setImageResource(R.drawable.upbit_logo)
+                binding.WalletDepositExchangeTV.text = "업비트"
             }
             Exchange.Bithumb -> {
-                binding.WalletDepositReceieverExchangeIV.setImageResource(R.drawable.bithumb_logo)
-                binding.WalletDepositReceiverNameTV.text = "빗썸"
+                binding.WalletDepositExchangeIV.setImageResource(R.drawable.bithumb_logo)
+                binding.WalletDepositExchangeTV.text = "빗썸"
             }
             Exchange.Binance -> {
-                binding.WalletDepositReceieverExchangeIV.setImageResource(R.drawable.binance_logo)
-                binding.WalletDepositReceiverNameTV.text = "BINANCE"
+                binding.WalletDepositExchangeIV.setImageResource(R.drawable.binance_logo)
+                binding.WalletDepositExchangeTV.text = "BINANCE"
             }
             else -> Unit
         }

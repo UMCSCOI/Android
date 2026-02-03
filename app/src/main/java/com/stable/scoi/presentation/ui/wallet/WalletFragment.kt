@@ -7,9 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentWalletBinding
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.transfer.BookMark
 import com.stable.scoi.presentation.ui.transfer.Exchange
+import com.stable.scoi.presentation.ui.wallet.bottomsheet.ArraySettingChargeBottomSheet
+import com.stable.scoi.presentation.ui.wallet.bottomsheet.ArraySettingTransferBottomSheet
 import com.stable.scoi.presentation.ui.wallet.bottomsheet.ExchangeBottomSheet
+import com.stable.scoi.presentation.ui.wallet.bottomsheet.SearchNameBottomSheet
 import com.stable.scoi.presentation.ui.wallet.bottomsheet.SetExchangeType
+import com.stable.scoi.presentation.ui.wallet.dialog.CancelCompleteDialogFragment
+import com.stable.scoi.presentation.ui.wallet.dialog.ChargeCancelDialogFragment
+import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.Counterparty
 import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeList
 import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeListOnClickListener
 import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeListRVAdapter
@@ -25,6 +32,8 @@ class WalletFragment: RecentChargeListOnClickListener, RecentTransferListOnClick
 ) {
     private var recentTransferListData = ArrayList<RecentTransferList>()
     private var recentChargeListData = ArrayList<RecentChargeList>()
+
+    private var toggleState: ToggleState = ToggleState.Transfer
 
     override val viewModel: WalletViewModel by activityViewModels()
 
@@ -69,14 +78,41 @@ class WalletFragment: RecentChargeListOnClickListener, RecentTransferListOnClick
             }
 
             WalletRecentArraySettingIV.setOnClickListener {
-                // 정렬 BottomSheet Navigate
+                when (toggleState) {
+                    ToggleState.Transfer -> {
+                        ArraySettingTransferBottomSheet().show(
+                            childFragmentManager,
+                            "bottomsheet"
+                        )
+                    }
+                    ToggleState.charge -> {
+                        ArraySettingChargeBottomSheet().show(
+                            childFragmentManager,
+                            "bottomsheet"
+                        )
+                    }
+                }
             }
 
             WalletRecentSearchIV.setOnClickListener {
-                // 검색 BottomSheet Navigate
+                SearchNameBottomSheet().show(
+                    childFragmentManager,
+                    "bottomsheet"
+                )
             }
 
             setToggleAction()
+        }
+
+        //더미데이터
+        recentChargeListData.apply {
+            add(RecentChargeList("1", "OUT", "COMPLETED","5000.00", "0.00", "Bithumb","5000.00","KRW","출금(이체)",
+                Counterparty("usr_77","홍길동"),"2026-01-12T12:30:00Z","USDT"))
+        }
+
+        recentTransferListData.apply {
+            add(RecentTransferList("1", "OUT", "5000.00", "0.00", "Bithumb","5000.00","KRW","출금(이체)",
+                Counterparty("usr_77","홍길동"),"2026-01-12T12:30:00Z","USDT"))
         }
 
 
@@ -102,6 +138,8 @@ class WalletFragment: RecentChargeListOnClickListener, RecentTransferListOnClick
                 }
                 WalletRecentListVP.adapter = recentTransferListAdapter
                 WalletRecentListVP.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+                toggleState = ToggleState.Transfer
             }
 
             WalletRecentToggle2TV.setOnClickListener {
@@ -115,6 +153,8 @@ class WalletFragment: RecentChargeListOnClickListener, RecentTransferListOnClick
                 }
                 WalletRecentListVP.adapter = recentChargeListAdapter
                 WalletRecentListVP.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+                toggleState = ToggleState.Transfer
             }
         }
     }
@@ -143,5 +183,17 @@ class WalletFragment: RecentChargeListOnClickListener, RecentTransferListOnClick
     override fun RCLOnClickListener(recentChargeData: RecentChargeList) {
         viewModel.submitChargeDetails(recentChargeData)
         findNavController().navigate(R.id.wallet_charge_detail_fragment)
+    }
+
+    override fun cancelOnclickListener(cancelData: RecentChargeList) {
+        //id만 전송 하는 방식 이용 예정
+        ChargeCancelDialogFragment().show(
+            childFragmentManager,
+            "dialog"
+        )
+    }
+
+    enum class ToggleState {
+        Transfer, charge
     }
 }

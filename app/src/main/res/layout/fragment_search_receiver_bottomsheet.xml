@@ -55,12 +55,15 @@
                 android:layout_height="50dp"
                 android:elevation="0dp"
 
+                android:id="@+id/bottomsheet_search_receiver_submit_BT"
+                style="@style/NoShadowAppCompatButton"
+
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="10dp"
 
-                android:background="@drawable/button_submit"
+                android:background="@drawable/selector_button_submit"
                 android:backgroundTint="@null"
                 android:text="조회"
                 android:textColor="#4A4AFA"

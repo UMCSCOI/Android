@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class TransferRepository @Inject constructor(private val api: RecentListAPI) {
     suspend fun loadRecentList(request: RecentListRequest) {
-        //return api.loadRecentList(request).
+        //return api.loadRecentList(request,)
     }
 }

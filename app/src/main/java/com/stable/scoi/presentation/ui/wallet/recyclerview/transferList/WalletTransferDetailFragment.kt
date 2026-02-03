@@ -1,6 +1,7 @@
 package com.stable.scoi.presentation.ui.wallet.recyclerview.transferList
 
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.stable.scoi.databinding.FragmentWalletTransferDetailBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.wallet.WalletEvent
@@ -14,7 +15,9 @@ class WalletTransferDetailFragment: BaseFragment<FragmentWalletTransferDetailBin
 
         override fun initView() {
             binding.apply {
-                //detailFragment도 하나 더 만들어야 할듯 - 유지보수 측면에서 더 나을 것
+                WalletDetailBackArrowIV.setOnClickListener {
+                    findNavController().popBackStack()
+                }
             }
         }
 }

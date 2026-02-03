@@ -3,6 +3,7 @@ package com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList
 data class RecentChargeList(
     val transactionId: String = "",
     val category: String = "",
+    val status: String = "",
     val amount: String = "",
     val fee: String = "",
     val exchangeType: String = "",

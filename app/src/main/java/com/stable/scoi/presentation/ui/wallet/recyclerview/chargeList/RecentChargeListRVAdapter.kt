@@ -20,6 +20,9 @@ class RecentChargeListRVAdapter(private val recentChargeList: ArrayList<RecentCh
         holder.binding.WalletListVIEW.setOnClickListener {
             recentChargeListOnClickListener.RCLOnClickListener(recentChargeList[position])
         }
+        holder.binding.WalletListCancelTV.setOnClickListener {
+            recentChargeListOnClickListener.cancelOnclickListener(recentChargeList[position])
+        }
     }
 
     override fun getItemCount(): Int = recentChargeList.size

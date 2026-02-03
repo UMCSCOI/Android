@@ -245,7 +245,7 @@
                 android:textAppearance="@style/b3"/>
 
             <TextView
-                android:id="@+id/Wallet_detail_transfer_amount_assetSymbol_TV"
+                android:id="@+id/Wallet_detail_conclude_amount_assetSymbol_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="USDT"
@@ -279,6 +279,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1,000"
+                android:textAppearance="@style/b3"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원"
+                android:textAppearance="@style/b3"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Wallet_detail_total_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_charge_LL"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="총 결제 금액"
+                android:textAppearance="@style/b3"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/Wallet_detail_total_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="146,000"
                 android:textAppearance="@style/b3"/>
 
             <TextView
