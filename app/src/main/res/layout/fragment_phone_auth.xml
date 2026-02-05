@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="16dp"
-    >
+    android:paddingBottom="16dp">
 
 
     <TextView
@@ -36,10 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
         android:hint="010-0000-0000"
         android:inputType="phone"
         android:paddingVertical="8dp"
-        android:background="@android:color/transparent"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,40 +49,38 @@
         android:layout_width="14dp"
         android:layout_height="14dp"
         android:src="@drawable/no_m"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et" />
 
     <TextView
         android:id="@+id/phone_auth_number_send_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
         android:layout_marginEnd="40dp"
-        android:text="전송하기"
         android:src="@drawable/no_m"
+        android:text="전송하기"
         android:textColor="@color/active"
+        android:textSize="13sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
-        android:visibility="gone"
-        />
+        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et" />
 
     <TextView
         android:id="@+id/phone_auth_number_retry_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
         android:layout_marginEnd="40dp"
-        android:textColor="@color/disabled"
-        android:text="재전송"
         android:src="@drawable/no_m"
+        android:text="재전송"
+        android:textColor="@color/disabled"
+        android:textSize="13sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
-        android:visibility="gone"
-        />
+        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et" />
 
 
     <View
@@ -92,11 +89,10 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="16dp"
         android:background="@color/disabled"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_et"
-        android:visibility="visible"
-        />
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_et" />
 
     <View
         android:id="@+id/phone_auth_selected_number_line"
@@ -104,11 +100,10 @@
         android:layout_height="1.2dp"
         android:layout_marginHorizontal="16dp"
         android:background="@color/main_black"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_et"
-        android:visibility="gone"
-        />
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_et" />
 
 
     <TextView
@@ -122,17 +117,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phone_auth_number_line" />
 
-        <EditText
+    <EditText
         android:id="@+id/phone_auth_code_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
         android:hint="인증번호 6자리"
         android:inputType="number"
         android:maxLength="6"
         android:paddingVertical="8dp"
-        android:background="@android:color/transparent"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,11 +139,10 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="16dp"
         android:background="@color/disabled"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_et"
-        android:visibility="visible"
-        />
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_et" />
 
     <View
         android:id="@+id/phone_auth_selected_code_line"
@@ -156,34 +150,33 @@
         android:layout_height="1.2dp"
         android:layout_marginHorizontal="16dp"
         android:background="@color/main_black"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_et"
-        android:visibility="gone"
-        />
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_et" />
 
     <ImageView
         android:id="@+id/phone_auth_code_check_iv"
         android:layout_width="14dp"
         android:layout_height="14dp"
-        android:src="@drawable/non_check"
         android:layout_marginEnd="22dp"
+        android:src="@drawable/non_check"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/phone_auth_code_et"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phone_auth_code_et"
-        android:visibility="gone"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_code_et" />
 
     <ImageView
         android:id="@+id/phone_auth_code_active_check_iv"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:src="@drawable/active_check"
         android:layout_marginEnd="22dp"
+        android:src="@drawable/active_check"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/phone_auth_code_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phone_auth_code_et"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="@id/phone_auth_code_et" />
 
     <TextView
         android:id="@+id/phone_auth_code_active_timer_tv"
@@ -191,20 +184,20 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="22dp"
         android:text="5:00"
-        android:textsize="13sp"
         android:textColor="@color/active"
+        android:textSize="13sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/phone_auth_code_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phone_auth_code_et"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="@id/phone_auth_code_et" />
 
 
     <TextView
         android:id="@+id/phone_auth_helper_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="발송된 인증번호 6자리를 입력해주세요."
         android:textColor="@color/main_black"
         android:textSize="12sp"
@@ -216,8 +209,8 @@
         android:id="@+id/phone_auth_code_retry_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="인증번호가 재발송되었습니다."
         android:textColor="@color/main_black"
         android:textSize="12sp"
@@ -229,8 +222,8 @@
         android:id="@+id/phone_auth_expired_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="인증번호가 만료되었습니다. 인증 번호를 재발송해주세요."
         android:textColor="@color/error"
         android:textSize="12sp"
@@ -242,8 +235,8 @@
         android:id="@+id/phone_auth_check_helper_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="인증 번호가 일치합니다."
         android:textColor="@color/disabled"
         android:textSize="12sp"
@@ -255,8 +248,8 @@
         android:id="@+id/phone_auth_error_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="인증번호가 일치하지 않습니다"
         android:textColor="@color/error"
         android:textSize="12sp"
@@ -269,15 +262,15 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/active"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -304,15 +297,15 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
+        android:visibility="visible"
         app:cardBackgroundColor="@color/disabled"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="visible">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -340,15 +333,15 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/disabled"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -375,15 +368,15 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/active"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

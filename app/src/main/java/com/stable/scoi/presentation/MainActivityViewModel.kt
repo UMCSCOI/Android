@@ -19,14 +19,41 @@ class MainActivityViewModel @Inject constructor(
 ) : BaseViewModel<MainActivityUiState, MainActivityEvent>(
     MainActivityUiState()
 ) {
+    fun onClickHome() {
+        updateState {
+            copy(
+                isHome = true,
+                isCharge = false,
+                isWallet = false
+            )
+        }
+    }
 
-    fun emitFun() {
-        emitEvent(MainActivityEvent.DummyEvent)
+    fun onClickCharge() {
+        updateState {
+            copy(
+                isHome = false,
+                isCharge = true,
+                isWallet = false
+            )
+        }
+    }
+
+    fun onClickWallet() {
+        updateState {
+            copy(
+                isHome = false,
+                isCharge = false,
+                isWallet = true
+            )
+        }
     }
 }
 
 data class MainActivityUiState(
-    val dummy: String = ""
+    val isHome: Boolean = true,
+    val isCharge: Boolean = false,
+    val isWallet: Boolean = false
 ) : UiState
 
 sealed class MainActivityEvent : UiEvent {
