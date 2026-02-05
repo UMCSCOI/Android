@@ -23,8 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/splash"
-            app:lottie_repeatCount="1" />
+            app:lottie_rawRes="@raw/splash" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

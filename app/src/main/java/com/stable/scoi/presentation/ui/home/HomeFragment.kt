@@ -36,6 +36,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
         binding.apply {
             vm = viewModel
 
+            requireActivity().findViewById<View>(R.id.main).setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.white))
+
             viewPagerCard.apply {
                 adapter = accountCardAdapter
                 orientation = ViewPager2.ORIENTATION_HORIZONTAL

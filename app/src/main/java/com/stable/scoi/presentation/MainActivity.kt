@@ -48,6 +48,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
 
             launch {
                 viewModel.uiState.collect {
+                    if (it.isSplash) navController.navigate(R.id.splashFragment)
                     if (it.isHome) navController.navigate(R.id.homeFragment)
                     if (it.isCharge) navController.navigate(R.id.chargeFragment)
                     //if (it.isWallet) navController.navigate(R.layout.fragment_home)

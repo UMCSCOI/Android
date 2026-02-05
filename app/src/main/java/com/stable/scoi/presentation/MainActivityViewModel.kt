@@ -1,17 +1,9 @@
 package com.stable.scoi.presentation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.viewModelScope
-import com.stable.scoi.domain.model.CandleStreamEvent
-import com.stable.scoi.domain.repository.DummyRepository
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.base.UiEvent
 import com.stable.scoi.presentation.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +14,7 @@ class MainActivityViewModel @Inject constructor(
     fun onClickHome() {
         updateState {
             copy(
+                isSplash = false,
                 isHome = true,
                 isCharge = false,
                 isWallet = false
@@ -32,6 +25,7 @@ class MainActivityViewModel @Inject constructor(
     fun onClickCharge() {
         updateState {
             copy(
+                isSplash = false,
                 isHome = false,
                 isCharge = true,
                 isWallet = false
@@ -42,6 +36,7 @@ class MainActivityViewModel @Inject constructor(
     fun onClickWallet() {
         updateState {
             copy(
+                isSplash = false,
                 isHome = false,
                 isCharge = false,
                 isWallet = true
@@ -51,7 +46,8 @@ class MainActivityViewModel @Inject constructor(
 }
 
 data class MainActivityUiState(
-    val isHome: Boolean = true,
+    val isSplash: Boolean = true,
+    val isHome: Boolean = false,
     val isCharge: Boolean = false,
     val isWallet: Boolean = false
 ) : UiState

@@ -1,6 +1,8 @@
 package com.stable.scoi.presentation.ui.splash
 
 import android.animation.Animator
+import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.presentation.base.BaseFragment
@@ -8,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentSplashBinding
+import com.stable.scoi.util.SLOG
 
 @AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding, SplashUiState, SplashUiEvent, SplashViewModel>(
@@ -17,6 +20,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashUiState, Splash
 
     override fun initView() {
         binding.apply {
+            requireActivity().findViewById<View>(R.id.main).setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.active))
             vm = viewModel
 
             lotti.addAnimatorListener(object : Animator.AnimatorListener {
@@ -25,6 +29,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashUiState, Splash
                 }
 
                 override fun onAnimationEnd(animation: Animator) {
+                    SLOG.D("하이?")
                     navigateToHome()
                 }
 
