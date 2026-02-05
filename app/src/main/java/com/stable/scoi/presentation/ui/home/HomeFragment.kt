@@ -86,7 +86,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
     }
 
     private fun navigateToTransfer() {
-        findNavController().navigate(R.id.tansfer_fragment)
+        val action = HomeFragmentDirections.actionHomeFragmentToTansferFragment()
+        findNavController().navigate(action)
     }
 
     private fun startAnimation() {
