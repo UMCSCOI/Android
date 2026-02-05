@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.android.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.androidx.navigation.safeargs.kotlin)
 }
 
 android {
@@ -78,4 +79,7 @@ dependencies {
     // NAVIGATION
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    implementation(libs.tbuonomo.dotsindicator)
+    implementation(libs.airbnb.lottie)
 }

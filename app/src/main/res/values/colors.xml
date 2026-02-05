@@ -11,6 +11,7 @@
     <color name="disabled">#999999</color>
     <color name="disabled_fill">#F5F5F5</color>
     <color name="error">#EF2B2A</color>
-    <color name="active">#2569F2</color>
+    <color name="active">#4A4AFA</color>
+    <color name="sky_blue">#F2F6FF</color>
     <color name="active_fill">#F2F6FF</color>
 </resources>
