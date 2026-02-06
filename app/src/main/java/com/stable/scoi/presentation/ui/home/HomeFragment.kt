@@ -19,6 +19,8 @@ import com.stable.scoi.R
 import com.stable.scoi.extension.inVisible
 import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.ui.home.adapter.AccountCardAdapter
+import com.stable.scoi.presentation.ui.home.dialog.SelectAccountDialogFragment
+import com.stable.scoi.presentation.ui.home.dialog.SelectNetworkDialogFragment
 import com.stable.scoi.util.SLOG
 
 @AndroidEntryPoint
@@ -29,7 +31,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
     override val viewModel: HomeViewModel by viewModels()
 
     private val accountCardAdapter : AccountCardAdapter by lazy {
-        AccountCardAdapter()
+        AccountCardAdapter(object : AccountCardAdapter.Delegate {
+            override fun onClickCard() {
+                showDialog()
+            }
+        })
     }
 
     override fun initView() {
@@ -194,6 +200,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
         val activityRootView = requireActivity().findViewById<View>(R.id.main)
         activityRootView.setBackgroundColor(Color.WHITE)
+    }
+
+    private fun showDialog() {
+        childFragmentManager.setFragmentResultListener("requestKey_coin", viewLifecycleOwner) { requestKey, bundle ->
+
+            val result = bundle.getString("bundleKey_coin")
+            result?.let { showNetworkDialg(it, listOf("Ethereum", "Polygon")) }
+
+        }
+        SelectAccountDialogFragment().show(childFragmentManager, "")
+    }
+
+    private fun showNetworkDialg(coin: String, list: List<String>) {
+        val dialog = SelectNetworkDialogFragment.newInstance(coin, list)
+        dialog.show(parentFragmentManager, "SelectNetworkDialog")
     }
 
 }

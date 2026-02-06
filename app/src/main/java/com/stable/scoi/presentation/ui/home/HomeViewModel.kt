@@ -30,20 +30,15 @@ class HomeViewModel @Inject constructor(
                 type = AccountType.BITSUM,
                 usdc = "10,000",
                 usdt = "10,000",
-                key = "TXYZopYRdj2D9XRtbG411XZZc"
+                key = "입금 주소가 아직 생성되지 않았어요."
             ),
             AccountCard(
                 type = AccountType.UPBIT,
                 usdc = "20,000",
                 usdt = "20,000",
-                key = "asdvjzvjnjaksdnjewrewq"
+                key = "asdvjzvjnjaksdnjewrewq",
+                isEmpty = false
             ),
-            AccountCard(
-                type = AccountType.BITSUM,
-                usdc = "30,000",
-                usdt = "30,000",
-                key = "123jnjwne12ihhbrhb13"
-            )
         )
     }
 
