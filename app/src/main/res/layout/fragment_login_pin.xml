@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="16dp"
     >
 
@@ -18,15 +24,15 @@
 
     <TextView
         android:id="@+id/login_pin_intro_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="62dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/pretendard_medium"
         android:text="@string/scoi_pin_intro"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:lineSpacingExtra="5sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_pin_symbol_iv" />
 
@@ -44,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/login_pin_intro_tv">
 
         <TextView
-            android:id="@+id/pin_1_tv"
+            android:id="@+id/login_pin_1_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,7 +63,7 @@
             />
 
         <TextView
-            android:id="@+id/pin_2_tv"
+            android:id="@+id/login_pin_2_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -70,7 +76,7 @@
             />
 
         <TextView
-            android:id="@+id/pin_3_tv"
+            android:id="@+id/login_pin_3_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -83,7 +89,7 @@
             />
 
         <TextView
-            android:id="@+id/pin_4_tv"
+            android:id="@+id/login_pin_4_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -96,7 +102,7 @@
             />
 
         <TextView
-            android:id="@+id/pin_5_tv"
+            android:id="@+id/login_pin_5_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -109,7 +115,7 @@
             />
 
         <TextView
-            android:id="@+id/pin_6_tv"
+            android:id="@+id/login_pin_6_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -123,23 +129,23 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="잘못된 비밀번호입니다."
-        android:textColor="@color/error"
-        android:textSize="13sp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/login_pin_layout"
-        app:layout_constraintStart_toStartOf="@id/login_pin_layout"
-        android:visibility="invisible"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="49dp"
+            android:text="잘못된 비밀번호입니다."
+            android:textColor="@color/error"
+            android:textSize="13sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/login_pin_layout"
+            app:layout_constraintTop_toBottomOf="@id/login_pin_layout" />
 
-    <TextView
+        <TextView
         android:id="@+id/login_pin_bio_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="44dp"
         android:textSize="14sp"
         android:textColor="@color/disabled"
         android:background="@drawable/bg_pin_full_underline"
@@ -155,7 +161,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
-        app:cardBackgroundColor="@color/active"
+        app:cardBackgroundColor="@color/active_fill"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
@@ -165,15 +171,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="1dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -182,7 +179,6 @@
                 android:textColor="@color/active"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -190,7 +186,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
-        app:cardBackgroundColor="@color/disabled"
+        app:cardBackgroundColor="@color/disabled_fill"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
@@ -199,16 +195,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="visible">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="1dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -217,7 +203,7 @@
                 android:textColor="@color/disabled"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

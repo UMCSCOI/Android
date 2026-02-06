@@ -11,33 +11,42 @@
         android:layout_height="match_parent"
         android:paddingBottom="16dp">
 
-        <ImageView
-            android:id="@+id/bio_intro_symbol_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+        <ImageButton
+            android:id="@+id/login_pin_reg_back_btn"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="104dp"
-            android:src="@drawable/symbol"
+            android:layout_marginTop="14dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/bio_intro_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/login_pin_reg_intro_tv"
+            android:layout_width="204dp"
+            android:layout_height="57dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="28dp"
             android:fontFamily="@font/pretendard_medium"
-            android:text="생체 인증을 등록하려면\n먼저 로그인이 필요해요."
+            android:text="@string/login_pin_reg"
             android:textSize="22sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bio_intro_symbol_iv" />
+            app:layout_constraintTop_toBottomOf="@id/login_pin_reg_back_btn" />
 
+        <TextView
+            android:id="@+id/login_pin_reg_detail_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_pin_reg_detail"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_pin_reg_intro_tv" />
 
         <LinearLayout
-            android:id="@+id/bio_intro_layout"
+            android:id="@+id/login_pin_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
@@ -46,10 +55,10 @@
             android:weightSum="6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bio_intro_tv">
+            app:layout_constraintTop_toBottomOf="@id/login_pin_reg_detail_tv">
 
             <TextView
-                android:id="@+id/bio_intro_pin_1_tv"
+                android:id="@+id/reg_pin_1_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -61,7 +70,7 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/bio_intro_pin_2_tv"
+                android:id="@+id/reg_pin_2_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -73,7 +82,7 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/bio_intro_pin_3_tv"
+                android:id="@+id/reg_pin_3_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -85,7 +94,7 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/bio_intro_pin_4_tv"
+                android:id="@+id/reg_pin_4_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -97,7 +106,7 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/bio_intro_pin_5_tv"
+                android:id="@+id/reg_pin_5_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -109,7 +118,7 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/bio_intro_pin_6_tv"
+                android:id="@+id/reg_pin_6_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -122,40 +131,25 @@
 
         </LinearLayout>
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
+            android:layout_marginStart="16dp"
             android:text="잘못된 비밀번호입니다."
             android:textColor="@color/error"
             android:textSize="13sp"
             android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="@id/bio_intro_layout"
-            app:layout_constraintTop_toBottomOf="@id/bio_intro_layout" />
+            app:layout_constraintStart_toStartOf="@id/login_pin_layout"
+            app:layout_constraintTop_toBottomOf="@id/login_pin_layout" />
 
-        <TextView
-            android:id="@+id/bio_intro_bio_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/bg_pin_full_underline"
-            android:text="생체 로그인 사용"
-            android:textColor="@color/disabled"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bio_intro_layout"
-
-            />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/bio_intro_input_active_cv"
+            android:id="@+id/login_pin_reg_input_active_cv"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginHorizontal="16dp"
             android:visibility="gone"
-            app:cardBackgroundColor="@color/active"
+            app:cardBackgroundColor="@color/active_fill"
             app:cardCornerRadius="60dp"
             app:cardElevation="0dp"
             app:cardMaxElevation="0dp"
@@ -164,28 +158,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="1dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="60dp"
-                app:cardElevation="0dp"
-                app:cardMaxElevation="0dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="입력하기"
-                    android:textColor="@color/active"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="입력하기"
+                android:textColor="@color/active"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/bio_intro_input_inactive_cv"
+            android:id="@+id/login_pin_input_inactive_cv"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginHorizontal="16dp"
@@ -199,22 +183,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="입력하기"
-                            android:textColor="@color/disabled"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="다음"
+                android:textColor="@color/disabled"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
