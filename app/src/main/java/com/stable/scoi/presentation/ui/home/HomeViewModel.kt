@@ -16,6 +16,8 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel<HomeUiState, HomeEvent>(
     HomeUiState(),
 ) {
+    var isWalletOpened: Boolean = false
+
     init {
         updateAccountList(getDummy())
     }
