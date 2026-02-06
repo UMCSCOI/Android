@@ -69,11 +69,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
                         if (viewModel.uiState.value.accountList[position].isEmpty) {
                             binding.layoutSelect.isEnabled = false
                             binding.layoutSelect.setBackgroundResource(R.drawable.bg_rect_disable_fill_radius60)
-                            binding.textWalletKey.setTextColor(ContextCompat.getColor(requireActivity(),R.color.disabled))
+                            binding.textSelect.setTextColor(ContextCompat.getColor(requireActivity(),R.color.disabled))
                         } else {
                             binding.layoutSelect.isEnabled = true
                             binding.layoutSelect.setBackgroundResource(R.drawable.bg_rect_skyblue_radius60)
-                            binding.textWalletKey.setTextColor(ContextCompat.getColor(requireActivity(),R.color.active))
+                            binding.textSelect.setTextColor(ContextCompat.getColor(requireActivity(),R.color.active))
                         }
                         binding.textWalletKey.text = viewModel.uiState.value.accountList[position].key
                     }
