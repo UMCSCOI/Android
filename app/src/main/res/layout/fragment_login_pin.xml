@@ -37,100 +37,115 @@
         app:layout_constraintTop_toBottomOf="@id/login_pin_symbol_iv" />
 
 
-    <LinearLayout
+        <LinearLayout
         android:id="@+id/login_pin_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="60dp"
         android:orientation="horizontal"
         android:paddingHorizontal="45dp"
         android:weightSum="6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_pin_intro_tv">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_pin_intro_tv"
+            >
 
-        <TextView
-            android:id="@+id/login_pin_1_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+
+        <EditText
+            android:id="@+id/login_pin_1_et"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
+            android:maxLength="1"
+            android:inputType="number"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
             android:paddingBottom="8dp"
             android:textColor="@color/main_black"
             android:textSize="22sp"
-            android:background="@drawable/bg_pin_underlline"
+            android:background="@drawable/selector_pin_background"
             />
 
-        <TextView
-            android:id="@+id/login_pin_2_tv"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/login_pin_2_et"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:maxLength="1"
+            android:inputType="number"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
             android:paddingBottom="8dp"
             android:textColor="@color/main_black"
             android:textSize="22sp"
-            android:background="@drawable/bg_pin_underlline"
+            android:background="@drawable/selector_pin_background"
             />
 
-        <TextView
-            android:id="@+id/login_pin_3_tv"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/login_pin_3_et"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:maxLength="1"
+            android:inputType="number"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
             android:paddingBottom="8dp"
             android:textColor="@color/main_black"
             android:textSize="22sp"
-            android:background="@drawable/bg_pin_underlline"
+            android:background="@drawable/selector_pin_background"
             />
 
-        <TextView
-            android:id="@+id/login_pin_4_tv"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/login_pin_4_et"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:maxLength="1"
+            android:inputType="number"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
             android:paddingBottom="8dp"
             android:textColor="@color/main_black"
             android:textSize="22sp"
-            android:background="@drawable/bg_pin_underlline"
+            android:background="@drawable/selector_pin_background"
             />
 
-        <TextView
-            android:id="@+id/login_pin_5_tv"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/login_pin_5_et"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:maxLength="1"
+            android:inputType="number"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
             android:paddingBottom="8dp"
             android:textColor="@color/main_black"
             android:textSize="22sp"
-            android:background="@drawable/bg_pin_underlline"
+            android:background="@drawable/selector_pin_background"
             />
 
-        <TextView
-            android:id="@+id/login_pin_6_tv"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/login_pin_6_et"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:maxLength="1"
+            android:inputType="number"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
             android:paddingBottom="8dp"
             android:textColor="@color/main_black"
             android:textSize="22sp"
-            android:background="@drawable/bg_pin_underlline"
+            android:background="@drawable/selector_pin_background"
             />
 
     </LinearLayout>
 
 
         <TextView
+            android:id="@+id/login_pin_error_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="49dp"

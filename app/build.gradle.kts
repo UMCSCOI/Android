@@ -78,4 +78,6 @@ dependencies {
     // NAVIGATION
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    implementation("androidx.biometric:biometric-ktx:1.4.0-alpha02")
 }
