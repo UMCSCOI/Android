@@ -5,47 +5,47 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.stable.scoi.databinding.ItemAccountCardBinding
-import com.stable.scoi.domain.model.home.AccountCard
+import com.stable.scoi.databinding.ItemNetworkBinding
+import com.stable.scoi.domain.model.home.Network
 
-class AccountCardAdapter(
+class NetworkAdapter(
     private val listener : Delegate
-) : ListAdapter<AccountCard, RecyclerView.ViewHolder>(
-    AccountDiffCallBack()
+) : ListAdapter<Network, RecyclerView.ViewHolder>(
+    NetworkDiffCallBack()
 ) {
 
     interface Delegate {
-        fun onClickCard()
+        fun onClickItem(item: Network)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
-            is AccountCardViewHolder -> holder.bind(currentList[position])
+            is NetworkViewHolder -> holder.bind(currentList[position])
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = ItemAccountCardBinding.inflate(
+        val binding = ItemNetworkBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return AccountCardViewHolder(binding, listener)
+        return NetworkViewHolder(binding, listener)
     }
 }
 
-class AccountDiffCallBack : DiffUtil.ItemCallback<AccountCard>() {
+class NetworkDiffCallBack : DiffUtil.ItemCallback<Network>() {
     override fun areContentsTheSame(
-        oldItem: AccountCard,
-        newItem: AccountCard
+        oldItem: Network,
+        newItem: Network
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun areItemsTheSame(
-        oldItem: AccountCard,
-        newItem: AccountCard
+        oldItem: Network,
+        newItem: Network
     ): Boolean {
-        return oldItem.key == newItem.key
+        return oldItem.name == newItem.name
     }
 }

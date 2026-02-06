@@ -31,6 +31,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/image_empty_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:src="@drawable/ic_empty_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_account" />
+
+        <ImageView
+            android:id="@+id/image_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintStart_toStartOf="@id/image_empty_account"
+            app:layout_constraintTop_toBottomOf="@id/image_empty_account" />
+
+        <TextView
+            android:id="@+id/text_empty_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="입금 주소 생성하기"
+            android:textColor="@color/main_black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/image_plus"
+            app:layout_constraintStart_toEndOf="@id/image_plus"
+            app:layout_constraintTop_toTopOf="@id/image_plus" />
+
         <TextView
             android:id="@+id/text_usdt_money"
             android:layout_width="wrap_content"

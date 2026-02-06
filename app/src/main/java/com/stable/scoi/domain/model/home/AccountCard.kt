@@ -7,4 +7,5 @@ data class AccountCard(
     val usdt: String = "10,000",
     val usdc: String = "10,000",
     val key: String = "TXYZopYRdj2D9XRtbG411XZZc",
+    val isEmpty: Boolean = true
 )
