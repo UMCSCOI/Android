@@ -115,6 +115,8 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
                         is CandleStreamEvent.TradeUpdate -> {
                             updateTradeList(ev.trade)
                         }
+
+                        is CandleStreamEvent.TickerUpdate -> {}
                     }
 
                 }

@@ -1,10 +1,7 @@
 package com.stable.scoi.presentation.ui.home
 
 import com.stable.scoi.domain.model.enums.AccountType
-import com.stable.scoi.domain.model.enums.ChargeInputType
-import com.stable.scoi.domain.model.enums.ChargePageType
 import com.stable.scoi.domain.model.home.AccountCard
-import com.stable.scoi.domain.repository.DummyRepository
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.base.UiEvent
 import com.stable.scoi.presentation.base.UiState
