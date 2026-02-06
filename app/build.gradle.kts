@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.android.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.androidx.navigation.safeargs.kotlin)
 }
 
 android {
@@ -80,4 +81,6 @@ dependencies {
     implementation(libs.navigation.ui)
 
     implementation("androidx.biometric:biometric-ktx:1.4.0-alpha02")
+    implementation(libs.tbuonomo.dotsindicator)
+    implementation(libs.airbnb.lottie)
 }
