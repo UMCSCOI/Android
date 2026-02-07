@@ -29,7 +29,7 @@
             android:id="@+id/layout_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:leftClick="@{()->vm.test()}"
+            app:rightClick="@{()->vm.test()}"
             app:title="충전" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

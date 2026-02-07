@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.ui.charge
+package com.stable.scoi.presentation.ui.charge.chart
 
 import android.os.Build
 import androidx.annotation.RequiresApi

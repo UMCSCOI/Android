@@ -3,8 +3,11 @@ package com.stable.scoi.presentation.ui.charge.main
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentChargeMainBinding
+import com.stable.scoi.domain.model.enums.AccountType
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.charge.bottomSheet.SelectAccountBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -17,7 +20,9 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
     override fun initView() {
         binding.apply {
             vm = viewModel
-
+            textSelectAccount.setOnClickListener {
+                showAccountBottomSheet()
+            }
         }
     }
 
@@ -43,6 +48,20 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
                 }
             }
         }
+    }
+
+    private fun showAccountBottomSheet() {
+        SelectAccountBottomSheet(
+            onClickItem = {
+                if (it == AccountType.UPBIT) {
+                    binding.imageAccout.setImageResource(R.drawable.ic_upbit_logo)
+                    binding.textAccount.text = "업비트"
+                } else {
+                    binding.imageAccout.setImageResource(R.drawable.ic_bitsum_logo)
+                    binding.textAccount.text = "빗썸"
+                }
+            }
+        ).show(parentFragmentManager, "")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
