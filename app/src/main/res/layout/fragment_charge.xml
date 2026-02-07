@@ -13,7 +13,7 @@
 
         <variable
             name="vm"
-            type="com.stable.scoi.presentation.ui.charge.ChargeViewModel" />
+            type="com.stable.scoi.presentation.ui.charge.chart.ChargeViewModel" />
     </data>
 
     <LinearLayout
@@ -24,11 +24,22 @@
         android:clipToPadding="false"
         android:orientation="vertical">
 
-        <com.stable.scoi.presentation.base.component.ScoiTitleBar
+        <LinearLayout
+            android:id="@+id/layout_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:rightClick="@{()->vm.test2()}"
-            app:title="충전" />
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12.5dp">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_back" />
+
+        </LinearLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"

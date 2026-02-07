@@ -111,4 +111,18 @@
         <item name="android:letterSpacing">-0.02</item>
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
+
+    <style name="sb_24">
+        <item name="android:textSize">24sp</item>
+        <item name="lineHeight">34sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+    </style>
+
+    <style name="m_11">
+        <item name="android:textSize">11sp</item>
+        <item name="lineHeight">15sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
 </resources>
