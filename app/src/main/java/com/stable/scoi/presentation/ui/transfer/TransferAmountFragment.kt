@@ -1,23 +1,17 @@
 package com.stable.scoi.presentation.ui.transfer
 
-import android.os.Bundle
+
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.view.WindowManager
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferAmountBinding
-import com.stable.scoi.presentation.ui.transfer.bottomsheet.AssetSymbolBottomSheet
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.Network
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.NetworkBottomSheet
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SendCheckBottomSheet
-import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetAssetSymbol
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetNetworkType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,24 +22,8 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
 ) {
     override val viewModel: TransferViewModel by activityViewModels()
 
-//    override fun onResume() {
-//        super.onResume()
-//        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-//    }
-
     override fun initView() {
         //input
-//        binding.TransferAmountCoinTypeChangeIV.setOnClickListener {
-//            AssetSymbolBottomSheet().show(
-//                childFragmentManager,
-//                "BottomSheet"
-//            )
-//        }
 
         binding.TransferNextTV.setOnClickListener {
             viewModel.submitInformation(binding.TransferAmountET.text.toString())
@@ -178,33 +156,11 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                 }
             }
 
-            override fun beforeTextChanged(
-                p0: CharSequence?,
-                p1: Int,
-                p2: Int,
-                p3: Int
-            ) {}
-
+            override fun beforeTextChanged(p0: CharSequence?,p1: Int,p2: Int,p3: Int) {}
             override fun onTextChanged(p0: CharSequence?,p1: Int,p2: Int,p3: Int) {}
         })
 
         repeatOnStarted(viewLifecycleOwner) {
-//            launch {
-//                viewModel.assetSymbolType.collect { assetSymbol ->
-//                    when (assetSymbol) {
-//                        AssetSymbol.USDT -> {
-//                            binding.TransferAmountCoinTypeTV.text = "USDT"
-//                            binding.TransferAmountAvailableCoinTypeTV.text = "USDT"
-//                        }
-//                        AssetSymbol.USDC -> {
-//                            binding.TransferAmountCoinTypeTV.text = "USDC"
-//                            binding.TransferAmountAvailableCoinTypeTV.text = "USDC"
-//                        }
-//                        else -> Unit
-//                    }
-//                }
-//            }
-
             launch {
                 viewModel.netWorkType.collect { network ->
                     when (network) {
@@ -235,14 +191,6 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
         binding.TransferAmountET.setText(added)
         binding.TransferAmountET.setSelection(added.length+1)
     }
-
-//    override fun typeUSDT() {
-//        viewModel.setAssetSymbolUSDT()
-//    }
-//
-//    override fun typeUSDC() {
-//        viewModel.setAssetSymbolUSDC()
-//    }
 
     override fun networkType(network: Network) {
         viewModel.submitNetwork(network)

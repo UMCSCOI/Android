@@ -12,7 +12,6 @@ import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.ExchangeBottomSheet
-import com.stable.scoi.presentation.ui.transfer.bottomsheet.ReceiverTypeBottomSheet
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetExchangeType
 import com.stable.scoi.presentation.ui.transfer.recyclerview.DirectoryOnClickListener
 import com.stable.scoi.presentation.ui.transfer.recyclerview.DirectoryRVAdapter
@@ -138,13 +137,6 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             launch {
                 viewModel.uiEvent.collect { event ->
                     when (event) {
-                        TransferEvent.OpenReceiverType -> {
-                            ReceiverTypeBottomSheet().show(
-                                childFragmentManager,
-                                "BottomSheet"
-                            )
-                        }
-
                         TransferEvent.NavigateToNextPage -> {
                             findNavController().navigate(R.id.transfer_amount_fragment)
                         }

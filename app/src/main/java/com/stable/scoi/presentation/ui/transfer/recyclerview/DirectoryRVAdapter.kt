@@ -28,10 +28,10 @@ class DirectoryRVAdapter(private val directoryList: ArrayList<Directory>, privat
 
     inner class ViewHolder(val binding: ItemDirectoryBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(bookMark: Directory) {
+        fun bind(directory: Directory) {
             binding.apply {
-                directoryReceiverNameTV.text = bookMark.recipientKORName
-                directoryReceiverAddressTV.text = bookMark.walletAddress
+                directoryReceiverNameTV.text = directory.recipientKORName
+                directoryReceiverAddressTV.text = directory.walletAddress
                 directoryExchangeLogoIV.setImageResource(R.drawable.upbit_logo)
             }
         }

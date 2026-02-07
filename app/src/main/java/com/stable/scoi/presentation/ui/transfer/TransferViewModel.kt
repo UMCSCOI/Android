@@ -1,20 +1,14 @@
 package com.stable.scoi.presentation.ui.transfer
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.core.content.ContextCompat
-import com.stable.scoi.R
 import com.stable.scoi.presentation.base.BaseViewModel
-import com.stable.scoi.domain.model.transfer.BookMarkReceiver
 import com.stable.scoi.domain.model.transfer.Execute
 import com.stable.scoi.domain.model.transfer.Information
 import com.stable.scoi.domain.model.transfer.Receiver
-import com.stable.scoi.domain.model.transfer.ReceiverType
-import com.stable.scoi.domain.repository.transfer.TransferRepository
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.Network
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -30,11 +24,7 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private var exType: String = ""
     private var asSymb: String = ""
 
-    private var bExType: String = ""
-
     //bottomSheet Type 선택
-    private val _receiverType = MutableStateFlow<ReceiverType>(ReceiverType.Empty)
-    val receiverType = _receiverType.asStateFlow()
 
     private val _exchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
     val exchangeType = _exchangeType.asStateFlow()
@@ -44,10 +34,6 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
 
     private val _networkType = MutableStateFlow<Network>(Network.TRON)
     val netWorkType = _networkType.asStateFlow()
-
-    //DialogFragment Type 선택
-    private val _bookMarkExchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
-    val bookMarkExchangeType = _bookMarkExchangeType.asStateFlow()
 
 
     //API 요구 정보
@@ -60,36 +46,6 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private val _execute = MutableStateFlow(Execute())
     val execute = _execute.asStateFlow()
 
-    private val _bookMarkReceiver = MutableStateFlow(BookMarkReceiver())
-    val bookMarkReceiver = _bookMarkReceiver.asStateFlow()
-
-
-
-    //Event
-    fun onReceiverTypeClicked() { //초기 receiverType 결정
-        when (receiverType.value) {
-            ReceiverType.Empty -> {
-                emitEvent(TransferEvent.OpenReceiverType)
-            }
-            else -> Unit
-        }
-    }
-    fun onReceiverTypeChange() { //우측 receiverType 결정 메뉴
-        emitEvent(TransferEvent.OpenReceiverType)
-    }
-
-
-    //ReceiverType
-    fun setReceiverTypeIndividual() {
-        _receiverType.value = ReceiverType.Individual
-        Log.d("receiverType", receiverType.value.toString())
-    }
-
-    fun setReceiverTypeCorporation() {
-        _receiverType.value = ReceiverType.Corporation
-        Log.d("receiverType", receiverType.value.toString())
-
-    }
 
 
     //ExchangeType
@@ -103,18 +59,6 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     }
     fun setExchange() {
         _exchangeType.value = Exchange.Unselected
-    }
-
-
-    //AssetSymbolType
-    fun setAssetSymbolUSDT() {
-        _assetSymbolType.value = AssetSymbol.USDT
-        asSymb = "USDT"
-    }
-
-    fun setAssetSymbolUSDC() {
-        _assetSymbolType.value = AssetSymbol.USDC
-        asSymb = "USDC"
     }
 
 
@@ -140,8 +84,7 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         _receiver.value = _receiver.value.copy(
             receiverKORName,
             receiverENGName,
-            receiverAddress,
-            _receiverType.value
+            receiverAddress
         )
     }
 
@@ -167,27 +110,6 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     //Network
     fun submitNetwork(network: Network) {
         _networkType.value = network
-    }
-
-
-
-    //BookMark
-    fun setBookMarkExchangeUpbit() {
-        _bookMarkExchangeType.value = Exchange.Upbit
-        bExType = "UPBIT"
-    }
-    fun setBookMarkExchangeBithumb() {
-        _bookMarkExchangeType.value = Exchange.Bithumb
-        bExType = "BITHUMB"
-    }
-
-    fun submitBookMarkReceiver(name: String, address: String) {
-        _bookMarkReceiver.value = _bookMarkReceiver.value.copy(
-            name,
-            address,
-            bExType
-        )
-        Log.d("bookmark",bookMarkReceiver.value.toString())
     }
 
 
