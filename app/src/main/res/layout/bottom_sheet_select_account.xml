@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_sheet"
+        android:paddingBottom="60dp">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="28.5dp"
+            android:text="거래소"
+            android:textAppearance="@style/t1_sb"
+            android:textColor="@color/main_black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ic_close_small"
+            app:layout_constraintBottom_toBottomOf="@id/text_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_title" />
+
+        <ImageView
+            android:id="@+id/image_upbit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="31.5dp"
+            android:src="@drawable/ic_upbit_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+        <TextView
+            android:id="@+id/text_upbit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="업비트"
+            android:textColor="@color/main_black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/image_upbit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_upbit"
+            app:layout_constraintTop_toTopOf="@id/image_upbit" />
+
+        <ImageView
+            android:id="@+id/image_bitsum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="17dp"
+            android:src="@drawable/ic_bitsum_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_upbit" />
+
+        <TextView
+            android:id="@+id/text_bitsum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="빗썸"
+            android:textColor="@color/main_black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/image_bitsum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_bitsum"
+            app:layout_constraintTop_toTopOf="@id/image_bitsum" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

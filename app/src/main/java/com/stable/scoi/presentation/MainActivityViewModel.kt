@@ -7,24 +7,49 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor() : BaseViewModel<MainActivityUiState, MainActivityEvent>(
+class MainActivityViewModel @Inject constructor(
+) : BaseViewModel<MainActivityUiState, MainActivityEvent>(
     MainActivityUiState()
 ) {
-    fun dummyFun() {
+    fun onClickHome() {
         updateState {
             copy(
-                dummy = "~~~"
+                isSplash = false,
+                isHome = true,
+                isCharge = false,
+                isWallet = false
             )
         }
     }
 
-    fun emitFun() {
-        emitEvent(MainActivityEvent.DummyEvent)
+    fun onClickCharge() {
+        updateState {
+            copy(
+                isSplash = false,
+                isHome = false,
+                isCharge = true,
+                isWallet = false
+            )
+        }
+    }
+
+    fun onClickWallet() {
+        updateState {
+            copy(
+                isSplash = false,
+                isHome = false,
+                isCharge = false,
+                isWallet = true
+            )
+        }
     }
 }
 
 data class MainActivityUiState(
-    val dummy: String = ""
+    val isSplash: Boolean = true,
+    val isHome: Boolean = false,
+    val isCharge: Boolean = false,
+    val isWallet: Boolean = false
 ) : UiState
 
 sealed class MainActivityEvent : UiEvent {

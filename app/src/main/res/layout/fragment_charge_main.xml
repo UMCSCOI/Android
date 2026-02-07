@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.stable.scoi.domain.model.enums.ChargeInputType" />
+
+        <import type="com.stable.scoi.domain.model.enums.ChargePageType" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.stable.scoi.presentation.ui.charge.main.ChargeMainViewModel"
+            tools:ignore="NewApi" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical">
+
+        <com.stable.scoi.presentation.base.component.ScoiTitleBar
+            android:id="@+id/layout_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:rightClick="@{()->vm.test()}"
+            app:title="충전" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_accout"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="27.5dp"
+                android:src="@drawable/ic_bitsum_logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="빗썸"
+                android:textAppearance="@style/t1_sb"
+                android:textColor="@color/main_black"
+                app:layout_constraintBottom_toBottomOf="@id/image_accout"
+                app:layout_constraintStart_toEndOf="@id/image_accout"
+                app:layout_constraintTop_toTopOf="@id/image_accout" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:text="보유 자산"
+                android:textAppearance="@style/b1"
+                android:textColor="@color/main_black"
+                app:layout_constraintBottom_toBottomOf="@id/image_accout"
+                app:layout_constraintStart_toEndOf="@id/text_account"
+                app:layout_constraintTop_toTopOf="@id/image_accout" />
+
+            <ImageView
+                android:id="@+id/image_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_down_arrow_24"
+                app:layout_constraintBottom_toBottomOf="@id/image_accout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/image_accout" />
+
+            <TextView
+                android:id="@+id/text_select_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:text="거래소 선택"
+                android:textAppearance="@style/b3"
+                android:textColor="@color/sub_gray_2"
+                app:layout_constraintBottom_toBottomOf="@id/image_accout"
+                app:layout_constraintEnd_toStartOf="@id/image_down"
+                app:layout_constraintTop_toTopOf="@id/image_accout" />
+
+            <TextView
+                android:id="@+id/text_usdt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="47.5dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="USDT"
+                android:textColor="@color/sub_gray_2"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_account" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_usdt"
+                app:layout_constraintBottom_toBottomOf="@id/text_usdt"
+                app:layout_constraintEnd_toStartOf="@id/text_usdt"
+                app:layout_constraintTop_toTopOf="@id/text_usdt" />
+
+            <TextView
+                android:id="@+id/text_usdt_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="1,000,000"
+                android:textAppearance="@style/t1_sb"
+                android:textColor="@color/main_black"
+                app:layout_constraintEnd_toEndOf="@id/text_usdt"
+                app:layout_constraintTop_toBottomOf="@id/text_usdt" />
+
+            <TextView
+                android:id="@+id/text_usdc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="USDC"
+                android:textColor="@color/sub_gray_2"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_usdt_money" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_usdc"
+                app:layout_constraintBottom_toBottomOf="@id/text_usdc"
+                app:layout_constraintEnd_toStartOf="@id/text_usdc"
+                app:layout_constraintTop_toTopOf="@id/text_usdc" />
+
+            <TextView
+                android:id="@+id/text_usdc_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="1,000,000"
+                android:textAppearance="@style/t1_sb"
+                android:textColor="@color/main_black"
+                app:layout_constraintEnd_toEndOf="@id/text_usdc"
+                app:layout_constraintTop_toBottomOf="@id/text_usdc" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:background="@color/gray300"
+                app:layout_constraintTop_toBottomOf="@id/text_usdc_money" />
+
+            <TextView
+                android:id="@+id/text_stable_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="39dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="스테이블 코인"
+                android:textColor="@color/main_black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+            <TextView
+                android:id="@+id/text_stable_usdt_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="29dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="1,484원"
+                android:textColor="@color/main_black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_stable_title" />
+
+            <TextView
+                android:id="@+id/text_stable_usdt_money_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="-0.13%"
+                android:textColor="@color/active"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/text_stable_usdt_money"
+                app:layout_constraintTop_toBottomOf="@id/text_stable_usdt_money" />
+
+            <ImageView
+                android:id="@+id/image_stable_usdt"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_usdt"
+                app:layout_constraintBottom_toBottomOf="@id/text_stable_usdt_money_percent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_stable_usdt_money" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:text="USDT"
+                android:textColor="@color/main_black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/image_stable_usdt"
+                app:layout_constraintEnd_toStartOf="@id/text_stable_usdt_money"
+                app:layout_constraintStart_toEndOf="@id/image_stable_usdt"
+                app:layout_constraintTop_toTopOf="@id/image_stable_usdt" />
+
+            <TextView
+                android:id="@+id/text_stable_usdc_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="1,484원"
+                android:textColor="@color/main_black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_stable_usdt_money_percent" />
+
+            <TextView
+                android:id="@+id/text_stable_usdc_money_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="+0.07%"
+                android:textColor="@color/error"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/text_stable_usdc_money"
+                app:layout_constraintTop_toBottomOf="@id/text_stable_usdc_money" />
+
+            <ImageView
+                android:id="@+id/image_stable_usdc"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_usdc"
+                app:layout_constraintBottom_toBottomOf="@id/text_stable_usdc_money_percent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_stable_usdc_money" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:text="USDC"
+                android:textColor="@color/main_black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/image_stable_usdc"
+                app:layout_constraintEnd_toStartOf="@id/text_stable_usdc_money"
+                app:layout_constraintStart_toEndOf="@id/image_stable_usdc"
+                app:layout_constraintTop_toTopOf="@id/image_stable_usdc" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>
