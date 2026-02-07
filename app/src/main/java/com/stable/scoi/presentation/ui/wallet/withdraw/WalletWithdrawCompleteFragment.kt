@@ -15,6 +15,7 @@ class WalletWithdrawCompleteFragment: BaseFragment<FragmentWalletWithdrawComplet
     override val viewModel: WalletViewModel by activityViewModels()
 
     override fun initView() {
+        binding.WalletCompleteAmountTV.text = viewModel.amount.value.toString()
         binding.WalletCompleteCompleteTV.setOnClickListener {
             findNavController().navigate(R.id.wallet_fragment)
         }

@@ -271,7 +271,7 @@
             <LinearLayout
                 android:id="@+id/Transfer_amount_network_popup_LL"
                 android:layout_width="298dp"
-                android:layout_height="312dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/popup_background"
                 app:layout_constraintBottom_toTopOf="@id/Transfer_amount_network_IV"
@@ -293,7 +293,7 @@
                     android:text="스테이블코인은 ‘네트워크'를 통해 전송됩니다.\n네트워크에 따라 주소 · 수수료 · 속도가 달라질 수 있어요.\n\nSCOI에서는 기본적으로 Tron (TRC20) 네트워크를 사용합니다.\n • 빠른 전송 속도\n • 매우 낮은 수수료\n • 해외 거래소에서 가장 많이 사용하는 전송 방식\n\n전송 전 지갑 주소와 네트워크가 일치하는지 꼭 확인해주세요. (잘못된 네트워크로 전송하면 복구가 어려울 수 있어요.)"
                     android:textAppearance="@style/l2"
                     android:textColor="@color/white"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
 
             <ImageView

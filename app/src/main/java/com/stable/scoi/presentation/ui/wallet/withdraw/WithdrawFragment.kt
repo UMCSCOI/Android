@@ -18,6 +18,7 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
     override val viewModel: WalletViewModel by activityViewModels()
 
     override fun initView() {
+        binding.WalletWithdrawNextTV.isEnabled = false
 
         when (viewModel.exchangeType.value) {
             Exchange.Upbit -> {
@@ -36,6 +37,7 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
         }
 
         binding.WalletWithdrawNextTV.setOnClickListener {
+            viewModel.submitAmount(binding.WalletWithdrawAmountET.text.toString().replace(",","").toInt())
             findNavController().navigate(R.id.wallet_withdraw_complete_fragment)
         }
 
@@ -75,7 +77,8 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
                 }
 
                 binding.apply {
-                    val rawInt = raw.toInt()
+                    val rawInt = if (raw.isNotEmpty()) raw.toInt() else 0
+
                     WalletWithdrawAmountPlus1BT.setOnClickListener {
                         addButtonClicked(rawInt, 10000)
                     }

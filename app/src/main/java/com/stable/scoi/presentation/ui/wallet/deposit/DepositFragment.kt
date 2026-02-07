@@ -38,6 +38,7 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
         }
 
         binding.WalletDepositNextTV.setOnClickListener {
+            viewModel.submitAmount(binding.WalletDepositAmountET.text.toString().replace(",","").toInt())
             findNavController().navigate(R.id.wallet_deposit_complete_fragment)
         }
 

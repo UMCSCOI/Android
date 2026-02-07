@@ -27,16 +27,6 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
 
     override val viewModel: TransferViewModel by activityViewModels()
 
-    override fun onResume() {
-        super.onResume()
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-    }
-
     override fun initView() {
 
         binding.TransferNextTV.isEnabled = false

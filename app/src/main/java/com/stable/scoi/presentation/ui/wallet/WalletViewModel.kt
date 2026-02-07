@@ -29,6 +29,9 @@ class WalletViewModel @Inject constructor(): BaseViewModel<WalletState, WalletEv
     private val _chargeDetail = MutableStateFlow<RecentChargeList>(RecentChargeList())
     val chargeDetail = _chargeDetail.asStateFlow()
 
+    private val _amount = MutableStateFlow(0)
+    val amount = _amount.asStateFlow()
+
     fun setExchangeUpbit() {
         _exchangeType.value = Exchange.Upbit
         exType = "UPBIT"
@@ -47,6 +50,10 @@ class WalletViewModel @Inject constructor(): BaseViewModel<WalletState, WalletEv
 
     fun submitChargeDetails(detail: RecentChargeList) {
         _chargeDetail.value = detail
+    }
+
+    fun submitAmount(amount: Int) {
+        _amount.value = amount
     }
 
 
