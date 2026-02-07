@@ -141,6 +141,16 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
                 }
 
             }
+            is LoginEvent.NavigationToExpired -> {
+                findNavController().navigate(R.id.action_loginFragment_to_loginExpiredFragment)
+            }
+
+            is LoginEvent.VerifySuccess -> {
+
+            }
+            is LoginEvent.NavigationToLogin -> {
+
+            }
         }
     }
 

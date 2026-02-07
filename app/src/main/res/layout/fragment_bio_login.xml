@@ -37,8 +37,8 @@
 
         <ImageView
             android:id="@+id/login_bio_uncheck_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="44dp"
             android:src="@drawable/bio_untouch"
             android:visibility="visible"
@@ -48,8 +48,8 @@
 
         <ImageView
             android:id="@+id/login_bio_touch_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/bio_touch"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
@@ -58,8 +58,8 @@
 
         <ImageView
             android:id="@+id/login_bio_touch_error_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/bio_touch_error"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
@@ -68,8 +68,8 @@
 
         <ImageView
             android:id="@+id/login_bio_success_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/bio_check"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
@@ -78,8 +78,8 @@
 
         <ImageView
             android:id="@+id/login_bio_error_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/bio_error"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"

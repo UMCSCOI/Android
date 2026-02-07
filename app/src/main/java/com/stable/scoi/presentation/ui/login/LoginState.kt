@@ -8,6 +8,14 @@ data class LoginState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val isLoginSuccess: Boolean = false,
-    val pin:String="",
+    val simplePassword:String="",
     val isButtonEnabled: Boolean = false,
+
+    val keepLoined:Boolean=true,
+    val phoneNumber:String="",
+    val isCodeSendEnabled:Boolean=false,
+    val isSend:Boolean=false,
+    val isCodeEnabled:Boolean=false,
+    val verificationCode:String=""
+
 ) : UiState

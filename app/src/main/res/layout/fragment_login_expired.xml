@@ -27,8 +27,9 @@
 
     <TextView
         android:id="@+id/login_expired_intro_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="182dp"
+        android:layout_height="62dp"
+        android:lineSpacingExtra="5sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="100dp"
         android:fontFamily="@font/pretendard_medium"
@@ -40,7 +41,8 @@
     <TextView
         android:id="@+id/login_expired_relogin_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="22dp"
+        android:lineSpacingExtra="3sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="@string/re_login"
@@ -55,9 +57,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="46dp"
         android:text="휴대폰 번호"
+        android:lineSpacingExtra="0sp"
         android:textSize="16sp"
+        android:letterSpacing="-0.02"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_expired_relogin_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/login_expired_relogin_tv"
+
+        />
 
     <EditText
         android:id="@+id/login_expired_phone_auth_number_et"
@@ -65,52 +71,55 @@
         android:layout_height="48dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:hint="010-0000-0000"
-        android:inputType="phone"
+        android:hint="-빼고 숫자만 입력해주세요"
+        android:inputType="number"
+        android:maxLength="13"
         android:paddingVertical="8dp"
         android:background="@android:color/transparent"
         android:textSize="20sp"
+        android:letterSpacing="-0.02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_expired_phone_auth_tv" />
 
     <ImageView
-        android:id="@+id/phone_auth_number_clear_iv"
+        android:id="@+id/login_expired_phone_auth_number_clear_iv"
         android:layout_width="14dp"
         android:layout_height="14dp"
         android:src="@drawable/no_m"
-        app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
+        android:layout_marginEnd="124.5dp"
+        app:layout_constraintBottom_toBottomOf="@id/login_expired_phone_auth_number_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
+        app:layout_constraintTop_toTopOf="@id/login_expired_phone_auth_number_et"
         android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/phone_auth_number_send_tv"
+        android:id="@+id/login_expired_phone_auth_number_send_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13sp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="16dp"
         android:text="전송하기"
         android:src="@drawable/no_m"
         android:textColor="@color/active"
-        app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
+        app:layout_constraintBottom_toBottomOf="@id/login_expired_phone_auth_number_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
+        app:layout_constraintTop_toTopOf="@id/login_expired_phone_auth_number_et"
         android:visibility="gone"
         />
 
     <TextView
-        android:id="@+id/phone_auth_number_retry_tv"
+        android:id="@+id/login_expired_phone_auth_number_retry_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13sp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="16dp"
         android:textColor="@color/disabled"
         android:text="재전송"
         android:src="@drawable/no_m"
-        app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
+        app:layout_constraintBottom_toBottomOf="@id/login_expired_phone_auth_number_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
+        app:layout_constraintTop_toTopOf="@id/login_expired_phone_auth_number_et"
         android:visibility="gone"
         />
 
@@ -128,14 +137,14 @@
         />
 
     <View
-        android:id="@+id/phone_auth_selected_number_line"
+        android:id="@+id/login_expired_phone_auth_selected_number_line"
         android:layout_width="0dp"
         android:layout_height="1.2dp"
         android:layout_marginHorizontal="16dp"
         android:background="@color/main_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_et"
+        app:layout_constraintTop_toBottomOf="@id/login_expired_phone_auth_number_et"
         android:visibility="gone"
         />
 
@@ -148,6 +157,7 @@
         android:layout_marginTop="14dp"
         android:text="인증 번호"
         android:textSize="16sp"
+        android:letterSpacing="-0.02"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_expired_phone_auth_number_line" />
 
@@ -161,6 +171,7 @@
         android:inputType="number"
         android:maxLength="6"
         android:paddingVertical="8dp"
+        android:letterSpacing="-0.02"
         android:background="@android:color/transparent"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -180,35 +191,45 @@
         />
 
     <View
-        android:id="@+id/phone_auth_selected_code_line"
+        android:id="@+id/login_expired_phone_auth_selected_code_line"
         android:layout_width="0dp"
         android:layout_height="1.2dp"
         android:layout_marginHorizontal="16dp"
         android:background="@color/main_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_et"
+        app:layout_constraintTop_toBottomOf="@id/login_expired_phone_auth_code_et"
         android:visibility="gone"
         />
 
     <ImageView
-        android:id="@+id/login_expired_phone_auth_code_check_iv"
+        android:id="@+id/login_expired_phone_auth_code_clear_iv"
         android:layout_width="14dp"
         android:layout_height="14dp"
-        android:src="@drawable/non_check"
-        android:layout_marginEnd="22dp"
+        android:src="@drawable/no_m"
+        android:layout_marginEnd="154dp"
         app:layout_constraintBottom_toBottomOf="@id/login_expired_phone_auth_code_et"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/login_expired_phone_auth_code_et"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/login_expired_phone_auth_code_check_iv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/check_default"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintBottom_toBottomOf="@id/login_expired_phone_auth_code_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/login_expired_phone_auth_code_et"
         android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/login_expired_phone_auth_code_active_check_iv"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@drawable/active_check"
-        android:layout_marginEnd="22dp"
+        android:layout_marginEnd="28dp"
         app:layout_constraintBottom_toBottomOf="@id/login_expired_phone_auth_code_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/login_expired_phone_auth_code_et"
@@ -248,7 +269,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:text="인증번호가 재발송되었습니다."
-        android:textColor="@color/main_black"
+        android:textColor="@color/error"
         android:textSize="12sp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
@@ -299,7 +320,7 @@
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
         android:visibility="gone"
-        app:cardBackgroundColor="@color/active"
+        app:cardBackgroundColor="@color/active_fill"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
@@ -307,15 +328,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="1dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -326,7 +338,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
-    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/login_expired_phone_auth_input_inactive_cv"
