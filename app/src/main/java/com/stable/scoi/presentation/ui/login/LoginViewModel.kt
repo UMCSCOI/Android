@@ -10,19 +10,31 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor() :
     BaseViewModel<LoginState, LoginEvent>(LoginState()) {
 
+        init{
+            checkAutoLoginStatus()
+        }
+
+    private fun checkAutoLoginStatus() {
+        val keepLogined = false
+
+        if (!keepLogined) {
+            emitEvent(LoginEvent.NavigationToExpired)
+        } else {
+            // 자동 로그인 로직 수행
+        }
+    }
     fun onPinChanged(input: String) {
         updateState {
             this.copy(
-                pin = input,
+                simplePassword = input,
                 isButtonEnabled = input.length == 6
             )
         }
     }
 
-    // 2. '입력하기' 버튼 클릭 시 (비밀번호 검증을 거치도록 수정)
     fun onCompleteClicked() {
         if (!uiState.value.isLoading) {
-            login(uiState.value.pin)
+            login(uiState.value.simplePassword)
         }
     }
 
@@ -51,5 +63,50 @@ class LoginViewModel @Inject constructor() :
             }
         }
     }
+
+    //LoginExpiredFragment.kt
+
+    fun onPhoneAuthNumberChanged(input:String){
+        updateState {
+            this.copy(
+                phoneNumber = input,
+                isCodeSendEnabled = true
+            )
+        }
+    }
+
+    fun onAuthChanged(input : String){
+        this.updateState {
+            this.copy(
+                verificationCode = input,
+                isCodeEnabled = true
+            )
+        }
+
+    }
+
+    fun onSendClicked() {
+            verification(uiState.value.verificationCode)
+    }
+
+    private fun verification(code: String) {
+        viewModelScope.launch {
+
+            delay(1500)
+
+            if (code == "123456") {
+                // 성공 시: 성공 이벤트 발송
+                emitEvent(LoginEvent.VerifySuccess)
+            } else {
+                emitEvent(LoginEvent.ShowError("인증번호가 일치하지 않습니다."))
+            }
+        }
+
+    }
+
+
+
+
+
 
 }
