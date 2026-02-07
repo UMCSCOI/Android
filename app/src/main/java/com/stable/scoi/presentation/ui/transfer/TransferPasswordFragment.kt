@@ -30,6 +30,8 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
 
     override fun initView() {
 
+        binding.TransferPasswordInputTV.isEnabled = false
+
         moveNext(
             binding.TransferPasswordInputPassword1ET,
             binding.TransferPasswordInputPassword2ET) { password ->
@@ -93,6 +95,7 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
                     if (requestText == binding.focusDummy) {
                         Log.d("action", "action")
                         binding.focusDummy.hideKeyboard()
+                        binding.TransferPasswordInputTV.isEnabled = true
                     }
                 }
             }

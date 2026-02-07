@@ -14,6 +14,13 @@
         <item name="fontFamily">@font/pretendard_semibold</item>
     </style>
 
+    <style name="t4_sb">
+        <item name="android:textSize">22sp</item>
+        <item name="lineHeight">28sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+    </style>
+
     <style name="t2">
         <item name="android:textSize">14sp</item>
         <item name="lineHeight">20sp</item>
@@ -26,6 +33,13 @@
         <item name="lineHeight">31sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
+    <style name="b1_md">
+        <item name="android:textSize">22sp</item>
+        <item name="lineHeight">31sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="b2">
@@ -70,6 +84,13 @@
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
+    <style name="f2_sb">
+        <item name="android:textSize">20sp</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+    </style>
+
     <style name="f3m">
         <item name="android:textSize">20sp</item>
         <item name="lineHeight">24sp</item>
@@ -98,6 +119,13 @@
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
+    <style name="l1sb">
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">19sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+    </style>
+
     <style name="l2">
         <item name="android:textSize">14sp</item>
         <item name="lineHeight">19sp</item>
@@ -112,6 +140,20 @@
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
+    <style name="l4">
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">19sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
+
+    <style name="l18_sb">
+        <item name="android:textSize">18dp</item>
+        <item name="lineHeight">25sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+    </style>
+  
     <style name="sb_24">
         <item name="android:textSize">24sp</item>
         <item name="lineHeight">34sp</item>
@@ -119,6 +161,46 @@
         <item name="fontFamily">@font/pretendard_semibold</item>
     </style>
 
+    <style name="l18_md">
+        <item name="android:textSize">18dp</item>
+        <item name="lineHeight">25sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
+
+    <style name="l18_rg">
+        <item name="android:textSize">18dp</item>
+        <item name="lineHeight">25sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
+    <style name="NoShadowAppCompatButton" parent="Widget.AppCompat.Button">
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="TransparentBottomSheet"
+        parent="Widget.Material3.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TransparentBottomSheetDialog"
+        parent="Theme.Material3.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/TransparentBottomSheet</item>
+    </style>
+
+    <style name="TransparentDialog"
+        parent="Theme.Material3.Light.Dialog">
+
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.2</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+  
     <style name="m_11">
         <item name="android:textSize">11sp</item>
         <item name="lineHeight">15sp</item>

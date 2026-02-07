@@ -1,12 +1,15 @@
 package com.stable.scoi.presentation.ui.transfer.bottomsheet
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentExchangeBottomsheetBinding
 import com.stable.scoi.presentation.ui.transfer.TransferViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +21,13 @@ class ExchangeBottomSheet : BottomSheetDialogFragment() {
     lateinit var binding: FragmentExchangeBottomsheetBinding
     private lateinit var setExchange: SetExchangeType
     private val viewModel: TransferViewModel by activityViewModels()
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return BottomSheetDialog(
+            requireContext(),
+            R.style.TransparentBottomSheetDialog
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,11 +54,6 @@ class ExchangeBottomSheet : BottomSheetDialogFragment() {
 
         binding.bottomsheetExchangeBithumbLl.setOnClickListener {
             setExchange.bithumb()
-            dismiss()
-        }
-
-        binding.bottomsheetExchangeBinanceLl.setOnClickListener {
-            setExchange.binance()
             dismiss()
         }
 

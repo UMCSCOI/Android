@@ -1,5 +1,6 @@
 package com.stable.scoi.di
 
+import com.stable.scoi.data.api.transfer.RecentListAPI
 import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
 import com.stable.scoi.data.api.UpbitQuotationRestApi
 import dagger.Module
@@ -14,11 +15,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-//    @Singleton
-//    @Provides
-//    fun provide머시기머시기(retrofit: Retrofit): API Interface {
-//        return retrofit.create(API Interface::class.java)
-//    }
+    @Singleton
+    @Provides
+    fun provideRecentListAPI(retrofit: Retrofit): RecentListAPI {
+        return retrofit.create(RecentListAPI::class.java)
+    }
 
     @Provides
     @Singleton

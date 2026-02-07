@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/Wallet_complete_check_IV"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo_check"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="190dp"/>
+
+        <LinearLayout
+            android:id="@+id/Wallet_complete_amount_LL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Wallet_complete_check_IV"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/Wallet_complete_amount_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3200"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="24sp"
+                android:textColor="@color/active"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출금 신청이 완료되었어요"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textSize="24sp"
+            android:textColor="@color/main_black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Wallet_complete_amount_LL"/>
+
+
+        <FrameLayout
+            android:id="@+id/Wallet_next_FL"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+
+                    android:id="@+id/Wallet_complete_complete_TV"
+                    style="@style/NoShadowAppCompatButton"
+
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+
+                    android:background="@drawable/selector_button_submit"
+                    android:text="확인"
+                    android:textColor="@color/selector_button_text"
+                    android:textAppearance="@style/l1m"/>
+            </LinearLayout>
+
+
+
+        </FrameLayout>
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
