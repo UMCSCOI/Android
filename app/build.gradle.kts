@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
 
+    implementation("androidx.biometric:biometric-ktx:1.4.0-alpha02")
     implementation(libs.tbuonomo.dotsindicator)
     implementation(libs.airbnb.lottie)
 }

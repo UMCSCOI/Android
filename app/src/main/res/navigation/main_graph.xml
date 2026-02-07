@@ -56,6 +56,18 @@
         tools:layout="@layout/fragment_charge"/>
 
     <fragment
+        android:id="@+id/login_pin_fragment"
+        android:name="com.stable.scoi.presentation.ui.login.LoginFragment">
+
+        <action
+                android:id="@+id/action_loginFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+
+    </fragment>
+
+
+
+
         android:id="@+id/homeFragment"
         android:name="com.stable.scoi.presentation.ui.home.HomeFragment"
         android:label="홈 화면"

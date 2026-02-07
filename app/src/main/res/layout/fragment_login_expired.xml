@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="16dp"
     >
 
@@ -56,7 +62,7 @@
     <EditText
         android:id="@+id/login_expired_phone_auth_number_et"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:hint="010-0000-0000"
@@ -73,9 +79,9 @@
         android:layout_width="14dp"
         android:layout_height="14dp"
         android:src="@drawable/no_m"
-        app:layout_constraintBottom_toBottomOf="@id/login_expired_phone_auth_code_et"
+        app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/login_expired_phone_auth_code_et"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
         android:visibility="gone"/>
 
     <TextView
@@ -87,9 +93,9 @@
         android:text="전송하기"
         android:src="@drawable/no_m"
         android:textColor="@color/active"
-        app:layout_constraintBottom_toBottomOf="@id/login_expired_phone_auth_code_et"
+        app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/login_expired_phone_auth_code_et"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
         android:visibility="gone"
         />
 
@@ -102,9 +108,9 @@
         android:textColor="@color/disabled"
         android:text="재전송"
         android:src="@drawable/no_m"
-        app:layout_constraintBottom_toBottomOf="@id/login_expired_phone_auth_code_et"
+        app:layout_constraintBottom_toBottomOf="@id/phone_auth_number_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/login_expired_phone_auth_code_et"
+        app:layout_constraintTop_toTopOf="@id/phone_auth_number_et"
         android:visibility="gone"
         />
 
@@ -129,7 +135,7 @@
         android:background="@color/main_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_expired_phone_auth_code_et"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_number_et"
         android:visibility="gone"
         />
 
@@ -139,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="14dp"
         android:text="인증 번호"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -181,7 +187,7 @@
         android:background="@color/main_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_expired_phone_auth_code_et"
+        app:layout_constraintTop_toBottomOf="@id/phone_auth_code_et"
         android:visibility="gone"
         />
 
@@ -239,8 +245,8 @@
         android:id="@+id/login_expired_phone_auth_code_retry_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="인증번호가 재발송되었습니다."
         android:textColor="@color/main_black"
         android:textSize="12sp"
@@ -252,8 +258,8 @@
         android:id="@+id/login_expired_phone_auth_expired_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="인증번호가 만료되었습니다. 인증 번호를 재발송해주세요."
         android:textColor="@color/error"
         android:textSize="12sp"
@@ -265,8 +271,8 @@
         android:id="@+id/login_expired_phone_auth_check_helper_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="인증 번호가 일치합니다."
         android:textColor="@color/disabled"
         android:textSize="12sp"
@@ -278,8 +284,8 @@
         android:id="@+id/login_expired_phone_auth_error_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="인증번호가 일치하지 않습니다"
         android:textColor="@color/error"
         android:textSize="12sp"
@@ -292,15 +298,15 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/active"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -327,24 +333,16 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
-        app:cardBackgroundColor="@color/disabled"
+        android:visibility="visible"
+        app:cardBackgroundColor="@color/disabled_fill"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="visible">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="1dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -354,7 +352,6 @@
                 android:textColor="@color/disabled"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
 
@@ -363,24 +360,15 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
-        app:cardBackgroundColor="@color/disabled"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/disabled_fill"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="1dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp">
+        app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -390,7 +378,6 @@
                 android:textColor="@color/disabled"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -398,24 +385,15 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
-        app:cardBackgroundColor="@color/active"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/active_fill"
         app:cardCornerRadius="60dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="1dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp">
+        app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -425,7 +403,7 @@
                 android:textColor="@color/active"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
