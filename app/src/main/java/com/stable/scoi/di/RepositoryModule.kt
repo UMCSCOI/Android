@@ -9,5 +9,5 @@ import dagger.hilt.components.SingletonComponent
 abstract class RepositoryModule {
 //    @Singleton
 //    @Binds
-//    abstract fun provides머시기머시기(repositoryImpl: RepositoryImpl): Repository
+//    abstract fun providesRepository(repository: DummyRepository): DummyRepository
 }

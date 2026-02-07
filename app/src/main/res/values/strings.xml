@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">scoi</string>
+    <string name="phone_auth_intro"><b>휴대폰 번호 인증</b>을 진행해주세요.</string>
+
+    <string name="scoi_pin_intro">당신에게 가장 편리한\n스테이블 코인 결제, <b>스코이</b></string>
+    <string name="join_intro">"반가워요! \n<b>회원가입</b>을 진행해주세요. "</string>
+    <string name="login_expired_intro">안전한 이용을 위해\n<b>인증이 만료</b>되었어요.</string>
+    <string name="re_login">휴대폰 번호 인증 후 <b><font color='#2569F2'>다시 로그인해</font></b> 주세요.</string>
+    <string name="bio_scan_intro">간편한 이용을 위해 \n<b>생체인증</b>을 등록해주세요.</string>
+    <string name="bio_scan_detail">미리 등록한 <font color='#2569F2'>지문으로</font> 서비스를 이용할 수 있어요.</string>
+    <string name="bio_reg_success">생체인증 등록에 \n<b>성공하였어요.</b></string>
+    <string name="bio_reg_failed">생체인증 등록에 \n<b>실패하였어요</b></string>
+    <string name="login_pin_reg"><b>간편 비밀번호 6자리</b>를 \n설정해주세요.</string>
+    <string name="login_pin_reg_detail">앞으로 <font color="2569F2">로그인과 계좌이체 시</font> 사용할 비밀번호예요.</string>
+    <string name="login_pin_done"><b>간편 비밀번호 설정</b>이\n 완료되었어요.</string>
 </resources>
