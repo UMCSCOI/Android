@@ -6,6 +6,5 @@ interface SetBookmark {
         fun inputString(name: String, address: String)
         fun setExchangeUPBIT()
         fun setExchangeBITHUMB()
-        fun setExchangeBINANCE()
         fun removeFocus(editText: EditText)
 }

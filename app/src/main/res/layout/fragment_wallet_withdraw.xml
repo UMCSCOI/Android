@@ -224,8 +224,8 @@
                 android:layout_marginBottom="10dp"
 
                 android:background="@drawable/selector_button_submit"
-                android:text="출금하기"
-                android:textColor="#4A4AFA"
+                android:text="인증 요청하기"
+                android:textColor="@color/selector_button_text"
                 android:textAppearance="@style/l1m"/>
 
         </FrameLayout>

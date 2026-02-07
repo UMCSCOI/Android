@@ -43,11 +43,6 @@ class ExchangeBottomSheet : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        binding.bottomsheetExchangeBinanceLl.setOnClickListener {
-            setExchange.binance()
-            dismiss()
-        }
-
         binding.bottomsheetExchangeCloseIv.setOnClickListener {
             setExchange.empty()
             dismiss()

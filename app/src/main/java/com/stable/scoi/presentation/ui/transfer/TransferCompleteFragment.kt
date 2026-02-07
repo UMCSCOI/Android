@@ -12,11 +12,11 @@ class TransferCompleteFragment :
     override val viewModel: TransferViewModel by activityViewModels()
 
     override fun initView() {
-        binding.TransferCompleteReceiverNameTV.text = viewModel.receiver.value.receiverName
+        binding.TransferCompleteReceiverNameTV.text = viewModel.receiver.value.receiverKORName
         binding.TransferCompleteAddressTV.text = viewModel.receiver.value.receiverAddress
 
         binding.TransferCompleteAmountTV.text = viewModel.information.value.amount
-        binding.TransferCompleteExchangeTV.text = viewModel.information.value.exchangeType
+        binding.TransferCompleteExchangeTV.text = viewModel.exchangeToString(viewModel.exchangeType.value)
         binding.TransferCompleteAssetSymbolTV.text = viewModel.information.value.assetSymbol
 
         binding.TransferCompleteCheckTransferTV.setOnClickListener {
@@ -25,5 +25,5 @@ class TransferCompleteFragment :
         binding.TransferCompleteCompleteTV.setOnClickListener {
             //종료
         }
-    }ㅁㄴㅇ
+    }
 }

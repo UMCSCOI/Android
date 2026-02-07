@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.ui.wallet
+package com.stable.scoi.presentation.ui.wallet.deposit
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +8,9 @@ import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentWalletDepositBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.transfer.Exchange
+import com.stable.scoi.presentation.ui.wallet.WalletEvent
+import com.stable.scoi.presentation.ui.wallet.WalletState
+import com.stable.scoi.presentation.ui.wallet.WalletViewModel
 
 class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, WalletEvent, WalletViewModel>(
     FragmentWalletDepositBinding::inflate
@@ -15,6 +18,8 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
     override val viewModel: WalletViewModel by activityViewModels()
 
     override fun initView() {
+
+        binding.WalletDepositNextTV.isEnabled = false
 
         when (viewModel.exchangeType.value) {
             Exchange.Upbit -> {
@@ -25,15 +30,15 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
                 binding.WalletDepositExchangeIV.setImageResource(R.drawable.bithumb_logo)
                 binding.WalletDepositExchangeTV.text = "빗썸"
             }
-            Exchange.Binance -> {
-                binding.WalletDepositExchangeIV.setImageResource(R.drawable.binance_logo)
-                binding.WalletDepositExchangeTV.text = "BINANCE"
-            }
             else -> Unit
         }
 
         binding.WalletDepositBackArrowIV.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.WalletDepositNextTV.setOnClickListener {
+            findNavController().navigate(R.id.wallet_deposit_complete_fragment)
         }
 
         viewModel.focusRemove(binding.WalletDepositAmountET)
@@ -56,7 +61,6 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
                 //API 연동 후 추가 예정 (전체 금액)
                 WalletDepositAmountET.requestFocus()
             }
-            WalletDepositAmountET.setText(rawInt.toString())
         }
 
 
@@ -73,7 +77,8 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
                 }
 
                 binding.apply {
-                    val rawInt = raw.toInt()
+                    val rawInt = if (raw.isNotEmpty()) raw.toInt() else 0
+
                     WalletDepositAmountPlus1BT.setOnClickListener {
                         addButtonClicked(rawInt, 10000)
                     }
@@ -89,6 +94,14 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
                 }
 
                 binding.WalletDepositAmountET.addTextChangedListener(this)
+
+                val amount = raw.toIntOrNull()
+
+                if (amount == null) {
+                    binding.WalletDepositNextTV.isEnabled = false
+                } else {
+                    binding.WalletDepositNextTV.isEnabled = true
+                }
             }
 
             override fun beforeTextChanged(

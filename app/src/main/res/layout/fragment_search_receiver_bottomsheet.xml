@@ -66,7 +66,7 @@
                 android:background="@drawable/selector_button_submit"
                 android:backgroundTint="@null"
                 android:text="조회"
-                android:textColor="#4A4AFA"
+                android:textColor="@color/selector_button_text"
                 android:textAppearance="@style/l1m"/>
 
         </FrameLayout>

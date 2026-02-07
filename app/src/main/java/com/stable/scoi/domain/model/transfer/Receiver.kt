@@ -1,7 +1,8 @@
 package com.stable.scoi.domain.model.transfer
 
 data class Receiver(
-    var receiverName: String? = null,
+    var receiverKORName: String? = null,
+    var receiverENGName: String? = null,
     var receiverAddress: String? = null,
     var receiverType: ReceiverType = ReceiverType.Empty,
 )

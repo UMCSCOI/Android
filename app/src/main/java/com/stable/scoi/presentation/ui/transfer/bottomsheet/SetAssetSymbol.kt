@@ -13,8 +13,11 @@ interface SetReceiverType {
 interface SetExchangeType {
     fun upbit()
     fun bithumb()
-    fun binance()
     fun empty()
+}
+
+interface SetNetworkType {
+    fun networkType(network: Network)
 }
 
 

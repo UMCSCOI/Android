@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.ui.wallet
+package com.stable.scoi.presentation.ui.wallet.withdraw
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +8,9 @@ import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentWalletWithdrawBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.transfer.Exchange
+import com.stable.scoi.presentation.ui.wallet.WalletEvent
+import com.stable.scoi.presentation.ui.wallet.WalletState
+import com.stable.scoi.presentation.ui.wallet.WalletViewModel
 
 class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState, WalletEvent, WalletViewModel>(
     FragmentWalletWithdrawBinding::inflate
@@ -25,15 +28,15 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
                 binding.WalletWithdrawExchangeIV.setImageResource(R.drawable.bithumb_logo)
                 binding.WalletWithdrawExchangeTV.text = "빗썸"
             }
-            Exchange.Binance -> {
-                binding.WalletWithdrawExchangeIV.setImageResource(R.drawable.binance_logo)
-                binding.WalletWithdrawExchangeTV.text = "BINANCE"
-            }
             else -> Unit
         }
 
         binding.WalletWithdrawBackArrowIV.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.WalletWithdrawNextTV.setOnClickListener {
+            findNavController().navigate(R.id.wallet_withdraw_complete_fragment)
         }
 
         viewModel.focusRemove(binding.WalletWithdrawAmountET)
@@ -56,7 +59,6 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
                 //API 연동 후 추가 예정 (전체 금액)
                 WalletWithdrawAmountET.requestFocus()
             }
-            WalletWithdrawAmountET.setText(rawInt.toString())
         }
 
 
@@ -89,6 +91,14 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
                 }
 
                 binding.WalletWithdrawAmountET.addTextChangedListener(this)
+
+                val amount = raw.toIntOrNull()
+
+                if (amount == null) {
+                    binding.WalletWithdrawNextTV.isEnabled = false
+                } else {
+                    binding.WalletWithdrawNextTV.isEnabled = true
+                }
             }
 
             override fun beforeTextChanged(

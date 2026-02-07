@@ -64,12 +64,6 @@ class BookMarkDialogFragment: DialogFragment(){
                 updateExchange(selectedType)
                 checkEmptyExchange(selectedType)
             }
-            bookmarkExchangeBinanceBT.setOnClickListener {
-                setBookmark.setExchangeBINANCE()
-                selectedType = Select.BINANCE
-                updateExchange(selectedType)
-                checkEmptyExchange(selectedType)
-            }
 
 
             bookmarkInputNameRemoveIV.setOnClickListener {

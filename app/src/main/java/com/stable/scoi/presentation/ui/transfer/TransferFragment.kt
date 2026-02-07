@@ -1,49 +1,76 @@
 package com.stable.scoi.presentation.ui.transfer
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferBinding
 import com.stable.scoi.presentation.base.BaseFragment
-import com.stable.scoi.presentation.ui.transfer.dialog.BookMarkDialogFragment
-import com.stable.scoi.presentation.ui.transfer.recyclerview.BookMarkOnClickListener
-import com.stable.scoi.presentation.ui.transfer.recyclerview.BookMarkRVAdapter
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.ExchangeBottomSheet
-import com.stable.scoi.domain.model.transfer.ReceiverType
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.ReceiverTypeBottomSheet
-import com.stable.scoi.presentation.ui.transfer.recyclerview.RecentOnCliCKListener
-import com.stable.scoi.presentation.ui.transfer.recyclerview.RecentRVAdapter
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetExchangeType
-import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetReceiverType
-import com.stable.scoi.presentation.ui.transfer.dialog.SetBookmark
+import com.stable.scoi.presentation.ui.transfer.recyclerview.DirectoryOnClickListener
+import com.stable.scoi.presentation.ui.transfer.recyclerview.DirectoryRVAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBookmark,
-    SetReceiverType, SetExchangeType,
+class TransferFragment : DirectoryOnClickListener, SetExchangeType,
     BaseFragment<FragmentTransferBinding, TransferState, TransferEvent, TransferViewModel>(
     FragmentTransferBinding::inflate
 ) {
-    private var bookmarkData = ArrayList<BookMark>()
-    private var recentData = ArrayList<Recent>()
+    private var directoryData = ArrayList<Directory>()
 
     override val viewModel: TransferViewModel by activityViewModels()
 
+    override fun onResume() {
+        super.onResume()
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
+
     override fun initView() {
-        //input
-        binding.TransferInputNameET.setOnClickListener {
-            viewModel.onReceiverTypeClicked()
+
+        binding.TransferNextTV.isEnabled = false
+
+        val watcher = object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {}
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val value1 = binding.TransferInputNameET.text.toString()
+                val value2 = binding.TransferInputName1ENGET.text.toString()
+                val value3 = binding.TransferInputName2ENGET.text.toString()
+                val value4 = binding.TransferInputAddressET.text.toString()
+
+                updateButtonState(value1, value2, value3, value4, viewModel.exchangeType.value)
+            }
         }
 
-        binding.TransferReceiverTypeTV.setOnClickListener {
-            viewModel.onReceiverTypeChange()
+        binding.TransferDirectoryIcIV.setOnClickListener {
+            binding.TransferDirectoryIcPopupTV.visibility = View.VISIBLE
+            binding.TransferDirectoryIcPopupIV.visibility = View.VISIBLE
         }
+
+        binding.root.setOnClickListener {
+            binding.TransferDirectoryIcPopupTV.visibility = View.GONE
+            binding.TransferDirectoryIcPopupIV.visibility = View.GONE
+        }
+
+        binding.TransferInputNameET.addTextChangedListener(watcher)
+        binding.TransferInputName1ENGET.addTextChangedListener(watcher)
+        binding.TransferInputName2ENGET.addTextChangedListener(watcher)
+        binding.TransferInputAddressET.addTextChangedListener(watcher)
 
         binding.TransferInputExchangeET.isFocusable = false
         binding.TransferInputExchangeET.setOnClickListener {
@@ -53,12 +80,12 @@ class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBook
             )
         }
 
-        binding.TransferInputNameET.text.toString()
-
         binding.TransferNextTV.setOnClickListener {
-            val name: String = binding.TransferInputNameET.text.toString()
+            val nameKOR: String = binding.TransferInputNameET.text.toString()
+            val nameENG: String =
+                binding.TransferInputName1ENGET.text.toString() + " " + binding.TransferInputName2ENGET.text.toString()
             val address: String = binding.TransferInputAddressET.text.toString()
-            viewModel.submitReceiver(name,address)
+            viewModel.submitReceiver(nameKOR, nameENG, address)
             viewModel.onClickNextButton()
         }
 
@@ -72,45 +99,16 @@ class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBook
         viewModel.focusRemove(binding.TransferCorpNameKORET)
 
 
-
-        //output
         repeatOnStarted(viewLifecycleOwner) {
             launch {
-                viewModel.receiverType.collect { receiverType ->
-                    when (receiverType) {
-                        ReceiverType.Empty -> {
-                            binding.TransferInputNameET.isFocusable = false
-                        }
-
-                        ReceiverType.Individual -> {
-                            individualTypeView()
-                        }
-
-                        ReceiverType.Corporation -> {
-                            corporationTypeView()
-                        }
-                    }
-                }
-            }
-
-            launch {
-                viewModel.receiver.collect { receiver ->
-                    if (receiver.receiverName == "") {
-                        binding.TransferInputNameWarningTV.visibility = View.VISIBLE
-                    } else {
-                        binding.TransferInputNameWarningTV.visibility = View.GONE
-                    }
-
-                    if (receiver.receiverAddress == "") {
-                        binding.TransferInputAddressWarningTV.visibility = View.VISIBLE
-                    } else {
-                        binding.TransferInputAddressWarningTV.visibility = View.GONE
-                    }
-                }
-            }
-
-            launch {
                 viewModel.exchangeType.collect { exchange ->
+                    val value1 = binding.TransferInputNameET.text.toString()
+                    val value2 = binding.TransferInputName1ENGET.text.toString()
+                    val value3 = binding.TransferInputName2ENGET.text.toString()
+                    val value4 = binding.TransferInputAddressET.text.toString()
+
+                    updateButtonState(value1, value2, value3, value4, exchange)
+
                     when (exchange) {
                         Exchange.Upbit -> {
                             binding.TransferInputExchangeWarningTV.visibility = View.GONE
@@ -119,6 +117,7 @@ class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBook
                                 ContextCompat.getColor(requireContext(), R.color.black)
                             )
                         }
+
                         Exchange.Bithumb -> {
                             binding.TransferInputExchangeWarningTV.visibility = View.GONE
                             binding.TransferInputExchangeET.setText("빗썸")
@@ -126,16 +125,11 @@ class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBook
                                 ContextCompat.getColor(requireContext(), R.color.black)
                             )
                         }
-                        Exchange.Binance -> {
-                            binding.TransferInputExchangeWarningTV.visibility = View.GONE
-                            binding.TransferInputExchangeET.setText("Binance")
-                            binding.TransferInputExchangeET.setTextColor(
-                                ContextCompat.getColor(requireContext(), R.color.black)
-                            )
-                        }
+
                         Exchange.Unselected -> {
                             binding.TransferInputExchangeWarningTV.visibility = View.VISIBLE
                         }
+
                         else -> Unit
                     }
                 }
@@ -150,6 +144,7 @@ class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBook
                                 "BottomSheet"
                             )
                         }
+
                         TransferEvent.NavigateToNextPage -> {
                             findNavController().navigate(R.id.transfer_amount_fragment)
                         }
@@ -158,98 +153,18 @@ class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBook
             }
         }
 
-        bookmarkData.apply {
-            add(BookMark("1", "홍길동", "주소", "UPBIT", true))
-            add(BookMark("2", "홍길동", "주소", "UPBIT", true))
-            add(BookMark("3", "홍길동", "주소", "UPBIT", true))
-            add(BookMark("4", "홍길동", "주소", "UPBIT", true))
-            add(BookMark("5", "홍길동", "주소", "UPBIT", true))
-        }
-            //더미 데이터1
-
-
-        recentData.apply {
-            add(Recent("1", "홍길동", "주소", "UPBIT", true))
-            add(Recent("2", "홍길동", "주소", "UPBIT", true))
-            add(Recent("3", "홍길동", "주소", "UPBIT", true))
-            add(Recent("4", "홍길동", "주소", "UPBIT", true))
-            add(Recent("5", "홍길동", "주소", "UPBIT", true))
-        }
-            //더미 데이터2
-
-        val bookMarkRVAdapter = BookMarkRVAdapter(bookmarkData, this)
-        val recentRVAdapter = RecentRVAdapter(recentData, this)
-        binding.TransferBookmarkRV.adapter = bookMarkRVAdapter
-        binding.TransferBookmarkRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-
-        binding.TransferBookmarkTV.setOnClickListener {
-            binding.apply {
-                TransferRecentTV.typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_regular)
-                TransferBookmarkTV.typeface = ResourcesCompat.getFont(requireContext(),R.font.pretendard_semibold)
-                TransferRecentTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                TransferBookmarkTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                //TextAppearance로 통합 예정
-                TransferBookmarkRV.adapter = bookMarkRVAdapter
-                TransferBookmarkRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            }
+        directoryData.apply {
+            add(Directory("1", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
+            add(Directory("2", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
+            add(Directory("3", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
+            add(Directory("4", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
+            add(Directory("5", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
         }
 
-        binding.TransferRecentTV.setOnClickListener {
-            binding.apply {
-                TransferRecentTV.typeface = ResourcesCompat.getFont(requireContext(), R.font.pretendard_semibold)
-                TransferBookmarkTV.typeface = ResourcesCompat.getFont(requireContext(),R.font.pretendard_regular)
-                TransferRecentTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                TransferBookmarkTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                //TextAppearance로 통합 예정
-                TransferBookmarkRV.adapter = recentRVAdapter
-                TransferBookmarkRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            }
-        }
-
-        binding.TransferBookmarkAddTV.setOnClickListener {
-            BookMarkDialogFragment().show(
-                childFragmentManager,
-                "Dialogfragment"
-            )
-        }
-    }
-
-    fun individualTypeView() {
-        binding.apply {
-            TransferInputNameET.isFocusable = true
-            TransferInputNameET.isFocusableInTouchMode = true
-            TransferInputNameET.requestFocus()
-            TransferReceiverTypeTV.visibility = View.VISIBLE
-            TransferReceiverTypeTV.text = "개인"
-            TransferCorpNameENGET.visibility = View.GONE
-            TransferCorpNameENGTV.visibility = View.GONE
-            TransferCorpNameKORET.visibility = View.GONE
-            TransferCorpNameKORTV.visibility = View.GONE
-        }
-    }
-    fun corporationTypeView() {
-        binding.apply {
-            TransferInputNameET.isFocusable = true
-            TransferInputNameET.isFocusableInTouchMode = true
-            TransferInputNameET.requestFocus()
-            TransferReceiverTypeTV.visibility = View.VISIBLE
-            TransferReceiverTypeTV.text = "법인"
-            TransferCorpNameENGET.visibility = View.VISIBLE
-            TransferCorpNameENGTV.visibility = View.VISIBLE
-            TransferCorpNameKORET.visibility = View.VISIBLE
-            TransferCorpNameKORTV.visibility = View.VISIBLE
-        }
-    }
-
-
-    //ReceiverTypeBottomSheet
-    override fun individual() {
-        viewModel.setReceiverTypeIndividual()
-    }
-
-    override fun corporation() {
-        viewModel.setReceiverTypeCorporation()
+        val directoryRVAdapter = DirectoryRVAdapter(directoryData, this)
+        binding.TransferBookmarkRV.adapter = directoryRVAdapter
+        binding.TransferBookmarkRV.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
 
@@ -262,47 +177,15 @@ class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBook
         viewModel.setExchangeBithumb()
     }
 
-    override fun binance() {
-        viewModel.setExchangeBinance()
-    }
-
     override fun empty() {
         viewModel.setExchange()
     }
 
 
-    //BookMarkDialog
-    override fun inputString(name: String, address: String) {
-        viewModel.submitBookMarkReceiver(name,address)
-    }
-
-    override fun setExchangeUPBIT() {
-        viewModel.setBookMarkExchangeUpbit()
-    }
-
-    override fun setExchangeBITHUMB() {
-        viewModel.setBookMarkExchangeBithumb()
-    }
-
-    override fun setExchangeBINANCE() {
-        viewModel.setBookMarkExchangeBinance()
-    }
-
-    override fun removeFocus(editText: EditText) {
-        viewModel.focusRemove(editText)
-    }
-
-
     //RVAdatper
-    override fun rcOnclickListener(recent: Recent) {
-        viewModel.submitReceiver(recent.recipientName, recent.walletAddress)
-        changeStringToExchangeType(recent.exchangeType)
-        findNavController().navigate(R.id.transfer_amount_fragment)
-    }
-
-    override fun bmOnclickListener(bookMark: BookMark) {
-        viewModel.submitReceiver(bookMark.recipientName, bookMark.walletAddress)
-        changeStringToExchangeType(bookMark.exchangeType)
+    override fun dtOnclickListener(directory: Directory) {
+        viewModel.submitReceiver(directory.recipientKORName, directory.recipientENGName, directory.walletAddress)
+        changeStringToExchangeType(directory.exchangeType)
         findNavController().navigate(R.id.transfer_amount_fragment)
     }
 
@@ -314,10 +197,15 @@ class TransferFragment : RecentOnCliCKListener, BookMarkOnClickListener, SetBook
             "BITHUMB" -> {
                 viewModel.setExchangeBithumb()
             }
-            "BINANCE" -> {
-                viewModel.setExchangeBinance()
-            }
         }
+    }
+
+    private fun updateButtonState(value1: String, value2: String, value3: String, value4: String, exchange: Exchange) {
+        if(value1 == "" || value2 == "" || value3 == "" || value4 == "" || exchange == Exchange.Empty || exchange == Exchange.Unselected
+        ) {
+            Unit
+        }
+        else binding.TransferNextTV.isEnabled = true
     }
 
 }

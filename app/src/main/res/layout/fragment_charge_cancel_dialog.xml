@@ -7,13 +7,9 @@
 
     </data>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bookmark_background">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="328dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bookmark_background">
             
@@ -58,7 +54,7 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
             
             <FrameLayout
-                android:layout_width="258dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@null"
                 android:background="@drawable/alert_background"
@@ -68,7 +64,9 @@
                 app:layout_constraintTop_toBottomOf="@id/Wallet_charge_cancel_alert_message_TV"
                 android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -180,7 +178,8 @@
                 app:layout_constraintTop_toBottomOf="@id/Wallet_charge_cancel_alert_info_FL" 
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="24dp"
-                android:paddingVertical="10dp">
+                android:paddingVertical="10dp"
+                android:gravity="center">
                 
                 <TextView
                     android:layout_width="140dp"
@@ -209,5 +208,4 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
 </layout>

@@ -7,14 +7,11 @@
 
     </data>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bookmark_background">
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="328dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/bookmark_background">
 
             <ImageView
@@ -62,7 +59,8 @@
                 app:layout_constraintTop_toBottomOf="@id/Wallet_charge_cancel_complete_message_TV"
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="24dp"
-                android:paddingVertical="10dp">
+                android:paddingVertical="10dp"
+                android:gravity="center">
 
                 <TextView
                     android:layout_width="140dp"
@@ -86,5 +84,4 @@
                     android:gravity="center"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
 </layout>

@@ -7,14 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentWalletBinding
 import com.stable.scoi.presentation.base.BaseFragment
-import com.stable.scoi.presentation.ui.transfer.BookMark
 import com.stable.scoi.presentation.ui.transfer.Exchange
 import com.stable.scoi.presentation.ui.wallet.bottomsheet.ArraySettingChargeBottomSheet
 import com.stable.scoi.presentation.ui.wallet.bottomsheet.ArraySettingTransferBottomSheet
 import com.stable.scoi.presentation.ui.wallet.bottomsheet.ExchangeBottomSheet
 import com.stable.scoi.presentation.ui.wallet.bottomsheet.SearchNameBottomSheet
 import com.stable.scoi.presentation.ui.wallet.bottomsheet.SetExchangeType
-import com.stable.scoi.presentation.ui.wallet.dialog.CancelCompleteDialogFragment
 import com.stable.scoi.presentation.ui.wallet.dialog.ChargeCancelDialogFragment
 import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.Counterparty
 import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeList
@@ -51,10 +49,6 @@ class WalletFragment: RecentChargeListOnClickListener, RecentTransferListOnClick
                     Exchange.Bithumb -> {
                         binding.WalletExchangeIV.setImageResource(R.drawable.bithumb_logo)
                         binding.WalletExchangeTV.text = "빗썸"
-                    }
-                    Exchange.Binance -> {
-                        binding.WalletExchangeIV.setImageResource(R.drawable.binance_logo)
-                        binding.WalletExchangeTV.text = "BINANCE"
                     }
                     else -> Unit
                 }
@@ -165,10 +159,6 @@ class WalletFragment: RecentChargeListOnClickListener, RecentTransferListOnClick
 
     override fun bithumb() {
         viewModel.setExchangeBithumb()
-    }
-
-    override fun binance() {
-        viewModel.setExchangeBinance()
     }
 
     override fun empty() {

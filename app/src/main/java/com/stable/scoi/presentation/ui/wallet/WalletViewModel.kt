@@ -37,10 +37,6 @@ class WalletViewModel @Inject constructor(): BaseViewModel<WalletState, WalletEv
         _exchangeType.value = Exchange.Bithumb
         exType = "BITHUMB"
     }
-    fun setExchangeBinance() {
-        _exchangeType.value = Exchange.Binance
-        exType = "BINANCE"
-    }
     fun setExchange() {
         _exchangeType.value = Exchange.Unselected
     }
