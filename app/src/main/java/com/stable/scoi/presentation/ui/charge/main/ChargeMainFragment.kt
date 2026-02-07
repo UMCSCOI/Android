@@ -3,6 +3,7 @@ package com.stable.scoi.presentation.ui.charge.main
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentChargeMainBinding
 import com.stable.scoi.domain.model.enums.AccountType
@@ -22,6 +23,14 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
             vm = viewModel
             textSelectAccount.setOnClickListener {
                 showAccountBottomSheet()
+            }
+
+            textStableUsdt.setOnClickListener {
+                navigateChart("USDT")
+            }
+
+            textStableUsdc.setOnClickListener {
+                navigateChart("USDC")
             }
         }
     }
@@ -62,6 +71,11 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
                 }
             }
         ).show(parentFragmentManager, "")
+    }
+
+    private fun navigateChart(coin: String) {
+        val action = ChargeMainFragmentDirections.actionChargeMainFragmentToChargeFragment(coin)
+        findNavController().navigate(action)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

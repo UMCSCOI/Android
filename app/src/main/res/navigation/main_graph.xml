@@ -41,40 +41,50 @@
 
     <fragment
         android:id="@+id/transfer_complete_fragment"
-        android:name="com.stable.scoi.presentation.ui.transfer.TransferCompleteFragment"/>
+        android:name="com.stable.scoi.presentation.ui.transfer.TransferCompleteFragment" />
 
     <fragment
         android:id="@+id/chargeMainFragment"
         android:name="com.stable.scoi.presentation.ui.charge.main.ChargeMainFragment"
         android:label="충전 화면 메인"
-        tools:layout="@layout/fragment_charge_main"/>
+        tools:layout="@layout/fragment_charge_main" >
+        <action
+            android:id="@+id/action_chargeMainFragment_to_chargeFragment"
+            app:destination="@id/chargeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/chargeFragment"
         android:name="com.stable.scoi.presentation.ui.charge.chart.ChargeFragment"
         android:label="충전 화면"
-        tools:layout="@layout/fragment_charge"/>
+        tools:layout="@layout/fragment_charge">
+
+        <argument
+            android:name="coin"
+            android:defaultValue=""
+            app:argType="string" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/login_pin_fragment"
         android:name="com.stable.scoi.presentation.ui.login.LoginFragment">
 
         <action
-                android:id="@+id/action_loginFragment_to_homeFragment"
-                app:destination="@id/homeFragment" />
-
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
-
-
-
+    <fragment
         android:id="@+id/homeFragment"
         android:name="com.stable.scoi.presentation.ui.home.HomeFragment"
         android:label="홈 화면"
         tools:layout="@layout/fragment_home">
+
         <action
             android:id="@+id/action_homeFragment_to_tansfer_fragment"
             app:destination="@id/tansfer_fragment" />
+
     </fragment>
 
 

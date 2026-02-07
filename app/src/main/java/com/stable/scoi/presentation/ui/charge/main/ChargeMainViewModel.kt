@@ -25,7 +25,7 @@ import kotlinx.coroutines.Job
 @RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
 class ChargeMainViewModel @Inject constructor(
-    private val chartRepository: ChartRepository // DummyRepository가 주입됨
+    private val chartRepository: ChartRepository
 ) : BaseViewModel<ChargeMainUiState, ChargeMainEvent>(
     ChargeMainUiState(),
 ) {
@@ -37,12 +37,15 @@ class ChargeMainViewModel @Inject constructor(
         if (coinJob?.isActive == true) return
 
         coinJob = viewModelScope.launch {
-            chartRepository.streamTickers(listOf("KRW-USDT", "KRW-USDC"))
+            chartRepository.streamUnified(
+                chartMarket = null,
+                tickerMarkets = listOf("KRW-USDT", "KRW-USDC")
+            )
                 .collect { ev ->
                     if (ev is CandleStreamEvent.TickerUpdate) {
                         when (ev.ticker.market) {
-                            "KRW-USDT" -> updateTickerState(ev.ticker, isUsdt = true)
-                            "KRW-USDC" -> updateTickerState(ev.ticker, isUsdt = false)
+                            "KRW-USDT" -> updateTickerState(ev.ticker, true)
+                            "KRW-USDC" -> updateTickerState(ev.ticker, false)
                         }
                     }
                 }
@@ -99,7 +102,6 @@ class ChargeMainViewModel @Inject constructor(
     }
 }
 
-// --- State & Models ---
 
 data class ChargeMainUiState(
     val usdtInfo: CoinInfo = CoinInfo(),

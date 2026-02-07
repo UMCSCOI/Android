@@ -30,70 +30,74 @@ class ChartRepository @Inject constructor(
 ) {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun streamMarket(
-        market: String,
-        unitMinutes: Int,
-        initialCount: Int
+    // ChartRepository.kt
+
+    fun streamUnified(
+        chartMarket: String? = null,   // ✅ Nullable로 변경 (Default = null)
+        tickerMarkets: List<String>,
+        unitMinutes: Int = 1
     ): Flow<CandleStreamEvent> = channelFlow {
 
-        // 1) REST API로 초기 분봉 데이터 로드 (차트용 스냅샷)
-        try {
-            val snapshot = rest.getMinuteCandles(
-                unit = unitMinutes,
-                market = market,
-                count = initialCount.coerceAtMost(200),
-            )
-                .asReversed() // 과거 -> 최신 순 정렬
-                .map { it.toTvCandle() }
+        // 1) REST API 스냅샷: chartMarket이 있을 때만 요청
+        if (chartMarket != null) {
+            try {
+                val snapshot = rest.getMinuteCandles(
+                    unit = unitMinutes,
+                    market = chartMarket,
+                    count = 200,
+                )
+                    .asReversed()
+                    .map { it.toTvCandle() }
 
-            send(CandleStreamEvent.Snapshot(snapshot))
-
-        } catch (e: Exception) {
-            SLOG.D("Repo: REST Snapshot error $e")
-            // 스냅샷 실패해도 소켓 연결은 시도하도록 진행
+                send(CandleStreamEvent.Snapshot(snapshot))
+            } catch (e: Exception) {
+                SLOG.D("Repo: REST Snapshot error $e")
+            }
         }
 
-        // 2) WS 통합 스트림 연결 (candle + trade + ticker)
+        // 2) WS 통합 연결
+        // listOfNotNull: null인 chartMarket은 자동으로 제외됨
+        val allMarkets = (listOfNotNull(chartMarket) + tickerMarkets).distinct()
+
+        // chartMarket이 없으면 캔들/체결은 구독할 필요 없음 (데이터 절약)
+        val needChart = chartMarket != null
+
         val wsJob = launch {
             wsApi.streamMinuteCandle(
-                markets = listOf(market),
+                markets = allMarkets,
                 unitMinutes = unitMinutes,
-                subscribeCandle = true, // 차트 갱신용
-                subscribeTrade = true,  // 체결 내역용
-                subscribeTicker = true  // ✅ 현재가 및 등락률용
+                subscribeCandle = needChart, // ✅ 동적 설정
+                subscribeTrade = needChart,  // ✅ 동적 설정
+                subscribeTicker = true       // Ticker는 항상 구독
             )
-                .catch { e ->
-                    SLOG.D("Repo: WS error $e")
-                }
+                .catch { e -> SLOG.D("Repo: WS error $e") }
                 .collect { ev ->
-                    when (ev) {
-                        is UpbitWsEvent.Message -> {
-                            // JSON 파싱
-                            val parsed = parseUpbitWsMessage(ev.rawJson, expectedMarket = market)
-                                ?: return@collect
+                    if (ev is UpbitWsEvent.Message) {
+                        val parsed = parseUpbitWsMessage(ev.rawJson) ?: return@collect
 
-                            // 파싱 결과에 따라 이벤트 분기 처리
-                            when (parsed) {
-                                is ParsedUpbitWs.Candle ->
+                        when (parsed) {
+                            // [캔들] chartMarket이 null이 아니고, 마켓이 일치할 때만
+                            is ParsedUpbitWs.Candle -> {
+                                val code = JSONObject(ev.rawJson).optString("code")
+                                if (chartMarket != null && code == chartMarket) {
                                     send(CandleStreamEvent.Update(parsed.value))
+                                }
+                            }
 
-                                is ParsedUpbitWs.Trade ->
+                            // [체결] chartMarket이 null이 아니고, 마켓이 일치할 때만
+                            is ParsedUpbitWs.Trade -> {
+                                if (chartMarket != null && parsed.value.market == chartMarket) {
                                     send(CandleStreamEvent.TradeUpdate(parsed.value))
+                                }
+                            }
 
-                                is ParsedUpbitWs.Ticker -> // ✅ Ticker 처리 추가
+                            // [Ticker] 요청한 Ticker 목록에 포함될 때만
+                            is ParsedUpbitWs.Ticker -> {
+                                if (parsed.value.market in tickerMarkets) {
                                     send(CandleStreamEvent.TickerUpdate(parsed.value))
+                                }
                             }
                         }
-
-                        is UpbitWsEvent.Failure -> {
-                            SLOG.D("Repo: WS failure=${ev.message}")
-                        }
-
-                        is UpbitWsEvent.Closing -> {
-                            SLOG.D("Repo: WS closing=${ev.reason}")
-                        }
-
-                        else -> Unit
                     }
                 }
         }
@@ -104,51 +108,39 @@ class ChartRepository @Inject constructor(
         }
     }
 
+    // --- Parsing Logic ---
+
     @RequiresApi(Build.VERSION_CODES.O)
     private val UPBIT_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun parseUpbitWsMessage(
-        rawJson: String,
-        expectedMarket: String? = null, // ✅ 수정 1: Nullable로 변경 (null이면 모든 마켓 허용)
-    ): ParsedUpbitWs? {
+    private fun parseUpbitWsMessage(rawJson: String): ParsedUpbitWs? {
         val obj = runCatching { JSONObject(rawJson) }.getOrNull() ?: return null
-
-        val type = obj.optString("type") // "candle.1m", "trade", "ticker"
-        val code = obj.optString("code")
-
-        // ✅ 수정 2: expectedMarket이 "지정되었는데(not null)" 코드가 다를 때만 거름.
-        // (null인 경우는 검사하지 않고 통과시킴)
-        if (expectedMarket != null && code != expectedMarket) return null
+        val type = obj.optString("type")
 
         return when {
-            type.startsWith("candle.") -> {
-                parseCandle(obj)?.let { ParsedUpbitWs.Candle(it) }
-            }
-
-            type == "trade" -> {
-                parseTrade(obj)?.let { ParsedUpbitWs.Trade(it) }
-            }
-
-            type == "ticker" -> { // Ticker 파싱
-                parseTicker(obj)?.let { ParsedUpbitWs.Ticker(it) }
-            }
-
+            type.startsWith("candle.") -> parseCandle(obj)?.let { ParsedUpbitWs.Candle(it) }
+            type == "trade" -> parseTrade(obj)?.let { ParsedUpbitWs.Trade(it) }
+            type == "ticker" -> parseTicker(obj)?.let { ParsedUpbitWs.Ticker(it) }
             else -> null
         }
     }
-    // --- Parsing Logic Methods ---
 
-    /**
-     * ✅ Ticker(현재가) 파싱 로직
-     */
+    // domain/repository/ChartRepository.kt 내부
+
     private fun parseTicker(obj: JSONObject): UpbitTicker? {
         val market = obj.optString("code")
         if (market.isBlank()) return null
 
         val tradePrice = obj.optDouble("trade_price", Double.NaN)
-        val signedChangeRate = obj.optDouble("signed_change_rate", Double.NaN) // 예: 0.05
+        val signedChangeRate = obj.optDouble("signed_change_rate", Double.NaN)
         val accVol = obj.optDouble("acc_trade_volume_24h", 0.0)
+
+        // ✅ 추가 파싱
+        val accPrice = obj.optDouble("acc_trade_price_24h", 0.0)
+        val high = obj.optDouble("high_price", 0.0)
+        val low = obj.optDouble("low_price", 0.0)
+        val prevClose = obj.optDouble("prev_closing_price", 0.0)
 
         if (tradePrice.isNaN() || signedChangeRate.isNaN()) return null
 
@@ -156,7 +148,12 @@ class ChartRepository @Inject constructor(
             market = market,
             tradePrice = tradePrice,
             signedChangeRate = signedChangeRate,
-            accTradeVolume24h = accVol
+            accTradeVolume24h = accVol,
+            // ✅ 생성자에 추가 전달
+            accTradePrice24h = accPrice,
+            highPrice = high,
+            lowPrice = low,
+            prevClosingPrice = prevClose
         )
     }
 
@@ -164,88 +161,36 @@ class ChartRepository @Inject constructor(
     private fun parseCandle(obj: JSONObject): TvCandle? {
         val utc = obj.optString("candle_date_time_utc")
         if (utc.isBlank()) return null
-
         val timeSec = LocalDateTime.parse(utc, UPBIT_FMT).toEpochSecond(ZoneOffset.UTC)
-
         val open = obj.optDouble("opening_price", Double.NaN)
         val high = obj.optDouble("high_price", Double.NaN)
         val low = obj.optDouble("low_price", Double.NaN)
-        val close = obj.optDouble("trade_price", Double.NaN) // 캔들에서는 현재가가 trade_price
+        val close = obj.optDouble("trade_price", Double.NaN)
         val volume = obj.optDouble("candle_acc_trade_volume", Double.NaN)
 
         if (open.isNaN() || high.isNaN() || low.isNaN() || close.isNaN() || volume.isNaN()) return null
-
         val volumeColor = if (close >= open) "#ff4d4f" else "#2f7cff"
 
         return TvCandle(
-            time = timeSec,
-            open = open,
-            high = high,
-            low = low,
-            close = close,
-            volume = volume,
-            volumeColor = volumeColor
+            time = timeSec, open = open, high = high, low = low, close = close,
+            volume = volume, volumeColor = volumeColor
         )
     }
 
     private fun parseTrade(obj: JSONObject): RecentTrade? {
         val market = obj.optString("code")
         if (market.isBlank()) return null
-
-        // 타임스탬프 처리
-        val tsMs = when {
-            obj.has("trade_timestamp") -> obj.optLong("trade_timestamp", 0L)
-            obj.has("timestamp") -> obj.optLong("timestamp", 0L)
-            else -> 0L
-        }
+        val tsMs = if (obj.has("trade_timestamp")) obj.optLong("trade_timestamp", 0L) else obj.optLong("timestamp", 0L)
         if (tsMs <= 0L) return null
-
         val price = obj.optDouble("trade_price", Double.NaN)
         val volume = obj.optDouble("trade_volume", Double.NaN)
-        if (price.isNaN() || volume.isNaN()) return null
-
-        val askBid = obj.optString("ask_bid") // "ASK" or "BID"
-        if (askBid.isBlank()) return null
-
+        val askBid = obj.optString("ask_bid")
+        if (price.isNaN() || volume.isNaN() || askBid.isBlank()) return null
         val color = if (askBid == "BID") "#EF2B2A" else "#2569F2"
 
         return RecentTrade(
-            market = market,
-            timestampMs = tsMs,
-            price = price,
-            volume = volume,
-            askBid = askBid,
-            color = color
+            market = market, timestampMs = tsMs, price = price,
+            volume = volume, askBid = askBid, color = color
         )
-    }
-
-    fun streamTickers(markets: List<String>): Flow<CandleStreamEvent> = channelFlow {
-        // 1. 소켓 연결 (리스트를 통째로 넘김)
-        val wsJob = launch {
-            wsApi.streamMinuteCandle(
-                markets = markets,          // ["KRW-USDT", "KRW-USDC"]
-                unitMinutes = 1,
-                subscribeCandle = false,    // 캔들 필요 없으면 false
-                subscribeTrade = false,     // 체결 내역 필요 없으면 false
-                subscribeTicker = true      // ✅ 현재가(Ticker) 필수
-            )
-                .catch { e -> SLOG.D("Repo: WS error $e") }
-                .collect { ev ->
-                    if (ev is UpbitWsEvent.Message) {
-                        // Ticker 파싱
-                        val parsed = parseUpbitWsMessage(ev.rawJson, expectedMarket = null) // null이면 모든 마켓 허용
-
-                        // 파싱된 데이터 방출
-                        if (parsed is ParsedUpbitWs.Ticker) {
-                            send(CandleStreamEvent.TickerUpdate(parsed.value))
-                        }
-                    }
-                }
-        }
-
-        awaitClose {
-            wsJob.cancel()
-            wsApi.close()
-        }
     }
 }
