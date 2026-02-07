@@ -50,7 +50,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
                 viewModel.uiState.collect {
                     if (it.isSplash) navController.navigate(R.id.splashFragment)
                     if (it.isHome) navController.navigate(R.id.homeFragment)
-                    if (it.isCharge) navController.navigate(R.id.chargeFragment)
+                    if (it.isCharge) navController.navigate(R.id.chargeMainFragment)
                     //if (it.isWallet) navController.navigate(R.layout.fragment_home)
                 }
             }
@@ -66,7 +66,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
                 R.id.homeFragment -> {
                     binding.layoutBottomNav.visible()
                 }
-                R.id.chargeFragment -> {
+                R.id.chargeMainFragment -> {
                     binding.layoutBottomNav.visible()
                 }
                 else -> {

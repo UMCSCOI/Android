@@ -44,8 +44,14 @@
         android:name="com.stable.scoi.presentation.ui.transfer.TransferCompleteFragment"/>
 
     <fragment
+        android:id="@+id/chargeMainFragment"
+        android:name="com.stable.scoi.presentation.ui.charge.main.ChargeMainFragment"
+        android:label="충전 화면 메인"
+        tools:layout="@layout/fragment_charge_main"/>
+
+    <fragment
         android:id="@+id/chargeFragment"
-        android:name="com.stable.scoi.presentation.ui.charge.ChargeFragment"
+        android:name="com.stable.scoi.presentation.ui.charge.chart.ChargeFragment"
         android:label="충전 화면"
         tools:layout="@layout/fragment_charge"/>
 

@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.ui.charge
+package com.stable.scoi.presentation.ui.charge.chart
 
 import android.content.Context
 import android.os.Build
@@ -21,7 +21,6 @@ import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.charge.adapter.ChargeRecentTradeAdapter
 import com.stable.scoi.util.Format.formatWon
 import com.stable.scoi.util.Format.unformatWon
-import com.stable.scoi.util.SLOG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -115,6 +114,8 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
                         is CandleStreamEvent.TradeUpdate -> {
                             updateTradeList(ev.trade)
                         }
+
+                        is CandleStreamEvent.TickerUpdate -> {}
                     }
 
                 }
