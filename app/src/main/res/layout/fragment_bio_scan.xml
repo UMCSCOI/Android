@@ -64,7 +64,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bio_scan_detail_tv" />
+            app:layout_constraintTop_toBottomOf="@id/bio_scan_intro_tv" />
 
         <ImageView
             android:id="@+id/bio_scan_touch_done_iv"
@@ -75,18 +75,18 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bio_scan_detail_tv" />
+            app:layout_constraintTop_toBottomOf="@id/bio_scan_intro_tv" />
 
         <ImageView
             android:id="@+id/bio_touch_error_iv"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="117dp"
             android:src="@drawable/bio_touch_error"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bio_scan_detail_tv" />
+            app:layout_constraintTop_toBottomOf="@id/bio_scan_intro_tv" />
 
 
         <ImageView
@@ -111,23 +111,25 @@
 
         <ImageView
             android:id="@+id/bio_scan_success_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/bio_check"
+            android:layout_marginTop="117dp"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/bio_scan_uncheck_iv"
-            app:layout_constraintStart_toStartOf="@id/bio_scan_uncheck_iv"
-            app:layout_constraintTop_toTopOf="@id/bio_scan_uncheck_iv" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bio_scan_intro_tv" />
 
         <ImageView
             android:id="@+id/bio_scan_error_iv"
             android:layout_width="110dp"
             android:layout_height="110dp"
+            android:layout_marginTop="117dp"
             android:src="@drawable/bio_error"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/bio_scan_uncheck_iv"
-            app:layout_constraintStart_toStartOf="@id/bio_scan_uncheck_iv"
-            app:layout_constraintTop_toTopOf="@id/bio_scan_uncheck_iv" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bio_scan_intro_tv" />
 
 
         <LinearLayout
@@ -139,7 +141,9 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="visible"
+            >
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/bio_scan_input_inactive_cv"

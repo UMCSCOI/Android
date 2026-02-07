@@ -2,21 +2,18 @@ package com.stable.scoi.presentation.ui.login
 
 import android.os.CountDownTimer
 import android.view.View
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentLoginExpiredBinding
 import com.stable.scoi.extension.toPhoneNumber
 
 import com.stable.scoi.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

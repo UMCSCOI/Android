@@ -108,6 +108,7 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
         }
     }
 
+
     private fun renderUi(state: LoginState) {
         if (state.isButtonEnabled) {
             binding.loginPinInputActiveCv.visibility = View.VISIBLE
@@ -128,7 +129,8 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             is LoginEvent.NavigationToMain -> {
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             }
-            is LoginEvent.NavigationToBiometric -> {
+            is LoginEvent.NavigationToBiometric->{
+                findNavController().navigate(R.id.action_loginFragment_to_bioFragment)
             }
             is LoginEvent.ShowError -> {
 
