@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Wallet_list_VIEW">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/Wallet_list_1_LL"
+
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingHorizontal="16dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/Wallet_list_time_TV"
+
+                android:text="12.14 21:49:26"
+                android:textAppearance="@style/t2"
+                android:textColor="#505050"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="|"
+                android:textAppearance="@style/t2"
+                android:textColor="#505050"
+
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/Wallet_list_assetSymbol_TV"
+
+                android:text="USDT"
+                android:textAppearance="@style/t2"
+                android:textColor="#505050"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/Wallet_list_cancel_TV"
+
+                android:text="취소하기"
+                android:textAppearance="@style/t2"
+                android:textColor="#505050"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/Wallet_list_2_LL"
+
+            app:layout_constraintTop_toBottomOf="@id/Wallet_list_1_LL"
+            android:layout_marginTop="10dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/Wallet_list_charge_assetSymbol_TV"
+
+                android:text="USDT"
+                android:textAppearance="@style/l18_sb"/>
+
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/Wallet_list_charge_state_TV"
+
+                android:text="현금 교환 대기"
+                android:textAppearance="@style/l18_sb"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/Wallet_list_amount_TV"
+
+                android:text="+100"
+                android:textAppearance="@style/l18_sb"
+                android:textColor="#4A4AFA"/>
+
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/Wallet_list_assetSymbol_title_TV"
+
+                android:text="USDT"
+                android:textAppearance="@style/l18_sb"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@id/Wallet_list_2_LL"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"
+
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/Wallet_list_total_amount_TV"
+
+                android:text="310"
+                android:textAppearance="@style/l3"
+                android:textColor="#767676"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/Wallet_list_total_assetSymbol_TV"
+
+                android:text="USDT"
+                android:textAppearance="@style/l3"
+                android:textColor="#767676"
+
+                android:layout_marginStart="4dp"/>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

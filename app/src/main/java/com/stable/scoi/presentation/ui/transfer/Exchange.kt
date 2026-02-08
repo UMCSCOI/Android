@@ -3,7 +3,6 @@ package com.stable.scoi.presentation.ui.transfer
 sealed class Exchange {
     object Upbit: Exchange()
     object Bithumb: Exchange()
-    object Binance: Exchange()
     object Empty: Exchange()
     object Unselected: Exchange()
 }
