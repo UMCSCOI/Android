@@ -174,6 +174,10 @@ class ChargeViewModel @Inject constructor(
     fun updatePageType(type: ChargePageType) {
         updateState { copy(pageType = type) }
     }
+
+    fun back() {
+        emitEvent(ChargeEvent.MoveToBack)
+    }
 }
 
 // State & Event classes (기존 유지)
@@ -186,4 +190,6 @@ data class ChargeUiState(
     val coin: CoinInfo = CoinInfo(),
 ) : UiState
 
-sealed class ChargeEvent : UiEvent
+sealed interface ChargeEvent : UiEvent {
+    data object MoveToBack: ChargeEvent
+}

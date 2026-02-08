@@ -55,10 +55,6 @@ class ChargeFragment :
             vm = viewModel
             setSummaryCountUi()
 
-            imgBack.setOnClickListener {
-                findNavController().popBackStack()
-            }
-
             if (args.coin == "USDT") {
                 textAmount.text = "체결량(USDT)"
                 imageStableUsdt.setImageResource(R.drawable.ic_usdt)
@@ -139,7 +135,9 @@ class ChargeFragment :
         repeatOnStarted(viewLifecycleOwner) {
             launch {
                 viewModel.uiEvent.collect {
-
+                    when(it){
+                        ChargeEvent.MoveToBack -> findNavController().popBackStack()
+                    }
                 }
             }
 

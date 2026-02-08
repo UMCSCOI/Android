@@ -60,8 +60,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bottom_nav_doller"
-                    android:tint="@{vm.uiState.home ? @color/active : @color/disabled}"
+                    android:src="@{vm.uiState.home ? @drawable/ic_bottom_nav_doller :@drawable/ic_bottom_nav_doller_inactive}"
                     tools:ignore="UseAppTint" />
 
                 <TextView
@@ -89,8 +88,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bottom_nav_database"
-                    android:tint="@{vm.uiState.charge ? @color/active : @color/disabled}"
+                    android:src="@{vm.uiState.charge ? @drawable/ic_bottom_nav_database :@drawable/ic_bottom_nav_database_inactive}"
                     app:tint="@color/active"
                     tools:ignore="UseAppTint" />
 
@@ -119,8 +117,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bottom_nav_credit_card"
-                    android:tint="@{vm.uiState.wallet ? @color/active : @color/disabled}"
+                    android:src="@{vm.uiState.charge ? @drawable/ic_bottom_nav_credit_card :@drawable/ic_bottom_nav_credit_card_inactive}"
                     tools:ignore="UseAppTint" />
 
                 <TextView
