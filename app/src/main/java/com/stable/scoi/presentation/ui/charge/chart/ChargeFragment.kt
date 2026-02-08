@@ -5,12 +5,16 @@ import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentChargeBinding
 import com.stable.scoi.domain.model.CandleStreamEvent
 import com.stable.scoi.domain.model.RecentTrade
+import com.stable.scoi.domain.model.UpbitTicker
 import com.stable.scoi.domain.model.enums.ChargeInputType
 import com.stable.scoi.extension.gone
 import com.stable.scoi.extension.setupTvChart
@@ -18,20 +22,31 @@ import com.stable.scoi.extension.tvSetData
 import com.stable.scoi.extension.tvUpdate
 import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.charge.adapter.ChargePriceAdapter
 import com.stable.scoi.presentation.ui.charge.adapter.ChargeRecentTradeAdapter
+import com.stable.scoi.presentation.ui.charge.adapter.PriceItem
 import com.stable.scoi.util.Format.formatWon
 import com.stable.scoi.util.Format.unformatWon
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
+import java.util.Locale
 
 @AndroidEntryPoint
-class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, ChargeEvent, ChargeViewModel>(
-    FragmentChargeBinding::inflate,
-) {
+class ChargeFragment :
+    BaseFragment<FragmentChargeBinding, ChargeUiState, ChargeEvent, ChargeViewModel>(
+        FragmentChargeBinding::inflate,
+    ) {
     override val viewModel: ChargeViewModel by viewModels()
 
-    private val chargeRecentTradeAdapter : ChargeRecentTradeAdapter by lazy {
+    private val args: ChargeFragmentArgs by navArgs()
+
+    private val chargeRecentTradeAdapter: ChargeRecentTradeAdapter by lazy {
         ChargeRecentTradeAdapter()
+    }
+
+    private val chargePriceAdapter: ChargePriceAdapter by lazy {
+        ChargePriceAdapter()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -40,9 +55,21 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
             vm = viewModel
             setSummaryCountUi()
 
-            binding.tvChartWebView.setupTvChart(onReady = {
-                viewModel.test("KRW-USDC", 1)
+            if (args.coin == "USDT") {
+                textAmount.text = "체결량(USDT)"
+                imageStableUsdt.setImageResource(R.drawable.ic_usdt)
+                textStableUsdt.text = "USDT"
+            } else {
+                textAmount.text = "체결량(USDC)"
+                imageStableUsdt.setImageResource(R.drawable.ic_usdc)
+                textStableUsdt.text = "USDC"
+            }
+
+            tvChartWebView.setupTvChart(onReady = {
+                val coin = if (args.coin == "USDT") "KRW-USDT" else "KRW-USDC"
+                viewModel.startMonitoring(coin)
             })
+
 
             layoutChargeMoney.setOnClickListener {
                 setEditingUi()
@@ -92,6 +119,12 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
                 layoutManager = LinearLayoutManager(context)
                 itemAnimator = null
             }
+
+            recyclerPrice.apply {
+                adapter = chargePriceAdapter
+                layoutManager = LinearLayoutManager(context)
+                itemAnimator = null
+            }
         }
     }
 
@@ -102,7 +135,9 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
         repeatOnStarted(viewLifecycleOwner) {
             launch {
                 viewModel.uiEvent.collect {
-
+                    when(it){
+                        ChargeEvent.MoveToBack -> findNavController().popBackStack()
+                    }
                 }
             }
 
@@ -115,7 +150,10 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
                             updateTradeList(ev.trade)
                         }
 
-                        is CandleStreamEvent.TickerUpdate -> {}
+                        is CandleStreamEvent.TickerUpdate -> {
+                            updateLeftPanel(ev.ticker)
+                            updatePriceList(ev.ticker)
+                        }
                     }
 
                 }
@@ -123,7 +161,11 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
 
             launch {
                 viewModel.uiState.collect {
-                    if (it.inputType == ChargeInputType.SELECT ) {
+                    binding.textStableUsdtMoney.text = "${it.coin.price}원"
+                    binding.textStableUsdtMoneyPercent.text = it.coin.rate
+                    binding.textStableUsdtMoneyPercent.setTextColor(it.coin.color)
+
+                    if (it.inputType == ChargeInputType.SELECT) {
                         showBottomLayout()
                     } else {
                         hideBottomLayout()
@@ -153,13 +195,15 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
 
     private fun showKeyboard(target: View) {
         target.post {
-            val imm = target.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm =
+                target.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(target, InputMethodManager.SHOW_IMPLICIT)
         }
     }
 
     private fun hideKeyboard(target: View) {
-        val imm = target.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            target.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(target.windowToken, 0)
     }
 
@@ -167,6 +211,11 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
         binding.apply {
             textInputSelf.visible()
             textInputSelect.visible()
+
+            textInputSelf.setTextColor(ContextCompat.getColor(requireActivity(), R.color.main_black))
+            textInputSelect.setTextColor(ContextCompat.getColor(requireActivity(), R.color.main_black))
+
+
             editMoney.visible()
             imageInputMode.visible()
 
@@ -184,6 +233,9 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
                 textInputSelect.visible()
             }
 
+            textInputSelf.setTextColor(ContextCompat.getColor(requireActivity(), R.color.sub_gray_1))
+            textInputSelect.setTextColor(ContextCompat.getColor(requireActivity(), R.color.sub_gray_1))
+
             textInputMoney.visible()
 
             editMoney.gone()
@@ -199,6 +251,7 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
             textMax.visible()
             editCount.visible()
             textTotal.visible()
+            textCountTitle.setTextColor(ContextCompat.getColor(requireActivity(), R.color.main_black))
 
             textCount.gone()
         }
@@ -209,6 +262,7 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
             textMax.gone()
             textCount.visible()
             textTotal.gone()
+            textCountTitle.setTextColor(ContextCompat.getColor(requireActivity(), R.color.sub_gray_1))
 
             editCount.gone()
             hideKeyboard(editCount)
@@ -221,11 +275,55 @@ class ChargeFragment : BaseFragment<FragmentChargeBinding, ChargeUiState, Charge
 
         val newList = ArrayList<RecentTrade>(minOf(old.size + 1, 20))
         newList.add(trade)
-
         for (i in 0 until minOf(old.size, 20 - 1)) {
             newList.add(old[i])
         }
 
-        chargeRecentTradeAdapter.submitList(newList)
+        val layoutManager = binding.recyclerRecentAmount.layoutManager as LinearLayoutManager
+        val isAtTop = layoutManager.findFirstVisibleItemPosition() == 0
+
+        chargeRecentTradeAdapter.submitList(newList) {
+            if (isAtTop) {
+                binding.recyclerRecentAmount.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun updatePriceList(ticker: UpbitTicker) {
+        val currentPrice = ticker.tradePrice
+        val prevClose = currentPrice / (1 + ticker.signedChangeRate)
+
+        val priceList = ArrayList<PriceItem>()
+        val step = 1.0 // 호가 단위 (1원)
+
+        // 1. 매도 호가 (현재가보다 높은 가격) : 위에서부터 내림차순 (예: +4 ~ +1)
+        for (i in 4 downTo 1) {
+            val price = currentPrice + (i * step)
+            priceList.add(PriceItem(price, isCurrentPrice = false, prevClosingPrice = prevClose))
+        }
+
+        priceList.add(PriceItem(currentPrice, isCurrentPrice = true, prevClosingPrice = prevClose))
+
+        for (i in 1..4) {
+            val price = currentPrice - (i * step)
+            priceList.add(PriceItem(price, isCurrentPrice = false, prevClosingPrice = prevClose))
+        }
+
+        chargePriceAdapter.submitList(priceList)
+    }
+
+    private fun updateLeftPanel(ticker: UpbitTicker) {
+        val nf = NumberFormat.getNumberInstance(Locale.KOREA).apply {
+            maximumFractionDigits = 0 // 소수점 제거 (필요시 조정)
+        }
+
+        binding.apply {
+            // 1. 거래량 (24H)
+            val coinType = if (args.coin == "USDT") "USDT" else "USDC"
+            textAllAmount.text = "${nf.format(ticker.accTradeVolume24h)} $coinType"
+            textHighPrice.text = "고가(당일) ${nf.format(ticker.highPrice)}"
+            textLowPrice.text = "저가(당일) ${nf.format(ticker.lowPrice)}"
+            textEndPrice.text = "전일종가    ${nf.format(ticker.prevClosingPrice)}"
+        }
     }
 }

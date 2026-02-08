@@ -23,5 +23,9 @@ data class UpbitTicker(
     val market: String,
     val tradePrice: Double,       // 현재가
     val signedChangeRate: Double, // 등락률 (예: 0.05 = 5%)
-    val accTradeVolume24h: Double // (선택) 24시간 거래량 등
+    val accTradeVolume24h: Double, // (선택) 24시간 거래량 등
+    val accTradePrice24h: Double, // 거래대금(24H)
+    val highPrice: Double,        // 고가
+    val lowPrice: Double,         // 저가
+    val prevClosingPrice: Double  // 전일종가
 )
