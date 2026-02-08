@@ -13,10 +13,12 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentBioScanBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.getValue
 
 @AndroidEntryPoint
 class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, BioViewModel>(
@@ -42,12 +44,17 @@ class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, 
         }
     }
 
+
+
     override fun onResume() {
         super.onResume()
         if (waitingForResult) {
             checkStatusAndAction()
         }
     }
+
+//    private val args: BioRegFragmentArgs by navArgs()
+
 
     private fun checkStatusAndAction() {
         val biometricManager = BiometricManager.from(requireContext())
@@ -63,9 +70,20 @@ class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, 
                 binding.bioScanIntroTv.text = getText(R.string.bio_reg_success)
                 binding.bottomBtnLayout.visibility = View.GONE // 버튼 숨기기
 
-                handler.postDelayed({
-                    findNavController().navigate(R.id.action_bioRegFragment_to_pinFragment)
-                }, 2000)
+//                when (args.bioRegType) {
+//                    "JOIN" -> {// 가이드 화면으로 이동
+//                        handler.postDelayed({
+//                            findNavController().navigate(R.id.action_bioRegFragment_to_pinFragment)
+//                        }, 2000)
+//                    }
+//                    "LOGIN" -> {
+//                        handler.postDelayed({
+//                            findNavController().navigate(R.id.action_bioRegFragment_to_pinFragment)
+//                        }, 2000)
+//                    }
+//                }
+
+
             }
 
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {

@@ -25,7 +25,6 @@ class LoginExpiredFragment :
     override val viewModel: LoginViewModel by activityViewModels()
     private var countDownTimer: CountDownTimer? = null
 
-    // 현재 상태가 '인증번호 전송 전'인지 '후(코드 입력 중)'인지 구분
     private var isCodeSent: Boolean = false
     private var code:String=""
     override fun initView() {

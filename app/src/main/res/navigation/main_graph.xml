@@ -3,34 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/login_expired_fragment">
+    app:startDestination="@id/join_fragment">
 
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.stable.scoi.presentation.MainActivity"/>
+        android:name="com.stable.scoi.presentation.MainActivity" />
 
     <fragment
         android:id="@+id/tansfer_fragment"
-        android:name="com.stable.scoi.presentation.ui.transfer.TransferFragment"/>
+        android:name="com.stable.scoi.presentation.ui.transfer.TransferFragment" />
 
     <fragment
         android:id="@+id/transfer_amount_fragment"
-        android:name="com.stable.scoi.presentation.ui.transfer.TransferAmountFragment"/>
+        android:name="com.stable.scoi.presentation.ui.transfer.TransferAmountFragment" />
 
     <fragment
         android:id="@+id/transfer_password_fragment"
-        android:name="com.stable.scoi.presentation.ui.transfer.TransferPasswordFragment"/>
+        android:name="com.stable.scoi.presentation.ui.transfer.TransferPasswordFragment" />
 
     <fragment
         android:id="@+id/transfer_complete_fragment"
-        android:name="com.stable.scoi.presentation.ui.transfer.TransferCompleteFragment"/>
+        android:name="com.stable.scoi.presentation.ui.transfer.TransferCompleteFragment" />
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.stable.scoi.presentation.ui.charge.ChargeFragment"
         android:label="홈 화면"
-        tools:layout="@layout/fragment_charge"/>
+        tools:layout="@layout/fragment_charge" />
 
     <fragment
         android:id="@+id/bio_fragment"
@@ -38,14 +38,16 @@
         tools:layout="@layout/fragment_bio_login">
         <action
             android:id="@+id/action_bioFragment_to_loginFragment"
-            app:destination="@id/login_pin_fragment"/>
+            app:destination="@id/login_pin_fragment" />
         <action
             android:id="@+id/action_bioFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
 
         <action
             android:id="@+id/action_bioFragment_to_bioRegFragment"
-            app:destination="@id/bio_scan_fragment"/>
+            app:destination="@id/bio_scan_fragment">
+        </action>
+
 
     </fragment>
 
@@ -56,7 +58,7 @@
 
         <action
             android:id="@+id/action_bioRegFragment_to_pinFragment"
-            app:destination="@id/login_pin_fragment"/>
+            app:destination="@id/login_pin_fragment" />
 
         <action
             android:id="@+id/action_bioRegFragment_to_homeFragment"
@@ -71,7 +73,7 @@
         tools:layout="@layout/fragment_login_expired">
         <action
             android:id="@+id/action_loginExpiredFragment_to_loginFragment"
-            app:destination="@id/login_pin_fragment"/>
+            app:destination="@id/login_pin_fragment" />
 
     </fragment>
 
@@ -80,21 +82,57 @@
         android:name="com.stable.scoi.presentation.ui.login.LoginFragment">
 
         <action
-                android:id="@+id/action_loginFragment_to_homeFragment"
-                app:destination="@id/homeFragment" />
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
 
         <action
             android:id="@+id/action_loginFragment_to_loginExpiredFragment"
-            app:destination="@id/login_expired_fragment"/>
+            app:destination="@id/login_expired_fragment" />
 
         <action
             android:id="@+id/action_loginFragment_to_bioFragment"
-            app:destination="@id/bio_fragment"/>
+            app:destination="@id/bio_fragment" />
 
     </fragment>
 
+    <fragment
+        android:id="@+id/join_fragment"
+        android:name="com.stable.scoi.presentation.ui.Auth.JoinFragment"
+        tools:layout="@layout/fragment_join">
 
+        <action
+            android:id="@+id/action_joinFragment_to_joinAuthFragment"
+            app:destination="@id/join_auth_fragment" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/join_auth_fragment"
+        android:name="com.stable.scoi.presentation.ui.Auth.JoinAuthFragment"
+        tools:layout="@layout/fragment_phone_auth">
+        <action
+            android:id="@+id/action_joinAuthFragment_to_loginRegFragment"
+            app:destination="@id/login_reg_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_reg_done_fragment"
+        android:name="com.stable.scoi.presentation.ui.login.LoginRegDoneFragment"
+        tools:layout="@layout/fragment_login_pin_done">
+
+        <action
+            android:id="@+id/action_loginRegDoneFragment_to_bioRegFragment"
+            app:destination="@id/bio_scan_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_reg_fragment"
+        android:name="com.stable.scoi.presentation.ui.login.LoginRegFragment"
+        tools:layout="@layout/fragment_login_pin_reg">
+        <action
+            android:id="@+id/action_loginRegFragment_to_loginRegDoneFragment"
+            app:destination="@id/login_reg_done_fragment" />
+    </fragment>
 
 
 </navigation>
