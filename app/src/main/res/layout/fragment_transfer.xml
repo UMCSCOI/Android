@@ -88,7 +88,7 @@
             <EditText
                 android:id="@+id/Transfer_inputName_ET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 app:layout_constraintTop_toBottomOf="@id/Transfer_name_TV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,6 +97,16 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:imeOptions="actionDone"/>
+
+            <ImageView
+                android:id="@+id/Transfer_inputName_remove_IV"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="11dp"
+                android:src="@drawable/ic_close_small"
+                app:layout_constraintTop_toTopOf="@id/Transfer_inputName_ET"
+                app:layout_constraintEnd_toEndOf="@id/Transfer_inputName_ET"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/Transfer_inputName_warning_TV"
@@ -128,7 +138,7 @@
             <EditText
                 android:id="@+id/Transfer_inputName1ENG_ET"
                 android:layout_width="120dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 app:layout_constraintTop_toBottomOf="@id/Transfer_nameENG_TV"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
@@ -137,10 +147,20 @@
                 android:maxLines="1"
                 android:imeOptions="actionDone"/>
 
+            <ImageView
+                android:id="@+id/Transfer_inputName1ENG_remove_IV"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="11dp"
+                android:src="@drawable/ic_close_small"
+                app:layout_constraintTop_toTopOf="@id/Transfer_inputName1ENG_ET"
+                app:layout_constraintEnd_toEndOf="@id/Transfer_inputName1ENG_ET"
+                android:visibility="gone"/>
+
             <EditText
                 android:id="@+id/Transfer_inputName2ENG_ET"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 app:layout_constraintTop_toBottomOf="@id/Transfer_nameENG_TV"
                 app:layout_constraintStart_toEndOf="@id/Transfer_inputName1ENG_ET"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -149,6 +169,16 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:imeOptions="actionDone"/>
+
+            <ImageView
+                android:id="@+id/Transfer_inputName2ENG_remove_IV"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="11dp"
+                android:src="@drawable/ic_close_small"
+                app:layout_constraintTop_toTopOf="@id/Transfer_inputName2ENG_ET"
+                app:layout_constraintEnd_toEndOf="@id/Transfer_inputName2ENG_ET"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/Transfer_inputNameENG_warning_TV"
@@ -194,7 +224,7 @@
             <EditText
                 android:id="@+id/Transfer_inputAddress_ET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 app:layout_constraintTop_toBottomOf="@+id/Transfer_address_TV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -202,6 +232,16 @@
                 android:inputType="text"
                 android:layout_marginEnd="16dp"
                 android:imeOptions="actionDone"/>
+
+            <ImageView
+                android:id="@+id/Transfer_inputAddress_remove_IV"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="11dp"
+                android:src="@drawable/ic_close_small"
+                app:layout_constraintTop_toTopOf="@id/Transfer_inputAddress_ET"
+                app:layout_constraintEnd_toEndOf="@id/Transfer_inputAddress_ET"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/Transfer_inputAddress_warning_TV"
@@ -276,7 +316,7 @@
             <EditText
                 android:id="@+id/Transfer_inputExchange_ET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:text="거래소"
                 android:fontFamily="@font/pretendard_medium"
                 android:textSize="20sp"
@@ -284,7 +324,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/Transfer_corpName_ENG_ET"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="14dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp" />
 
@@ -382,7 +422,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"/>
 
-
             <FrameLayout
                 android:id="@+id/Transfer_next_FL"
                 android:layout_width="match_parent"
@@ -408,9 +447,6 @@
                     android:textAppearance="@style/l1m"/>
 
             </FrameLayout>
-
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

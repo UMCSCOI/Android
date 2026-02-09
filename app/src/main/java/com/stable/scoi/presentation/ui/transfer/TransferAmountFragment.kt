@@ -147,7 +147,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                 if (amount == null) {
                     binding.TransferAmountWarningTV.visibility = View.GONE
                     binding.TransferNextTV.isEnabled = false
-                } else if (amount <= 3) {
+                } else if (amount <= 2) {
                     binding.TransferAmountWarningTV.visibility = View.VISIBLE
                     binding.TransferNextTV.isEnabled = false
                 } else {

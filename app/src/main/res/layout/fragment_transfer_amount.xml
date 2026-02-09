@@ -264,8 +264,7 @@
                 android:text="네트워크"
                 android:textColor="#555555"
                 android:textSize="16sp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="500dp"
+                app:layout_constraintBottom_toTopOf="@id/Transfer_amount_networkType_LL"
                 app:layout_constraintStart_toStartOf="parent"/>
         
             <LinearLayout
@@ -323,7 +322,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"
-                app:layout_constraintTop_toBottomOf="@id/Transfer_amount_network_TV">
+                app:layout_constraintBottom_toTopOf="@id/Transfer_next_FL">
 
                 <TextView
                     android:id="@+id/Transfer_amount_network_type_TV"

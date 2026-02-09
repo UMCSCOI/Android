@@ -4,6 +4,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -46,12 +48,20 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             }
         }
 
+        binding.apply {
+            TransferInputNameET.textRemover(binding.TransferInputNameRemoveIV)
+            TransferInputName1ENGET.textRemover(binding.TransferInputName1ENGRemoveIV)
+            TransferInputName2ENGET.textRemover(binding.TransferInputName2ENGRemoveIV)
+            TransferInputAddressET.textRemover(binding.TransferInputAddressRemoveIV)
+        }
+
+
         binding.TransferDirectoryIcIV.setOnClickListener {
             binding.TransferDirectoryIcPopupTV.visibility = View.VISIBLE
             binding.TransferDirectoryIcPopupIV.visibility = View.VISIBLE
         }
 
-        binding.root.setOnClickListener {
+        binding.cd.setOnClickListener {
             binding.TransferDirectoryIcPopupTV.visibility = View.GONE
             binding.TransferDirectoryIcPopupIV.visibility = View.GONE
         }
@@ -188,6 +198,20 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             Unit
         }
         else binding.TransferNextTV.isEnabled = true
+    }
+
+    private fun EditText.textRemover(remover: ImageView) {
+        setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                remover.visibility = View.VISIBLE
+            }
+            else {
+                remover.visibility = View.GONE
+            }
+        }
+        remover.setOnClickListener {
+            setText("")
+        }
     }
 
 }

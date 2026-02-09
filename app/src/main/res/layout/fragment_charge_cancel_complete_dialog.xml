@@ -46,6 +46,7 @@
 
                 android:text="해당 주문은 더 이상 처리되지 않으며,\n취소 내역은 거래 내역에서 확인할 수 있습니다."
                 android:textAppearance="@style/t2"
+                android:textColor="#505050"
 
                 app:layout_constraintTop_toBottomOf="@id/Wallet_charge_cancel_complete_title_TV"
                 android:layout_marginTop="10dp"

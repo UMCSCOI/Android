@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:text="홍길동"
             android:fontFamily="@font/pretendard_semibold"
+            android:textSize="16sp"
             android:textColor="@color/main_black"
             app:layout_constraintTop_toTopOf="@id/directory_receiver_VIEW"
             app:layout_constraintStart_toEndOf="@id/directory_exchange_logo_IV"
