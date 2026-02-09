@@ -46,7 +46,7 @@ object AuthNetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("http://13.209.12.10:8081")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
@@ -106,7 +106,7 @@ object NormalNetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://dev.umc-product.kyeoungwoon.kr/")
+            .baseUrl("http://13.209.12.10:8081")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

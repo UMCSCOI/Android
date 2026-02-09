@@ -1,15 +1,20 @@
 package com.stable.scoi.presentation.ui.home
 
+import androidx.lifecycle.viewModelScope
 import com.stable.scoi.domain.model.enums.AccountType
 import com.stable.scoi.domain.model.home.AccountCard
+import com.stable.scoi.domain.repository.ChargeRepository
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.base.UiEvent
 import com.stable.scoi.presentation.base.UiState
+import com.stable.scoi.util.SLOG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val chargeRepository: ChargeRepository
 ) : BaseViewModel<HomeUiState, HomeEvent>(
     HomeUiState(),
 ) {
@@ -17,6 +22,15 @@ class HomeViewModel @Inject constructor(
 
     init {
         updateAccountList(getDummy())
+
+        viewModelScope.launch {
+            resultResponse(
+                response = chargeRepository.test(),
+                successCallback = {
+                    SLOG.D("하이")
+                }
+            )
+        }
     }
 
     fun updateAccountList(list: List<AccountCard>) {
