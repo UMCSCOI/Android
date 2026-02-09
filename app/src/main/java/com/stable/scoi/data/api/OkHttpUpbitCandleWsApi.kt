@@ -20,20 +20,15 @@ class OkHttpUpbitCandleWsApi @Inject constructor(
 
     private var ws: WebSocket? = null
 
-    /**
-     * ✅ 한 소켓에서 candle + trade 동시에 받기
-     *
-     * markets: ["KRW-BTC", "KRW-ETH"] 처럼 여러 개 가능
-     * unitMinutes: 1, 3, 5, 15 ...
-     */
     fun streamMinuteCandle(
         markets: List<String>,
         unitMinutes: Int = 1,
         subscribeCandle: Boolean = true,
         subscribeTrade: Boolean = true,
+        subscribeTicker: Boolean = true // [NEW] 현재가(Ticker) 구독 여부
     ): Flow<UpbitWsEvent> = callbackFlow {
 
-        // 혹시 기존 연결이 있으면 정리
+        // 기존 연결 정리
         ws?.close(1000, "reconnect")
         ws = null
 
@@ -47,19 +42,20 @@ class OkHttpUpbitCandleWsApi @Inject constructor(
                 SLOG.D("Quotation WS OPEN")
                 trySend(UpbitWsEvent.Open(response.code))
 
+                // [NEW] JSON 생성 함수에도 ticker 파라미터 전달
                 val subscribeJson = buildSubscribeJson(
                     markets = markets,
                     unitMinutes = unitMinutes,
                     subscribeCandle = subscribeCandle,
-                    subscribeTrade = subscribeTrade
+                    subscribeTrade = subscribeTrade,
+                    subscribeTicker = subscribeTicker
                 )
                 webSocket.send(subscribeJson)
             }
 
             override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
                 val text = bytes.utf8()
-                // 너무 길면 로그 폭발하니까 필요하면 축약해도 됨
-                SLOG.D("Quotation WS $text")
+                SLOG.D("Quotation WS $text") // 로그 너무 많으면 주석 처리
                 trySend(UpbitWsEvent.Message(text))
             }
 
@@ -98,6 +94,7 @@ class OkHttpUpbitCandleWsApi @Inject constructor(
         unitMinutes: Int,
         subscribeCandle: Boolean,
         subscribeTrade: Boolean,
+        subscribeTicker: Boolean // [NEW]
     ): String {
         val ticket = UUID.randomUUID().toString()
         val codesJson = markets.joinToString(prefix = "[", postfix = "]") { "\"$it\"" }
@@ -105,16 +102,23 @@ class OkHttpUpbitCandleWsApi @Inject constructor(
         val parts = mutableListOf<String>()
         parts += """{"ticket":"$ticket"}"""
 
+        // 1. 캔들 요청
         if (subscribeCandle) {
             val candleType = "candle.${unitMinutes}m"
             parts += """{"type":"$candleType","codes":$codesJson}"""
         }
 
+        // 2. 체결 요청
         if (subscribeTrade) {
             parts += """{"type":"trade","codes":$codesJson}"""
         }
 
-        // 배열 형태로 보내야 함
+        // 3. [NEW] 현재가(Ticker) 요청
+        if (subscribeTicker) {
+            parts += """{"type":"ticker","codes":$codesJson}"""
+        }
+
+        // 배열로 묶어서 반환: [{"ticket":...}, {"type":"candle..."}, {"type":"ticker..."}]
         return parts.joinToString(prefix = "[", postfix = "]", separator = ",")
     }
 }

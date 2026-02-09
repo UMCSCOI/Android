@@ -13,7 +13,7 @@
         android:background="@drawable/bookmark_background">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="360dp"
+                android:layout_width="328dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bookmark_background">
 

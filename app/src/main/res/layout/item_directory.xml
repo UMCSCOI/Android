@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <View
+            android:id="@+id/directory_receiver_VIEW"
+            android:layout_width="0dp"
+            android:layout_height="51dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="14dp"/>
+
+        <ImageView
+            android:id="@+id/directory_exchange_logo_IV"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="6dp"
+            android:src="@drawable/bithumb_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/directory_receiverName_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="홍길동"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textColor="@color/main_black"
+            app:layout_constraintTop_toTopOf="@id/directory_receiver_VIEW"
+            app:layout_constraintStart_toEndOf="@id/directory_exchange_logo_IV"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="4dp"/>
+
+        <ImageView
+            android:id="@+id/directory_bookmark_IV"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_bookmark_on"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="4dp"/>
+
+       <TextView
+           android:id="@+id/directory_receiverAddress_TV"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="주소"
+           android:fontFamily="@font/pretendard_regular"
+           android:textSize="14sp"
+           android:textColor="@color/disabled"
+           app:layout_constraintTop_toBottomOf="@id/directory_receiverName_TV"
+           app:layout_constraintStart_toEndOf="@id/directory_exchange_logo_IV"
+           app:layout_constraintBottom_toBottomOf="@id/directory_receiver_VIEW"
+           android:layout_marginStart="6dp"
+           android:layout_marginTop="6dp"
+           android:layout_marginBottom="4dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,136 @@
+kotlin version: 2.2.21
+error message: java.lang.RuntimeException: Exception while generating code for:
+FUN name:initView visibility:protected modality:OPEN returnType:kotlin.Unit
+  VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:com.stable.scoi.presentation.ui.login.LoginFragment
+  overridden:
+    protected abstract fun initView (): kotlin.Unit declared in com.stable.scoi.presentation.base.BaseFragment
+  BLOCK_BODY
+    COMPOSITE type=kotlin.Unit origin=null
+      CALL 'public final fun apply <T> (<this>: T of kotlin.StandardKt.apply, block: @[ExtensionFunctionType] kotlin.Function1<T of kotlin.StandardKt.apply, kotlin.Unit>): T of kotlin.StandardKt.apply [inline] declared in kotlin.StandardKt' type=@[EnhancedNullability] android.widget.LinearLayout origin=null
+        TYPE_ARG T: @[EnhancedNullability] android.widget.LinearLayout
+        ARG <this>: GET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:loginPinLayout type:@[EnhancedNullability] android.widget.LinearLayout visibility:public [final] declared in com.stable.scoi.databinding.FragmentLoginPinBinding' type=@[EnhancedNullability] android.widget.LinearLayout superQualifierSymbol=com.stable.scoi.databinding.FragmentLoginPinBinding origin=null
+          receiver: CALL 'protected final fun <get-binding> (): com.stable.scoi.databinding.FragmentLoginPinBinding [fake_override] declared in com.stable.scoi.presentation.ui.login.LoginFragment' type=com.stable.scoi.databinding.FragmentLoginPinBinding origin=GET_PROPERTY
+            ARG <this>: GET_VAR '<this>: com.stable.scoi.presentation.ui.login.LoginFragment declared in com.stable.scoi.presentation.ui.login.LoginFragment.initView' type=com.stable.scoi.presentation.ui.login.LoginFragment origin=IMPLICIT_ARGUMENT
+        ARG block: BLOCK type=@[ExtensionFunctionType] kotlin.Function1<@[EnhancedNullability] android.widget.LinearLayout, kotlin.Unit> origin=LAMBDA
+          COMPOSITE type=kotlin.Unit origin=null
+          FUNCTION_REFERENCE 'private final fun initView$lambda$0 ($this$apply: @[EnhancedNullability] android.widget.LinearLayout, this$0: com.stable.scoi.presentation.ui.login.LoginFragment): kotlin.Unit declared in com.stable.scoi.presentation.ui.login.LoginFragment' type=@[ExtensionFunctionType] kotlin.Function1<@[EnhancedNullability] android.widget.LinearLayout, kotlin.Unit> origin=INLINE_LAMBDA reflectionTarget=null
+            ARG this$0: GET_VAR '<this>: com.stable.scoi.presentation.ui.login.LoginFragment declared in com.stable.scoi.presentation.ui.login.LoginFragment.initView' type=com.stable.scoi.presentation.ui.login.LoginFragment origin=null
+      COMPOSITE type=kotlin.Unit origin=null
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:53)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate$default(FunctionCodegen.kt:46)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethodNode(ClassCodegen.kt:422)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethod(ClassCodegen.kt:439)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generate(ClassCodegen.kt:164)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.generateFile(JvmIrCodegenFactory.kt:446)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.invokeCodegen(JvmIrCodegenFactory.kt:413)
+	at org.jetbrains.kotlin.cli.jvm.compiler.KotlinToJVMBytecodeCompiler.runCodegen$cli(KotlinToJVMBytecodeCompiler.kt:425)
+	at org.jetbrains.kotlin.cli.pipeline.jvm.JvmBackendPipelinePhase.executePhase(JvmBackendPipelinePhase.kt:89)
+	at org.jetbrains.kotlin.cli.pipeline.jvm.JvmBackendPipelinePhase.executePhase(JvmBackendPipelinePhase.kt:27)
+	at org.jetbrains.kotlin.cli.pipeline.PipelinePhase.phaseBody(PipelinePhase.kt:68)
+	at org.jetbrains.kotlin.cli.pipeline.PipelinePhase.phaseBody(PipelinePhase.kt:58)
+	at org.jetbrains.kotlin.config.phaser.NamedCompilerPhase.invoke(CompilerPhase.kt:102)
+	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:22)
+	at org.jetbrains.kotlin.config.phaser.CompilerPhaseKt.invokeToplevel(CompilerPhase.kt:53)
+	at org.jetbrains.kotlin.cli.pipeline.AbstractCliPipeline.runPhasedPipeline(AbstractCliPipeline.kt:109)
+	at org.jetbrains.kotlin.cli.pipeline.AbstractCliPipeline.execute(AbstractCliPipeline.kt:68)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecutePhased(K2JVMCompiler.kt:79)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecutePhased(K2JVMCompiler.kt:45)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.kt:90)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.exec(CLICompiler.kt:352)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunnerBase.runCompiler(IncrementalJvmCompilerRunnerBase.kt:176)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunnerBase.runCompiler(IncrementalJvmCompilerRunnerBase.kt:39)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.doCompile(IncrementalCompilerRunner.kt:499)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compileImpl(IncrementalCompilerRunner.kt:416)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compileNonIncrementally(IncrementalCompilerRunner.kt:301)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:128)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.execIncrementalCompiler(CompileServiceImpl.kt:684)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.access$execIncrementalCompiler(CompileServiceImpl.kt:94)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.compile(CompileServiceImpl.kt:1810)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(Unknown Source)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Unknown Source)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.RuntimeException: Exception while generating code for:
+FUN INLINE_LAMBDA name:initView$lambda$0 visibility:private modality:FINAL returnType:kotlin.Unit
+  VALUE_PARAMETER kind:ExtensionReceiver name:$this$apply index:0 type:@[EnhancedNullability] android.widget.LinearLayout
+  VALUE_PARAMETER BOUND_VALUE_PARAMETER kind:Regular name:this$0 index:1 type:com.stable.scoi.presentation.ui.login.LoginFragment
+  BLOCK_BODY
+    VAR name:$i$a$-apply-LoginFragment$initView$1 type:kotlin.Int [val]
+      CONST Int type=kotlin.Int value=0
+    SET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:inputType type:kotlin.Int visibility:public [final,static] declared in android.R.attr' type=kotlin.Unit superQualifierSymbol=android.R.attr origin=EQ
+      value: CONST Int type=kotlin.Int value=18
+    COMPOSITE type=kotlin.Unit origin=null
+      CALL 'public final fun requestFocus (): kotlin.Boolean [fake_override] declared in android.widget.LinearLayout' type=kotlin.Boolean origin=null
+        ARG <this>: GET_VAR '$this$apply: @[EnhancedNullability] android.widget.LinearLayout declared in com.stable.scoi.presentation.ui.login.LoginFragment.initView$lambda$0' type=@[EnhancedNullability] android.widget.LinearLayout origin=null
+      COMPOSITE type=kotlin.Unit origin=null
+    VAR name:imm type:android.view.inputmethod.InputMethodManager [val]
+      BLOCK type=android.view.inputmethod.InputMethodManager origin=null
+        VAR IR_TEMPORARY_VARIABLE name:tmp0 type:kotlin.Any? [val]
+          CALL 'public abstract fun getSystemService (p0: @[EnhancedNullability] kotlin.String): @[FlexibleNullability] kotlin.Any? declared in android.content.Context' type=@[FlexibleNullability] kotlin.Any? origin=null
+            ARG <this>: CALL 'public final fun requireContext (): @[EnhancedNullability] android.content.Context [fake_override] declared in com.stable.scoi.presentation.ui.login.LoginFragment' type=@[EnhancedNullability] android.content.Context origin=null
+              ARG <this>: GET_VAR 'this$0: com.stable.scoi.presentation.ui.login.LoginFragment declared in com.stable.scoi.presentation.ui.login.LoginFragment.initView$lambda$0' type=com.stable.scoi.presentation.ui.login.LoginFragment origin=null
+            ARG p0: CONST String type=kotlin.String value="input_method"
+        CALL 'public final fun checkNotNull (object: kotlin.Any?, message: kotlin.String): kotlin.Unit declared in kotlin.jvm.internal.Intrinsics' type=kotlin.Unit origin=null
+          ARG object: GET_VAR 'val tmp0: kotlin.Any? [val] declared in com.stable.scoi.presentation.ui.login.LoginFragment.initView$lambda$0' type=kotlin.Any? origin=null
+          ARG message: CONST String type=kotlin.String value="null cannot be cast to non-null type android.view.inputmethod.InputMethodManager"
+        TYPE_OP type=android.view.inputmethod.InputMethodManager? origin=CAST typeOperand=android.view.inputmethod.InputMethodManager?
+          GET_VAR 'val tmp0: kotlin.Any? [val] declared in com.stable.scoi.presentation.ui.login.LoginFragment.initView$lambda$0' type=kotlin.Any? origin=null
+    COMPOSITE type=kotlin.Unit origin=null
+      CALL 'public open fun showSoftInput (p0: @[FlexibleNullability] android.view.View?, p1: kotlin.Int): kotlin.Boolean declared in android.view.inputmethod.InputMethodManager' type=kotlin.Boolean origin=null
+        ARG <this>: GET_VAR 'val imm: android.view.inputmethod.InputMethodManager [val] declared in com.stable.scoi.presentation.ui.login.LoginFragment.initView$lambda$0' type=android.view.inputmethod.InputMethodManager origin=null
+        ARG p0: GET_VAR '$this$apply: @[EnhancedNullability] android.widget.LinearLayout declared in com.stable.scoi.presentation.ui.login.LoginFragment.initView$lambda$0' type=@[EnhancedNullability] android.widget.LinearLayout origin=null
+        ARG p1: CONST Int type=kotlin.Int value=1
+      COMPOSITE type=kotlin.Unit origin=null
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:53)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrSourceCompilerForInline.generateLambdaBody(IrSourceCompilerForInline.kt:72)
+	at org.jetbrains.kotlin.codegen.inline.ExpressionLambda.generateLambdaBody(LambdaInfo.kt:72)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCodegen.genValueAndPut(IrInlineCodegen.kt:122)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall$handleParameter(ExpressionCodegen.kt:567)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:580)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.expressions.IrCall.accept(IrCall.kt:24)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:530)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:544)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.visitors.IrVisitor.visitComposite(IrVisitor.kt:125)
+	at org.jetbrains.kotlin.ir.expressions.IrComposite.accept(IrComposite.kt:18)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:530)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:535)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.generate(ExpressionCodegen.kt:232)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.doGenerate(FunctionCodegen.kt:129)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:50)
+	... 44 more
+Caused by: java.lang.AssertionError: access of const val: SET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:inputType type:kotlin.Int visibility:public [final,static] declared in android.R.attr' type=kotlin.Unit superQualifierSymbol=android.R.attr origin=EQ
+  value: CONST Int type=kotlin.Int value=18
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitFieldAccess(ExpressionCodegen.kt:811)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitFieldAccess(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.visitors.IrVisitor.visitSetField(IrVisitor.kt:215)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitSetField(ExpressionCodegen.kt:862)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitSetField(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.expressions.IrSetField.accept(IrSetField.kt:21)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:530)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:535)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.generate(ExpressionCodegen.kt:232)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.doGenerate(FunctionCodegen.kt:129)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:50)
+	... 63 more
+
+

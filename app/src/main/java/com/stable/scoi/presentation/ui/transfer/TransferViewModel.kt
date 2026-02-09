@@ -1,17 +1,15 @@
 package com.stable.scoi.presentation.ui.transfer
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.stable.scoi.presentation.base.BaseViewModel
-import com.stable.scoi.domain.model.transfer.BookMarkReceiver
 import com.stable.scoi.domain.model.transfer.Execute
 import com.stable.scoi.domain.model.transfer.Information
 import com.stable.scoi.domain.model.transfer.Receiver
-import com.stable.scoi.domain.model.transfer.ReceiverType
+import com.stable.scoi.presentation.ui.transfer.bottomsheet.Network
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,11 +24,7 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private var exType: String = ""
     private var asSymb: String = ""
 
-    private var bExType: String = ""
-
     //bottomSheet Type 선택
-    private val _receiverType = MutableStateFlow<ReceiverType>(ReceiverType.Empty)
-    val receiverType = _receiverType.asStateFlow()
 
     private val _exchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
     val exchangeType = _exchangeType.asStateFlow()
@@ -38,9 +32,8 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private val _assetSymbolType = MutableStateFlow<AssetSymbol>(AssetSymbol.Empty)
     val assetSymbolType = _assetSymbolType.asStateFlow()
 
-    //DialogFragment Type 선택
-    private val _bookMarkExchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
-    val bookMarkExchangeType = _bookMarkExchangeType.asStateFlow()
+    private val _networkType = MutableStateFlow<Network>(Network.TRON)
+    val netWorkType = _networkType.asStateFlow()
 
 
     //API 요구 정보
@@ -53,36 +46,6 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     private val _execute = MutableStateFlow(Execute())
     val execute = _execute.asStateFlow()
 
-    private val _bookMarkReceiver = MutableStateFlow(BookMarkReceiver())
-    val bookMarkReceiver = _bookMarkReceiver.asStateFlow()
-
-
-
-    //Event
-    fun onReceiverTypeClicked() { //초기 receiverType 결정
-        when (receiverType.value) {
-            ReceiverType.Empty -> {
-                emitEvent(TransferEvent.OpenReceiverType)
-            }
-            else -> Unit
-        }
-    }
-    fun onReceiverTypeChange() { //우측 receiverType 결정 메뉴
-        emitEvent(TransferEvent.OpenReceiverType)
-    }
-
-
-    //ReceiverType
-    fun setReceiverTypeIndividual() {
-        _receiverType.value = ReceiverType.Individual
-        Log.d("receiverType", receiverType.value.toString())
-    }
-
-    fun setReceiverTypeCorporation() {
-        _receiverType.value = ReceiverType.Corporation
-        Log.d("receiverType", receiverType.value.toString())
-
-    }
 
 
     //ExchangeType
@@ -94,49 +57,34 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         _exchangeType.value = Exchange.Bithumb
         exType = "BITHUMB"
     }
-    fun setExchangeBinance() {
-        _exchangeType.value = Exchange.Binance
-        exType = "BINANCE"
-    }
     fun setExchange() {
         _exchangeType.value = Exchange.Unselected
     }
 
 
-    //AssetSymbolType
-    fun setAssetSymbolUSDT() {
-        _assetSymbolType.value = AssetSymbol.USDT
-        asSymb = "USDT"
-    }
-
-    fun setAssetSymbolUSDC() {
-        _assetSymbolType.value = AssetSymbol.USDC
-        asSymb = "USDC"
-    }
-
-
     //NextButton
     fun onClickNextButton() {
-        if(_receiver.value.receiverName == null ||
-            _receiver.value.receiverName == "" ||
+        if(_receiver.value.receiverKORName == null ||
+            _receiver.value.receiverKORName == "" ||
+            _receiver.value.receiverENGName == null ||
+            _receiver.value.receiverENGName == "" ||
             _receiver.value.receiverAddress == null ||
             _receiver.value.receiverAddress == "" ||
             _exchangeType.value == Exchange.Empty ||
-            _exchangeType.value == Exchange.Unselected ||
-            _receiverType.value == ReceiverType.Empty
+            _exchangeType.value == Exchange.Unselected
         ) {
-           Unit
+            Unit
         }
         else emitEvent(TransferEvent.NavigateToNextPage)
     }
 
 
     //Receiver
-    fun submitReceiver(receiverName: String, receiverAddress: String) {
+    fun submitReceiver(receiverKORName: String, receiverENGName: String, receiverAddress: String) {
         _receiver.value = _receiver.value.copy(
-            receiverName,
-            receiverAddress,
-            _receiverType.value
+            receiverKORName,
+            receiverENGName,
+            receiverAddress
         )
     }
 
@@ -159,28 +107,21 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         )
     }
 
-    //BookMark
-    fun setBookMarkExchangeUpbit() {
-        _bookMarkExchangeType.value = Exchange.Upbit
-        bExType = "UPBIT"
-    }
-    fun setBookMarkExchangeBithumb() {
-        _bookMarkExchangeType.value = Exchange.Bithumb
-        bExType = "BITHUMB"
-    }
-    fun setBookMarkExchangeBinance() {
-        _bookMarkExchangeType.value = Exchange.Binance
-        bExType = "BINANCE"
+    //Network
+    fun submitNetwork(network: Network) {
+        _networkType.value = network
     }
 
-    fun submitBookMarkReceiver(name: String, address: String) {
-        _bookMarkReceiver.value = _bookMarkReceiver.value.copy(
-            name,
-            address,
-            bExType
-        )
-        Log.d("bookmark",bookMarkReceiver.value.toString())
-    }
+
+    //API
+//    fun setRecentList() {
+//        resultResponse(
+//            response = TransferRepository.load,
+//            successCallback = {
+//
+//            }
+//        )
+//    }
 
     //ETC
     fun addressLineChange(address: String): String {
@@ -216,5 +157,44 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
+
+    fun exchangeToString(exchange: Exchange): String {
+        when (exchange) {
+            Exchange.Upbit -> {
+                val string = "업비트"
+                return string
+            }
+            Exchange.Bithumb -> {
+                val string = "빗썸"
+                return string
+            }
+            else -> {
+                val string = "잘못된 거래소 정보"
+                return string
+            }
+        }
+    }
+
+    fun networkToString(network: Network): String {
+        when (network) {
+            Network.TRON -> {
+                val string = "트론"
+                return string
+            }
+            Network.ETHEREUM -> {
+                val string = "이더리움"
+                return string
+            }
+            Network.KAIA -> {
+                val string = "카이아"
+                return string
+            }
+            Network.APTOS -> {
+                val string = "앱토스"
+                return string
+            }
+        }
+    }
+
 
 }
