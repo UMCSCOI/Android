@@ -19,14 +19,46 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RetrofitModule {
-
+object AuthNetworkModule {
     @Provides
     @Singleton
+    @AuthOkHttpClient
     fun provideHttpClient(
-        //TODO 만약 JWT로 가면 Interceptor 추가
-        loggingInterceptor: HttpLoggingInterceptor
+        authenticator: TokenAuthenticator,
+        authenticationInterceptor: AuthenticationInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(35, TimeUnit.SECONDS)
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(authenticationInterceptor)
+            .authenticator(authenticator)
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    @AuthRetrofit
+    fun provideAuthRetrofit(
+        @AuthOkHttpClient okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory,
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("")
+            .client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+    }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object NormalNetworkModule {
+    @Provides
+    @Singleton
+    fun provideHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -37,32 +69,44 @@ object RetrofitModule {
 
     @Provides
     @Singleton
+    fun provideConverterFactory(): GsonConverterFactory {
+        return GsonConverterFactory.create()
+    }
+
+    @Provides
+    @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor { message ->
-            when {
-                !message.isJsonObject() && !message.isJsonArray() ->
-                    Log.d("RETROFIT","CONNECTION INFO -> $message")
-                else ->  try {
-                    Log.d("RETROFIT", GsonBuilder().setPrettyPrinting().create().toJson(
-                        JsonParser().parse(message)))
-                } catch (m: JsonSyntaxException) {
-                    Log.d("RETROFIT", message)
+        val loggingInterceptor =
+            HttpLoggingInterceptor { message ->
+                when {
+                    !message.isJsonObject() && !message.isJsonArray() ->
+                        Log.d("RETROFIT1", "CONNECTION INFO -> $message")
+                    else ->
+                        try {
+                            Log.d(
+                                "RETROFIT2",
+                                GsonBuilder().setPrettyPrinting().create().toJson(
+                                    JsonParser().parse(message),
+                                ),
+                            )
+                        } catch (m: JsonSyntaxException) {
+                            Log.d("RETROFIT3", message)
+                        }
                 }
             }
-        }
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return loggingInterceptor
     }
 
     @Singleton
     @Provides
-    fun provideAuthRetrofit(
+    @NormalRetrofit
+    fun provideRetrofit(
         okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
+        gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            //TODO 서버 도메인
-            .baseUrl("")
+            .baseUrl("https://dev.umc-product.kyeoungwoon.kr/")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
