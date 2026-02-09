@@ -37,14 +37,11 @@ abstract class BaseViewModel<STATE: UiState, EVENT : UiEvent>(
 
     protected fun<D> resultResponse(response: ApiState<D>, successCallback : (D) -> Unit, errorCallback : ((String) -> Unit)? = null){
         when(response){
-            is ApiState.Error -> {
-                errorCallback?.invoke(response.errorCode)
+            is ApiState.Fail -> {
+                errorCallback?.invoke()
             }
             is ApiState.Success -> {
-                successCallback.invoke(response.result)
-            }
-            is ApiState.Loading -> {
-                //TODO 로딩 화면 같은거
+                successCallback.invoke(response.data)
             }
         }
     }
