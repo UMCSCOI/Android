@@ -18,9 +18,13 @@ class JoinFragment : BaseFragment<FragmentJoinBinding, JoinState, JoinEvent, Joi
 ) {
     override val viewModel: JoinViewModel by activityViewModels()
 
+
     private var isRearNumberVisible = false
 
     override fun initView() {
+        binding.joinBackBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.koreanNameEt.doOnTextChanged { text, _, _, _ ->
             val input = text.toString()
             val koreanPattern = Regex("^[가-힣ㄱ-ㅎㅏ-ㅣ]+$")
@@ -76,11 +80,11 @@ class JoinFragment : BaseFragment<FragmentJoinBinding, JoinState, JoinEvent, Joi
             if (input.isNotEmpty()) {
                 binding.engLastNameClearIv.visibility = View.VISIBLE
                 if (isValid) {
-                    binding.engLastNameClearIv.setImageResource(R.drawable.check_default)
                     binding.engLastNameLine.visibility = View.GONE
                     binding.engErrorLastNameLine.visibility = View.GONE
                     binding.engLastNameErrorTv.visibility = View.GONE
                     binding.engSelectedFirstNameLine.visibility=View.GONE
+                    binding.engLastNameClearIv.visibility=View.GONE
 
                 } else {
                     binding.engLastNameClearIv.setImageResource(R.drawable.no_m)
@@ -117,11 +121,11 @@ class JoinFragment : BaseFragment<FragmentJoinBinding, JoinState, JoinEvent, Joi
             if (input.isNotEmpty()) {
                 binding.engFirstNameClearIv.visibility = View.VISIBLE
                 if (isValid) {
-                    binding.engFirstNameClearIv.setImageResource(R.drawable.check_default)
                     binding.engFirstNameLine.visibility = View.GONE
                     binding.engErrorFirstNameLine.visibility = View.GONE
                     binding.engFirstNameErrorTv.visibility = View.GONE
                     binding.engSelectedFirstNameLine.visibility=View.GONE
+                    binding.engFirstNameClearIv.visibility=View.GONE
 
                 } else {
                     binding.engFirstNameClearIv.setImageResource(R.drawable.no_m)

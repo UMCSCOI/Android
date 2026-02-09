@@ -55,7 +55,7 @@
             android:weightSum="6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_pin_reg_intro_tv"
+            app:layout_constraintTop_toBottomOf="@id/login_pin_reg_detail_tv"
             >
 
 

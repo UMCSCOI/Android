@@ -14,11 +14,11 @@
 
     <ImageView
         android:id="@+id/login_pin_symbol_iv"
-        android:layout_width="wrap_content"
+        android:layout_width="33.5dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="104dp"
-        android:src="@drawable/symbol"
+        android:src="@drawable/symbol2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 

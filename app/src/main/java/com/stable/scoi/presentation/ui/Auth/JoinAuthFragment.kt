@@ -25,6 +25,10 @@ class JoinAuthFragment : BaseFragment<FragmentPhoneAuthBinding, JoinState, JoinE
     private var isCodeSent: Boolean = false
     private var code:String=""
     override fun initView() {
+
+        binding.phoneAuthBackBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
         observeEvents()
         inputUi(isActive = false)
 

@@ -6,20 +6,32 @@
 
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="16dp">
 
+        <ImageButton
+            android:id="@+id/bio_login_back_btn"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="14dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/login_bio_symbol_iv"
-            android:layout_width="wrap_content"
+            android:layout_width="33.5dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="38dp"
-            android:src="@drawable/symbol"
+            android:src="@drawable/symbol2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/bio_login_back_btn" />
 
         <TextView
             android:id="@+id/login_bio_intro_tv"
