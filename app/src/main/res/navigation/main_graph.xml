@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/wallet_fragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -91,8 +91,8 @@
         android:name="com.stable.scoi.presentation.ui.login.LoginFragment">
 
         <action
-                android:id="@+id/action_loginFragment_to_homeFragment"
-                app:destination="@id/homeFragment"/>
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -100,6 +100,7 @@
         android:name="com.stable.scoi.presentation.ui.home.HomeFragment"
         android:label="홈 화면"
         tools:layout="@layout/fragment_home">
+
         <action
             android:id="@+id/action_homeFragment_to_tansfer_fragment"
             app:destination="@id/tansfer_fragment" />

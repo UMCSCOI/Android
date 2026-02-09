@@ -213,6 +213,7 @@
                 app:layout_constraintTop_toTopOf="@id/text_stable_usdt_money" />
 
             <TextView
+                android:id="@+id/text_stable_usdt"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
@@ -260,6 +261,7 @@
                 app:layout_constraintTop_toTopOf="@id/text_stable_usdc_money" />
 
             <TextView
+                android:id="@+id/text_stable_usdc"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"

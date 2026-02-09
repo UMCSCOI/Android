@@ -55,12 +55,12 @@ class OkHttpUpbitCandleWsApi @Inject constructor(
 
             override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
                 val text = bytes.utf8()
-                //SLOG.D("Quotation WS $text") // 로그 너무 많으면 주석 처리
+                SLOG.D("Quotation WS $text") // 로그 너무 많으면 주석 처리
                 trySend(UpbitWsEvent.Message(text))
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
-                //SLOG.D("Quotation WS $text")
+                SLOG.D("Quotation WS $text")
                 trySend(UpbitWsEvent.Message(text))
             }
 
