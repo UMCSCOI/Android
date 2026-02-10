@@ -1,6 +1,7 @@
 package com.stable.scoi.presentation.ui.home
 
 import androidx.lifecycle.viewModelScope
+import com.stable.scoi.data.dto.request.CreateAddressRequest
 import com.stable.scoi.domain.model.enums.AccountType
 import com.stable.scoi.domain.model.home.AccountCard
 import com.stable.scoi.domain.repository.ChargeRepository
@@ -21,34 +22,54 @@ class HomeViewModel @Inject constructor(
     var isWalletOpened: Boolean = false
 
     init {
-        viewModelScope.launch {
-            resultResponse(
-                response = chargeRepository.getMyBalances("Bithumb"),
-                successCallback = {
-                    val accountVo = AccountCard(
+        getBithumbAddress()
+    }
+
+    private fun getBithumbAddress() = viewModelScope.launch {
+        resultResponse(
+            response = chargeRepository.getDepositAddress("BITHUMB"),
+            successCallback = {
+                getBithumb(it)
+            }
+        )
+    }
+
+    private fun getBithumb(address: String) = viewModelScope.launch {
+        resultResponse(
+            response = chargeRepository.getMyBalances("Bithumb"),
+            successCallback = {
+                val accountVo = AccountCard(
+                    type = AccountType.BITSUM,
+                    usdc = it.balances.find { it.currency == "USDC" }!!.balance,
+                    usdt = it.balances.find { it.currency == "USDT" }!!.balance,
+                    key = address,
+                    isEmpty = address.isEmpty()
+                )
+                updateState { copy(firstAccountVo = accountVo) }
+                updateAccountList(uiState.value.accountList + listOf(
+                    AccountCard(
                         type = AccountType.BITSUM,
                         usdc = it.balances.find { it.currency == "USDC" }!!.balance,
                         usdt = it.balances.find { it.currency == "USDT" }!!.balance,
-                        key = "입금 주소가 아직 생성되지 않았어요.",
-                        isEmpty = false
+                        key = address,
+                        isEmpty = address.isEmpty()
                     )
-                    updateState { copy(firstAccountVo = accountVo) }
-                    updateAccountList(uiState.value.accountList + listOf(
-                        AccountCard(
-                            type = AccountType.BITSUM,
-                            usdc = it.balances.find { it.currency == "USDC" }!!.balance,
-                            usdt = it.balances.find { it.currency == "USDT" }!!.balance,
-                            key = "입금 주소가 아직 생성되지 않았어요.",
-                            isEmpty = false
-                        )
-                    ))
-                    getUpbit()
-                }
-            )
-        }
+                ))
+                getUpbitAddress()
+            }
+        )
     }
 
-    private fun getUpbit() {
+    private fun getUpbitAddress() = viewModelScope.launch {
+        resultResponse(
+            response = chargeRepository.getDepositAddress("UPBIT"),
+            successCallback = {
+                getUpbit(it)
+            }
+        )
+    }
+
+    private fun getUpbit(address: String) {
         viewModelScope.launch {
             resultResponse(
                 response = chargeRepository.getMyBalances("Upbit"),
@@ -58,8 +79,8 @@ class HomeViewModel @Inject constructor(
                             type = AccountType.UPBIT,
                             usdc = it.balances.find { it.currency == "USDC" }!!.balance,
                             usdt = it.balances.find { it.currency == "USDT" }!!.balance,
-                            key = "입금 주소가 아직 생성되지 않았어요.",
-                            isEmpty = false
+                            key = address,
+                            isEmpty = address.isEmpty()
                         )
                     ))
                 }
@@ -74,11 +95,30 @@ class HomeViewModel @Inject constructor(
     fun onClickSelect() {
         emitEvent(HomeEvent.MoveToTransferEvent)
     }
+
+    fun createAddress(coinType: String, netType: String) = viewModelScope.launch {
+        val exchangeType = when(uiState.value.accountList[uiState.value.selectPosition].type) {
+            AccountType.BITSUM -> "BITHUMB"
+            AccountType.UPBIT -> "UPBIT"
+        }
+        val request = CreateAddressRequest(exchangeType, coinType = listOf(coinType), netType = listOf(netType))
+        resultResponse(
+            response = chargeRepository.createDepositAddress(request),
+            successCallback = {
+                getBithumbAddress()
+            }
+        )
+    }
+
+    fun setSelectPosition(selectPosition: Int) {
+        updateState { copy(selectPosition = selectPosition) }
+    }
 }
 
 data class HomeUiState(
     val accountList: List<AccountCard> = emptyList(),
-    val firstAccountVo: AccountCard = AccountCard()
+    val firstAccountVo: AccountCard = AccountCard(),
+    val selectPosition: Int = 0,
 ) : UiState
 
 sealed interface HomeEvent : UiEvent {

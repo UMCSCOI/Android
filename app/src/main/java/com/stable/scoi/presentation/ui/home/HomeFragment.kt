@@ -94,7 +94,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
                             binding.layoutSelect.setBackgroundResource(R.drawable.bg_rect_skyblue_radius60)
                             binding.textSelect.setTextColor(ContextCompat.getColor(requireActivity(),R.color.active))
                         }
-                        binding.textWalletKey.text = viewModel.uiState.value.accountList[position].key
+                        binding.textWalletKey.text = if(viewModel.uiState.value.accountList[position].isEmpty) "입금 주소가 아직 생성되지 않았어요." else viewModel.uiState.value.accountList[position].key
+                        viewModel.setSelectPosition(position)
                     }
                 }
             })
@@ -145,7 +146,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
                 .alpha(0f)
                 .setDuration(600)
                 .withEndAction {
-                    view.visibility = View.GONE
+                    view.visibility = View.INVISIBLE
                     view.alpha = 1f
                 }
                 .start()
@@ -257,7 +258,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
         childFragmentManager.setFragmentResultListener("requestKey_coin", viewLifecycleOwner) { requestKey, bundle ->
 
             val result = bundle.getString("bundleKey_coin")
-            result?.let { showNetworkDialg(it, listOf("Ethereum", "Polygon")) }
+
+            result?.let { coinName ->
+                val networkList = when (coinName) {
+                    "USDT" -> listOf(
+                        "트론 (Tron)",
+                        "이더리움 (Ethereum)",
+                        "카이아 (Kaia)",
+                        "앱토스 (Aptos)"
+                    )
+                    "USDC" -> listOf(
+                        "이더리움 (Ethereum)"
+                    )
+                    else -> listOf("이더리움 (Ethereum)", "폴리곤 (Polygon)")
+                }
+                showNetworkDialg(coinName, networkList)
+            }
 
         }
         SelectAccountDialogFragment().show(childFragmentManager, "")
@@ -265,6 +281,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
     private fun showNetworkDialg(coin: String, list: List<String>) {
         val dialog = SelectNetworkDialogFragment.newInstance(coin, list)
+
+        dialog.onNetworkSelectedListener = { selectedNetworkName ->
+            viewModel.createAddress(coin,selectedNetworkName)
+        }
+
         dialog.show(parentFragmentManager, "SelectNetworkDialog")
     }
 

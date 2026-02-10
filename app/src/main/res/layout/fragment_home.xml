@@ -67,7 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
-            android:textAppearance="@style/t1_sb"
+            android:textColor="@color/main_black"
+            android:textAppearance="@style/t1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_top" />
 
@@ -77,7 +78,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
-            android:textAppearance="@style/t1_sb"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textAppearance="@style/t1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_top" />
 
