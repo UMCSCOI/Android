@@ -21,13 +21,47 @@ class HomeViewModel @Inject constructor(
     var isWalletOpened: Boolean = false
 
     init {
-        updateAccountList(getDummy())
-
         viewModelScope.launch {
             resultResponse(
-                response = chargeRepository.test(),
+                response = chargeRepository.getMyBalances("Bithumb"),
                 successCallback = {
-                    SLOG.D("하이")
+                    val accountVo = AccountCard(
+                        type = AccountType.BITSUM,
+                        usdc = it.balances.find { it.currency == "USDC" }!!.balance,
+                        usdt = it.balances.find { it.currency == "USDT" }!!.balance,
+                        key = "입금 주소가 아직 생성되지 않았어요.",
+                        isEmpty = false
+                    )
+                    updateState { copy(firstAccountVo = accountVo) }
+                    updateAccountList(uiState.value.accountList + listOf(
+                        AccountCard(
+                            type = AccountType.BITSUM,
+                            usdc = it.balances.find { it.currency == "USDC" }!!.balance,
+                            usdt = it.balances.find { it.currency == "USDT" }!!.balance,
+                            key = "입금 주소가 아직 생성되지 않았어요.",
+                            isEmpty = false
+                        )
+                    ))
+                    getUpbit()
+                }
+            )
+        }
+    }
+
+    private fun getUpbit() {
+        viewModelScope.launch {
+            resultResponse(
+                response = chargeRepository.getMyBalances("Upbit"),
+                successCallback = {
+                    updateAccountList(uiState.value.accountList + listOf(
+                        AccountCard(
+                            type = AccountType.UPBIT,
+                            usdc = it.balances.find { it.currency == "USDC" }!!.balance,
+                            usdt = it.balances.find { it.currency == "USDT" }!!.balance,
+                            key = "입금 주소가 아직 생성되지 않았어요.",
+                            isEmpty = false
+                        )
+                    ))
                 }
             )
         }
@@ -37,24 +71,6 @@ class HomeViewModel @Inject constructor(
         updateState { copy(accountList = list) }
     }
 
-    fun getDummy(): List<AccountCard> {
-        return listOf(
-            AccountCard(
-                type = AccountType.BITSUM,
-                usdc = "10,000",
-                usdt = "10,000",
-                key = "입금 주소가 아직 생성되지 않았어요."
-            ),
-            AccountCard(
-                type = AccountType.UPBIT,
-                usdc = "20,000",
-                usdt = "20,000",
-                key = "asdvjzvjnjaksdnjewrewq",
-                isEmpty = false
-            ),
-        )
-    }
-
     fun onClickSelect() {
         emitEvent(HomeEvent.MoveToTransferEvent)
     }
@@ -62,6 +78,7 @@ class HomeViewModel @Inject constructor(
 
 data class HomeUiState(
     val accountList: List<AccountCard> = emptyList(),
+    val firstAccountVo: AccountCard = AccountCard()
 ) : UiState
 
 sealed interface HomeEvent : UiEvent {

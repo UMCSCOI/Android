@@ -7,6 +7,9 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -19,6 +22,7 @@ import com.stable.scoi.R
 import com.stable.scoi.extension.inVisible
 import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.ui.home.adapter.AccountCardAdapter
+import com.stable.scoi.presentation.ui.home.dialog.CustomTypefaceSpan
 import com.stable.scoi.presentation.ui.home.dialog.SelectAccountDialogFragment
 import com.stable.scoi.presentation.ui.home.dialog.SelectNetworkDialogFragment
 import com.stable.scoi.presentation.ui.home.dialog.SelectStableDialogFragment
@@ -41,6 +45,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
     override fun initView() {
         binding.apply {
             vm = viewModel
+
+            val boldFont = ResourcesCompat.getFont(requireActivity(), R.font.pretendard_semibold)
+
+            textTitle.text = buildSpannedString {
+                inSpans(CustomTypefaceSpan(boldFont!!)) {
+                    append("서희정")
+                }
+                append("님!\n송금을 시작해볼까요?")
+            }
+            textTitle2.text = buildSpannedString {
+                inSpans(CustomTypefaceSpan(boldFont!!)) {
+                    append("서희정")
+                }
+                append("님!\n어떤 자산을 보내시겠어요?")
+            }
 
             setupViewPager()
 
@@ -120,7 +139,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
         val screenHeight = binding.root.height.toFloat()
 
-        val viewsToHide = listOf(binding.imgMyBlack, binding.textTouchWallet)
+        val viewsToHide = listOf(binding.imgMyBlack, binding.textTouchWallet, binding.textTitle)
         viewsToHide.forEach { view ->
             view.animate()
                 .alpha(0f)
@@ -132,7 +151,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
                 .start()
         }
 
-        val viewsToShow = listOf(binding.imgMyWhite, binding.textWalletKey, binding.layoutSelect)
+        val viewsToShow = listOf(binding.imgMyWhite, binding.textWalletKey, binding.layoutSelect, binding.dotsIndicator, binding.textTitle2)
         viewsToShow.forEach { view ->
             view.alpha = 0f
             view.visibility = View.VISIBLE

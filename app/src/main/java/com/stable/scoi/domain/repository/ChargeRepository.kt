@@ -13,7 +13,7 @@ class ChargeRepository @Inject constructor(
     private val chargeApi: ChargeApi
 ) {
     // 계좌 잔고 조회
-    suspend fun getMyBalances(tradeType: String): ApiState<BalanceResponse> {
+    suspend fun getMyBalances(tradeType: String): ApiState<BalanceListResponse> {
         return apiCall { chargeApi.getMyBalances(tradeType) }
     }
 

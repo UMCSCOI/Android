@@ -67,9 +67,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
-            android:text="조경석님!\n무엇이 필요한가요?"
             android:textAppearance="@style/t1_sb"
-            android:textColor="@color/main_black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_top" />
+
+        <TextView
+            android:id="@+id/text_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="30dp"
+            android:textAppearance="@style/t1_sb"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_top" />
 
@@ -128,8 +136,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:layout_marginTop="34dp"
-                android:text="10,000"
+                android:layout_marginTop="59dp"
+                android:text="@{vm.uiState.firstAccountVo.usdt}"
                 android:textAppearance="@style/sb_24"
                 android:textColor="@color/main_black"
                 app:layout_constraintStart_toEndOf="@id/image_usdt"
@@ -162,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="10dp"
-                android:text="10,000"
+                android:text="@{vm.uiState.firstAccountVo.usdc}"
                 android:textAppearance="@style/sb_24"
                 android:textColor="@color/main_black"
                 app:layout_constraintStart_toEndOf="@id/image_usdc"
@@ -221,7 +229,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-
+            android:visibility="gone"
             app:dotsColor="#C3C3C3"
             app:selectedDotColor="@color/active"
             app:dotsSize="4dp"

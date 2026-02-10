@@ -5,6 +5,7 @@ import com.stable.scoi.data.dto.request.CreateAddressRequest
 import com.stable.scoi.data.dto.request.DepositRequest
 import com.stable.scoi.data.dto.request.OrderRequest
 import com.stable.scoi.data.dto.request.OrderTestRequest
+import com.stable.scoi.data.dto.response.BalanceListResponse
 import com.stable.scoi.data.dto.response.BalanceResponse
 import com.stable.scoi.data.dto.response.DepositResponse
 import com.stable.scoi.data.dto.response.OrderInfoResponse
@@ -18,7 +19,7 @@ interface ChargeApi {
     @GET("/api/balances")
     suspend fun getMyBalances(
         @Query("tradeType") tradeType: String
-    ): ApiResponse<BalanceResponse>
+    ): ApiResponse<BalanceListResponse>
 
     @GET("/api/orders/info")
     suspend fun getOrderInfo(
