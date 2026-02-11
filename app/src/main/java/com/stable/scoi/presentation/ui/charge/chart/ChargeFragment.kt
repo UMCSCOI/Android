@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 @AndroidEntryPoint
 class ChargeFragment :
     BaseFragment<FragmentChargeBinding, ChargeUiState, ChargeEvent, ChargeViewModel>(
@@ -46,7 +47,11 @@ class ChargeFragment :
     }
 
     private val chargePriceAdapter: ChargePriceAdapter by lazy {
-        ChargePriceAdapter()
+        ChargePriceAdapter(
+            onClickItem = {
+                viewModel.updateMoney(viewModel.formatPrice(it.price))
+            }
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

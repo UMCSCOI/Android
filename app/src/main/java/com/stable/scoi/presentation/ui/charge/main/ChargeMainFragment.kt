@@ -63,9 +63,11 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
         SelectAccountBottomSheet(
             onClickItem = {
                 if (it == AccountType.UPBIT) {
+                    viewModel.getUpbit()
                     binding.imageAccout.setImageResource(R.drawable.ic_upbit_logo)
                     binding.textAccount.text = "업비트"
                 } else {
+                    viewModel.getBithumb()
                     binding.imageAccout.setImageResource(R.drawable.ic_bitsum_logo)
                     binding.textAccount.text = "빗썸"
                 }
@@ -74,7 +76,7 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
     }
 
     private fun navigateChart(coin: String) {
-        val action = ChargeMainFragmentDirections.actionChargeMainFragmentToChargeFragment(coin)
+        val action = ChargeMainFragmentDirections.actionChargeMainFragmentToChargeFragment(coin, money = viewModel.uiState.value.myKrwMoney)
         findNavController().navigate(action)
     }
 

@@ -17,10 +17,14 @@ import kotlin.math.roundToLong
 
 class RecentTradeViewHolder(
     private val binding: ItemRecentAmountBinding,
+    private val onClickItem: (RecentTrade) -> Unit = {},
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(trade: RecentTrade) {
         binding.apply {
+            root.setOnClickListener {
+                onClickItem(trade)
+            }
             textTime.text = formatKstTime(trade.timestampMs)
 
             textMoney.text = formatPrice(trade.price)

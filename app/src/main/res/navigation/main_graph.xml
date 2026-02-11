@@ -94,6 +94,11 @@
             android:defaultValue=""
             app:argType="string" />
 
+        <argument
+            android:name="money"
+            android:defaultValue=""
+            app:argType="string" />
+
     </fragment>
 
     <fragment
