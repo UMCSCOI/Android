@@ -23,7 +23,7 @@ interface ChargeApi {
 
     @GET("/api/orders/info")
     suspend fun getOrderInfo(
-        @Query("tradeType") tradeType: String,
+        @Query("exchangeType") exchangeType: String,
         @Query("coinType") coinType: String
     ): ApiResponse<OrderInfoResponse>
 

@@ -104,11 +104,20 @@ class ChargeViewModel @Inject constructor(
                 copy(coin = info)
             }
         } else {
+            val maxCountText = calculateMaxCountText(formattedPrice, uiState.value.myKrwMoney, uiState.value.pageType)
             updateState {
-                copy(coin = info, money = formattedPrice)
+                copy(coin = info, money = formattedPrice, maxCount = maxCountText)
             }
             flag = true
         }
+    }
+
+    private fun calculateMaxCountText(priceStr: String, capitalStr: String, pageType: ChargePageType): String {
+        val price = priceStr.replace("[^0-9.]".toRegex(), "").toDoubleOrNull() ?: 0.0
+        val capital = capitalStr.trim().toDoubleOrNull() ?: 0.0
+        val maxCount = if (price > 0) (capital / price).toInt() else 0
+        val actionText = if (pageType == ChargePageType.CHARGE) "충전" else "교환"
+        return "최대 ${maxCount}개 $actionText 가능"
     }
 
     fun formatPrice(price: Double): String {
@@ -128,10 +137,6 @@ class ChargeViewModel @Inject constructor(
             rate < 0 -> "#4A4AFA".toColorInt()
             else -> "#767676".toColorInt()
         }
-    }
-
-    fun updateMoneyChanged() {
-        updateState { copy(money = money) }
     }
 
     fun updateCountChanged() {
@@ -160,22 +165,62 @@ class ChargeViewModel @Inject constructor(
     }
 
     fun updateMoney(money: String) {
-        updateState { copy(money = money) }
+        val newMaxCount = calculateMaxCountText(money, uiState.value.myKrwMoney, uiState.value.pageType)
+        updateState { copy(money = money, maxCount = newMaxCount) }
     }
 
     fun updatePageType(type: ChargePageType) {
-        updateState { copy(pageType = type) }
+        val newMaxCount = calculateMaxCountText(uiState.value.money, uiState.value.myKrwMoney, type)
+        updateState { copy(pageType = type, maxCount = newMaxCount) }
     }
 
     fun back() {
         emitEvent(ChargeEvent.MoveToBack)
+    }
+
+    fun setMyKrwMoney(money: String) {
+        SLOG.D("하이", money)
+        val newMaxCount = calculateMaxCountText(uiState.value.money, money, uiState.value.pageType)
+        updateState { copy(myKrwMoney = money, maxCount = newMaxCount) }
+    }
+
+    fun onClickButton() {
+        val currentState = uiState.value
+
+        if (currentState.pageType == ChargePageType.CHARGE) {
+            val price = currentState.money.replace("[^0-9.]".toRegex(), "").toDoubleOrNull() ?: 0.0
+            val count = currentState.count.toIntOrNull() ?: 0
+            val myAsset = currentState.myKrwMoney.trim().toDoubleOrNull() ?: 0.0
+            val totalCost = price * count
+            if (totalCost > myAsset) {
+                val lackAmount = (totalCost - myAsset).toLong()
+                emitEvent(ChargeEvent.ShowLackMoneyEvent(lackAmount.toString()))
+            } else {
+                SLOG.D("ChargeViewModel", "자산 충분, 충전 진행")
+            }
+        } else {
+            val inputCount = currentState.count.toIntOrNull() ?: 0
+            val myHolding = currentState.myCoinCount.replace("[^0-9.]".toRegex(), "").toDoubleOrNull() ?: 0.0
+            if (inputCount > myHolding) {
+                emitEvent(ChargeEvent.ShowExceedCountEvent)
+            } else {
+                SLOG.D("ChargeViewModel", "보유 코인 충분, 교환 진행")
+            }
+        }
+    }
+
+    fun setMyCoinCount(count: String) {
+        updateState { copy(myCoinCount = count) }
     }
 }
 
 data class ChargeUiState(
     val pageType: ChargePageType = ChargePageType.CHARGE,
     val inputType: ChargeInputType = ChargeInputType.SELF,
+    val maxCount: String = "최대 0개 충전 가능",
     val money: String = "1447",
+    val myKrwMoney: String = "0",
+    val myCoinCount: String = "0",
     var count: String = "",
     val total: String = "",
     val coin: CoinInfo = CoinInfo(),
@@ -183,4 +228,6 @@ data class ChargeUiState(
 
 sealed interface ChargeEvent : UiEvent {
     data object MoveToBack: ChargeEvent
+    data class ShowLackMoneyEvent(val lackMoney: String): ChargeEvent
+    data object ShowExceedCountEvent: ChargeEvent
 }

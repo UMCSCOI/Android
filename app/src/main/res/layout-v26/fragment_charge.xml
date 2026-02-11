@@ -217,7 +217,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="12dp"
-                        android:afterTextChanged="@{()->vm.updateMoneyChanged()}"
+                        android:afterTextChanged="@{(s)->vm.updateMoney(s.toString())}"
                         android:background="@null"
                         android:inputType="number"
                         android:maxLines="1"
@@ -280,7 +280,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
-                            android:text="최대 0개 충전 가능"
+                            android:text="@{vm.uiState.maxCount}"
                             android:textAppearance="@style/f4m"
                             android:textColor="@color/disabled" />
 
@@ -332,6 +332,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:onClick="@{() -> vm.onClickButton()}"
                     android:layout_marginHorizontal="16dp"
                     android:background="@{(!vm.uiState.count.empty &amp;&amp; !vm.uiState.money.empty) ? @drawable/bg_rect_active_radius60 : @drawable/bg_rect_disable_fill_radius60}">
 
