@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="96dp"
+            android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/pretendard_bold"
@@ -53,7 +53,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_user02"
-            app:tint="#5C78FF"/>
+            app:tint="#4A4AFA"/>
     </FrameLayout>
 
     <TextView
@@ -80,7 +80,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/menu_account_info"
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="60dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,14 +105,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#F4F4F4"
+                android:background="#E0E0E0"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/menu_api_setting"
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="60dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -129,22 +129,22 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/chevron_right"
+                app:tint="#B0B0B0"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="#B0B0B0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#F4F4F4"
+                android:background="#E0E0E0"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/menu_password_change"
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="60dp">
 
             <TextView
                 android:layout_width="wrap_content"

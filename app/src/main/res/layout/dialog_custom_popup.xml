@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="20dp"
     app:cardElevation="0dp"
-    android:layout_margin="20dp"
+    android:layout_margin="16dp"
     app:cardBackgroundColor="#FFFFFF">
 
     <LinearLayout
@@ -19,12 +19,10 @@
 
         <ImageView
             android:id="@+id/dialog_icon_iv"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@drawable/ic_ex"
-            android:background="@drawable/ic_oval"
-            android:padding="14dp"
-            app:tint="#FF5C5C"/>
+            android:padding="14dp"/>
 
         <TextView
             android:id="@+id/dialog_title_tv"

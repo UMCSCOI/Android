@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:fitsSystemWindows="true"
-    tools:context="com.stable.scoi.presentation.base.MyPageActivity">
+    tools:context="com.stable.scoi.presentation.data.MyPageActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

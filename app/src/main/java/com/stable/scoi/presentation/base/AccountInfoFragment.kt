@@ -1,51 +1,49 @@
 package com.stable.scoi.presentation.base
 
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.button.MaterialButton
-import com.stable.scoi.R
+import com.stable.scoi.databinding.FragmentAccountInfoBinding
+import com.stable.scoi.presentation.mypage.MyPageEvent
+import com.stable.scoi.presentation.mypage.MyPageUiState
+import com.stable.scoi.presentation.mypage.MyPageViewModel
+import com.stable.scoi.presentation.data.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class AccountInfoFragment : Fragment(R.layout.fragment_account_info) {
+@AndroidEntryPoint
+class AccountInfoFragment : BaseFragment<FragmentAccountInfoBinding, MyPageUiState, MyPageEvent, MyPageViewModel>(
+    FragmentAccountInfoBinding::inflate
+) {
+    override val viewModel: MyPageViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initView() {
+        viewModel.loadUserInfo()
 
-        val btnIndividual = view.findViewById<MaterialButton>(R.id.btn_individual)
-        val btnCorporate = view.findViewById<MaterialButton>(R.id.btn_corporate)
-        val btnSave = view.findViewById<MaterialButton>(R.id.btn_save)
-        val btnBack = view.findViewById<View>(R.id.back_iv)
-
-        val colorBlue = Color.parseColor("#5C78FF")
-        val colorGrayText = Color.parseColor("#888888")
-        val colorGrayStroke = Color.parseColor("#DDDDDD")
-
-        btnIndividual.setOnClickListener {
-            btnIndividual.strokeColor = ColorStateList.valueOf(colorBlue)
-            btnIndividual.setTextColor(colorBlue)
-
-            btnCorporate.strokeColor = ColorStateList.valueOf(colorGrayStroke)
-            btnCorporate.setTextColor(colorGrayText)
-        }
-
-        btnCorporate.setOnClickListener {
-            btnCorporate.strokeColor = ColorStateList.valueOf(colorBlue)
-            btnCorporate.setTextColor(colorBlue)
-
-            btnIndividual.strokeColor = ColorStateList.valueOf(colorGrayStroke)
-            btnIndividual.setTextColor(colorGrayText)
-        }
-
-        btnSave.setOnClickListener {
-
+        binding.backIv.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        btnBack.setOnClickListener {
+        binding.btnSave.setOnClickListener {
             findNavController().popBackStack()
+        }
+    }
+
+    override fun initStates() {
+        repeatOnStarted(viewLifecycleOwner) {
+            launch {
+                viewModel.uiState.collectLatest { state ->
+                    state.userInfo?.let { user ->
+
+                        binding.tvName.text = user.koreanName
+
+                        binding.etFirstName.text = user.englishName
+                        binding.etLastName.text = ""
+
+                        binding.tvMaskedId.text = user.residentNumber
+                    }
+                }
+            }
         }
     }
 }
