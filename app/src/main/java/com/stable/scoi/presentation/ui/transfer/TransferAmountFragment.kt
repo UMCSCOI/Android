@@ -8,18 +8,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferAmountBinding
-import com.stable.scoi.domain.model.transfer.Balances
-import com.stable.scoi.domain.model.transfer.BalancesResponse
 import com.stable.scoi.domain.model.transfer.QuoteRequest
 import com.stable.scoi.presentation.base.BaseFragment
-import com.stable.scoi.presentation.ui.home.HomeEvent
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.Network
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.NetworkBottomSheet
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SendCheckBottomSheet
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetNetworkType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

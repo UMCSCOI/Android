@@ -157,10 +157,13 @@ class WalletViewModel @Inject constructor(
         uuid: String,
         currency: String?
     ) = viewModelScope.launch {
+        updateState { copy(isLoading = true) }
+
         resultResponse(
             response = transactionsDetailRepository.loadTransactionsDetail(exchangeType,category,remitType,uuid,currency),
 
             successCallback = { transactionsDetailResponse ->
+                updateState { copy(isLoading = false) }
                 when (transactionsDetailResponse.category) {
                     "REMIT" -> {
                         updateState {
