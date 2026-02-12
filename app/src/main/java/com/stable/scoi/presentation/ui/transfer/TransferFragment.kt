@@ -26,8 +26,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class TransferFragment : DirectoryOnClickListener, SetExchangeType,
     BaseFragment<FragmentTransferBinding, TransferState, TransferEvent, TransferViewModel>(
-    FragmentTransferBinding::inflate
-) {
+        FragmentTransferBinding::inflate
+    ) {
     override val viewModel: TransferViewModel by activityViewModels()
 
     override fun initView() {
@@ -37,6 +37,21 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
         binding.TransferNextTV.isEnabled = false
 
         val watcher = object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {}
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val value1 = binding.TransferInputNameET.text.toString()
+                val value2 = binding.TransferInputName1ENGET.text.toString()
+                val value3 = binding.TransferInputName2ENGET.text.toString()
+                val value4 = binding.TransferInputAddressET.text.toString()
+
+                updateButtonState(value1, value2, value3, value4, viewModel.exchangeType.value)
+            }
+        }
+
+        val addressWatcher = object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 binding.TransferInputAddressET.removeTextChangedListener(this)
 
@@ -50,10 +65,6 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
                     }
                 }
 
-                binding.TransferInputAddressET.setText(builder.toString())
-                binding.TransferInputAddressET.setSelection(binding.TransferInputAddressET.text.length)
-
-                binding.TransferInputAddressET.addTextChangedListener(this)
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -89,7 +100,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
         binding.TransferInputNameET.addTextChangedListener(watcher)
         binding.TransferInputName1ENGET.addTextChangedListener(watcher)
         binding.TransferInputName2ENGET.addTextChangedListener(watcher)
-        binding.TransferInputAddressET.addTextChangedListener(watcher)
+        binding.TransferInputAddressET.addTextChangedListener(addressWatcher)
 
         binding.TransferInputExchangeET.isFocusable = false
         binding.TransferInputExchangeET.setOnClickListener {

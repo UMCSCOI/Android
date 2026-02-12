@@ -6,6 +6,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -41,7 +42,7 @@ class ChargeFragment :
     BaseFragment<FragmentChargeBinding, ChargeUiState, ChargeEvent, ChargeViewModel>(
         FragmentChargeBinding::inflate,
     ) {
-    override val viewModel: ChargeViewModel by viewModels()
+    override val viewModel: ChargeViewModel by activityViewModels()
 
     private val args: ChargeFragmentArgs by navArgs()
 
@@ -153,6 +154,7 @@ class ChargeFragment :
                         is ChargeEvent.ShowLackMoneyEvent -> showLackBottomSheet(it.lackMoney)
                         ChargeEvent.ShowExceedCountEvent -> showExceedBottomSheet()
                         ChargeEvent.ShowChargeBottomSheet -> showChargeBottomSheet()
+                        ChargeEvent.Complete -> {}
                     }
                 }
             }
@@ -360,8 +362,7 @@ class ChargeFragment :
             total = state.total,
             type = state.pageType,
             onClickRight = {
-                // TODO: 확인 버튼 눌렀을 때 실행할 로직 (예: API 호출)
-                // viewModel.requestCharge()
+                findNavController().navigate(R.id.chargePwFragment)
             }
         ).show(parentFragmentManager, "")
     }

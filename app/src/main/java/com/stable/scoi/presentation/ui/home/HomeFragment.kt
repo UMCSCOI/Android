@@ -82,20 +82,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
             imgMyBlack.setOnClickListener {
                 findNavController().navigate(R.id.myPageFragment)
             }
-            val boldFont = ResourcesCompat.getFont(requireActivity(), R.font.pretendard_semibold)
-
-            textTitle.text = buildSpannedString {
-                inSpans(CustomTypefaceSpan(boldFont!!)) {
-                    append(viewModel.uiState.value.userInfo.koreanName)
-                }
-                append("님!\n송금을 시작해볼까요?")
-            }
-            textTitle2.text = buildSpannedString {
-                inSpans(CustomTypefaceSpan(boldFont!!)) {
-                    append(viewModel.uiState.value.userInfo.koreanName)
-                }
-                append("님!\n어떤 자산을 보내시겠어요?")
-            }
 
             setupViewPager()
 
@@ -151,6 +137,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
             launch {
                 viewModel.uiState.collect {
+                    binding.apply {
+                        val boldFont = ResourcesCompat.getFont(requireActivity(), R.font.pretendard_semibold)
+
+                        textTitle.text = buildSpannedString {
+                            inSpans(CustomTypefaceSpan(boldFont!!)) {
+                                append(viewModel.uiState.value.userInfo.koreanName)
+                            }
+                            append("님!\n송금을 시작해볼까요?")
+                        }
+                        textTitle2.text = buildSpannedString {
+                            inSpans(CustomTypefaceSpan(boldFont!!)) {
+                                append(viewModel.uiState.value.userInfo.koreanName)
+                            }
+                            append("님!\n어떤 자산을 보내시겠어요?")
+                        }
+                    }
                     accountCardAdapter.submitList(it.accountList)
                 }
             }

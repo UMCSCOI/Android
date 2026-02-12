@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewModelScope
 import com.stable.scoi.data.dto.request.OrderRequest
+import com.stable.scoi.data.util.EncryptionUtil
 import com.stable.scoi.domain.model.CandleStreamEvent
 import com.stable.scoi.domain.model.UpbitTicker
 import com.stable.scoi.domain.model.enums.ChargeInputType
@@ -231,9 +232,17 @@ class ChargeViewModel @Inject constructor(
              resultResponse(
                  response = chargeRepository.createOrder(request),
                  successCallback = {
-                     //TODO 성공 콜백
+                     emitEvent(ChargeEvent.Complete)
                  },
              )
+        }
+    }
+
+    fun onPinChanged(input: String) {
+        SLOG.D("하이 $input")
+        updateState { copy(simplePassword = input) }
+        if(input.length == 6) {
+            order(EncryptionUtil.encrypt(input))
         }
     }
 
@@ -254,6 +263,7 @@ data class ChargeUiState(
     val myCoinCount: String = "0",
     var count: String = "",
     val total: String = "",
+    val simplePassword:String="",
     val coin: CoinInfo = CoinInfo(),
 ) : UiState
 
@@ -262,4 +272,5 @@ sealed interface ChargeEvent : UiEvent {
     data class ShowLackMoneyEvent(val lackMoney: String): ChargeEvent
     data object ShowExceedCountEvent: ChargeEvent
     data object ShowChargeBottomSheet: ChargeEvent
+    data object Complete: ChargeEvent
 }

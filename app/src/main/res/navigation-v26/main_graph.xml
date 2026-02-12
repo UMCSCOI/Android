@@ -242,5 +242,11 @@
 
     <!-- 마이페이지 -->
 
+    <fragment
+        android:id="@+id/chargePwFragment"
+        android:name="com.stable.scoi.presentation.ui.charge.chart.ChargePwFragment"
+        android:label="충전 비번"
+        tools:layout="@layout/fragment_charge_pw" />
+
 
 </navigation>
