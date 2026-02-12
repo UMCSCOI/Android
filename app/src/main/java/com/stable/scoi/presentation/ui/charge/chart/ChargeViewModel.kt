@@ -220,7 +220,7 @@ class ChargeViewModel @Inject constructor(
             val finalVolume = currentState.count.trim()
 
             val request = OrderRequest(
-                tradeType = uiState.value.tradeType,
+                exchangeType = uiState.value.tradeType,
                 market = uiState.value.currentMarket,
                 side = side,
                 orderType = "limit",
