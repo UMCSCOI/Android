@@ -115,6 +115,32 @@
     </fragment>
 
     <fragment
+        android:id="@+id/chargeCompleteFragment"
+        android:name="com.stable.scoi.presentation.ui.charge.complete.ChargeCompleteFragment"
+        android:label="완료 화면"
+        tools:layout="@layout/fragment_charge_complete">
+
+        <argument
+            android:name="coin"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="coinCount"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_complete_to_charge_main"
+            app:destination="@id/chargeMainFragment" />
+
+        <action
+            android:id="@+id/action_complete_to_my_wallet"
+            app:destination="@id/wallet_fragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/login_pin_fragment"
         android:name="com.stable.scoi.presentation.ui.login.LoginFragment">
 
