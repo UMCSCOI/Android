@@ -24,11 +24,11 @@ class MyPageRepository @Inject constructor(
         return apiCall { api.getExchangeList() }
     }
 
-    suspend fun getApiKeys(): ApiState<ApiKeyListResult> {
+    suspend fun getApiKeys(): ApiState<List<ApiKeyInfo>> {
         return apiCall { api.getApiKeys() }
     }
 
-    suspend fun registerApiKeys(req: List<ApiKeyRequest>): ApiState<Unit> {
+    suspend fun registerApiKeys(req: List<ApiKeyRequest>): ApiState<List<String>> {
         return apiCall { api.registerApiKeys(req) }
     }
 

@@ -35,7 +35,7 @@ class MyPageViewModel @Inject constructor(
                 updateState { copy(exchangeList = list) }
             })
             resultResponse(repository.getApiKeys(), { result ->
-                updateState { copy(apiKeys = result.apiKeys, isLoading = false) }
+                updateState { copy(apiKeys = result, isLoading = false) }
             })
         }
     }
