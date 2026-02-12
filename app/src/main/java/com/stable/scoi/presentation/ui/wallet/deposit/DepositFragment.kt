@@ -58,10 +58,6 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
                 addButtonClicked(rawInt, 100000)
                 WalletDepositAmountET.requestFocus()
             }
-            WalletDepositAmountPlusAllBT.setOnClickListener {
-                //API 연동 후 추가 예정 (전체 금액)
-                WalletDepositAmountET.requestFocus()
-            }
         }
 
 
@@ -88,9 +84,6 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
                     }
                     WalletDepositAmountPlus10BT.setOnClickListener {
                         addButtonClicked(rawInt, 100000)
-                    }
-                    WalletDepositAmountPlusAllBT.setOnClickListener {
-                        //API 연동 후 추가 예정 (전체 금액)
                     }
                 }
 

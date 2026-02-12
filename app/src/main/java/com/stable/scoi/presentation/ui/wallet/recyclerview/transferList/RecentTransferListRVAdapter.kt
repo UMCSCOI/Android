@@ -4,8 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.databinding.ItemMywalletListBinding
+import com.stable.scoi.domain.model.wallet.Transactions
+import com.stable.scoi.domain.model.wallet.TransactionsCharge
+import java.text.SimpleDateFormat
+import java.time.OffsetDateTime
+import java.util.Locale
 
-class RecentTransferListRVAdapter(private val recentTransferList: ArrayList<RecentTransferList>, private val recentTransferListOnClickListener: RecentTransferListOnClickListener): RecyclerView.Adapter<RecentTransferListRVAdapter.ViewHolder>() {
+class RecentTransferListRVAdapter(private val recentTransferListOnClickListener: RecentTransferListOnClickListener): RecyclerView.Adapter<RecentTransferListRVAdapter.ViewHolder>() {
+
+    private val items = ArrayList<Transactions>()
+
+    fun updateItems(newItems: List<Transactions>) {
+        items.clear()
+        items.addAll(newItems)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -16,26 +30,54 @@ class RecentTransferListRVAdapter(private val recentTransferList: ArrayList<Rece
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(recentTransferList[position])
+        holder.bind(items[position])
         holder.binding.WalletListVIEW.setOnClickListener {
-            recentTransferListOnClickListener.RTLOnClickListener(recentTransferList[position])
+            recentTransferListOnClickListener.RTLOnClickListener(items[position])
         }
     }
 
-    override fun getItemCount(): Int = recentTransferList.size
+    override fun getItemCount(): Int = items.size
 
     inner class ViewHolder(val binding: ItemMywalletListBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(recentTransferList: RecentTransferList) {
+        fun bind(recentTransferList: Transactions) {
             binding.apply {
-                WalletListTimeTV.text = recentTransferList.occurredAt//데이터 가공 필요 (날짜 시간)
-                WalletListAssetSymbolTV.text = recentTransferList.assetSymbol//API 명세서 누락 항목
-                WalletListNameTV.text = recentTransferList.counterparty.displayName
-                WalletListAmountTV.text = recentTransferList.amount//데이터 가공 필요 (+/-)
-                WalletListAssetSymbolTitleTV.text = recentTransferList.assetSymbol
-                WalletListTotalAmountTV.text = recentTransferList.netAmount
-                WalletListTotalAssetSymbolTV.text = recentTransferList.assetSymbol//API 명세서 누락 항목
+
+                val sign = when (recentTransferList.type) {
+                    "WITHDRAW" -> "-"
+                    "DEPOSIT" -> "+"
+                    else -> ""
+                }
+
+                val type = when (recentTransferList.type) {
+                    "WITHDRAW" -> "출금"
+                    "DEPOSIT" -> "입금"
+                    else -> ""
+                }
+
+                WalletListTimeTV.text = formatDate(recentTransferList.createdAt)
+                WalletListAssetSymbolTV.text = recentTransferList.currency
+                WalletListAmountTV.text = "$sign${recentTransferList.amount}"
+                WalletListAssetSymbolTitleTV.text = recentTransferList.currency
+                WalletListStateTV.text = type
             }
+        }
+    }
+
+    fun formatDate(dateString: String): String {
+        return try {
+            val input = SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ssXXX",
+                Locale.getDefault()
+            )
+            val output = SimpleDateFormat(
+                "MM.dd HH:mm:ss",
+                Locale.getDefault()
+            )
+            val date = input.parse(dateString)
+            output.format(date!!)
+        } catch (e: Exception) {
+            dateString
         }
     }
 }

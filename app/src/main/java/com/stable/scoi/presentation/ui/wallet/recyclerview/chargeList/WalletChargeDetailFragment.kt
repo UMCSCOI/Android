@@ -18,6 +18,9 @@ class WalletChargeDetailFragment: BaseFragment<FragmentWalletChargeDetailBinding
                 WalletDetailBackArrowIV.setOnClickListener {
                     findNavController().popBackStack()
                 }
+
+                binding.apply {
+                }
             }
         }
 }

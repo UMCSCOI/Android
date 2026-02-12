@@ -12,18 +12,18 @@ class TransferCompleteFragment :
     override val viewModel: TransferViewModel by activityViewModels()
 
     override fun initView() {
-        binding.TransferCompleteReceiverNameTV.text = viewModel.receiver.value.receiverKORName
-        binding.TransferCompleteAddressTV.text = viewModel.receiver.value.receiverAddress
+        binding.TransferCompleteReceiverNameTV.text = viewModel.receiver.value.recipientKoName
+        binding.TransferCompleteAddressTV.text = viewModel.receiver.value.walletAddress
 
         binding.TransferCompleteAmountTV.text = viewModel.information.value.amount
         binding.TransferCompleteExchangeTV.text = viewModel.exchangeToString(viewModel.exchangeType.value)
-        binding.TransferCompleteAssetSymbolTV.text = viewModel.information.value.assetSymbol
+        binding.TransferCompleteAssetSymbolTV.text = viewModel.receiver.value.coinType
 
         binding.TransferCompleteCheckTransferTV.setOnClickListener {
-            //내지갑으로 이동
+            findNavController().navigate(R.id.wallet_fragment)
         }
         binding.TransferCompleteCompleteTV.setOnClickListener {
-            //종료
+            //홈으로 이동
         }
     }
 }

@@ -14,10 +14,16 @@ class ArraySettingChargeBottomSheet: BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentArraySettingChargeBottomsheetBinding
 
+    private lateinit var setArraySettingCharge: SetArraySettingCharge
+
     var sortType: Sort? = null
+    lateinit var sortTypeString: String
     var categoryType: ChargeCategory? = null
+    lateinit var categoryTypeString: String
     var statusType: Status? = null
+    lateinit var statusTypeString: String
     var periodType: Period? = null
+    lateinit var periodTypeString: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,7 +91,8 @@ class ArraySettingChargeBottomSheet: BottomSheetDialogFragment() {
             }
 
             bottomsheetArraySettingSubmitBT.setOnClickListener {
-                //submit()
+                arraySetToString(sortType,categoryType,statusType,periodType)
+                setArraySettingCharge.arraySettingCharge(sortTypeString,categoryTypeString,statusTypeString,periodTypeString)
                 dismiss()
             }
         }
@@ -230,6 +237,37 @@ class ArraySettingChargeBottomSheet: BottomSheetDialogFragment() {
                 }
             }
             else -> Unit
+        }
+    }
+
+    private fun arraySetToString(
+        sortType: Sort?,
+        categoryType: ChargeCategory?,
+        statusType: Status?,
+        periodType: Period?) {
+        sortTypeString = when (sortType) {
+            Sort.ASC -> "asc"
+            Sort.DESC -> "desc"
+            else -> ""
+        }
+        categoryTypeString = when (categoryType) {
+            ChargeCategory.TOPUP -> "CHARGE"
+            ChargeCategory.ALL -> "ALL"
+            ChargeCategory.EXCHANGE -> "CASH_EXCHANGE"
+            else -> ""
+        }
+        statusTypeString = when (statusType) {
+            Status.PENDING -> "WAIT"
+            Status.COMPLETED -> "DONE"
+            Status.CANCELED -> "CANCEL"
+            else -> ""
+        }
+        periodTypeString = when (periodType) {
+            Period.TODAY -> "TODAY"
+            Period.SIXMONTH -> "SIX_MONTHS"
+            Period.ONEMONTH -> "ONE_MONTH"
+            Period.THREEMONTH -> "THREE_MONTHS"
+            else -> ""
         }
     }
 }

@@ -3,6 +3,7 @@ package com.stable.scoi.presentation.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stable.scoi.data.base.ApiState
+import com.stable.scoi.data.base.FailState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow

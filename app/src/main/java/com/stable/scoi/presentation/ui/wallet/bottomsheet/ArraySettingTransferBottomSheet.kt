@@ -13,9 +13,13 @@ class ArraySettingTransferBottomSheet: BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentArraySettingTransferBottomsheetBinding
 
+    private lateinit var setArraySettingTransfer: SetArraySettingTransfer
     var sortType: Sort? = null
+    lateinit var sortTypeString: String
     var categoryType: TransferCategory? = null
+    lateinit var categoryTypeString: String
     var periodType: Period? = null
+    lateinit var periodTypeString: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +74,8 @@ class ArraySettingTransferBottomSheet: BottomSheetDialogFragment() {
             }
 
             bottomsheetArraySettingSubmitBT.setOnClickListener {
-                //submit()
+                arraySetToString(sortType,categoryType,periodType)
+                setArraySettingTransfer.arraySettingTransfer(sortTypeString,categoryTypeString,periodTypeString)
                 dismiss()
             }
         }
@@ -181,6 +186,30 @@ class ArraySettingTransferBottomSheet: BottomSheetDialogFragment() {
                 }
             }
             else -> Unit
+        }
+    }
+
+    private fun arraySetToString(
+        sortType: Sort?,
+        categoryType: TransferCategory?,
+        periodType: Period?) {
+        sortTypeString = when (sortType) {
+            Sort.ASC -> "asc"
+            Sort.DESC -> "desc"
+            else -> ""
+        }
+        categoryTypeString = when (categoryType) {
+            TransferCategory.ALL -> "ALL"
+            TransferCategory.IN -> "DEPOSIT"
+            TransferCategory.OUT -> "WITHDRAW"
+            else -> ""
+        }
+        periodTypeString = when (periodType) {
+            Period.TODAY -> "TODAY"
+            Period.SIXMONTH -> "SIX_MONTHS"
+            Period.ONEMONTH -> "ONE_MONTH"
+            Period.THREEMONTH -> "THREE_MONTHS"
+            else -> ""
         }
     }
 }

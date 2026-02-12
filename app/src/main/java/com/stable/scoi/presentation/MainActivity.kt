@@ -73,6 +73,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
                 }
                 R.id.wallet_fragment -> {
                     viewModel.onClickWallet()
+                    binding.layoutBottomNav.visible()
                 }
                 else -> {
                     binding.layoutBottomNav.gone()
