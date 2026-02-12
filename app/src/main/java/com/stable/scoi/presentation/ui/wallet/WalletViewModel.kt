@@ -5,23 +5,48 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.lifecycle.viewModelScope
+import com.stable.scoi.domain.model.wallet.CancelOrderRequest
+import com.stable.scoi.domain.repository.transfer.BalancesRepository
+import com.stable.scoi.domain.repository.wallet.CancelOrderRepository
+import com.stable.scoi.domain.repository.wallet.TransactionsDetailRepository
+import com.stable.scoi.domain.repository.wallet.TransactionsRemitRepository
+import com.stable.scoi.domain.repository.wallet.TransactionsTopupsRepository
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.ui.transfer.Exchange
+import com.stable.scoi.presentation.ui.wallet.bottomsheet.ChargeCategory
+import com.stable.scoi.presentation.ui.wallet.bottomsheet.Period
+import com.stable.scoi.presentation.ui.wallet.bottomsheet.Sort
+import com.stable.scoi.presentation.ui.wallet.bottomsheet.Status
+import com.stable.scoi.presentation.ui.wallet.bottomsheet.TransferCategory
 import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeList
 import com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.RecentTransferList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import java.nio.file.Files.copy
 import java.text.NumberFormat
 import java.util.Locale
 
 @HiltViewModel
-class WalletViewModel @Inject constructor(): BaseViewModel<WalletState, WalletEvent>(WalletState()) {
+class WalletViewModel @Inject constructor(
+    private val transactionsRemitRepository: TransactionsRemitRepository,
+    private val transactionsTopupsRepository: TransactionsTopupsRepository,
+    private val transactionsDetailRepository: TransactionsDetailRepository,
+    private val cancelOrderRepository: CancelOrderRepository,
+    private val balancesRepository: BalancesRepository): BaseViewModel<WalletState, WalletEvent>(WalletState()) {
 
-    private var exType: String = ""
+    var exType: String = ""
     private val _exchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
     val exchangeType = _exchangeType.asStateFlow()
+
+    private val _arraySettingTransfer = MutableStateFlow(ArraySettingTransfer())
+    val arraySettingTransfer =  _arraySettingTransfer.asStateFlow()
+
+    private val _arraySettingCharge = MutableStateFlow(ArraySettingCharge())
+    val arraySettingCharge = _arraySettingCharge.asStateFlow()
 
     private val _transferDetail = MutableStateFlow<RecentTransferList>(RecentTransferList())
     val transferDetail = _transferDetail.asStateFlow()
@@ -56,6 +81,132 @@ class WalletViewModel @Inject constructor(): BaseViewModel<WalletState, WalletEv
         _amount.value = amount
     }
 
+    fun submitArraySettingTransfer(
+        sortType: String,
+        categoryType: String,
+        periodType: String
+    ) {
+        _arraySettingTransfer.value.sortType = sortType
+        _arraySettingTransfer.value.periodType = periodType
+        _arraySettingTransfer.value.categoryType = categoryType
+    }
+
+    fun submitArraySettingCharge(
+        sortType: String,
+        categoryType: String,
+        statusType: String,
+        periodType: String
+    ) {
+        _arraySettingCharge.value.sortType = sortType
+        _arraySettingCharge.value.periodType = periodType
+        _arraySettingCharge.value.categoryType = categoryType
+        _arraySettingCharge.value.statusType = statusType
+    }
+
+    //API
+    fun transactionRemit(
+        exchangeType: String,
+        type: String,
+        period: String,
+        order: String,
+        limit: Int
+    ) = viewModelScope.launch {
+        resultResponse(
+            response = transactionsRemitRepository.loadTransactionsRemit(exchangeType,type,period,order,limit),
+
+            successCallback = { transactionsRemitResponse ->
+                updateState {
+                    copy(
+                        transactionsRemitItems = transactionsRemitResponse.transactions,
+                        totalCount = transactionsRemitResponse.totalCount
+                    )
+                }
+            }
+        )
+    }
+
+    fun transactionTopups(
+        exchangeType: String,
+        type: String,
+        state: String,
+        period: String,
+        order: String,
+        limit: Int
+    ) = viewModelScope.launch {
+        resultResponse(
+            response = transactionsTopupsRepository.loadTransactionsTopups(exchangeType,type,state,period,order,limit),
+
+            successCallback = { transactionsTopupsResponse ->
+                updateState {
+                    copy(
+                        transactionsTopupsItems = transactionsTopupsResponse.transactions,
+                        totalCount = transactionsTopupsResponse.totalCount
+                    )
+                }
+            }
+        )
+    }
+
+
+    fun transactionsDetail(
+        exchangeType: String,
+        category: String,
+        remitType: String?,
+        uuid: String,
+        currency: String?
+    ) = viewModelScope.launch {
+        resultResponse(
+            response = transactionsDetailRepository.loadTransactionsDetail(exchangeType,category,remitType,uuid,currency),
+
+            successCallback = { transactionsDetailResponse ->
+                when (transactionsDetailResponse.category) {
+                    "REMIT" -> {
+                        updateState {
+                            copy(
+                                transactionsRemitDetailItem = transactionsDetailResponse.remitDetail
+                            )
+                        }
+                    }
+                    "TOPUP" -> {
+                        updateState {
+                            copy(
+                                transactionsTopupsDetailItem = transactionsDetailResponse.topupDetail
+                            )
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    fun cancelOrder(request: CancelOrderRequest) = viewModelScope.launch {
+        resultResponse(
+            response = cancelOrderRepository.cancelOrder(request),
+
+            successCallback = { cancelOrderResponse ->
+                updateState {
+                    copy(
+                        cancelOrderState = cancelOrderResponse.uuid
+                    )
+                }
+            }
+        )
+    }
+
+    fun balances(exchangeType: String) = viewModelScope.launch {
+        resultResponse(
+            response = balancesRepository.balances(exchangeType),
+
+            successCallback = { balancesResponse ->
+                updateState {
+                    copy(
+                        balances = balancesResponse.balances
+                    )
+                }
+            }
+        )
+    }
+
 
     //ETC
     fun addComma(amount: String): String {
@@ -87,3 +238,16 @@ class WalletViewModel @Inject constructor(): BaseViewModel<WalletState, WalletEv
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
+
+data class ArraySettingTransfer(
+    var sortType: String = "",
+    var categoryType: String = "",
+    var periodType: String = ""
+)
+
+data class ArraySettingCharge(
+    var sortType: String = "",
+    var categoryType: String = "",
+    var statusType: String = "",
+    var periodType: String = ""
+)

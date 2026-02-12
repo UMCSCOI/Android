@@ -58,7 +58,6 @@ class ExchangeBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.bottomsheetExchangeCloseIv.setOnClickListener {
-            setExchange.empty()
             dismiss()
         }
     }

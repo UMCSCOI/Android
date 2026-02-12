@@ -5,45 +5,67 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.lifecycle.viewModelScope
 import com.stable.scoi.presentation.base.BaseViewModel
-import com.stable.scoi.domain.model.transfer.Execute
-import com.stable.scoi.domain.model.transfer.Information
-import com.stable.scoi.domain.model.transfer.Receiver
+import com.stable.scoi.domain.model.transfer.ExecuteRequest
+import com.stable.scoi.domain.model.transfer.QuoteRequest
+import com.stable.scoi.domain.model.transfer.ValidateRequest
+import com.stable.scoi.domain.repository.transfer.BalancesRepository
+import com.stable.scoi.domain.repository.transfer.DirectoryRepository
+import com.stable.scoi.domain.repository.transfer.ExecuteRepository
+import com.stable.scoi.domain.repository.transfer.QuoteRepository
+import com.stable.scoi.domain.repository.transfer.ValidateRepository
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.Network
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
+import java.util.UUID
 
 @HiltViewModel
-class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, TransferEvent>(
+class TransferViewModel @Inject constructor(
+    private val directoryRepository: DirectoryRepository,
+    private val validateRepository: ValidateRepository,
+    private val executeRepository: ExecuteRepository,
+    private val quoteRepository: QuoteRepository,
+    private val balancesRepository: BalancesRepository) : BaseViewModel<TransferState, TransferEvent>(
     TransferState()
 ) {
     private var exType: String = ""
     private var asSymb: String = ""
-
     //bottomSheet Type 선택
 
     private val _exchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
     val exchangeType = _exchangeType.asStateFlow()
 
     private val _assetSymbolType = MutableStateFlow<AssetSymbol>(AssetSymbol.Empty)
-    val assetSymbolType = _assetSymbolType.asStateFlow()
+    val assetSymbolType = _assetSymbolType.asStateFlow() // homeFragment의 선택 코인 입력
 
     private val _networkType = MutableStateFlow<Network>(Network.TRON)
     val netWorkType = _networkType.asStateFlow()
 
+    private val _myExchange = MutableStateFlow("")
+    val myExchange = _myExchange.asStateFlow()
+
+    private val _myAssetSymbol = MutableStateFlow<String>("")
+    val myAssetSymbol = _myAssetSymbol.asStateFlow()
+
+    private val _myAddress = MutableStateFlow("")
+    val myAddress = _myAddress.asStateFlow()
+
+
 
     //API 요구 정보
-    private val _receiver = MutableStateFlow(Receiver())
+    private val _receiver = MutableStateFlow(ValidateRequest())
     val receiver = _receiver.asStateFlow()
 
     private val _information = MutableStateFlow(Information())
     val information = _information.asStateFlow()
 
-    private val _execute = MutableStateFlow(Execute())
+    private val _execute = MutableStateFlow(ExecuteRequest())
     val execute = _execute.asStateFlow()
 
 
@@ -64,35 +86,34 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
 
     //NextButton
     fun onClickNextButton() {
-        if(_receiver.value.receiverKORName == null ||
-            _receiver.value.receiverKORName == "" ||
-            _receiver.value.receiverENGName == null ||
-            _receiver.value.receiverENGName == "" ||
-            _receiver.value.receiverAddress == null ||
-            _receiver.value.receiverAddress == "" ||
+        if(_receiver.value.recipientKoName == "" ||
+            _receiver.value.recipientEnName == "" ||
+            _receiver.value.walletAddress == "" ||
             _exchangeType.value == Exchange.Empty ||
             _exchangeType.value == Exchange.Unselected
         ) {
             Unit
         }
-        else emitEvent(TransferEvent.NavigateToNextPage)
+        else {
+            judgeValidate(receiver.value)
+        }
     }
 
 
     //Receiver
     fun submitReceiver(receiverKORName: String, receiverENGName: String, receiverAddress: String) {
         _receiver.value = _receiver.value.copy(
-            receiverKORName,
-            receiverENGName,
-            receiverAddress
+            recipientKoName = receiverKORName,
+            recipientEnName = receiverENGName,
+            walletAddress = receiverAddress,
+            exchangeType = exType,
+            coinType = asSymb
         )
     }
 
     //Information
     fun submitInformation(amount: String) {
         _information.value = _information.value.copy(
-            exType,
-            asSymb,
             amount
         )
     }
@@ -101,10 +122,27 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
     fun submitPassword(
         first: String, second: String, third:String, fourth: String, fifth: String, sixth: String) {
         val simplePassword = first + second + third + fourth + fifth + sixth
+        val network = when (netWorkType.value) {
+            Network.TRON -> "TRX"
+            Network.KAIA -> "KAIA"
+            Network.APTOS -> "APT"
+            Network.ETHEREUM -> "ETH"
+        }
+        val idempotencyKey = UUID.randomUUID().toString()
 
         _execute.value = _execute.value.copy(
-            simplePassword
+            asSymb,
+            network,
+            information.value.amount,
+            receiver.value.walletAddress,
+            receiver.value.exchangeType,
+            "INDIVIDUAL",
+            receiver.value.recipientKoName,
+            receiver.value.recipientEnName,
+            simplePassword,
+            idempotencyKey
         )
+        execute(execute.value)
     }
 
     //Network
@@ -114,14 +152,81 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
 
 
     //API
-//    fun setRecentList() {
-//        resultResponse(
-//            response = TransferRepository.load,
-//            successCallback = {
-//
-//            }
-//        )
-//    }
+    fun setDirectoryList(exchange: String, coinType: String) = viewModelScope.launch {
+        resultResponse(
+            response = directoryRepository.loadDirectoryList(exchange, coinType),
+
+            successCallback = { directoryListResponse ->
+                updateState {
+                    copy(
+                        directoryList = directoryListResponse.result,
+                    )
+                }
+            }
+        )
+    }
+
+    fun judgeValidate(request: ValidateRequest) = viewModelScope.launch {
+        resultResponse(
+            response = validateRepository.judgeValidateRecipient(request),
+
+            successCallback = { validateResponse ->
+                updateState {
+                    copy(
+                        validateBalance = validateResponse.balance
+                    )
+                }
+                emitEvent(TransferEvent.NavigateToNextPage)
+            },
+
+            errorCallback = { failState ->
+                emitEvent(TransferEvent.ShowError(failState.message))
+            }
+        )
+    }
+
+    fun execute(request: ExecuteRequest) = viewModelScope.launch {
+        resultResponse(
+            response = executeRepository.execute(request),
+
+            successCallback = { executeResponse ->
+                emitEvent(TransferEvent.NavigateToNextPage)
+            },
+
+            errorCallback = { failState ->
+                emitEvent(TransferEvent.ShowError(failState.message))
+            }
+        )
+    }
+
+    fun quote(request: QuoteRequest) = viewModelScope.launch {
+        resultResponse(
+            response = quoteRepository.quote(request),
+
+            successCallback = { quoteResponse ->
+                emitEvent(TransferEvent.NavigateToNextPage)
+            },
+
+            errorCallback = { failState ->
+                emitEvent(TransferEvent.ShowError(failState.message))
+            }
+        )
+    }
+
+    fun balances(exchangeType: String) = viewModelScope.launch {
+        resultResponse(
+            response = balancesRepository.balances(exchangeType),
+
+            successCallback = { balancesResponse ->
+                updateState {
+                    copy(
+                        balances = balancesResponse.balances
+                    )
+                }
+            }
+        )
+    }
+
 
     //ETC
     fun addressLineChange(address: String): String {
@@ -193,6 +298,15 @@ class TransferViewModel @Inject constructor() : BaseViewModel<TransferState, Tra
                 val string = "앱토스"
                 return string
             }
+        }
+    }
+
+    fun formattedNetwork(network: Network): String {
+        return when (network) {
+            Network.TRON -> "TRX"
+            Network.KAIA -> "KAIA"
+            Network.APTOS -> "APT"
+            Network.ETHEREUM -> "ETH"
         }
     }
 

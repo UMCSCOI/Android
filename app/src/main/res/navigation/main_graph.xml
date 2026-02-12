@@ -72,7 +72,11 @@
 
     <fragment
         android:id="@+id/transfer_complete_fragment"
-        android:name="com.stable.scoi.presentation.ui.transfer.TransferCompleteFragment"/>
+        android:name="com.stable.scoi.presentation.ui.transfer.TransferCompleteFragment">
+        <action
+            android:id="@+id/action_transfer_complete_to_wallet"
+            app:destination="@id/wallet_fragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/chargeMainFragment"

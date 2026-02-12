@@ -10,14 +10,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferBinding
+import com.stable.scoi.domain.model.transfer.DirectoryResult
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.ExchangeBottomSheet
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetExchangeType
 import com.stable.scoi.presentation.ui.transfer.recyclerview.DirectoryOnClickListener
 import com.stable.scoi.presentation.ui.transfer.recyclerview.DirectoryRVAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -25,16 +28,33 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
     BaseFragment<FragmentTransferBinding, TransferState, TransferEvent, TransferViewModel>(
     FragmentTransferBinding::inflate
 ) {
-    private var directoryData = ArrayList<Directory>()
-
     override val viewModel: TransferViewModel by activityViewModels()
 
     override fun initView() {
 
+        viewModel.setDirectoryList(viewModel.myExchange.value, viewModel.myAssetSymbol.value)
+
         binding.TransferNextTV.isEnabled = false
 
         val watcher = object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+                binding.TransferInputAddressET.removeTextChangedListener(this)
+
+                val text = p0.toString().replace("\n", "")
+                val builder = StringBuilder()
+
+                text.chunked(24).forEachIndexed { index, chunk ->
+                    builder.append(chunk)
+                    if (index != text.chunked(24).lastIndex) {
+                        builder.append("\n")
+                    }
+                }
+
+                binding.TransferInputAddressET.setText(builder.toString())
+                binding.TransferInputAddressET.setSelection(binding.TransferInputAddressET.text.length)
+
+                binding.TransferInputAddressET.addTextChangedListener(this)
+            }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
@@ -97,6 +117,13 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
         viewModel.focusRemove(binding.TransferCorpNameENGET)
         viewModel.focusRemove(binding.TransferCorpNameKORET)
 
+        //RecyclerView
+        val directoryRVAdapter = DirectoryRVAdapter(this)
+        binding.TransferBookmarkRV.adapter = directoryRVAdapter
+        binding.TransferBookmarkRV.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+
 
         repeatOnStarted(viewLifecycleOwner) {
             launch {
@@ -138,25 +165,27 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
                 viewModel.uiEvent.collect { event ->
                     when (event) {
                         TransferEvent.NavigateToNextPage -> {
+                            binding.TransferValidateWarningTV.visibility = View.GONE
+                            binding.TransferValidateInfoTV.visibility = View.VISIBLE
                             findNavController().navigate(R.id.transfer_amount_fragment)
+                        }
+                        is TransferEvent.ShowError -> {
+                            binding.TransferValidateWarningTV.visibility = View.VISIBLE
+                            binding.TransferValidateWarningTV.text = event.message
+                            binding.TransferValidateInfoTV.visibility = View.GONE
                         }
                     }
                 }
             }
+
+            launch {
+                viewModel.uiState.collectLatest { state ->
+                    directoryRVAdapter.setItems(state.directoryList)
+                }
+            }
         }
 
-        directoryData.apply {
-            add(Directory("1", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
-            add(Directory("2", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
-            add(Directory("3", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
-            add(Directory("4", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
-            add(Directory("5", "홍길동", "Hong GIldong", "주소", "UPBIT", true))
-        }
 
-        val directoryRVAdapter = DirectoryRVAdapter(directoryData, this)
-        binding.TransferBookmarkRV.adapter = directoryRVAdapter
-        binding.TransferBookmarkRV.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
 
@@ -175,9 +204,9 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
 
 
     //RVAdatper
-    override fun dtOnclickListener(directory: Directory) {
-        viewModel.submitReceiver(directory.recipientKORName, directory.recipientENGName, directory.walletAddress)
-        changeStringToExchangeType(directory.exchangeType)
+    override fun dtOnclickListener(result: DirectoryResult) {
+        viewModel.submitReceiver(result.recipientKoName,result.recipientEnName,result.walletAddress) //APi 변경 필요
+        changeStringToExchangeType(result.exchangeType)
         findNavController().navigate(R.id.transfer_amount_fragment)
     }
 
@@ -195,7 +224,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
     private fun updateButtonState(value1: String, value2: String, value3: String, value4: String, exchange: Exchange) {
         if(value1 == "" || value2 == "" || value3 == "" || value4 == "" || exchange == Exchange.Empty || exchange == Exchange.Unselected
         ) {
-            Unit
+            binding.TransferNextTV.isEnabled = false
         }
         else binding.TransferNextTV.isEnabled = true
     }

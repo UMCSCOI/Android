@@ -324,6 +324,13 @@
                 android:gravity="center_vertical"
                 app:layout_constraintBottom_toTopOf="@id/Transfer_next_FL">
 
+                <ImageView
+                    android:id="@+id/Transfer_amount_network_setting_IV"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="18dp"
+                    android:src="@drawable/ic_arrow_down" />
+
                 <TextView
                     android:id="@+id/Transfer_amount_network_type_TV"
                     android:layout_width="wrap_content"
@@ -365,13 +372,6 @@
                     android:text="USDT"
                     android:textColor="@color/main_black"
                     android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/Transfer_amount_network_setting_IV"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:padding="18dp"
-                    android:src="@drawable/ic_arrow_down" />
 
 
             </LinearLayout>

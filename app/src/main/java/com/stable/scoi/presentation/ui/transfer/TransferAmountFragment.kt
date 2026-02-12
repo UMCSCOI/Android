@@ -8,12 +8,18 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferAmountBinding
+import com.stable.scoi.domain.model.transfer.Balances
+import com.stable.scoi.domain.model.transfer.BalancesResponse
+import com.stable.scoi.domain.model.transfer.QuoteRequest
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.home.HomeEvent
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.Network
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.NetworkBottomSheet
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SendCheckBottomSheet
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetNetworkType
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -23,15 +29,37 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
     override val viewModel: TransferViewModel by activityViewModels()
 
     override fun initView() {
+
+        viewModel.balances(viewModel.myExchange.value)
+
+        repeatOnStarted(viewLifecycleOwner) {
+            launch {
+                viewModel.uiState.collect { state ->
+                    val myAssetAmount = state.balances.find { it.currency == "KRW" }
+                    if (myAssetAmount != null )
+                    binding.TransferAmountAvailableAmountTV.text = myAssetAmount.balance
+                }
+            }
+        }
         //input
-
         binding.TransferNextTV.setOnClickListener {
-            viewModel.submitInformation(binding.TransferAmountET.text.toString())
 
-            SendCheckBottomSheet().show(
-                parentFragmentManager,
-                "bottomsheet"
+            val currentState = viewModel.uiState.value
+
+            val myAssetAmount = currentState.balances
+                .find { it.currency == viewModel.myAssetSymbol.value }
+
+            if (myAssetAmount == null) return@setOnClickListener
+
+            val request = QuoteRequest(
+                available = myAssetAmount.balance,
+                amount = binding.TransferAmountET.text.toString().replace(",", ""),
+                coinType = viewModel.myAssetSymbol.value,
+                networkType = viewModel.formattedNetwork(viewModel.netWorkType.value),
+                networkFee = binding.TransferAmountNetworkFeeTV.text.toString()
             )
+
+            viewModel.quote(request)
         }
 
         binding.TransferAmountBackArrowIV.setOnClickListener {
@@ -63,7 +91,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                 binding.TransferAmountAvailableCoinTypeTV.text = "USDC"
                 binding.TransferAmountNetworkAssetSymbolTV.text = "USDC"
                 binding.TransferAmountNetworkTypeTV.text = "이더리움"
-                binding.TransferAmountNetworkFeeTV.text = "250"
+                binding.TransferAmountNetworkFeeTV.text = "1"
                 binding.TransferAmountNetworkSettingIV.isClickable = false
             }
             else -> Unit
@@ -79,10 +107,13 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
 
 
         //output
-        binding.TransferAmountReceiverNameTV.text = viewModel.receiver.value.receiverKORName.toString()
+        binding.TransferAmountReceiverNameTV.text = viewModel.receiver.value.recipientKoName
 
-        val address = viewModel.receiver.value.receiverAddress.toString()
+        val address = viewModel.receiver.value.walletAddress
         binding.TransferAmountReceiverAddressTV.text = viewModel.addressLineChange(address)
+
+        val availableAmount = viewModel.uiState.value.validateBalance.availableAmount
+        binding.TransferAmountAvailableAmountTV.text = viewModel.addComma(availableAmount)
 
         when (viewModel.exchangeType.value) {
             Exchange.Upbit -> binding.TransferAmountReceieverExchangeIV.setImageResource(R.drawable.upbit_logo)
@@ -105,7 +136,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                 TransferAmountET.requestFocus()
             }
             TransferAmountAmountPlusAllBT.setOnClickListener {
-                //API 연동 후 추가 예정 (전체 금액)
+                addButtonClicked(rawInt, availableAmount.toInt())
                 TransferAmountET.requestFocus()
             }
         }
@@ -136,7 +167,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                         addButtonClicked(rawInt, 100000)
                     }
                     TransferAmountAmountPlusAllBT.setOnClickListener {
-                        //API 연동 후 추가 예정 (전체 금액)
+                        addButtonClicked(rawInt, availableAmount.toInt())
                     }
                 }
 
@@ -170,15 +201,31 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                         }
                         Network.ETHEREUM -> {
                             binding.TransferAmountNetworkTypeTV.text = "이더리움"
-                            binding.TransferAmountNetworkFeeTV.text = "250"
+                            binding.TransferAmountNetworkFeeTV.text = "1"
                         }
                         Network.KAIA -> {
                             binding.TransferAmountNetworkTypeTV.text = "카이아"
-                            binding.TransferAmountNetworkFeeTV.text = "250"
+                            binding.TransferAmountNetworkFeeTV.text = "0.1"
                         }
                         Network.APTOS -> {
                             binding.TransferAmountNetworkTypeTV.text = "앱토스"
-                            binding.TransferAmountNetworkFeeTV.text = "250"
+                            binding.TransferAmountNetworkFeeTV.text = "0.1"
+                        }
+                    }
+                }
+            }
+            launch {
+                viewModel.uiEvent.collect { event ->
+                    when (event) {
+                        TransferEvent.NavigateToNextPage -> {
+                            SendCheckBottomSheet().show(
+                                parentFragmentManager,
+                                "bottomsheet"
+                            )
+                        }
+                        is TransferEvent.ShowError -> {
+                            binding.TransferAmountWarningTV.visibility = View.VISIBLE
+                            binding.TransferAmountWarningTV.text = event.message
                         }
                     }
                 }

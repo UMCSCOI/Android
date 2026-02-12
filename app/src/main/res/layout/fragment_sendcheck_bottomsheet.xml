@@ -133,10 +133,20 @@
                 android:textColor="@color/main_black"/>
 
             <TextView
-                android:id="@+id/bottomsheet_sendCheck_myWallet_TV"
+                android:id="@+id/bottomsheet_sendCheck_myWallet_exchange_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="업비트 뭐시기"
+                android:text="업비트"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textSize="16sp"
+                android:textColor="@color/main_black"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/bottomsheet_sendCheck_myWallet_address_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주소"
                 android:fontFamily="@font/pretendard_semibold"
                 android:textSize="16sp"
                 android:textColor="@color/main_black"

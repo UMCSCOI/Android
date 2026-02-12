@@ -36,13 +36,11 @@ class SendCheckBottomSheet: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.bottomsheetSendCheckReceiverNameTV.text = viewModel.receiver.value.receiverKORName.toString()
-        binding.bottomsheetSendCheckAssetSymbolTV.text = viewModel.information.value.assetSymbol
+        binding.bottomsheetSendCheckReceiverNameTV.text = viewModel.receiver.value.recipientKoName
+        binding.bottomsheetSendCheckAssetSymbolTV.text = viewModel.receiver.value.coinType
         binding.bottomsheetSendCheckAmountTV.text = viewModel.information.value.amount
-
-        val myWallet = viewModel.exchangeToString(viewModel.exchangeType.value) + ' ' + viewModel.receiver.value.receiverAddress.toString()
-        binding.bottomsheetSendCheckMyWalletTV.text = myWallet
-
+        binding.bottomsheetSendCheckMyWalletExchangeTV.text = viewModel.myExchange.value
+        binding.bottomsheetSendCheckMyWalletAddressTV.text = formatWalletAddress(viewModel.myAddress.value)
         binding.bottomsheetSendCheckNetworkTV.text = viewModel.networkToString(viewModel.netWorkType.value)
 
 
@@ -59,6 +57,14 @@ class SendCheckBottomSheet: BottomSheetDialogFragment() {
         binding.BottomsheetSendCheckSendTV.setOnClickListener {
             findNavController().navigate(R.id.transfer_password_fragment)
             dismiss()
+        }
+    }
+
+    fun formatWalletAddress(address: String): String {
+        return if (address.length > 11) {
+            address.take(11) + "..."
+        } else {
+            address
         }
     }
 }

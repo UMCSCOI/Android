@@ -3,6 +3,7 @@ package com.stable.scoi.presentation.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stable.scoi.data.base.ApiState
+import com.stable.scoi.data.base.FailState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -35,16 +36,13 @@ abstract class BaseViewModel<STATE: UiState, EVENT : UiEvent>(
         }
     }
 
-    protected fun<D> resultResponse(response: ApiState<D>, successCallback : (D) -> Unit, errorCallback : ((String) -> Unit)? = null){
-        when(response){
-            is ApiState.Error -> {
-                errorCallback?.invoke(response.errorCode)
+    protected fun<D> resultResponse(response: ApiState<D>, successCallback : (D) -> Unit, errorCallback : ((FailState) -> Unit)? = null){
+        when (response){
+            is ApiState.Fail -> {
+                errorCallback?.invoke(response.failState)
             }
             is ApiState.Success -> {
-                successCallback.invoke(response.result)
-            }
-            is ApiState.Loading -> {
-                //TODO 로딩 화면 같은거
+                successCallback.invoke(response.data)
             }
         }
     }
