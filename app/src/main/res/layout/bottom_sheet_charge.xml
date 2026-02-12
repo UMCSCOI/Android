@@ -50,6 +50,7 @@
             android:layout_marginTop="31.5dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="1,449원"
+            android:textSize="16sp"
             android:textAppearance="@style/b3_sb"
             android:textColor="@color/main_black"
             app:layout_constraintTop_toBottomOf="@id/text_charge_title" />

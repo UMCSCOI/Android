@@ -27,11 +27,11 @@ interface MyPageApi {
 
     // API 키 목록 조회
     @GET("api/members/me/api-keys")
-    suspend fun getApiKeys(): ApiResponse<ApiKeyListResult>
+    suspend fun getApiKeys(): ApiResponse<List<ApiKeyInfo>>
 
     // API 키 등록 및 수정
     @POST("api/members/me/api-keys")
-    suspend fun registerApiKeys(@Body request: List<ApiKeyRequest>): ApiResponse<Unit>
+    suspend fun registerApiKeys(@Body request: List<ApiKeyRequest>): ApiResponse<List<String>>
 
     // API 키 삭제
     @DELETE("api/members/me/api-keys")

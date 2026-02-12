@@ -1,10 +1,14 @@
 package com.stable.scoi.presentation.ui.home
 
+import android.Manifest
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.view.View
 import android.view.animation.AccelerateInterpolator
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -14,6 +18,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.stable.scoi.databinding.FragmentHomeBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +40,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 ) {
     override val viewModel: HomeViewModel by viewModels()
 
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // 권한 허용됨
+            SLOG.D("알림 권한 허용됨")
+        } else {
+            // 권한 거부됨 -> 설정으로 유도하거나 안내 메시지 표시
+            SLOG.D("알림 권한 거부됨")
+        }
+    }
+
     private val accountCardAdapter : AccountCardAdapter by lazy {
         AccountCardAdapter(object : AccountCardAdapter.Delegate {
             override fun onClickCard() {
@@ -45,6 +63,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
     override fun initView() {
         binding.apply {
             vm = viewModel
+            askNotificationPermission()
+            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    SLOG.D("FCM 토큰 가져오기 실패")
+                    return@addOnCompleteListener
+                }
+
+                // 토큰 가져오기 성공
+                val token = task.result
+                SLOG.D("FCM : $token")
+            }
+
 
             imgMyWhite.setOnClickListener {
                 findNavController().navigate(R.id.myPageFragment)
@@ -303,5 +333,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
             navigateToTransfer()
         }
         SelectStableDialogFragment().show(childFragmentManager, "")
+    }
+
+    private fun askNotificationPermission() {
+        // 안드로이드 13(API 33) 이상인 경우에만 권한 요청
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // 이미 권한이 있음 -> FCM 토큰 가져오기 등 진행
+            } else {
+                // 권한 요청 팝업 띄우기
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 }
