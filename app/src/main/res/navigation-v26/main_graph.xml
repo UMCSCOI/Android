@@ -161,5 +161,86 @@
 
     </fragment>
 
+    <!-- 마이페이지 -->
+
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.stable.scoi.presentation.ui.my.MyPageFragment"
+        android:label="MyPageFragment"
+        tools:layout="@layout/fragment_mypage">
+        <action
+            android:id="@+id/action_mypage_to_accountInfo"
+            app:destination="@id/accountInfoFragment" />
+        <action
+            android:id="@+id/action_mypage_to_apiSetting"
+            app:destination="@id/apiSettingFragment" />
+
+        <action
+            android:id="@+id/action_mypage_to_changePassword"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountInfoFragment"
+        android:name="com.stable.scoi.presentation.ui.my.info.AccountInfoFragment"
+        android:label="AccountInfoFragment"
+        tools:layout="@layout/fragment_account_info" />
+
+    <fragment
+        android:id="@+id/apiSettingFragment"
+        android:name="com.stable.scoi.presentation.ui.my.api.ApiSettingFragment"
+        android:label="ApiSettingFragment"
+        tools:layout="@layout/fragment_api_setting">
+        <action
+            android:id="@+id/action_apiSetting_to_apiEdit"
+            app:destination="@id/apiEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/apiEditFragment"
+        android:name="com.stable.scoi.presentation.ui.my.api.ApiEditFragment"
+        android:label="ApiEditFragment"
+        tools:layout="@layout/fragment_api_edit" />
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.stable.scoi.presentation.ui.my.pw.PasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_password" />
+
+    <fragment
+        android:id="@+id/phoneAuthFragment"
+        android:name="com.stable.scoi.presentation.ui.my.phone.PhoneAuthFragment"
+        android:label="PhoneAuthFragment"
+        tools:layout="@layout/fragment_phone_auth">
+        <action
+            android:id="@+id/action_phoneAuth_to_code"
+            app:destination="@id/phoneAuthCodeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/phoneAuthCodeFragment"
+        android:name="com.stable.scoi.presentation.ui.my.phone.PhoneAuthCodeFragment"
+        android:label="PhoneAuthCodeFragment"
+        tools:layout="@layout/fragment_phone_auth_code">
+        <action
+            android:id="@+id/action_code_to_complete"
+            app:destination="@id/phoneAuthCompleteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/phoneAuthCompleteFragment"
+        android:name="com.stable.scoi.presentation.ui.my.phone.PhoneAuthCompleteFragment"
+        android:label="PhoneAuthCompleteFragment"
+        tools:layout="@layout/fragment_phone_auth_complete" />
+
+    <fragment
+        android:id="@+id/passwordSuccessFragment"
+        android:name="com.stable.scoi.presentation.ui.my.pw.PasswordSuccessFragment"
+        android:label="PasswordSuccessFragment"
+        tools:layout="@layout/fragment_password_success" />
+
+    <!-- 마이페이지 -->
+
 
 </navigation>

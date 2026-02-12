@@ -46,6 +46,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
         binding.apply {
             vm = viewModel
 
+            imgMyWhite.setOnClickListener {
+                findNavController().navigate(R.id.myPageFragment)
+            }
+            imgMyBlack.setOnClickListener {
+                findNavController().navigate(R.id.myPageFragment)
+            }
             val boldFont = ResourcesCompat.getFont(requireActivity(), R.font.pretendard_semibold)
 
             textTitle.text = buildSpannedString {

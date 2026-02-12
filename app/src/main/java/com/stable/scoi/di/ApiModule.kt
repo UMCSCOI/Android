@@ -4,6 +4,7 @@ import com.stable.scoi.data.api.ChargeApi
 import com.stable.scoi.data.api.transfer.RecentListAPI
 import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
 import com.stable.scoi.data.api.UpbitQuotationRestApi
+import com.stable.scoi.data.api.MyPageApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,7 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideRecentListAPI(retrofit: Retrofit): RecentListAPI {
+    fun provideRecentListAPI(@NormalRetrofit retrofit: Retrofit): RecentListAPI {
         return retrofit.create(RecentListAPI::class.java)
     }
 
@@ -33,4 +34,9 @@ object ApiModule {
     fun provideUpbitPrivateWsApi(client: OkHttpClient): OkHttpUpbitCandleWsApi =
         OkHttpUpbitCandleWsApi(client)
 
+    @Singleton
+    @Provides
+    fun provideMyPageApi(@AuthRetrofit retrofit: Retrofit): MyPageApi {
+        return retrofit.create(MyPageApi::class.java)
+    }
 }
