@@ -25,6 +25,7 @@ class ScoiFCMService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+        SLOG.D("FCM Message Data payload: ${message}")
 
         if (message.data.isNotEmpty()) {
             SLOG.D("FCM Message Data payload: ${message.data}")

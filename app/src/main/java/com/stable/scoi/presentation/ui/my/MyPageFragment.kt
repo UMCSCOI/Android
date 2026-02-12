@@ -1,28 +1,50 @@
 package com.stable.scoi.presentation.ui.my
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
+import com.stable.scoi.databinding.FragmentMypageBinding
+import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.my.info.MyPageEvent
+import com.stable.scoi.presentation.ui.my.info.MyPageUiState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyPageFragment : Fragment(R.layout.fragment_mypage) {
+class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageUiState, MyPageEvent, MyPageViewModel>(
+    FragmentMypageBinding::inflate
+) {
+    override val viewModel: MyPageViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initView() {
+        viewModel.loadUserInfo()
 
-        view.findViewById<View>(R.id.menu_account_info).setOnClickListener {
-            findNavController().navigate(R.id.action_mypage_to_accountInfo)
+        binding.apply {
+            menuAccountInfo.setOnClickListener {
+                findNavController().navigate(R.id.action_mypage_to_accountInfo)
+            }
+
+            menuApiSetting.setOnClickListener {
+                findNavController().navigate(R.id.action_mypage_to_apiSetting)
+            }
+
+            menuPasswordChange.setOnClickListener {
+                findNavController().navigate(R.id.action_mypage_to_changePassword)
+            }
+
         }
+    }
 
-        view.findViewById<View>(R.id.menu_api_setting).setOnClickListener {
-            findNavController().navigate(R.id.action_mypage_to_apiSetting)
-        }
-
-        view.findViewById<View>(R.id.menu_password_change).setOnClickListener {
-            findNavController().navigate(R.id.action_mypage_to_changePassword)
+    override fun initStates() {
+        repeatOnStarted(viewLifecycleOwner) {
+            launch {
+                viewModel.uiState.collectLatest { state ->
+                    state.userInfo?.let { user ->
+                        binding.tvUserName.text = user.koreanName
+                    }
+                }
+            }
         }
     }
 }
