@@ -18,5 +18,6 @@ data class WalletState(
     val transactionsTopupsDetailItem: TopupDetail = TopupDetail(),
     val cancelOrderState: String = "",
     val balances: List<Balances> = emptyList(),
-    val totalCount: Int = 20
+    val totalCount: Int = 20,
+    val isLoading: Boolean = true
 ): UiState
