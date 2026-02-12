@@ -86,13 +86,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
             textTitle.text = buildSpannedString {
                 inSpans(CustomTypefaceSpan(boldFont!!)) {
-                    append("서희정")
+                    append(viewModel.uiState.value.userInfo.koreanName)
                 }
                 append("님!\n송금을 시작해볼까요?")
             }
             textTitle2.text = buildSpannedString {
                 inSpans(CustomTypefaceSpan(boldFont!!)) {
-                    append("서희정")
+                    append(viewModel.uiState.value.userInfo.koreanName)
                 }
                 append("님!\n어떤 자산을 보내시겠어요?")
             }

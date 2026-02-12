@@ -1,10 +1,12 @@
 package com.stable.scoi.presentation.ui.home
 
 import androidx.lifecycle.viewModelScope
+import com.stable.scoi.data.api.UserResponse
 import com.stable.scoi.data.dto.request.CreateAddressRequest
 import com.stable.scoi.domain.model.enums.AccountType
 import com.stable.scoi.domain.model.home.AccountCard
 import com.stable.scoi.domain.repository.ChargeRepository
+import com.stable.scoi.domain.repository.MyPageRepository
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.base.UiEvent
 import com.stable.scoi.presentation.base.UiState
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val chargeRepository: ChargeRepository
+    private val chargeRepository: ChargeRepository,
+    private val myRepository: MyPageRepository
 ) : BaseViewModel<HomeUiState, HomeEvent>(
     HomeUiState(),
 ) {
@@ -23,6 +26,16 @@ class HomeViewModel @Inject constructor(
 
     init {
         getBithumbAddress()
+        getMyInfo()
+    }
+
+    private fun getMyInfo() = viewModelScope.launch {
+        resultResponse(
+            response = myRepository.getMyInfo(),
+            successCallback = {
+                updateState { copy(userInfo = it) }
+            }
+        )
     }
 
     private fun getBithumbAddress() = viewModelScope.launch {
@@ -116,6 +129,7 @@ class HomeViewModel @Inject constructor(
 }
 
 data class HomeUiState(
+    val userInfo: UserResponse = UserResponse(),
     val accountList: List<AccountCard> = emptyList(),
     val firstAccountVo: AccountCard = AccountCard(),
     val selectPosition: Int = 0,
