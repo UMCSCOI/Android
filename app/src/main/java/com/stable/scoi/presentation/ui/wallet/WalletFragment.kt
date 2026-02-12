@@ -31,9 +31,11 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChargeListOnClickListener, RecentTransferListOnClickListener, SetExchangeType, BaseFragment<FragmentWalletBinding, WalletState, WalletEvent, WalletViewModel>(
-    FragmentWalletBinding::inflate
-) {
+class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
+    RecentChargeListOnClickListener, RecentTransferListOnClickListener, SetExchangeType,
+    BaseFragment<FragmentWalletBinding, WalletState, WalletEvent, WalletViewModel>(
+        FragmentWalletBinding::inflate
+    ) {
     val recentTransferListAdapter = RecentTransferListRVAdapter(this)
     val recentChargeListAdapter = RecentChargeListRVAdapter(this)
 
@@ -47,6 +49,10 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
         viewModel.setExchangeUpbit()//기본 거래소
         viewModel.balances(viewModel.exType)
 
+        binding.imageMyPage.setOnClickListener {
+            findNavController().navigate(R.id.myPageFragment)
+        }
+
         repeatOnStarted(viewLifecycleOwner) {
             launch {
                 viewModel.exchangeType.collect { exchange ->
@@ -56,10 +62,12 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
                             binding.WalletExchangeIV.setImageResource(R.drawable.upbit_logo)
                             binding.WalletExchangeTV.text = "업비트"
                         }
+
                         Exchange.Bithumb -> {
                             binding.WalletExchangeIV.setImageResource(R.drawable.bithumb_logo)
                             binding.WalletExchangeTV.text = "빗썸"
                         }
+
                         else -> Unit
                     }
                 }
@@ -103,7 +111,11 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
 
                         // 콜백 설정
                         bottomSheet.setCallback(object : SetArraySettingTransfer {
-                            override fun arraySettingTransfer(sort: String, category: String, period: String) {
+                            override fun arraySettingTransfer(
+                                sort: String,
+                                category: String,
+                                period: String
+                            ) {
                                 binding.apply {
                                     WalletRecentArrayTV.text = when (sort) {
                                         "desc" -> "최신순"
@@ -139,6 +151,7 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
 
                         bottomSheet.show(parentFragmentManager, "ArraySettingTransferBottomSheet")
                     }
+
                     ToggleState.charge -> {
                         ArraySettingChargeBottomSheet().show(
                             childFragmentManager,
@@ -147,11 +160,16 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
                     }
                 }
             }
-           // setToggleAction()
+            // setToggleAction()
         }
     }
 
-   fun setToggleAction(categoryType: String = "ALL", period: String = "ONE_MONTH", order: String = "desc", limit: Int = 20) {
+    fun setToggleAction(
+        categoryType: String = "ALL",
+        period: String = "ONE_MONTH",
+        order: String = "desc",
+        limit: Int = 20
+    ) {
         binding.apply {
             WalletRecentListVP.adapter = recentTransferListAdapter
             viewModel.transactionRemit(
@@ -161,7 +179,8 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
                 order = order,
                 limit = limit
             )
-            WalletRecentListVP.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            WalletRecentListVP.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
             WalletRecentToggle1TV.setOnClickListener {
                 WalletRecentToggle1TV.apply {
@@ -173,7 +192,8 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
                     setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
                 }
                 WalletRecentListVP.adapter = recentTransferListAdapter
-                WalletRecentListVP.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                WalletRecentListVP.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
                 toggleState = ToggleState.Transfer
             }
@@ -188,7 +208,8 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
                     setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 }
                 WalletRecentListVP.adapter = recentChargeListAdapter
-                WalletRecentListVP.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                WalletRecentListVP.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
                 toggleState = ToggleState.Transfer
             }
@@ -208,7 +229,13 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
     }
 
     override fun RTLOnClickListener(recentTransferData: Transactions) {
-        viewModel.transactionsDetail(viewModel.exType,"REMIT",recentTransferData.type,recentTransferData.uuid,recentTransferData.currency)
+        viewModel.transactionsDetail(
+            viewModel.exType,
+            "REMIT",
+            recentTransferData.type,
+            recentTransferData.uuid,
+            recentTransferData.currency
+        )
         findNavController().navigate(R.id.wallet_transfer_detail_fragment)
     }
 
@@ -218,7 +245,13 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
             "KRW-USDC" -> "USDC"
             else -> ""
         }
-        viewModel.transactionsDetail(viewModel.exType, "TOPUP", null, recentChargeData.uuid,currency)
+        viewModel.transactionsDetail(
+            viewModel.exType,
+            "TOPUP",
+            null,
+            recentChargeData.uuid,
+            currency
+        )
         findNavController().navigate(R.id.wallet_charge_detail_fragment)
     }
 
@@ -241,7 +274,7 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
         statusType: String,
         periodType: String
     ) {
-        viewModel.submitArraySettingCharge(sortType,categoryType,statusType,periodType)
+        viewModel.submitArraySettingCharge(sortType, categoryType, statusType, periodType)
 
         viewModel.transactionTopups(
             exchangeType = viewModel.exType,
@@ -258,7 +291,7 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
         categoryType: String,
         periodType: String
     ) {
-        viewModel.submitArraySettingTransfer(sortType,categoryType,periodType)
+        viewModel.submitArraySettingTransfer(sortType, categoryType, periodType)
 
         viewModel.transactionRemit(
             exchangeType = viewModel.exType,

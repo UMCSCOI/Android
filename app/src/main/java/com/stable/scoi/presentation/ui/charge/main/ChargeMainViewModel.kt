@@ -168,5 +168,5 @@ data class CoinInfo(
 )
 
 sealed class ChargeMainEvent : UiEvent {
-    // 필요 시 이벤트 정의
+    data object MoveToMyPage : ChargeMainEvent()
 }

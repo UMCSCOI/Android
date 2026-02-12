@@ -362,7 +362,7 @@ class ChargeFragment :
             total = state.total,
             type = state.pageType,
             onClickRight = {
-                findNavController().navigate(R.id.chargePwFragment)
+                findNavController().navigate(R.id.charge_pw_fragment)
             }
         ).show(parentFragmentManager, "")
     }
