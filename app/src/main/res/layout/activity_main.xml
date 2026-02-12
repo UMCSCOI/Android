@@ -8,7 +8,7 @@
     <data>
         <variable
             name="vm"
-            type="com.stable.scoi.presentation.data.MainActivityViewModel" />
+            type="com.stable.scoi.presentation.ui.my.MainActivityViewModel" />
     </data>
 
 

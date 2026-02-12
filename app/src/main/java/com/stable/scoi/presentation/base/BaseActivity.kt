@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.data
+package com.stable.scoi.presentation.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.stable.scoi.presentation.base.BaseViewModel
-import com.stable.scoi.presentation.base.UiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import com.stable.scoi.presentation.base.UiEvent
 
 abstract class BaseActivity<B : ViewDataBinding, STATE: UiState, EVENT: UiEvent, VM: BaseViewModel<STATE, EVENT>>(
     private val inflater: (LayoutInflater) -> B,

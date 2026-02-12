@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.mypage
+package com.stable.scoi.presentation.ui.my
 
 import androidx.lifecycle.viewModelScope
 import com.stable.scoi.data.api.*

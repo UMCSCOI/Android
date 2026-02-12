@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.data
+package com.stable.scoi.presentation.base
 
 import android.content.Context
 import android.os.Bundle
@@ -16,11 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.stable.scoi.presentation.base.BaseViewModel
-import com.stable.scoi.presentation.base.UiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import com.stable.scoi.presentation.base.UiEvent
 
 abstract class BaseFragment<B : ViewDataBinding, STATE: UiState, EVENT: UiEvent, VM: BaseViewModel<STATE, EVENT>>(
     private val inflater: (LayoutInflater, ViewGroup?, Boolean) -> B,

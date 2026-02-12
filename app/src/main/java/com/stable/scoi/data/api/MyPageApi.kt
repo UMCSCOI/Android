@@ -10,15 +10,15 @@ import retrofit2.http.POST
 
 interface MyPageApi {
     // 내 정보 조회
-    @GET("api/v1/members/me")
+    @GET("api/members/me")
     suspend fun getMyInfo(): ApiResponse<UserResponse>
 
     // 간편 비밀번호 변경
-    @PATCH("api/v1/members/me/password")
+    @PATCH("api/members/me/password")
     suspend fun changePassword(@Body request: PasswordChangeRequest): ApiResponse<Unit>
 
     // 간편 비밀번호 재설정
-    @POST("api/v1/members/me/password/reset")
+    @POST("api/members/me/password/reset")
     suspend fun resetPassword(@Body request: PasswordResetRequest): ApiResponse<Unit>
 
     // 거래소 목록 조회
@@ -26,19 +26,19 @@ interface MyPageApi {
     suspend fun getExchangeList(): ApiResponse<List<ExchangeInfo>>
 
     // API 키 목록 조회
-    @GET("api/v1/members/me/api-keys")
+    @GET("api/members/me/api-keys")
     suspend fun getApiKeys(): ApiResponse<ApiKeyListResult>
 
     // API 키 등록 및 수정
-    @POST("api/v1/members/me/api-keys")
+    @POST("api/members/me/api-keys")
     suspend fun registerApiKeys(@Body request: List<ApiKeyRequest>): ApiResponse<Unit>
 
     // API 키 삭제
-    @DELETE("api/v1/members/me/api-keys")
+    @DELETE("api/members/me/api-keys")
     suspend fun deleteApiKey(@Body request: ApiKeyDeleteRequest): ApiResponse<Unit>
 
     // FCM 토큰 등록
-    @POST("api/v1/members/me/fcm")
+    @POST("api/members/me/fcm")
     suspend fun registerFcmToken(@Body request: FcmTokenRequest): ApiResponse<Unit>
 }
 

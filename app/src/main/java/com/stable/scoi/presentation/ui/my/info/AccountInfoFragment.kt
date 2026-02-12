@@ -1,12 +1,12 @@
-package com.stable.scoi.presentation.base
+package com.stable.scoi.presentation.ui.my.info
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.databinding.FragmentAccountInfoBinding
-import com.stable.scoi.presentation.mypage.MyPageEvent
-import com.stable.scoi.presentation.mypage.MyPageUiState
-import com.stable.scoi.presentation.mypage.MyPageViewModel
-import com.stable.scoi.presentation.data.BaseFragment
+import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.my.MyPageEvent
+import com.stable.scoi.presentation.ui.my.MyPageUiState
+import com.stable.scoi.presentation.ui.my.MyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

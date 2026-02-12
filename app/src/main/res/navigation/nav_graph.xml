@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/myPageFragment"
-        android:name="com.stable.scoi.presentation.data.MyPageFragment"
+        android:name="com.stable.scoi.presentation.ui.my.MyPageFragment"
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_mypage">
         <action
@@ -24,13 +24,13 @@
 
     <fragment
         android:id="@+id/accountInfoFragment"
-        android:name="com.stable.scoi.presentation.base.AccountInfoFragment"
+        android:name="com.stable.scoi.presentation.ui.my.info.AccountInfoFragment"
         android:label="AccountInfoFragment"
         tools:layout="@layout/fragment_account_info" />
 
     <fragment
         android:id="@+id/apiSettingFragment"
-        android:name="com.stable.scoi.presentation.data.ApiSettingFragment"
+        android:name="com.stable.scoi.presentation.ui.my.api.ApiSettingFragment"
         android:label="ApiSettingFragment"
         tools:layout="@layout/fragment_api_setting">
         <action
@@ -40,19 +40,19 @@
 
     <fragment
         android:id="@+id/apiEditFragment"
-        android:name="com.stable.scoi.presentation.ApiEditFragment"
+        android:name="com.stable.scoi.presentation.ui.my.api.ApiEditFragment"
         android:label="ApiEditFragment"
         tools:layout="@layout/fragment_api_edit" />
 
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.stable.scoi.presentation.data.PasswordFragment"
+        android:name="com.stable.scoi.presentation.ui.my.pw.PasswordFragment"
         android:label="ChangePasswordFragment"
         tools:layout="@layout/fragment_password" />
 
     <fragment
         android:id="@+id/phoneAuthFragment"
-        android:name="com.stable.scoi.presentation.data.PhoneAuthFragment"
+        android:name="com.stable.scoi.presentation.ui.my.phone.PhoneAuthFragment"
         android:label="PhoneAuthFragment"
         tools:layout="@layout/fragment_phone_auth">
         <action
@@ -62,7 +62,7 @@
 
     <fragment
         android:id="@+id/phoneAuthCodeFragment"
-        android:name="com.stable.scoi.presentation.data.PhoneAuthCodeFragment"
+        android:name="com.stable.scoi.presentation.ui.my.phone.PhoneAuthCodeFragment"
         android:label="PhoneAuthCodeFragment"
         tools:layout="@layout/fragment_phone_auth_code">
         <action
@@ -72,13 +72,13 @@
 
     <fragment
         android:id="@+id/phoneAuthCompleteFragment"
-        android:name="com.stable.scoi.presentation.data.PhoneAuthCompleteFragment"
+        android:name="com.stable.scoi.presentation.ui.my.phone.PhoneAuthCompleteFragment"
         android:label="PhoneAuthCompleteFragment"
         tools:layout="@layout/fragment_phone_auth_complete" />
 
     <fragment
         android:id="@+id/passwordSuccessFragment"
-        android:name="com.stable.scoi.presentation.data.PasswordSuccessFragment"
+        android:name="com.stable.scoi.presentation.ui.my.pw.PasswordSuccessFragment"
         android:label="PasswordSuccessFragment"
         tools:layout="@layout/fragment_password_success" />
 

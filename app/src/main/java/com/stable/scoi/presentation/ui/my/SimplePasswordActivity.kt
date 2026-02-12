@@ -1,9 +1,8 @@
-package com.stable.scoi.presentation.data
+package com.stable.scoi.presentation.ui.my
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.stable.scoi.R
-
 
 class SimplePasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

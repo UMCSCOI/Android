@@ -1,13 +1,12 @@
-package com.stable.scoi.presentation.data
+package com.stable.scoi.presentation.ui.my.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.R
-
+import com.stable.scoi.presentation.data.MenuData
 
 class MyPageAdapter(
     private val itemList: List<MenuData>,

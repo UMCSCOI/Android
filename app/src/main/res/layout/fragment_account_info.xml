@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.stable.scoi.presentation.mypage.MyPageViewModel" />
+            type="com.stable.scoi.presentation.ui.my.MyPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,7 @@
                     android:id="@+id/back_iv"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:src="@drawable/ic_back2"
+                    android:src="@drawable/ic_back_jinju"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

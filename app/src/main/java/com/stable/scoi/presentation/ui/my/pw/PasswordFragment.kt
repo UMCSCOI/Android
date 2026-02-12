@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.data
+package com.stable.scoi.presentation.ui.my.pw
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -15,25 +15,19 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.stable.scoi.R
+import com.stable.scoi.presentation.data.CustomDialog
 
-class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
+class PasswordFragment : Fragment(R.layout.fragment_password) {
 
-    private var step = 1
-    private var firstPassword = ""
+    private var failCount = 0
+    private val maxFailCount = 4
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btnBack = view.findViewById<View>(R.id.Transfer_backArrow_IV)
-
-        val tvTitlePrefix = view.findViewById<TextView>(R.id.Trasnfer_password_TV)
-        val tvSimplePw = view.findViewById<TextView>(R.id.simple_password) // "간편 비밀번호"
-        val tvSuffix = view.findViewById<TextView>(R.id.tv_input_please) // "를 입력해주세요" (XML ID 추가 필요, 아래 설명 참고)
-
-        // 하단 설명 텍스트들 (2단계에서 숨기기 위해)
-        val tvDesc1 = view.findViewById<TextView>(R.id.now_password)
-        val tvDesc2 = view.findViewById<TextView>(R.id.use_password)
-        val tvDesc3 = view.findViewById<TextView>(R.id.desc_suffix) // " 사용할 비밀번호예요." (XML ID 추가 필요)
+        view.findViewById<View>(R.id.Transfer_backArrow_IV).setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         val et1 = view.findViewById<EditText>(R.id.login_pin_1_et)
         val et2 = view.findViewById<EditText>(R.id.login_pin_2_et)
@@ -45,7 +39,7 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
         val btnInput = view.findViewById<MaterialButton>(R.id.Transfer_password_input_TV)
         val tvError = view.findViewById<TextView>(R.id.tv_password_error)
 
-        view.findViewById<View>(R.id.Transfer_password_forgot_container).visibility = View.GONE
+        val tvForgot = view.findViewById<View>(R.id.Transfer_password_forgot_container)
 
         val editTexts = listOf(et1, et2, et3, et4, et5, et6)
         val errorColor = Color.RED
@@ -55,12 +49,16 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
         btnInput?.alpha = 0.5f
         btnInput?.visibility = View.GONE
 
-        btnBack.setOnClickListener {
-            if (step == 2) {
-                resetToStep1(editTexts, tvTitlePrefix, tvSimplePw, tvSuffix, tvDesc1, tvDesc2, tvDesc3, tvError, btnInput)
-            } else {
-                findNavController().popBackStack()
-            }
+        tvForgot.setOnClickListener {
+            val dialog = CustomDialog(
+                title = "간편 비밀번호를 잊으셨나요?",
+                content = "휴대폰 인증 후 새로운 비밀번호를\n설정할 수 있어요.\n먼저 휴대폰 인증부터 진행할게요.",
+                iconResId = R.drawable.ic_forgot_password,
+                onConfirm = {
+                    findNavController().navigate(R.id.phoneAuthFragment)
+                }
+            )
+            dialog.show(parentFragmentManager, "ForgotDialog")
         }
 
         editTexts.forEachIndexed { index, editText ->
@@ -107,29 +105,30 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
         }
 
         btnInput?.setOnClickListener {
-            val currentInput = editTexts.joinToString("") { it.text.toString() }
+            val inputPassword = editTexts.joinToString("") { it.text.toString() }
+            val currentPassword = "111111" // 테스트용 정답
 
-            if (step == 1) {
-                firstPassword = currentInput
-                step = 2
-
-                updateUiForStep2(tvTitlePrefix, tvSimplePw, tvSuffix, tvDesc1, tvDesc2, tvDesc3)
-                editTexts.forEach { it.text.clear() }
-                et1.requestFocus()
-
-                btnInput.isEnabled = false
-                btnInput.alpha = 0.5f
-                btnInput.visibility = View.GONE
-
-                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(et1, InputMethodManager.SHOW_IMPLICIT)
-
+            if (inputPassword == currentPassword) {
+                findNavController().popBackStack()
             } else {
-                if (currentInput == firstPassword) {
-                    findNavController().navigate(R.id.passwordSuccessFragment)
+                failCount++
+
+                if (failCount >= maxFailCount) {
+                    val dialog = CustomDialog(
+                        title = "간편 비밀번호를\n다시 설정해 주세요",
+                        content = "잘못된 비밀번호를 5번 넘게 입력했어요.\n계정 보호를 위해 본인 확인 후\n간편 비밀번호 재설정을 진행할게요.",
+                        iconResId = R.drawable.ic_reset_password,
+                        onConfirm = {
+                            findNavController().navigate(R.id.phoneAuthFragment)
+                        }
+                    )
+                    dialog.isCancelable = false
+                    dialog.show(parentFragmentManager, "FailDialog")
+
+                    tvError?.visibility = View.INVISIBLE
                 } else {
                     tvError?.visibility = View.VISIBLE
-                    tvError?.text = "비밀번호가 일치하지 않습니다.\n다시 입력해주세요."
+                    tvError?.text = "잘못된 비밀번호입니다.\n5회 연속 실패 시 본인 인증 후 재설정이 필요합니다.\n($failCount/$maxFailCount)"
 
                     editTexts.forEach {
                         it.text.clear()
@@ -143,45 +142,5 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                 }
             }
         }
-    }
-
-    private fun updateUiForStep2(
-        tvPrefix: TextView, tvSimple: TextView, tvSuffix: TextView?,
-        d1: TextView, d2: TextView, d3: TextView?
-    ) {
-        tvPrefix.text = "확인을 위해 변경할\n간편 비밀번호를 재입력해주세요."
-
-        tvSimple.visibility = View.GONE
-        tvSuffix?.visibility = View.GONE
-
-        d1.visibility = View.GONE
-        d2.visibility = View.GONE
-        d3?.visibility = View.GONE
-    }
-
-    private fun resetToStep1(
-        editTexts: List<EditText>,
-        tvPrefix: TextView, tvSimple: TextView, tvSuffix: TextView?,
-        d1: TextView, d2: TextView, d3: TextView?,
-        tvError: TextView?, btnInput: MaterialButton?
-    ) {
-        step = 1
-        firstPassword = ""
-
-        tvPrefix.text = "변경할"
-        tvSimple.visibility = View.VISIBLE
-        tvSuffix?.visibility = View.VISIBLE
-        d1.visibility = View.VISIBLE
-        d2.visibility = View.VISIBLE
-        d3?.visibility = View.VISIBLE
-
-        tvError?.visibility = View.GONE
-
-        editTexts.forEach { it.text.clear() }
-        editTexts[0].requestFocus()
-
-        btnInput?.isEnabled = false
-        btnInput?.alpha = 0.5f
-        btnInput?.visibility = View.GONE
     }
 }

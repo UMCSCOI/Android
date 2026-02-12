@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.data
+package com.stable.scoi.presentation.ui.my.phone
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.stable.scoi.R
 
-class PhoneAuthCompleteFragment : Fragment() {
+class PhoneAuthCodeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_phone_auth_complete, container, false)
+        return inflater.inflate(R.layout.fragment_phone_auth_code, container, false)
     }
 }

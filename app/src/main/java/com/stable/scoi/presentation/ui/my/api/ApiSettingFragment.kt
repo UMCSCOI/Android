@@ -1,4 +1,4 @@
-package com.stable.scoi.presentation.data
+package com.stable.scoi.presentation.ui.my.api
 
 import android.os.Bundle
 import android.view.View
