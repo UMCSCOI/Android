@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.androidx.navigation.safeargs.kotlin)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -83,4 +84,8 @@ dependencies {
     implementation("androidx.biometric:biometric-ktx:1.4.0-alpha02")
     implementation(libs.tbuonomo.dotsindicator)
     implementation(libs.airbnb.lottie)
+
+    implementation(platform(libs.firebase.bom))
+
+    implementation(libs.firebase.messaging)
 }

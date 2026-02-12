@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/bg_rect_white_radius20"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="31dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="자산 선택하기"
+                android:textColor="@color/main_black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/ic_close_small"
+                app:layout_constraintBottom_toBottomOf="@id/text_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_title" />
+
+            <TextView
+                android:id="@+id/text_stable_coin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="31dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="스테이블 코인"
+                android:textColor="@color/sub_gray_1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/text_title"
+                app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+            <ImageView
+                android:id="@+id/image_usdt"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="22dp"
+                android:src="@drawable/ic_usdt"
+                app:layout_constraintStart_toStartOf="@id/text_stable_coin"
+                app:layout_constraintTop_toBottomOf="@id/text_stable_coin" />
+
+            <TextView
+                android:id="@+id/text_usdt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="USDT"
+                android:textColor="@color/main_black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/image_usdt"
+                app:layout_constraintEnd_toStartOf="@id/image_usdt_check"
+                app:layout_constraintStart_toEndOf="@id/image_usdt"
+                app:layout_constraintTop_toTopOf="@id/image_usdt" />
+
+            <ImageView
+                android:id="@+id/image_usdt_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="29dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_check_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_usdt"
+                app:layout_constraintBottom_toBottomOf="@id/text_usdt"/>
+
+            <ImageView
+                android:id="@+id/image_usdc"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="26dp"
+                android:src="@drawable/ic_usdc"
+                app:layout_constraintStart_toStartOf="@id/image_usdt"
+                app:layout_constraintTop_toBottomOf="@id/image_usdt" />
+
+            <TextView
+                android:id="@+id/text_usdc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="USDC"
+                android:textColor="@color/main_black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/image_usdc"
+                app:layout_constraintEnd_toStartOf="@id/image_usdc_check"
+                app:layout_constraintStart_toEndOf="@id/image_usdc"
+                app:layout_constraintTop_toTopOf="@id/image_usdc" />
+
+            <ImageView
+                android:id="@+id/image_usdc_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="29dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_check_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_usdc"
+                app:layout_constraintBottom_toBottomOf="@id/text_usdc"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/button_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="38dp"
+                android:background="@drawable/bg_rect_disable_fill_radius60"
+                android:paddingVertical="13dp"
+                app:layout_constraintTop_toBottomOf="@id/image_usdc">
+
+                <TextView
+                    android:id="@+id/button_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="다음"
+                    android:textAppearance="@style/l1m"
+                    android:textColor="@color/disabled"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

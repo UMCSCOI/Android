@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 abstract class BaseViewModel<STATE: UiState, EVENT : UiEvent>(
     initialPageState : STATE,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(initialPageState)
     val uiState: StateFlow<STATE>
         get() = _uiState.asStateFlow()
@@ -36,19 +35,13 @@ abstract class BaseViewModel<STATE: UiState, EVENT : UiEvent>(
         }
     }
 
-    protected fun<D> resultResponse(
-        response: ApiState<D>,
-        successCallback : (D) -> Unit,
-        errorCallback : ((String) -> Unit)? = null
-    ){
-        when (val currentState = response) {
-            is ApiState.Loading -> {
-            }
-            is ApiState.Success<*>-> {
-            }
+    protected fun<D> resultResponse(response: ApiState<D>, successCallback : (D) -> Unit, errorCallback : ((String) -> Unit)? = null){
+        when(response){
             is ApiState.Fail -> {
-                val errorCode = currentState.failState.code
-                val message = currentState.failState.message
+                errorCallback?.invoke(response.failState.code)
+            }
+            is ApiState.Success -> {
+                successCallback.invoke(response.data)
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.stable.scoi.di
 
+import com.stable.scoi.data.api.ChargeApi
 import com.stable.scoi.data.api.transfer.RecentListAPI
 import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
+import com.stable.scoi.data.api.UpbitQuotationRestApi
 import com.stable.scoi.data.api.MyPageApi
 import dagger.Module
 import dagger.Provides
@@ -19,6 +21,12 @@ object ApiModule {
     @Provides
     fun provideRecentListAPI(@NormalRetrofit retrofit: Retrofit): RecentListAPI {
         return retrofit.create(RecentListAPI::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideChargeAPI(@AuthRetrofit retrofit: Retrofit): ChargeApi {
+        return retrofit.create(ChargeApi::class.java)
     }
 
     @Provides

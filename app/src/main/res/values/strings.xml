@@ -7,11 +7,13 @@
     <string name="login_expired_intro">안전한 이용을 위해\n<b>인증이 만료</b>되었어요.</string>
     <string name="re_login">휴대폰 번호 인증 후 <b><font color='#2569F2'>다시 로그인해</font></b> 주세요.</string>
     <string name="bio_scan_intro">간편한 이용을 위해 \n<b>생체인증</b>을 등록해주세요.</string>
-    <string name="bio_scan_detail">미리 등록한 <b><font color='#2569F2'>지문으로</font></b> 서비스를 이용할 수 있어요.</string>
+    <string name="bio_scan_detail">미리 등록한 <font color='#2569F2'>지문으로</font> 서비스를 이용할 수 있어요.</string>
     <string name="bio_reg_success">생체인증 등록에 \n<b>성공하였어요.</b></string>
     <string name="bio_reg_failed">생체인증 등록에 \n<b>실패하였어요</b></string>
     <string name="login_pin_reg"><b>간편 비밀번호 6자리</b>를 \n설정해주세요.</string>
+    <string name="login_pin_reg_detail">앞으로 <font color="2569F2">로그인과 계좌이체 시</font> 사용할 비밀번호예요.</string>
     <string name="login_pin_done"><b>간편 비밀번호 설정</b>이\n 완료되었어요.</string>
+
     <string name="login_reg_detail">앞으로 <b><font color='#2569F2'>로그인과 계좌이체 시</font></b> 사용한 비밀번호예요.</string>
     <string name="guide_intro"><b>거래소 연결</b>하는 방법을\n가이드와 함께 알아보아요</string>
     <string name="guide_detail">이 과정에서 <b><font color='#2569F2'>API 키</font></b>를 사용해요\n 거래소와 연결하기 위한 간단한 인증이에요</string>

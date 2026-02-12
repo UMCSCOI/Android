@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_rect_white_radius10"
+        android:elevation="6dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/text_title">
+
+        <TextView
+            android:id="@+id/text_account_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="빗썸"
+            android:textAppearance="@style/f3m"
+            android:textColor="@color/main_black"
+            app:layout_constraintBottom_toBottomOf="@id/image_account"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_account" />
+
+        <ImageView
+            android:id="@+id/image_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bitsum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_empty_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_empty_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_account" />
+
+        <ImageView
+            android:id="@+id/image_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintStart_toStartOf="@id/image_empty_account"
+            app:layout_constraintTop_toBottomOf="@id/image_empty_account" />
+
+        <TextView
+            android:id="@+id/text_empty_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="입금 주소 생성하기"
+            android:textColor="@color/main_black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/image_plus"
+            app:layout_constraintStart_toEndOf="@id/image_plus"
+            app:layout_constraintTop_toTopOf="@id/image_plus" />
+
+        <TextView
+            android:id="@+id/text_usdt_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="59dp"
+            android:text="10,000"
+            android:textAppearance="@style/sb_24"
+            android:textColor="@color/main_black"
+            app:layout_constraintStart_toEndOf="@id/image_usdt"
+            app:layout_constraintTop_toBottomOf="@id/image_account" />
+
+        <ImageView
+            android:id="@+id/image_usdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_usdt"
+            app:layout_constraintBottom_toBottomOf="@id/text_usdt_money"
+            app:layout_constraintStart_toEndOf="@id/text_usdt"
+            app:layout_constraintTop_toTopOf="@id/text_usdt_money" />
+
+        <TextView
+            android:id="@+id/text_usdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="USDT"
+            android:textAppearance="@style/l2"
+            android:textColor="@color/sub_gray_2"
+            app:layout_constraintBottom_toBottomOf="@id/text_usdt_money"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_usdt_money" />
+
+        <TextView
+            android:id="@+id/text_usdc_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="10dp"
+            android:text="10,000"
+            android:textAppearance="@style/sb_24"
+            android:textColor="@color/main_black"
+            app:layout_constraintStart_toEndOf="@id/image_usdc"
+            app:layout_constraintTop_toBottomOf="@id/text_usdt_money" />
+
+        <ImageView
+            android:id="@+id/image_usdc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_usdc"
+            app:layout_constraintBottom_toBottomOf="@id/text_usdc_money"
+            app:layout_constraintStart_toEndOf="@id/text_usdt"
+            app:layout_constraintTop_toTopOf="@id/text_usdc_money" />
+
+        <TextView
+            android:id="@+id/text_usdc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="USDC"
+            android:textAppearance="@style/l2"
+            android:textColor="@color/sub_gray_2"
+            app:layout_constraintBottom_toBottomOf="@id/text_usdc_money"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_usdc_money" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

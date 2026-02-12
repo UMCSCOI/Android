@@ -8,7 +8,6 @@ import kotlin.code
 
 @Serializable
 sealed interface ApiState<out T> {
-    data object Loading : ApiState<Nothing>
     data class Success<T>(val data: T) : ApiState<T>
     data class Fail(val failState: FailState) : ApiState<Nothing>
 }

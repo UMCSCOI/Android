@@ -5,7 +5,7 @@ import android.util.Log
 object SLOG {
 
     fun D(msg : String) {
-        Log.d("SCOI", msg)
+        Log.d("SCOI LOG", msg)
     }
 
     fun D(log : String, msg : String) {

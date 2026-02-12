@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DialogTheme" parent="Theme.MaterialComponents.Dialog">
+        <item name="windowMinWidthMajor">320dp</item>
+        <item name="windowFixedWidthMinor">400dp</item>
+    </style>
+</resources>
