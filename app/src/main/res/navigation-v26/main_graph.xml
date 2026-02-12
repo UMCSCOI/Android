@@ -420,6 +420,11 @@
     <fragment
         android:id="@+id/charge_pw_fragment"
         android:name="com.stable.scoi.presentation.ui.charge.chart.ChargePwFragment"
-        tools:layout="@layout/fragment_charge_pw" />
+        tools:layout="@layout/fragment_charge_pw" >
+
+        <action
+            android:id="@+id/action_charge_pw_complete"
+            app:destination="@id/chargeCompleteFragment"/>
+    </fragment>
 
 </navigation>

@@ -34,6 +34,7 @@ import com.stable.scoi.presentation.ui.charge.adapter.PriceItem
 import com.stable.scoi.presentation.ui.charge.bottomSheet.ChargeBottomSheet
 import com.stable.scoi.presentation.ui.charge.bottomSheet.ExceedBottomSheet
 import com.stable.scoi.presentation.ui.charge.bottomSheet.LackMoneyBottomSheet
+import com.stable.scoi.presentation.ui.charge.complete.ChargeCompleteFragmentDirections
 import com.stable.scoi.util.Format.formatWon
 import com.stable.scoi.util.Format.unformatWon
 import com.stable.scoi.util.SLOG
@@ -103,7 +104,7 @@ class ChargePwFragment :
             launch {
                 viewModel.uiEvent.collect {
                     when(it) {
-                        ChargeEvent.Complete -> findNavController().navigate(R.id.chargeCompleteFragment)
+                        ChargeEvent.Complete -> navigateToChargeComplete()
                         else -> {}
                     }
                 }
@@ -115,5 +116,10 @@ class ChargePwFragment :
                 }
             }
         }
+    }
+
+    private fun navigateToChargeComplete() {
+        val action = ChargePwFragmentDirections.actionChargePwComplete(coin = viewModel.uiState.value.currentMarket, viewModel.uiState.value.count)
+        findNavController().navigate(action)
     }
 }
