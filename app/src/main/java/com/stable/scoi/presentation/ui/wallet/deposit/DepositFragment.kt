@@ -39,6 +39,7 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
 
         binding.WalletDepositNextTV.setOnClickListener {
             viewModel.submitAmount(binding.WalletDepositAmountET.text.toString().replace(",","").toInt())
+            viewModel.diposit()
             findNavController().navigate(R.id.wallet_deposit_complete_fragment)
         }
 
@@ -56,10 +57,6 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
             }
             WalletDepositAmountPlus10BT.setOnClickListener {
                 addButtonClicked(rawInt, 100000)
-                WalletDepositAmountET.requestFocus()
-            }
-            WalletDepositAmountPlusAllBT.setOnClickListener {
-                //API 연동 후 추가 예정 (전체 금액)
                 WalletDepositAmountET.requestFocus()
             }
         }
@@ -88,9 +85,6 @@ class DepositFragment: BaseFragment<FragmentWalletDepositBinding, WalletState, W
                     }
                     WalletDepositAmountPlus10BT.setOnClickListener {
                         addButtonClicked(rawInt, 100000)
-                    }
-                    WalletDepositAmountPlusAllBT.setOnClickListener {
-                        //API 연동 후 추가 예정 (전체 금액)
                     }
                 }
 

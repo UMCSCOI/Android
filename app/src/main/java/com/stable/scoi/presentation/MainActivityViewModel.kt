@@ -1,10 +1,10 @@
 package com.stable.scoi.presentation
 
 import com.stable.scoi.presentation.base.BaseViewModel
-import com.stable.scoi.presentation.base.UiEvent
 import com.stable.scoi.presentation.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import com.stable.scoi.presentation.base.UiEvent
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(

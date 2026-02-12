@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.databinding.ItemRecentAnalyzeBinding
+import com.stable.scoi.domain.model.RecentTrade
 import com.stable.scoi.extension.gone
 import com.stable.scoi.extension.visible
 import java.text.NumberFormat
@@ -20,7 +21,9 @@ data class PriceItem(
     val prevClosingPrice: Double  // 전일 종가 (색상 결정용)
 )
 
-class ChargePriceAdapter : ListAdapter<PriceItem, ChargePriceAdapter.PriceViewHolder>(
+class ChargePriceAdapter(
+    private val onClickItem: (PriceItem) -> Unit = {},
+) : ListAdapter<PriceItem, ChargePriceAdapter.PriceViewHolder>(
     PriceDiffCallback()
 ) {
 
@@ -30,18 +33,24 @@ class ChargePriceAdapter : ListAdapter<PriceItem, ChargePriceAdapter.PriceViewHo
             parent,
             false
         )
-        return PriceViewHolder(binding)
+        return PriceViewHolder(onClickItem, binding)
     }
 
     override fun onBindViewHolder(holder: PriceViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 
-    class PriceViewHolder(private val binding: ItemRecentAnalyzeBinding) :
+    class PriceViewHolder(
+        private val onClickItem: (PriceItem) -> Unit = {},
+        private val binding: ItemRecentAnalyzeBinding
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: PriceItem) {
 
+            binding.root.setOnClickListener {
+                onClickItem(item)
+            }
             val nf = NumberFormat.getNumberInstance(Locale.KOREA)
             binding.textMoney.text = nf.format(item.price)
 

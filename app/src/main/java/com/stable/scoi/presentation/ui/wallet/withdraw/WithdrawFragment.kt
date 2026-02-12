@@ -38,6 +38,7 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
 
         binding.WalletWithdrawNextTV.setOnClickListener {
             viewModel.submitAmount(binding.WalletWithdrawAmountET.text.toString().replace(",","").toInt())
+            viewModel.withDraw()
             findNavController().navigate(R.id.wallet_withdraw_complete_fragment)
         }
 
@@ -55,10 +56,6 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
             }
             WalletWithdrawAmountPlus10BT.setOnClickListener {
                 addButtonClicked(rawInt, 100000)
-                WalletWithdrawAmountET.requestFocus()
-            }
-            WalletWithdrawAmountPlusAllBT.setOnClickListener {
-                //API 연동 후 추가 예정 (전체 금액)
                 WalletWithdrawAmountET.requestFocus()
             }
         }
@@ -87,9 +84,6 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
                     }
                     WalletWithdrawAmountPlus10BT.setOnClickListener {
                         addButtonClicked(rawInt, 100000)
-                    }
-                    WalletWithdrawAmountPlusAllBT.setOnClickListener {
-                        //API 연동 후 추가 예정 (전체 금액)
                     }
                 }
 

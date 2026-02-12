@@ -20,15 +20,23 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.core.graphics.toColorInt
+import com.stable.scoi.domain.model.enums.AccountType
+import com.stable.scoi.domain.model.home.AccountCard
+import com.stable.scoi.domain.repository.ChargeRepository
 import kotlinx.coroutines.Job
 
 @RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
 class ChargeMainViewModel @Inject constructor(
-    private val chartRepository: ChartRepository
+    private val chartRepository: ChartRepository,
+    private val chargeRepository: ChargeRepository,
 ) : BaseViewModel<ChargeMainUiState, ChargeMainEvent>(
     ChargeMainUiState(),
 ) {
+
+    init {
+        getBithumb()
+    }
 
     private var coinJob: Job? = null
 
@@ -52,8 +60,42 @@ class ChargeMainViewModel @Inject constructor(
         }
     }
 
-    fun test() {
+    fun onClickMyPage() {
+        //
+    }
 
+    fun getBithumb() = viewModelScope.launch {
+        resultResponse(
+            response = chargeRepository.getMyBalances("Bithumb"),
+            successCallback = {
+                updateState {
+                    copy(
+                        selectTradeType = "BITHUMB",
+                        myKrwMoney = it.balances.find { it.currency == "KRW" }!!.balance,
+                        myUsdcMoney = it.balances.find { it.currency == "USDC" }!!.balance,
+                        myUsdtMoney = it.balances.find { it.currency == "USDT" }!!.balance,
+                    )
+                }
+            }
+        )
+    }
+
+    fun getUpbit() {
+        viewModelScope.launch {
+            resultResponse(
+                response = chargeRepository.getMyBalances("Upbit"),
+                successCallback = {
+                    updateState {
+                        copy(
+                            selectTradeType = "UPBIT",
+                            myKrwMoney = it.balances.find { it.currency == "KRW" }!!.balance,
+                            myUsdcMoney = it.balances.find { it.currency == "USDC" }!!.balance,
+                            myUsdtMoney = it.balances.find { it.currency == "USDT" }!!.balance,
+                        )
+                    }
+                }
+            )
+        }
     }
 
     fun stopCoinMonitoring() {
@@ -100,10 +142,20 @@ class ChargeMainViewModel @Inject constructor(
             else -> "#767676".toColorInt()
         }
     }
+
+    fun updateSelectTradeType(type: String) {
+        updateState {
+            copy(selectTradeType = type)
+        }
+    }
 }
 
 
 data class ChargeMainUiState(
+    val selectTradeType: String = "",
+    val myKrwMoney: String = "",
+    val myUsdtMoney: String = "",
+    val myUsdcMoney: String = "",
     val usdtInfo: CoinInfo = CoinInfo(),
     val usdcInfo: CoinInfo = CoinInfo()
 ) : UiState
