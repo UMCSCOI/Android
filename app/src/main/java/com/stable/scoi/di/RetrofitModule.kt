@@ -4,8 +4,8 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
-import com.stable.scoi.extention.isJsonArray
-import com.stable.scoi.extention.isJsonObject
+import com.stable.scoi.extension.isJsonArray
+import com.stable.scoi.extension.isJsonObject
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,7 +46,7 @@ object AuthNetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("https://scoi.shop")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
@@ -106,7 +106,7 @@ object NormalNetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://dev.umc-product.kyeoungwoon.kr/")
+            .baseUrl("https://scoi.shop")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

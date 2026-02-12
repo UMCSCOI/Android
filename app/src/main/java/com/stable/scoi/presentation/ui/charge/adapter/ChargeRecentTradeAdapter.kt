@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.databinding.ItemRecentAmountBinding
 import com.stable.scoi.domain.model.RecentTrade
 
-class ChargeRecentTradeAdapter(
-) : ListAdapter<RecentTrade, RecyclerView.ViewHolder>(
+class ChargeRecentTradeAdapter() : ListAdapter<RecentTrade, RecyclerView.ViewHolder>(
     NoticeImageDiffCallBack()
 ) {
 

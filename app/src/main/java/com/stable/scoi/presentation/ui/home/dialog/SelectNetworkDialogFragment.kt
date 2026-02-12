@@ -15,6 +15,8 @@ import com.stable.scoi.domain.model.home.Network
 import com.stable.scoi.presentation.ui.home.adapter.NetworkAdapter
 
 class SelectNetworkDialogFragment: DialogFragment() {
+
+    var onNetworkSelectedListener: ((String) -> Unit)? = null
     companion object {
         const val KEY_ACCOUNT = "KEY_ACCOUNT"
         const val KEY_NETWORK = "KEY_NETWORK"
@@ -103,7 +105,12 @@ class SelectNetworkDialogFragment: DialogFragment() {
             })
 
             buttonCreate.setOnClickListener {
-                dismiss()
+                val selectedNetwork = networkAdapter.currentList.find { it.isChecked }
+
+                if (selectedNetwork != null) {
+                    onNetworkSelectedListener?.invoke(selectedNetwork.name)
+                    dismiss()
+                }
             }
         }
     }

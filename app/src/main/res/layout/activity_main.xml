@@ -89,7 +89,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@{vm.uiState.charge ? @drawable/ic_bottom_nav_database :@drawable/ic_bottom_nav_database_inactive}"
-                    app:tint="@color/active"
                     tools:ignore="UseAppTint" />
 
                 <TextView
@@ -117,7 +116,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@{vm.uiState.charge ? @drawable/ic_bottom_nav_credit_card :@drawable/ic_bottom_nav_credit_card_inactive}"
+                    android:src="@{vm.uiState.wallet ? @drawable/ic_bottom_nav_credit_card :@drawable/ic_bottom_nav_credit_card_inactive}"
                     tools:ignore="UseAppTint" />
 
                 <TextView

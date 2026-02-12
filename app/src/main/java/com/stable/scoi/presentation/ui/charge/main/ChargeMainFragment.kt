@@ -18,6 +18,7 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
 ) {
     override val viewModel: ChargeMainViewModel by viewModels()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initView() {
         binding.apply {
             vm = viewModel
@@ -26,11 +27,11 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
             }
 
             textStableUsdt.setOnClickListener {
-                navigateChart("USDT")
+                navigateChart("USDT", viewModel.uiState.value.myUsdtMoney)
             }
 
             textStableUsdc.setOnClickListener {
-                navigateChart("USDC")
+                navigateChart("USDC", viewModel.uiState.value.myUsdcMoney)
             }
         }
     }
@@ -59,13 +60,16 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showAccountBottomSheet() {
         SelectAccountBottomSheet(
             onClickItem = {
                 if (it == AccountType.UPBIT) {
+                    viewModel.getUpbit()
                     binding.imageAccout.setImageResource(R.drawable.ic_upbit_logo)
                     binding.textAccount.text = "업비트"
                 } else {
+                    viewModel.getBithumb()
                     binding.imageAccout.setImageResource(R.drawable.ic_bitsum_logo)
                     binding.textAccount.text = "빗썸"
                 }
@@ -73,8 +77,8 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
         ).show(parentFragmentManager, "")
     }
 
-    private fun navigateChart(coin: String) {
-        val action = ChargeMainFragmentDirections.actionChargeMainFragmentToChargeFragment(coin)
+    private fun navigateChart(coin: String, coinCount: String) {
+        val action = ChargeMainFragmentDirections.actionChargeMainFragmentToChargeFragment(coin, money = viewModel.uiState.value.myKrwMoney, coinCount = coinCount, tradeType = viewModel.uiState.value.selectTradeType)
         findNavController().navigate(action)
     }
 

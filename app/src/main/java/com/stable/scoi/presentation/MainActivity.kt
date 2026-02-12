@@ -51,7 +51,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
                     if (it.isSplash) navController.navigate(R.id.splashFragment)
                     if (it.isHome) navController.navigate(R.id.homeFragment)
                     if (it.isCharge) navController.navigate(R.id.chargeMainFragment)
-                    //if (it.isWallet) navController.navigate(R.layout.fragment_home)
+                    if (it.isWallet) navController.navigate(R.layout.fragment_home)
                 }
             }
         }
@@ -64,15 +64,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeFragment -> {
+                    viewModel.onClickHome()
                     binding.layoutBottomNav.visible()
                 }
                 R.id.chargeMainFragment -> {
+                    viewModel.onClickCharge()
                     binding.layoutBottomNav.visible()
+                }
+                R.layout.fragment_wallet -> {
+                    viewModel.onClickCharge()
                 }
                 else -> {
                     binding.layoutBottomNav.gone()
                 }
-                //R.layout.fragment_wallet -> {}
             }
         }
     }

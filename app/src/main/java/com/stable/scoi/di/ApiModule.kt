@@ -1,5 +1,6 @@
 package com.stable.scoi.di
 
+import com.stable.scoi.data.api.ChargeApi
 import com.stable.scoi.data.api.transfer.RecentListAPI
 import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
 import com.stable.scoi.data.api.UpbitQuotationRestApi
@@ -19,6 +20,12 @@ object ApiModule {
     @Provides
     fun provideRecentListAPI(retrofit: Retrofit): RecentListAPI {
         return retrofit.create(RecentListAPI::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideChargeAPI(@AuthRetrofit retrofit: Retrofit): ChargeApi {
+        return retrofit.create(ChargeApi::class.java)
     }
 
     @Provides
