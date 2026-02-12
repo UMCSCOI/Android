@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="입력하기"
+                android:text="다음"
                 android:textColor="@color/active"
                 android:textSize="16sp"
                 android:textStyle="bold" />

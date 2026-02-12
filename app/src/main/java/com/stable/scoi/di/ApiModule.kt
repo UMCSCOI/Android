@@ -2,8 +2,8 @@ package com.stable.scoi.di
 
 import com.stable.scoi.data.api.transfer.RecentListAPI
 import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
-import com.stable.scoi.data.api.UpbitQuotationRestApi
-import com.stable.scoi.data.api.auth.AuthApi
+import com.stable.scoi.data.api.AuthApi
+import com.stable.scoi.data.api.auth.SignUpApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +34,14 @@ object ApiModule {
         @NormalRetrofit retrofit: Retrofit
     ): AuthApi {
      return retrofit.create(AuthApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSignUpApi(
+        @NormalRetrofit retrofit: Retrofit
+    ): SignUpApi{
+        return retrofit.create(SignUpApi::class.java)
     }
 
 }

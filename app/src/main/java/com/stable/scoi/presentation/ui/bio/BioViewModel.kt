@@ -11,7 +11,6 @@ class BioViewModel @Inject constructor():
     fun onBiometricSuccess(){
         emitEvent(BioEvent.NavigationToMain)
     }
-
     fun onCountOver(count:Int){
         if(count>=5){
             emitEvent(BioEvent.NavigationToPin) // dialog 뜨게 하기

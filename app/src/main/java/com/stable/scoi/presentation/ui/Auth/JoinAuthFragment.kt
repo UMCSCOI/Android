@@ -2,6 +2,7 @@ package com.stable.scoi.presentation.ui.Auth
 
 import android.os.CountDownTimer
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -16,22 +17,41 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class JoinAuthFragment : BaseFragment<FragmentPhoneAuthBinding, JoinState, JoinEvent, JoinViewModel>(
-    FragmentPhoneAuthBinding::inflate
-) {
+class JoinAuthFragment :
+    BaseFragment<FragmentPhoneAuthBinding, JoinState, JoinEvent, JoinViewModel>(
+        FragmentPhoneAuthBinding::inflate
+    ) {
     override val viewModel: JoinViewModel by activityViewModels()
-    private var countDownTimer: CountDownTimer? = null
-
+    private var authTimer: CountDownTimer? = null
+    private var resendTimer: CountDownTimer? = null
     private var isCodeSent: Boolean = false
-    private var code:String=""
+    private var code: String = ""
+
     override fun initView() {
 
         binding.phoneAuthBackBtn.setOnClickListener {
             findNavController().popBackStack()
         }
+
         observeEvents()
         inputUi(isActive = false)
 
+        binding.phoneAuthNumberEt.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.phoneAuthInputInactiveCv.visibility = View.INVISIBLE
+            } else {
+                binding.phoneAuthInputInactiveCv.visibility = View.VISIBLE
+            }
+        }
+        binding.phoneAuthCodeEt.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.phoneAuthInputInactiveCv.visibility = View.INVISIBLE
+            } else {
+                binding.phoneAuthInputInactiveCv.visibility = View.VISIBLE
+            }
+        }
+
+        // 전화번호 입력 로직
         binding.phoneAuthNumberEt.doOnTextChanged { text, _, _, _ ->
             val input = text.toString()
             val rawNumber = input.replace("-", "")
@@ -44,33 +64,31 @@ class JoinAuthFragment : BaseFragment<FragmentPhoneAuthBinding, JoinState, JoinE
                 if (input != formatted) {
                     binding.phoneAuthNumberEt.setText(formatted)
                     binding.phoneAuthNumberEt.setSelection(formatted.length)
+                    return@doOnTextChanged
                 }
 
                 viewModel.onPhoneAuthNumberChanged(rawNumber)
+                binding.phoneAuthNumberSendTv.visibility = View.VISIBLE
 
-                if (!isCodeSent) {
-                    inputUi(isActive = true)
-                    binding.phoneAuthNumberSendTv.visibility = View.VISIBLE
-                }
             } else {
-                inputUi(isActive = false)
                 binding.phoneAuthNumberSendTv.visibility = View.GONE
+                inputUi(isActive = false)
             }
         }
 
-
+        // 인증번호 입력 로직
         binding.phoneAuthCodeEt.doOnTextChanged { text, _, _, _ ->
             binding.phoneAuthErrorTv.visibility = View.GONE
             val input = text.toString()
 
             binding.phoneAuthCodeCheckIv.visibility = View.VISIBLE
             binding.phoneAuthSelectedCodeLine.visibility = View.VISIBLE
-            binding.phoneAuthHelperTv.visibility=View.VISIBLE
+            binding.phoneAuthHelperTv.visibility = View.VISIBLE
 
             if (input.length == 6) {
-                viewModel.onAuthChanged(input)
+                viewModel.onAuthCodeChanged(input)
                 inputUi(isActive = true)
-                code=input
+                code = input
             } else {
                 inputUi(isActive = false)
             }
@@ -78,11 +96,9 @@ class JoinAuthFragment : BaseFragment<FragmentPhoneAuthBinding, JoinState, JoinE
 
         binding.phoneAuthInputActiveCv.setOnClickListener {
             if (!isCodeSent) {
-                //TODO 인증번호 전송
-            } else {
                 onSendButtonClicked()
-                viewModel.onAuthChanged(code)
-
+            } else {
+                viewModel.verifySms()
             }
         }
 
@@ -95,18 +111,85 @@ class JoinAuthFragment : BaseFragment<FragmentPhoneAuthBinding, JoinState, JoinE
         }
     }
 
+    private var isFirstSend = true
+
     private fun onSendButtonClicked() {
         isCodeSent = true
+        viewModel.sendSms()
 
-        viewModel.onSendClicked()
-        binding.phoneAuthNumberSendTv.visibility = View.GONE
-        binding.phoneAuthNumberRetryTv.visibility = View.VISIBLE
+        if (isFirstSend) {
+            binding.phoneAuthNumberSendTv.text = "재발송"
+            isFirstSend = false
+            binding.phoneAuthNumberSendTv.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.sub_gray_2
+                )
+            )
+
+        }
+
         binding.phoneAuthHelperTv.visibility = View.VISIBLE
 
-        startTimer()
+
+        startAuthTimer()
+        startResendCooldown()
 
         binding.phoneAuthCodeEt.requestFocus()
+
         inputUi(isActive = false)
+    }
+
+    private fun startResendCooldown() {
+        resendTimer?.cancel()
+
+        binding.phoneAuthNumberSendTv.isEnabled = false
+        binding.phoneAuthNumberSendTv.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.sub_gray_2
+            )
+        )
+
+        resendTimer = object : CountDownTimer(60000, 1000) { // 60초
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+                binding.phoneAuthNumberSendTv.isEnabled = true
+                binding.phoneAuthNumberSendTv.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.active
+                    )
+                )
+            }
+        }
+        resendTimer?.start()
+    }
+
+    private fun startAuthTimer() {
+        binding.phoneAuthCodeActiveTimerTv.visibility = View.VISIBLE
+        authTimer?.cancel()
+
+        authTimer = object : CountDownTimer(300000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = millisUntilFinished / 1000 / 60
+                val seconds = (millisUntilFinished / 1000) % 60
+                binding.phoneAuthCodeActiveTimerTv.text =
+                    String.format("%02d:%02d", minutes, seconds)
+            }
+
+            override fun onFinish() {
+                binding.phoneAuthCodeActiveTimerTv.text = "00:00"
+                binding.phoneAuthCodeRetryTv.visibility = View.VISIBLE
+                binding.phoneAuthHelperTv.visibility = View.GONE
+
+                isCodeSent = false
+                inputUi(isActive = false)
+            }
+        }
+        authTimer?.start()
     }
 
     private fun inputUi(isActive: Boolean) {
@@ -132,48 +215,31 @@ class JoinAuthFragment : BaseFragment<FragmentPhoneAuthBinding, JoinState, JoinE
     private fun handleEvent(event: JoinEvent) {
         when (event) {
             is JoinEvent.VerifySuccess -> {
-                countDownTimer?.cancel() // 타이머 종료
-                binding.phoneAuthCodeActiveTimerTv.visibility= View.GONE
-                binding.phoneAuthCodeActiveCheckIv.visibility=View.VISIBLE
+                authTimer?.cancel()
+                resendTimer?.cancel()
+
+                binding.phoneAuthCodeActiveTimerTv.visibility = View.GONE
                 binding.phoneAuthCodeActiveCheckIv.visibility = View.VISIBLE
                 binding.phoneAuthCodeCheckIv.visibility = View.GONE
 
-               findNavController().navigate(R.id.action_joinAuthFragment_to_loginRegFragment)
+                findNavController().navigate(R.id.action_joinAuthFragment_to_joinFragment)
             }
+
             is JoinEvent.ShowError -> {
-                binding.phoneAuthHelperTv.visibility=View.GONE
+                binding.phoneAuthHelperTv.visibility = View.GONE
                 binding.phoneAuthErrorTv.visibility = View.VISIBLE
                 inputUi(isActive = false)
             }
+
             else -> {}
         }
     }
 
-    private fun startTimer() {
-        binding.phoneAuthCodeActiveTimerTv.visibility = View.VISIBLE
-        countDownTimer?.cancel()
-
-        countDownTimer = object : CountDownTimer(300000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val minutes = millisUntilFinished / 1000 / 60
-                val seconds = (millisUntilFinished / 1000) % 60
-                binding.phoneAuthCodeActiveTimerTv.text =
-                    String.format("%02d:%02d", minutes, seconds)
-            }
-
-            override fun onFinish() {
-                binding.phoneAuthCodeActiveTimerTv.text = "00:00"
-                binding.phoneAuthCodeRetryTv.visibility = View.VISIBLE
-                binding.phoneAuthHelperTv.visibility = View.GONE
-                isCodeSent = false
-            }
-        }
-        countDownTimer?.start()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        countDownTimer?.cancel()
-        countDownTimer = null
+        authTimer?.cancel()
+        authTimer = null
+        resendTimer?.cancel()
+        resendTimer = null
     }
 }

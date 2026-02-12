@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentLoginPinBinding
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.Auth.JoinViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -108,7 +109,6 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
         }
     }
 
-
     private fun renderUi(state: LoginState) {
         if (state.isButtonEnabled) {
             binding.loginPinInputActiveCv.visibility = View.VISIBLE
@@ -181,6 +181,8 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             showKeyboard(targetEt)
         }, 300)
     }
+
+
 
 private fun showKeyboard(view: View) {
     if (view.requestFocus()) {

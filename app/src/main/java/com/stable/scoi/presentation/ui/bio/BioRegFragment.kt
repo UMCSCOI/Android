@@ -12,12 +12,16 @@ import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentBioScanBinding
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.Auth.JoinViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -25,8 +29,7 @@ class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, 
     FragmentBioScanBinding::inflate
 ){
     override val viewModel: BioViewModel by activityViewModels()
-
-    private val handler = Handler(Looper.getMainLooper())
+    private val joinViewModel: JoinViewModel by activityViewModels()
 
     private var waitingForResult = false
 
@@ -62,14 +65,14 @@ class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, 
         when (biometricManager.canAuthenticate(BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 waitingForResult = false
-                saveBiometricEnabled()
 
                 binding.bioScanUncheckIv.visibility = View.GONE
                 binding.bioScanSuccessIv.visibility = View.VISIBLE
                 binding.bioScanDetailTv.visibility = View.GONE
                 binding.bioScanIntroTv.text = getText(R.string.bio_reg_success)
                 binding.bottomBtnLayout.visibility = View.GONE // 버튼 숨기기
-
+                viewLifecycleOwner.lifecycleScope.launch {
+                    delay(2000)
 //                when (args.bioRegType) {
 //                    "JOIN" -> {// 가이드 화면으로 이동
 //                        handler.postDelayed({
@@ -82,10 +85,22 @@ class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, 
 //                        }, 2000)
 //                    }
 //                }
+                    if (isAdded) {
+                        try {
+                            findNavController().navigate(R.id.action_bioRegFragment_to_explainFragment)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            Toast.makeText(
+                                requireContext(),
+                                "네비게이션 이동 실패: ID를 확인해주세요.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
 
 
             }
-
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 waitingForResult = true
                 moveToSettings()

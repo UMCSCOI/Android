@@ -46,7 +46,7 @@ object AuthNetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("https://scoi.shop")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
@@ -56,6 +56,7 @@ object AuthNetworkModule {
 @Module
 @InstallIn(SingletonComponent::class)
 object NormalNetworkModule {
+
     @Provides
     @Singleton
     fun provideHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
@@ -70,7 +71,13 @@ object NormalNetworkModule {
     @Provides
     @Singleton
     fun provideConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create()
+        val gson = GsonBuilder()
+            .setLenient()
+            .disableHtmlEscaping() // 이 설정이 \u003d을 =으로 유지해줍니다.
+            .create()
+
+        // 2. 설정된 gson을 factory에 담아서 반환
+        return GsonConverterFactory.create(gson)
     }
 
     @Provides
@@ -106,7 +113,7 @@ object NormalNetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://dev.umc-product.kyeoungwoon.kr/")
+            .baseUrl("https://scoi.shop")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

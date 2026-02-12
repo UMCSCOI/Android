@@ -2,8 +2,6 @@ package com.stable.scoi.presentation.ui.login
 
 import android.view.KeyEvent
 import android.view.View
-import android.view.WindowManager
-import android.widget.EditText
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.widget.doOnTextChanged
@@ -12,6 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentLoginPinRegBinding
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.Auth.JoinEvent
+import com.stable.scoi.presentation.ui.Auth.JoinState
+import com.stable.scoi.presentation.ui.Auth.JoinViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -20,17 +21,9 @@ class LoginRegFragment : BaseFragment<FragmentLoginPinRegBinding, LoginState, Lo
     FragmentLoginPinRegBinding::inflate
 ) {
     override val viewModel: LoginViewModel by activityViewModels()
-
-    override fun onPause() {
-        super.onPause()
-
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        val bottomNav = requireActivity().findViewById<View>(R.id.layout_bottom_nav)
-        bottomNav?.visibility = View.VISIBLE
-    }
+    private val joinViewModel: JoinViewModel by activityViewModels()
 
     override fun initView() {
-
         val pinEditTexts = listOf(
             binding.loginPinReg1Et, binding.loginPinReg2Et, binding.loginPinReg3Et,
             binding.loginPinReg4Et, binding.loginPinReg5Et, binding.loginPinReg6Et
@@ -47,8 +40,7 @@ class LoginRegFragment : BaseFragment<FragmentLoginPinRegBinding, LoginState, Lo
                 }
 
                 val currentPin = pinEditTexts.joinToString("") { it.text.toString() }
-                viewModel.onPinChanged(currentPin)
-
+                joinViewModel.onPinChanged(currentPin)
             }
 
             editText.setOnKeyListener { _, keyCode, event ->
@@ -64,7 +56,6 @@ class LoginRegFragment : BaseFragment<FragmentLoginPinRegBinding, LoginState, Lo
             }
         }
 
-
         binding.loginPinRegInputActiveCv.setOnClickListener {
             findNavController().navigate(R.id.action_loginRegFragment_to_loginRegDoneFragment)
         }
@@ -74,22 +65,22 @@ class LoginRegFragment : BaseFragment<FragmentLoginPinRegBinding, LoginState, Lo
         super.initStates()
 
         repeatOnStarted(viewLifecycleOwner) {
+
             launch {
-                viewModel.uiState.collect { state ->
-                    renderUi(state)
+                joinViewModel.uiState.collect { state ->
+                    renderJoinUi(state)
                 }
             }
 
             launch {
-                viewModel.uiEvent.collect { event ->
-                    handleEvent(event)
+                joinViewModel.uiEvent.collect { event ->
+                    handleJoinEvent(event)
                 }
             }
         }
     }
 
-
-    private fun renderUi(state: LoginState) {
+    private fun renderJoinUi(state: JoinState) {
         if (state.isButtonEnabled) {
             binding.loginPinRegInputActiveCv.visibility = View.VISIBLE
             binding.loginPinInputInactiveCv.visibility = View.GONE
@@ -99,60 +90,30 @@ class LoginRegFragment : BaseFragment<FragmentLoginPinRegBinding, LoginState, Lo
         }
     }
 
-
-    private fun handleEvent(event: LoginEvent) {
-        val pinEditTexts = listOf(
-            binding.loginPinReg1Et, binding.loginPinReg2Et, binding.loginPinReg3Et,
-            binding.loginPinReg4Et, binding.loginPinReg5Et, binding.loginPinReg6Et
-        )
+    private fun handleJoinEvent(event: JoinEvent) {
         when (event) {
-            is LoginEvent.NavigationToMain -> {
-
+            is JoinEvent.NavigateToRegDone -> {
+                findNavController().navigate(R.id.action_loginRegFragment_to_loginRegDoneFragment)
             }
-            is LoginEvent.NavigationToBiometric->{
-
+            is JoinEvent.ShowError -> {
             }
-            is LoginEvent.ShowError -> {
-
-                }
-            is LoginEvent.NavigationToExpired -> {
-
-            }
-
-            is LoginEvent.VerifySuccess -> {
-
-            }
-            is LoginEvent.NavigationToLogin -> {
-
-            }
+            else -> {}
         }
     }
-
     override fun onResume() {
         super.onResume()
-
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
-        val bottomNav = requireActivity().findViewById<View>(R.id.layout_bottom_nav)
-        bottomNav?.visibility = View.GONE
-
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
         binding.loginPinReg1Et.postDelayed({
             val pinEditTexts = listOf(
                 binding.loginPinReg1Et, binding.loginPinReg2Et, binding.loginPinReg3Et,
                 binding.loginPinReg4Et, binding.loginPinReg5Et, binding.loginPinReg6Et
             )
-
             val targetEt = pinEditTexts.firstOrNull { it.text.isNullOrEmpty() } ?: pinEditTexts.last()
-
             binding.root.clearFocus()
-
-            targetEt.setSelection(targetEt.text?.length ?: 0)
-
+            targetEt.requestFocus()
             showKeyboard(targetEt)
         }, 300)
     }
+
 
     private fun showKeyboard(view: View) {
         if (view.requestFocus()) {

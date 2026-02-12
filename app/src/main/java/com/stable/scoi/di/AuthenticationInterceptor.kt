@@ -1,6 +1,7 @@
 package com.stable.scoi.di
 
 import android.util.Log
+import com.stable.scoi.data.local.PreferenceManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
@@ -10,14 +11,19 @@ import javax.inject.Singleton
 @Singleton
 class AuthenticationInterceptor
 @Inject
-constructor() : Interceptor {
+constructor(
+    private val preferenceManager: PreferenceManager
+) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        // val accessToken = runBlocking { repository.getAccessToken().first() }
-        val testToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDEiLCJpYXQiOjE3NzA0ODU0MDUsImV4cCI6MTc3MDQ4OTAwNX0.U3Hipuq7V9fBLgEXrMfFdS_KJujqT_T4E9SK7EP7w4Hh8OWmNg0SgyqsoFX53a7UDxcua_3ZAjH_BLAtYeBqfQ"
+        val accessToken=preferenceManager.getAccessToken()?:""
 
-        val request =
-            chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer ${testToken}").build()
+        val requestBuilder = chain.request().newBuilder()
+
+        if (accessToken.isNotEmpty()) {
+            requestBuilder.addHeader("Authorization", "Bearer $accessToken")
+            Log.d("RETROFIT", "인증 헤더 추가됨: Bearer ${accessToken.take(10)}...") // 로그에 토큰 앞부분만 살짝 출력
+        }
+        val request = requestBuilder.build()
 
         Log.d(
             "RETROFIT",

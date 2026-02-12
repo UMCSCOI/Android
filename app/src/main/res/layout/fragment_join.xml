@@ -107,7 +107,7 @@
             android:text="국문만 입력 가능합니다."
             android:layout_marginTop="4dp"
             android:textColor="@color/error"
-            android:textSize="13dp"
+            android:textSize="13sp"
             android:layout_marginStart="2dp"
             app:layout_constraintStart_toStartOf="@id/korean_name_et"
             app:layout_constraintTop_toBottomOf="@id/korean_name_et"
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:text="영문 성명"
             android:textSize="16sp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
             android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/korean_error_tv" />
@@ -304,7 +304,7 @@
             android:text="주민등록번호 앞 7자리"
             android:textSize="16sp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="14dp"
             app:layout_constraintStart_toStartOf="@id/eng_name_layout"
             app:layout_constraintTop_toBottomOf="@id/eng_passport_helper_tv"/>
 

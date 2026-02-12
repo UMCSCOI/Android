@@ -83,4 +83,5 @@ dependencies {
     implementation("androidx.biometric:biometric-ktx:1.4.0-alpha02")
     implementation(libs.tbuonomo.dotsindicator)
     implementation(libs.airbnb.lottie)
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
 }
