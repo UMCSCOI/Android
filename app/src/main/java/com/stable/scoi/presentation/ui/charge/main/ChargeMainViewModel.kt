@@ -70,6 +70,7 @@ class ChargeMainViewModel @Inject constructor(
             successCallback = {
                 updateState {
                     copy(
+                        selectTradeType = "BITHUMB",
                         myKrwMoney = it.balances.find { it.currency == "KRW" }!!.balance,
                         myUsdcMoney = it.balances.find { it.currency == "USDC" }!!.balance,
                         myUsdtMoney = it.balances.find { it.currency == "USDT" }!!.balance,
@@ -86,6 +87,7 @@ class ChargeMainViewModel @Inject constructor(
                 successCallback = {
                     updateState {
                         copy(
+                            selectTradeType = "UPBIT",
                             myKrwMoney = it.balances.find { it.currency == "KRW" }!!.balance,
                             myUsdcMoney = it.balances.find { it.currency == "USDC" }!!.balance,
                             myUsdtMoney = it.balances.find { it.currency == "USDT" }!!.balance,
@@ -140,10 +142,17 @@ class ChargeMainViewModel @Inject constructor(
             else -> "#767676".toColorInt()
         }
     }
+
+    fun updateSelectTradeType(type: String) {
+        updateState {
+            copy(selectTradeType = type)
+        }
+    }
 }
 
 
 data class ChargeMainUiState(
+    val selectTradeType: String = "",
     val myKrwMoney: String = "",
     val myUsdtMoney: String = "",
     val myUsdcMoney: String = "",

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "283555415072",
+    "project_id": "scoi-f6d1a",
+    "storage_bucket": "scoi-f6d1a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283555415072:android:eb0d92336cc3a620836845",
+        "android_client_info": {
+          "package_name": "com.stable.scoi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWMbiM5WMYgR8IsSqwRIGYnZ5iwDRzBf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

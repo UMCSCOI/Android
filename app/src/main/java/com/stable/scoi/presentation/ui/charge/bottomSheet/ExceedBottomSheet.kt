@@ -28,6 +28,10 @@ class ExceedBottomSheet: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            imageClose.setOnClickListener {
+                dismiss()
+            }
+
             buttonRetry.setOnClickListener {
                 dismiss()
             }

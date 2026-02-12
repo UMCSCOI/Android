@@ -103,6 +103,11 @@
             android:defaultValue=""
             app:argType="string" />
 
+        <argument
+            android:name="tradeType"
+            android:defaultValue=""
+            app:argType="string" />
+
         <action
             android:id="@+id/action_charge_to_my_wallet"
             app:destination="@id/wallet_fragment" />

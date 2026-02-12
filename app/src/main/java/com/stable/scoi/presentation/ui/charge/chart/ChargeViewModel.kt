@@ -5,10 +5,12 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewModelScope
+import com.stable.scoi.data.dto.request.OrderRequest
 import com.stable.scoi.domain.model.CandleStreamEvent
 import com.stable.scoi.domain.model.UpbitTicker
 import com.stable.scoi.domain.model.enums.ChargeInputType
 import com.stable.scoi.domain.model.enums.ChargePageType
+import com.stable.scoi.domain.repository.ChargeRepository
 import com.stable.scoi.domain.repository.ChartRepository
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.base.UiEvent
@@ -30,7 +32,8 @@ import javax.inject.Inject
 @RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
 class ChargeViewModel @Inject constructor(
-    private val chartRepository: ChartRepository
+    private val chartRepository: ChartRepository,
+    private val chargeRepository: ChargeRepository,
 ) : BaseViewModel<ChargeUiState, ChargeEvent>(
     ChargeUiState(),
 ) {
@@ -46,15 +49,12 @@ class ChargeViewModel @Inject constructor(
 
     fun startMonitoring(chartMarket: String) {
         stopMonitoring()
-
+        updateState { copy(currentMarket = chartMarket) }
         monitorJob = viewModelScope.launch {
-            // Ticker(상단 시세)용 마켓 정의
             val tickerMarkets = listOf(chartMarket)
 
             while (isActive) {
                 try {
-                    SLOG.D("ViewModel: Start Connecting Unified Stream...")
-
                     chartRepository.streamUnified(chartMarket, tickerMarkets)
                         .collect { ev ->
                             when (ev) {
@@ -79,9 +79,6 @@ class ChargeViewModel @Inject constructor(
         }
     }
 
-    /**
-     * 모니터링 중지
-     */
     fun stopMonitoring() {
         monitorJob?.cancel()
         monitorJob = null
@@ -167,6 +164,7 @@ class ChargeViewModel @Inject constructor(
     fun updateMoney(money: String) {
         val newMaxCount = calculateMaxCountText(money, uiState.value.myKrwMoney, uiState.value.pageType)
         updateState { copy(money = money, maxCount = newMaxCount) }
+        updateCountChanged()
     }
 
     fun updatePageType(type: ChargePageType) {
@@ -196,7 +194,7 @@ class ChargeViewModel @Inject constructor(
                 val lackAmount = (totalCost - myAsset).toLong()
                 emitEvent(ChargeEvent.ShowLackMoneyEvent(lackAmount.toString()))
             } else {
-                SLOG.D("ChargeViewModel", "자산 충분, 충전 진행")
+                emitEvent(ChargeEvent.ShowChargeBottomSheet)
             }
         } else {
             val inputCount = currentState.count.toIntOrNull() ?: 0
@@ -204,7 +202,7 @@ class ChargeViewModel @Inject constructor(
             if (inputCount > myHolding) {
                 emitEvent(ChargeEvent.ShowExceedCountEvent)
             } else {
-                SLOG.D("ChargeViewModel", "보유 코인 충분, 교환 진행")
+                emitEvent(ChargeEvent.ShowChargeBottomSheet)
             }
         }
     }
@@ -212,11 +210,44 @@ class ChargeViewModel @Inject constructor(
     fun setMyCoinCount(count: String) {
         updateState { copy(myCoinCount = count) }
     }
+
+    fun order(password: String) {
+        viewModelScope.launch {
+            val currentState = uiState.value
+            val side = if (currentState.pageType == ChargePageType.CHARGE) "bid" else "ask"
+            val finalPrice = currentState.money.replace("[^0-9.]".toRegex(), "")
+            val finalVolume = currentState.count.trim()
+
+            val request = OrderRequest(
+                tradeType = uiState.value.tradeType,
+                market = uiState.value.currentMarket,
+                side = side,
+                orderType = "limit",
+                price = finalPrice,
+                volume = finalVolume,
+                password = password
+            )
+
+             resultResponse(
+                 response = chargeRepository.createOrder(request),
+                 successCallback = {
+                     //TODO 성공 콜백
+                 },
+             )
+        }
+    }
+
+    fun setTradeType(tradeType: String) {
+        updateState { copy(tradeType = tradeType) }
+    }
 }
+
 
 data class ChargeUiState(
     val pageType: ChargePageType = ChargePageType.CHARGE,
     val inputType: ChargeInputType = ChargeInputType.SELF,
+    val currentMarket: String = "",
+    val tradeType: String = "",
     val maxCount: String = "최대 0개 충전 가능",
     val money: String = "1447",
     val myKrwMoney: String = "0",
@@ -230,4 +261,5 @@ sealed interface ChargeEvent : UiEvent {
     data object MoveToBack: ChargeEvent
     data class ShowLackMoneyEvent(val lackMoney: String): ChargeEvent
     data object ShowExceedCountEvent: ChargeEvent
+    data object ShowChargeBottomSheet: ChargeEvent
 }

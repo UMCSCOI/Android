@@ -34,6 +34,10 @@ class LackMoneyBottomSheet(
             val formattedMoney = DecimalFormat("#,###").format(amount)
             textAmount.text = "${formattedMoney}원"
 
+            imageClose.setOnClickListener {
+                dismiss()
+            }
+
             buttonClose.setOnClickListener {
                 dismiss()
             }

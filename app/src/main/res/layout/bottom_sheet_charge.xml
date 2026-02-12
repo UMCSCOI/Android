@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_sheet"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:id="@+id/image_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ic_close_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_charge_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:gravity="center"
+            android:text="3200 USDT를\n충전할까요?"
+            android:textAppearance="@style/t1_sb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_close" />
+
+        <TextView
+            android:id="@+id/text_1_usdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="31.5dp"
+            android:text="1 USDT 희망 가격"
+            android:textAppearance="@style/b3"
+            android:textColor="@color/sub_gray_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_charge_title" />
+
+        <TextView
+            android:id="@+id/text_usdt_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="31.5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="1,449원"
+            android:textAppearance="@style/b3_sb"
+            android:textColor="@color/main_black"
+            app:layout_constraintTop_toBottomOf="@id/text_charge_title" />
+
+        <TextView
+            android:id="@+id/text_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="13dp"
+            android:text="총 주문 금액"
+            android:textAppearance="@style/b3"
+            android:textColor="@color/sub_gray_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_1_usdt" />
+
+        <TextView
+            android:id="@+id/text_total_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="4,636,800원"
+            android:textAppearance="@style/b3_sb"
+            android:textColor="@color/main_black"
+            app:layout_constraintTop_toBottomOf="@id/text_usdt_money" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/button_close"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="41.5dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_rect_disable_fill_radius60"
+            app:layout_constraintEnd_toStartOf="@id/button_fill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_total_money">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15.5dp"
+                android:text="닫기"
+                android:textAppearance="@style/l1m"
+                android:textColor="@color/disabled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/button_fill"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="41.5dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_rect_active_radius60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_close"
+            app:layout_constraintTop_toBottomOf="@id/text_total_money">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15.5dp"
+                android:text="충전"
+                android:textAppearance="@style/l1m"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

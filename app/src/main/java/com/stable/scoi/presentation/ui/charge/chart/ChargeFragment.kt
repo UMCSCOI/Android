@@ -25,6 +25,7 @@ import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.charge.adapter.ChargePriceAdapter
 import com.stable.scoi.presentation.ui.charge.adapter.ChargeRecentTradeAdapter
 import com.stable.scoi.presentation.ui.charge.adapter.PriceItem
+import com.stable.scoi.presentation.ui.charge.bottomSheet.ChargeBottomSheet
 import com.stable.scoi.presentation.ui.charge.bottomSheet.ExceedBottomSheet
 import com.stable.scoi.presentation.ui.charge.bottomSheet.LackMoneyBottomSheet
 import com.stable.scoi.util.Format.formatWon
@@ -62,6 +63,7 @@ class ChargeFragment :
             vm = viewModel
             viewModel.setMyKrwMoney(money = args.money)
             viewModel.setMyCoinCount(count = args.coinCount)
+            viewModel.setTradeType(tradeType = args.tradeType)
             setSummaryCountUi()
 
             if (args.coin == "USDT") {
@@ -150,6 +152,7 @@ class ChargeFragment :
                         ChargeEvent.MoveToBack -> findNavController().popBackStack()
                         is ChargeEvent.ShowLackMoneyEvent -> showLackBottomSheet(it.lackMoney)
                         ChargeEvent.ShowExceedCountEvent -> showExceedBottomSheet()
+                        ChargeEvent.ShowChargeBottomSheet -> showChargeBottomSheet()
                     }
                 }
             }
@@ -234,7 +237,7 @@ class ChargeFragment :
 
     fun setSummaryUi() {
         binding.apply {
-            layoutChargeCount.setBackgroundResource(R.drawable.bg_rect_white_stroke_disable_radius10)
+            layoutChargeMoney.setBackgroundResource(R.drawable.bg_rect_white_stroke_disable_radius10)
             if (viewModel.uiState.value.inputType == ChargeInputType.SELF) {
                 textInputSelf.visible()
                 textInputSelect.gone()
@@ -321,7 +324,7 @@ class ChargeFragment :
 
     private fun updateLeftPanel(ticker: UpbitTicker) {
         val nf = NumberFormat.getNumberInstance(Locale.KOREA).apply {
-            maximumFractionDigits = 0 // 소수점 제거 (필요시 조정)
+            maximumFractionDigits = 0
         }
 
         binding.apply {
@@ -346,5 +349,20 @@ class ChargeFragment :
 
     private fun showExceedBottomSheet() {
         ExceedBottomSheet().show(parentFragmentManager, "")
+    }
+
+    private fun showChargeBottomSheet() {
+        val state = viewModel.uiState.value
+        ChargeBottomSheet(
+            money = state.money,
+            count = state.count,
+            coin = args.coin,
+            total = state.total,
+            type = state.pageType,
+            onClickRight = {
+                // TODO: 확인 버튼 눌렀을 때 실행할 로직 (예: API 호출)
+                // viewModel.requestCharge()
+            }
+        ).show(parentFragmentManager, "")
     }
 }

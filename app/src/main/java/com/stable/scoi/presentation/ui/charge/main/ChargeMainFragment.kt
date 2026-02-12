@@ -78,7 +78,7 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
     }
 
     private fun navigateChart(coin: String, coinCount: String) {
-        val action = ChargeMainFragmentDirections.actionChargeMainFragmentToChargeFragment(coin, money = viewModel.uiState.value.myKrwMoney, coinCount = coinCount)
+        val action = ChargeMainFragmentDirections.actionChargeMainFragmentToChargeFragment(coin, money = viewModel.uiState.value.myKrwMoney, coinCount = coinCount, tradeType = viewModel.uiState.value.selectTradeType)
         findNavController().navigate(action)
     }
 
