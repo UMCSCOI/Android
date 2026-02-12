@@ -6,20 +6,32 @@
 
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="16dp">
 
-        <ImageView
-            android:id="@+id/login_bio_symbol_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+        <ImageButton
+            android:id="@+id/bio_login_back_btn"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="104dp"
-            android:src="@drawable/symbol"
+            android:layout_marginTop="14dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/login_bio_symbol_iv"
+            android:layout_width="33.5dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="38dp"
+            android:src="@drawable/symbol2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bio_login_back_btn" />
 
         <TextView
             android:id="@+id/login_bio_intro_tv"
@@ -37,9 +49,9 @@
 
         <ImageView
             android:id="@+id/login_bio_uncheck_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_marginTop="44dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="43dp"
             android:src="@drawable/bio_untouch"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,43 +60,45 @@
 
         <ImageView
             android:id="@+id/login_bio_touch_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/bio_touch"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
-            app:layout_constraintStart_toStartOf="@id/login_bio_uncheck_iv"
-            app:layout_constraintTop_toTopOf="@id/login_bio_uncheck_iv" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv" />
 
         <ImageView
             android:id="@+id/login_bio_touch_error_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="43dp"
             android:src="@drawable/bio_touch_error"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
-            app:layout_constraintStart_toStartOf="@id/login_bio_uncheck_iv"
-            app:layout_constraintTop_toTopOf="@id/login_bio_uncheck_iv" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv" />
 
         <ImageView
             android:id="@+id/login_bio_success_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="43dp"
             android:src="@drawable/bio_check"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
-            app:layout_constraintStart_toStartOf="@id/login_bio_uncheck_iv"
-            app:layout_constraintTop_toTopOf="@id/login_bio_uncheck_iv" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv"/>
 
         <ImageView
             android:id="@+id/login_bio_error_iv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/bio_error"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/login_bio_uncheck_iv"
-            app:layout_constraintStart_toStartOf="@id/login_bio_uncheck_iv"
-            app:layout_constraintTop_toTopOf="@id/login_bio_uncheck_iv" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_bio_intro_tv" />
 
         <TextView
             android:id="@+id/login_bio_pin_tv"
@@ -108,7 +122,9 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            >
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/login_pin_input_inactive_cv"
@@ -118,7 +134,8 @@
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/disabled_fill"
                 app:cardCornerRadius="60dp"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                >
 
 
                     <TextView

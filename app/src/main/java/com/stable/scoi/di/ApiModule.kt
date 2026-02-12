@@ -1,6 +1,8 @@
 package com.stable.scoi.di
 
 import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
+import com.stable.scoi.data.api.AuthApi
+import com.stable.scoi.data.api.auth.SignUpApi
 import com.stable.scoi.data.api.transfer.BalancesAPI
 import com.stable.scoi.data.api.transfer.CancelOrderAPI
 import com.stable.scoi.data.api.transfer.DirectoryListAPI
@@ -19,6 +21,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
+import kotlin.jvm.java
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -88,6 +91,22 @@ object ApiModule {
     @Singleton
     fun provideUpbitPrivateWsApi(client: OkHttpClient): OkHttpUpbitCandleWsApi =
         OkHttpUpbitCandleWsApi(client)
+
+    @Provides
+    @Singleton
+    fun provideAuthApi(
+        @NormalRetrofit retrofit: Retrofit
+    ): AuthApi {
+     return retrofit.create(AuthApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSignUpApi(
+        @NormalRetrofit retrofit: Retrofit
+    ): SignUpApi{
+        return retrofit.create(SignUpApi::class.java)
+    }
 
     @Singleton
     @Provides

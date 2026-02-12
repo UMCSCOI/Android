@@ -10,7 +10,9 @@ import javax.inject.Singleton
 @Singleton
 class AuthenticationInterceptor
 @Inject
-constructor() : Interceptor {
+constructor(
+    private val preferenceManager: PreferenceManager
+) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         // val accessToken = runBlocking { repository.getAccessToken().first() }
         val testToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMTAxMjM0MTIzNCIsInR5cGUiOiJBQ0NFU1MiLCJpYXQiOjE3NzA4ODkwODcsImV4cCI6MTk1MDg4OTA4N30.mlpIoIk95c0vvo0rtLpjaObQ5K0rFG6uR1cRTBxTykxmHA0Tr2D8BLhJPwjzGgragvqaol90Q1fblyjO_yjixg"

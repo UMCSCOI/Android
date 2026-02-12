@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentLoginPinBinding
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.ui.Auth.JoinViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -128,7 +129,8 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             is LoginEvent.NavigationToMain -> {
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             }
-            is LoginEvent.NavigationToBiometric -> {
+            is LoginEvent.NavigationToBiometric->{
+                findNavController().navigate(R.id.action_loginFragment_to_bioFragment)
             }
             is LoginEvent.ShowError -> {
 
@@ -139,6 +141,16 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
                     editText.setBackgroundResource(R.drawable.bg_pin_underline_error)
 
                 }
+
+            }
+            is LoginEvent.NavigationToExpired -> {
+                findNavController().navigate(R.id.action_loginFragment_to_loginExpiredFragment)
+            }
+
+            is LoginEvent.VerifySuccess -> {
+
+            }
+            is LoginEvent.NavigationToLogin -> {
 
             }
         }
@@ -169,6 +181,8 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             showKeyboard(targetEt)
         }, 300)
     }
+
+
 
 private fun showKeyboard(view: View) {
     if (view.requestFocus()) {

@@ -146,6 +146,32 @@
     </fragment>
 
     <fragment
+        android:id="@+id/bio_fragment"
+        android:name="com.stable.scoi.presentation.ui.bio.BioFragment"
+        tools:layout="@layout/fragment_bio_login">
+        <action
+            android:id="@+id/action_bioFragment_to_loginFragment"
+            app:destination="@id/login_pin_fragment" />
+        <action
+            android:id="@+id/action_bioFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_bioFragment_to_bioRegFragment"
+            app:destination="@id/bio_reg_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_expired_fragment"
+        android:name="com.stable.scoi.presentation.ui.login.LoginExpiredFragment"
+        tools:layout="@layout/fragment_login_expired">
+        <action
+            android:id="@+id/action_loginExpiredFragment_to_loginFragment"
+            app:destination="@id/login_pin_fragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/login_pin_fragment"
         android:name="com.stable.scoi.presentation.ui.login.LoginFragment">
 
@@ -249,6 +275,66 @@
         tools:layout="@layout/fragment_password_success" />
 
     <!-- 마이페이지 -->
+
+    <fragment
+        android:id="@+id/bio_reg_fragment"
+        android:name="com.stable.scoi.presentation.ui.bio.BioRegFragment"
+        android:label="생체인증 등록"
+        tools:layout="@layout/fragment_bio_scan">
+
+        <action
+            android:id="@+id/action_bioRegFragment_to_pinFragment"
+            app:destination="@id/login_pin_fragment" />
+
+        <action
+            android:id="@+id/action_bioRegFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_bioRegFragment_to_explainFragment"
+            app:destination="@id/explain_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/guide_fragment"
+        android:name="com.stable.scoi.presentation.ui.Auth.GuideFragment"
+        android:label="가이드"
+        tools:layout="@layout/fragment_guide_step">
+        <action
+            android:id="@+id/action_guideFragment_to_keyFragment"
+            app:destination="@id/key_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/explain_fragment"
+        android:name="com.stable.scoi.presentation.ui.Auth.ExplainFragment"
+        tools:layout="@layout/fragment_explain">
+        <action
+            android:id="@+id/action_explainFragment_to_keyFragment"
+            app:destination="@id/key_fragment"/>
+
+        <action
+            android:id="@+id/action_explainFragment_to_guideFragment"
+            app:destination="@id/guide_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/key_fragment"
+        android:name="com.stable.scoi.presentation.ui.Auth.KeyFragment"
+        tools:layout="@layout/fragment_key">
+
+        <action
+            android:id="@+id/action_KeyFragment_to_joinCompleteFragment"
+            app:destination="@id/join_complete_fragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/join_complete_fragment"
+        android:name="com.stable.scoi.presentation.ui.Auth.JoinCompleteFragment"
+        tools:layout="@layout/fragment_reg_complete"
+/>
 
 
 </navigation>
