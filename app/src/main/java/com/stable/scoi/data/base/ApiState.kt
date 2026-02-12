@@ -36,7 +36,7 @@ suspend inline fun <reified T> apiCall(
     return try {
         val response = apiCall()
 
-        if (response.result != null) {
+        if (response.isSuccess) {
             ApiState.Success(response.result)
         } else {
             ApiState.Fail(

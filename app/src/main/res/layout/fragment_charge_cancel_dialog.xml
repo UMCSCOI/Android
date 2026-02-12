@@ -44,8 +44,9 @@
                 
                 android:id="@+id/Wallet_charge_cancel_alert_message_TV"
 
-                android:text="현재 주문은 채결 대기 중입니다.\n취소된 주문은 다시 복구할 수 없습니다."
+                android:text="현재 주문은 체결 대기 중입니다.\n취소된 주문은 다시 복구할 수 없습니다."
                 android:textAppearance="@style/t2"
+                android:textColor="#505050"
                 android:gravity="center"
                 
                 app:layout_constraintTop_toBottomOf="@id/Wallet_charge_cancel_alert_TV"
@@ -82,7 +83,8 @@
                         android:layout_height="wrap_content"
 
                         android:text="주문 정보"
-                        android:textAppearance="@style/t2"/>
+                        android:textAppearance="@style/t2"
+                        android:textColor="#505050"/>
                 </LinearLayout>
 
                 <FrameLayout
@@ -103,7 +105,8 @@
                             android:layout_height="wrap_content"
 
                             android:text="주문 일시"
-                            android:textAppearance="@style/t2"/>
+                            android:textAppearance="@style/t2"
+                            android:textColor="#505050"/>
 
                         <Space
                             android:layout_width="30dp"
@@ -114,7 +117,8 @@
                             android:layout_height="wrap_content"
 
                             android:text="2026. 01. 15 19:00"
-                            android:textAppearance="@style/l4"/>
+                            android:textAppearance="@style/l4"
+                            android:textColor="#505050"/>
 
                     </LinearLayout>
 
@@ -129,7 +133,8 @@
                             android:layout_height="wrap_content"
 
                             android:text="주문 유형"
-                            android:textAppearance="@style/t2"/>
+                            android:textAppearance="@style/t2"
+                            android:textColor="#505050"/>
 
                         <Space
                             android:layout_width="30dp"
@@ -140,7 +145,8 @@
                             android:layout_height="wrap_content"
 
                             android:text="USDT 충전"
-                            android:textAppearance="@style/l4"/>
+                            android:textAppearance="@style/l4"
+                            android:textColor="#505050"/>
 
                     </LinearLayout>
 
@@ -155,7 +161,8 @@
                             android:layout_height="wrap_content"
 
                             android:text="수량"
-                            android:textAppearance="@style/t2"/>
+                            android:textAppearance="@style/t2"
+                            android:textColor="#505050"/>
 
                         <Space
                             android:layout_width="30dp"
@@ -166,7 +173,8 @@
                             android:layout_height="wrap_content"
 
                             android:text="100 USDT"
-                            android:textAppearance="@style/l4"/>
+                            android:textAppearance="@style/l4"
+                            android:textColor="#505050"/>
 
                     </LinearLayout>
                 </FrameLayout>

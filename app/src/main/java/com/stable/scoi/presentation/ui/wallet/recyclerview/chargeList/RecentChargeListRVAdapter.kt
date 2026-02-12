@@ -4,8 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.databinding.ItemMywalletChargeListBinding
+import com.stable.scoi.domain.model.wallet.Transactions
+import com.stable.scoi.domain.model.wallet.TransactionsCharge
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class RecentChargeListRVAdapter(private val recentChargeList: ArrayList<RecentChargeList>, private val recentChargeListOnClickListener: RecentChargeListOnClickListener): RecyclerView.Adapter<RecentChargeListRVAdapter.ViewHolder>() {
+class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: RecentChargeListOnClickListener): RecyclerView.Adapter<RecentChargeListRVAdapter.ViewHolder>() {
+
+    private val items = ArrayList<TransactionsCharge>()
+
+    fun updateItems(newItems: List<TransactionsCharge>) {
+        items.clear()
+        items.addAll(newItems)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -16,29 +29,72 @@ class RecentChargeListRVAdapter(private val recentChargeList: ArrayList<RecentCh
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(recentChargeList[position])
+        holder.bind(items[position])
         holder.binding.WalletListVIEW.setOnClickListener {
-            recentChargeListOnClickListener.RCLOnClickListener(recentChargeList[position])
+            recentChargeListOnClickListener.RCLOnClickListener(items[position])
         }
         holder.binding.WalletListCancelTV.setOnClickListener {
-            recentChargeListOnClickListener.cancelOnclickListener(recentChargeList[position])
+            recentChargeListOnClickListener.cancelOnclickListener(items[position])
         }
     }
 
-    override fun getItemCount(): Int = recentChargeList.size
+    override fun getItemCount(): Int = items.size
 
     inner class ViewHolder(val binding: ItemMywalletChargeListBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(recentChargeList: RecentChargeList) {
+        fun bind(recentChargeList: TransactionsCharge) {
             binding.apply {
-                WalletListTimeTV.text = recentChargeList.occurredAt//데이터 가공 필요 (날짜 시간)
-                WalletListAssetSymbolTV.text = recentChargeList.assetSymbol//API 명세서 누락 항목
-                WalletListAmountTV.text = recentChargeList.amount//데이터 가공 필요 (+/-)
-                WalletListAssetSymbolTitleTV.text = recentChargeList.assetSymbol
-                WalletListTotalAmountTV.text = recentChargeList.netAmount
-                WalletListTotalAssetSymbolTV.text = recentChargeList.assetSymbol//API 명세서 누락 항목
-                //추가로 상태에 대한 API 정보 또한 추가 되어야 함 -> API 명세서 수정 후 기능 구현 예정
+                val coinType = when (recentChargeList.market) {
+                    "KRW-USDT" -> "USDT"
+                    "KRW-USDC" -> "USDC"
+                    else -> ""
+                }
+                WalletListTimeTV.text = formatDate(recentChargeList.createdAt)
+                WalletListAssetSymbolTV.text = coinType
+
+                val sign = when (recentChargeList.side) {
+                    "bid" -> "+"
+                    "ask" -> "-"
+                    else -> ""
+                }
+
+                val side = when (recentChargeList.side) {
+                    "bid" -> "충전"
+                    "ask" -> "현금 교환"
+                    else -> ""
+                }
+
+                val state = when (recentChargeList.state) {
+                    "done" -> "완료"
+                    "wait" -> "대기"
+                    "canceled" -> "취소"
+                    else -> ""
+                }
+
+                val amount = sign + recentChargeList.executedVolume
+
+                WalletListChargeStateTV.text = "$side $state"
+                WalletListAmountTV.text = amount
+                WalletListAssetSymbolTitleTV.text = coinType
+               // WalletListTotalAssetSymbolTV.text = coinType
             }
+        }
+    }
+
+    fun formatDate(dateString: String): String {
+        return try {
+            val input = SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ssXXX",
+                Locale.getDefault()
+            )
+            val output = SimpleDateFormat(
+                "MM.dd HH:mm:ss",
+                Locale.getDefault()
+            )
+            val date = input.parse(dateString)
+            output.format(date!!)
+        } catch (e: Exception) {
+            dateString
         }
     }
 }

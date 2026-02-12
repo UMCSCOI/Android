@@ -191,17 +191,6 @@
                     <Space
                         android:layout_width="10dp"
                         android:layout_height="wrap_content"/>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/bookmark_exchange_binance_BT"
-                        android:layout_width="106dp"
-                        android:layout_height="34dp"
-                        android:backgroundTint="@null"
-                        android:background="@drawable/select_exchange"
-                        android:text="BINANCE"
-                        android:fontFamily="@font/pretendard_regular"
-                        android:textSize="14sp"
-                        android:drawableStart="@drawable/binance_logo"/>
                 </LinearLayout>
 
                 <TextView

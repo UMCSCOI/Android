@@ -9,11 +9,14 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferPasswordBinding
 import com.stable.scoi.presentation.base.BaseFragment
+import com.stable.scoi.presentation.base.UiState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, TransferState, TransferEvent, TransferViewModel>(
@@ -72,7 +75,21 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
         binding.TransferPasswordInputTV.setOnClickListener {
             viewModel.submitPassword(passwordFirst, passwordSecond, passwordThird, passwordFourth, passwordFifth, passwordSixth)
             Log.d("password", viewModel.execute.value.simplePassword)
-            findNavController().navigate(R.id.transfer_complete_fragment)
+        }
+
+        binding.TransferBackArrowIV.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        repeatOnStarted(viewLifecycleOwner) {
+            launch {
+                viewModel.uiEvent.collect { event ->
+                    when (event) {
+                        TransferEvent.NavigateToNextPage -> findNavController().navigate(R.id.transfer_complete_fragment)
+                        else -> Unit
+                    }
+                }
+            }
         }
     }
 
