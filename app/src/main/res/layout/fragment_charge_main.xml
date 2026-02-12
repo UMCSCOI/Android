@@ -29,7 +29,7 @@
             android:id="@+id/layout_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:rightClick="@{()->vm.test()}"
+            app:rightClick="@{()->vm.onClickMyPage()}"
             app:title="충전" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -118,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="1,000,000"
+                android:text="@{vm.uiState.myUsdtMoney}"
                 android:textAppearance="@style/t1_sb"
                 android:textColor="@color/main_black"
                 app:layout_constraintEnd_toEndOf="@id/text_usdt"
@@ -151,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="1,000,000"
+                android:text="@{vm.uiState.myUsdcMoney}"
                 android:textAppearance="@style/t1_sb"
                 android:textColor="@color/main_black"
                 app:layout_constraintEnd_toEndOf="@id/text_usdc"

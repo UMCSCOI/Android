@@ -64,12 +64,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeFragment -> {
+                    viewModel.onClickHome()
                     binding.layoutBottomNav.visible()
                 }
                 R.id.chargeMainFragment -> {
+                    viewModel.onClickCharge()
                     binding.layoutBottomNav.visible()
                 }
-                R.id.wallet_fragment ->{
+                R.id.wallet_fragment -> {
+                    viewModel.onClickWallet()
                     binding.layoutBottomNav.visible()
                 }
                 else -> {

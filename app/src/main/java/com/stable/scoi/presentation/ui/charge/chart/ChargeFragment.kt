@@ -25,6 +25,9 @@ import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.charge.adapter.ChargePriceAdapter
 import com.stable.scoi.presentation.ui.charge.adapter.ChargeRecentTradeAdapter
 import com.stable.scoi.presentation.ui.charge.adapter.PriceItem
+import com.stable.scoi.presentation.ui.charge.bottomSheet.ChargeBottomSheet
+import com.stable.scoi.presentation.ui.charge.bottomSheet.ExceedBottomSheet
+import com.stable.scoi.presentation.ui.charge.bottomSheet.LackMoneyBottomSheet
 import com.stable.scoi.util.Format.formatWon
 import com.stable.scoi.util.Format.unformatWon
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +35,7 @@ import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 @AndroidEntryPoint
 class ChargeFragment :
     BaseFragment<FragmentChargeBinding, ChargeUiState, ChargeEvent, ChargeViewModel>(
@@ -46,13 +50,20 @@ class ChargeFragment :
     }
 
     private val chargePriceAdapter: ChargePriceAdapter by lazy {
-        ChargePriceAdapter()
+        ChargePriceAdapter(
+            onClickItem = {
+                viewModel.updateMoney(it.price.toInt().toString())
+            }
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initView() {
         binding.apply {
             vm = viewModel
+            viewModel.setMyKrwMoney(money = args.money)
+            viewModel.setMyCoinCount(count = args.coinCount)
+            viewModel.setTradeType(tradeType = args.tradeType)
             setSummaryCountUi()
 
             if (args.coin == "USDT") {
@@ -73,6 +84,7 @@ class ChargeFragment :
 
             layoutChargeMoney.setOnClickListener {
                 setEditingUi()
+                setSummaryCountUi()
 
                 editMoney.isFocusableInTouchMode = true
                 editMoney.requestFocus()
@@ -80,6 +92,7 @@ class ChargeFragment :
             }
 
             layoutChargeCount.setOnClickListener {
+                setSummaryUi()
                 setEditingCountUi()
 
                 editCount.isFocusableInTouchMode = true
@@ -137,6 +150,9 @@ class ChargeFragment :
                 viewModel.uiEvent.collect {
                     when(it){
                         ChargeEvent.MoveToBack -> findNavController().popBackStack()
+                        is ChargeEvent.ShowLackMoneyEvent -> showLackBottomSheet(it.lackMoney)
+                        ChargeEvent.ShowExceedCountEvent -> showExceedBottomSheet()
+                        ChargeEvent.ShowChargeBottomSheet -> showChargeBottomSheet()
                     }
                 }
             }
@@ -212,10 +228,6 @@ class ChargeFragment :
             textInputSelf.visible()
             textInputSelect.visible()
 
-            textInputSelf.setTextColor(ContextCompat.getColor(requireActivity(), R.color.main_black))
-            textInputSelect.setTextColor(ContextCompat.getColor(requireActivity(), R.color.main_black))
-
-
             editMoney.visible()
             imageInputMode.visible()
 
@@ -225,6 +237,7 @@ class ChargeFragment :
 
     fun setSummaryUi() {
         binding.apply {
+            layoutChargeMoney.setBackgroundResource(R.drawable.bg_rect_white_stroke_disable_radius10)
             if (viewModel.uiState.value.inputType == ChargeInputType.SELF) {
                 textInputSelf.visible()
                 textInputSelect.gone()
@@ -232,9 +245,6 @@ class ChargeFragment :
                 textInputSelf.gone()
                 textInputSelect.visible()
             }
-
-            textInputSelf.setTextColor(ContextCompat.getColor(requireActivity(), R.color.sub_gray_1))
-            textInputSelect.setTextColor(ContextCompat.getColor(requireActivity(), R.color.sub_gray_1))
 
             textInputMoney.visible()
 
@@ -314,7 +324,7 @@ class ChargeFragment :
 
     private fun updateLeftPanel(ticker: UpbitTicker) {
         val nf = NumberFormat.getNumberInstance(Locale.KOREA).apply {
-            maximumFractionDigits = 0 // 소수점 제거 (필요시 조정)
+            maximumFractionDigits = 0
         }
 
         binding.apply {
@@ -325,5 +335,34 @@ class ChargeFragment :
             textLowPrice.text = "저가(당일) ${nf.format(ticker.lowPrice)}"
             textEndPrice.text = "전일종가    ${nf.format(ticker.prevClosingPrice)}"
         }
+    }
+
+    private fun showLackBottomSheet(lackMoney: String) {
+        LackMoneyBottomSheet(
+            money = lackMoney,
+            onClickFill = {
+                val action = ChargeFragmentDirections.actionChargeToMyWallet()
+                findNavController().navigate(action)
+            }
+        ).show(parentFragmentManager, "LackMoneyBottomSheet")
+    }
+
+    private fun showExceedBottomSheet() {
+        ExceedBottomSheet().show(parentFragmentManager, "")
+    }
+
+    private fun showChargeBottomSheet() {
+        val state = viewModel.uiState.value
+        ChargeBottomSheet(
+            money = state.money,
+            count = state.count,
+            coin = args.coin,
+            total = state.total,
+            type = state.pageType,
+            onClickRight = {
+                // TODO: 확인 버튼 눌렀을 때 실행할 로직 (예: API 호출)
+                // viewModel.requestCharge()
+            }
+        ).show(parentFragmentManager, "")
     }
 }

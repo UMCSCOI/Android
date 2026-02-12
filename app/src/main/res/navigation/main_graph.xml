@@ -22,28 +22,27 @@
 
     <fragment
         android:id="@+id/wallet_deposit_fragment"
-        android:name="com.stable.scoi.presentation.ui.wallet.deposit.DepositFragment"/>
+        android:name="com.stable.scoi.presentation.ui.wallet.deposit.DepositFragment" />
 
     <fragment
         android:id="@+id/wallet_withdraw_fragment"
-        android:name="com.stable.scoi.presentation.ui.wallet.withdraw.WithdrawFragment"/>
+        android:name="com.stable.scoi.presentation.ui.wallet.withdraw.WithdrawFragment" />
 
     <fragment
         android:id="@+id/wallet_transfer_detail_fragment"
-        android:name="com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.WalletTransferDetailFragment"/>
+        android:name="com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.WalletTransferDetailFragment" />
 
     <fragment
         android:id="@+id/wallet_charge_detail_fragment"
-        android:name="com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.WalletChargeDetailFragment"/>
+        android:name="com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.WalletChargeDetailFragment" />
 
     <fragment
         android:id="@+id/wallet_deposit_complete_fragment"
-        android:name="com.stable.scoi.presentation.ui.wallet.deposit.WalletDepositCompleteFragment"/>
+        android:name="com.stable.scoi.presentation.ui.wallet.deposit.WalletDepositCompleteFragment" />
 
     <fragment
         android:id="@+id/wallet_withdraw_complete_fragment"
-        android:name="com.stable.scoi.presentation.ui.wallet.withdraw.WalletWithdrawCompleteFragment"/>
-
+        android:name="com.stable.scoi.presentation.ui.wallet.withdraw.WalletWithdrawCompleteFragment" />
 
 
     <fragment
@@ -82,13 +81,69 @@
         android:id="@+id/chargeMainFragment"
         android:name="com.stable.scoi.presentation.ui.charge.main.ChargeMainFragment"
         android:label="충전 화면 메인"
-        tools:layout="@layout/fragment_charge_main"/>
+        tools:layout="@layout/fragment_charge_main">
+        <action
+            android:id="@+id/action_chargeMainFragment_to_chargeFragment"
+            app:destination="@id/chargeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/chargeFragment"
         android:name="com.stable.scoi.presentation.ui.charge.chart.ChargeFragment"
         android:label="충전 화면"
-        tools:layout="@layout/fragment_charge"/>
+        tools:layout="@layout/fragment_charge">
+
+        <argument
+            android:name="coin"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="money"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="coinCount"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="tradeType"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_charge_to_my_wallet"
+            app:destination="@id/wallet_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/chargeCompleteFragment"
+        android:name="com.stable.scoi.presentation.ui.charge.complete.ChargeCompleteFragment"
+        android:label="완료 화면"
+        tools:layout="@layout/fragment_charge_complete">
+
+        <argument
+            android:name="coin"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="coinCount"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_complete_to_charge_main"
+            app:destination="@id/chargeMainFragment" />
+
+        <action
+            android:id="@+id/action_complete_to_my_wallet"
+            app:destination="@id/wallet_fragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/login_pin_fragment"
@@ -113,6 +168,87 @@
             android:id="@+id/action_homeFragment_to_walletFragment"
             app:destination="@id/wallet_fragment" />
     </fragment>
+
+    <!-- 마이페이지 -->
+
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.stable.scoi.presentation.ui.my.MyPageFragment"
+        android:label="MyPageFragment"
+        tools:layout="@layout/fragment_mypage">
+        <action
+            android:id="@+id/action_mypage_to_accountInfo"
+            app:destination="@id/accountInfoFragment" />
+        <action
+            android:id="@+id/action_mypage_to_apiSetting"
+            app:destination="@id/apiSettingFragment" />
+
+        <action
+            android:id="@+id/action_mypage_to_changePassword"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountInfoFragment"
+        android:name="com.stable.scoi.presentation.ui.my.info.AccountInfoFragment"
+        android:label="AccountInfoFragment"
+        tools:layout="@layout/fragment_account_info" />
+
+    <fragment
+        android:id="@+id/apiSettingFragment"
+        android:name="com.stable.scoi.presentation.ui.my.api.ApiSettingFragment"
+        android:label="ApiSettingFragment"
+        tools:layout="@layout/fragment_api_setting">
+        <action
+            android:id="@+id/action_apiSetting_to_apiEdit"
+            app:destination="@id/apiEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/apiEditFragment"
+        android:name="com.stable.scoi.presentation.ui.my.api.ApiEditFragment"
+        android:label="ApiEditFragment"
+        tools:layout="@layout/fragment_api_edit" />
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.stable.scoi.presentation.ui.my.pw.PasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_password" />
+
+    <fragment
+        android:id="@+id/phoneAuthFragment"
+        android:name="com.stable.scoi.presentation.ui.my.phone.PhoneAuthFragment"
+        android:label="PhoneAuthFragment"
+        tools:layout="@layout/fragment_phone_auth">
+        <action
+            android:id="@+id/action_phoneAuth_to_code"
+            app:destination="@id/phoneAuthCodeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/phoneAuthCodeFragment"
+        android:name="com.stable.scoi.presentation.ui.my.phone.PhoneAuthCodeFragment"
+        android:label="PhoneAuthCodeFragment"
+        tools:layout="@layout/fragment_phone_auth_code">
+        <action
+            android:id="@+id/action_code_to_complete"
+            app:destination="@id/phoneAuthCompleteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/phoneAuthCompleteFragment"
+        android:name="com.stable.scoi.presentation.ui.my.phone.PhoneAuthCompleteFragment"
+        android:label="PhoneAuthCompleteFragment"
+        tools:layout="@layout/fragment_phone_auth_complete" />
+
+    <fragment
+        android:id="@+id/passwordSuccessFragment"
+        android:name="com.stable.scoi.presentation.ui.my.pw.PasswordSuccessFragment"
+        android:label="PasswordSuccessFragment"
+        tools:layout="@layout/fragment_password_success" />
+
+    <!-- 마이페이지 -->
 
 
 </navigation>

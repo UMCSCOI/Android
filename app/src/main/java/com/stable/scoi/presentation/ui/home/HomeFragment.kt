@@ -7,6 +7,9 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -19,6 +22,7 @@ import com.stable.scoi.R
 import com.stable.scoi.extension.inVisible
 import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.ui.home.adapter.AccountCardAdapter
+import com.stable.scoi.presentation.ui.home.dialog.CustomTypefaceSpan
 import com.stable.scoi.presentation.ui.home.dialog.SelectAccountDialogFragment
 import com.stable.scoi.presentation.ui.home.dialog.SelectNetworkDialogFragment
 import com.stable.scoi.presentation.ui.home.dialog.SelectStableDialogFragment
@@ -41,6 +45,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
     override fun initView() {
         binding.apply {
             vm = viewModel
+
+            imgMyWhite.setOnClickListener {
+                findNavController().navigate(R.id.myPageFragment)
+            }
+            imgMyBlack.setOnClickListener {
+                findNavController().navigate(R.id.myPageFragment)
+            }
+            val boldFont = ResourcesCompat.getFont(requireActivity(), R.font.pretendard_semibold)
+
+            textTitle.text = buildSpannedString {
+                inSpans(CustomTypefaceSpan(boldFont!!)) {
+                    append("서희정")
+                }
+                append("님!\n송금을 시작해볼까요?")
+            }
+            textTitle2.text = buildSpannedString {
+                inSpans(CustomTypefaceSpan(boldFont!!)) {
+                    append("서희정")
+                }
+                append("님!\n어떤 자산을 보내시겠어요?")
+            }
 
             setupViewPager()
 
@@ -75,7 +100,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
                             binding.layoutSelect.setBackgroundResource(R.drawable.bg_rect_skyblue_radius60)
                             binding.textSelect.setTextColor(ContextCompat.getColor(requireActivity(),R.color.active))
                         }
-                        binding.textWalletKey.text = viewModel.uiState.value.accountList[position].key
+                        binding.textWalletKey.text = if(viewModel.uiState.value.accountList[position].isEmpty) "입금 주소가 아직 생성되지 않았어요." else viewModel.uiState.value.accountList[position].key
+                        viewModel.setSelectPosition(position)
                     }
                 }
             })
@@ -120,19 +146,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
         val screenHeight = binding.root.height.toFloat()
 
-        val viewsToHide = listOf(binding.imgMyBlack, binding.textTouchWallet)
+        val viewsToHide = listOf(binding.imgMyBlack, binding.textTouchWallet, binding.textTitle)
         viewsToHide.forEach { view ->
             view.animate()
                 .alpha(0f)
                 .setDuration(600)
                 .withEndAction {
-                    view.visibility = View.GONE
+                    view.visibility = View.INVISIBLE
                     view.alpha = 1f
                 }
                 .start()
         }
 
-        val viewsToShow = listOf(binding.imgMyWhite, binding.textWalletKey, binding.layoutSelect)
+        val viewsToShow = listOf(binding.imgMyWhite, binding.textWalletKey, binding.layoutSelect, binding.dotsIndicator, binding.textTitle2)
         viewsToShow.forEach { view ->
             view.alpha = 0f
             view.visibility = View.VISIBLE
@@ -238,7 +264,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
         childFragmentManager.setFragmentResultListener("requestKey_coin", viewLifecycleOwner) { requestKey, bundle ->
 
             val result = bundle.getString("bundleKey_coin")
-            result?.let { showNetworkDialg(it, listOf("Ethereum", "Polygon")) }
+
+            result?.let { coinName ->
+                val networkList = when (coinName) {
+                    "USDT" -> listOf(
+                        "트론 (Tron)",
+                        "이더리움 (Ethereum)",
+                        "카이아 (Kaia)",
+                        "앱토스 (Aptos)"
+                    )
+                    "USDC" -> listOf(
+                        "이더리움 (Ethereum)"
+                    )
+                    else -> listOf("이더리움 (Ethereum)", "폴리곤 (Polygon)")
+                }
+                showNetworkDialg(coinName, networkList)
+            }
 
         }
         SelectAccountDialogFragment().show(childFragmentManager, "")
@@ -246,6 +287,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
     private fun showNetworkDialg(coin: String, list: List<String>) {
         val dialog = SelectNetworkDialogFragment.newInstance(coin, list)
+
+        dialog.onNetworkSelectedListener = { selectedNetworkName ->
+            viewModel.createAddress(coin,selectedNetworkName)
+        }
+
         dialog.show(parentFragmentManager, "SelectNetworkDialog")
     }
 

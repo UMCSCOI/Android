@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_back_jinju"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="122dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="API 연동 설정"
+            android:textColor="#111111"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_container">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="40dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="25dp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:text="API 연동 설정"
+                    android:textColor="#111111"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btn_change_mode"
+                    android:layout_width="49dp"
+                    android:layout_height="20dp"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="변경하기"
+                    android:textColor="#999999"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="64dp"
+                android:layout_height="25dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="빗썸 API"
+                android:textColor="#111111"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="328dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="PUBLIC KEY"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_bithumb_public"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:background="#F5F5F5"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="4dp"
+                android:text="11111111"
+                android:textColor="#111111"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="328dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="SECRET KEY"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_bithumb_secret"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:background="#F5F5F5"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="4dp"
+                android:text="11111111"
+                android:textColor="#111111"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="24dp"
+                android:background="#EEEEEE" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="23dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="업비트 API"
+                android:textColor="#111111"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="PUBLIC KEY"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_upbit_public"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:background="#F5F5F5"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="4dp"
+                android:text="11111111"
+                android:textColor="#111111"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="SECRET KEY"
+                android:textColor="#505050"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_upbit_secret"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:background="#F5F5F5"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="4dp"
+                android:text="11111111"
+                android:textColor="#111111"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

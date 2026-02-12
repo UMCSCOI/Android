@@ -8,5 +8,4 @@ class ScoiApp: Application() {
     override fun onCreate() {
         super.onCreate()
     }
-
 }

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.stable.scoi.presentation.ui.my.MyPageViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/first_nav"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sec_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/back_iv"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_back_jinju"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/info_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="계정 정보"
+                    android:textColor="@color/main_black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/back_iv"
+                    app:layout_constraintStart_toEndOf="@id/back_iv"
+                    app:layout_constraintTop_toTopOf="@id/back_iv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/profileArea"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/profile_placeholder_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/first_nav">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_user02"
+                app:tint="#4A4AFA"/>
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/form_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileArea">
+
+            <TextView
+                android:id="@+id/tv_kr_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="국문 성명"
+                android:textColor="@color/sub_text1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_kr_name"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/btn_disabled_fill"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_kr_name_label">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:paddingHorizontal="4dp"
+                    android:paddingTop="11dp"
+                    android:text="서희정"
+                    android:textColor="@color/main_black"
+                    android:textSize="20sp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_en_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="영문 성명"
+                android:textColor="@color/sub_text1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_kr_name" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_last_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toStartOf="@+id/layout_first_name"
+                app:layout_constraintHorizontal_weight="0.4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_en_name_label">
+
+                <TextView
+                    android:id="@+id/et_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/btn_disabled_fill"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:paddingVertical="8dp"
+                    android:text=" SEO"
+                    android:textColor="@color/main_black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#888888"
+                    app:layout_constraintTop_toBottomOf="@id/et_last_name" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_first_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/layout_last_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="0.6"
+                app:layout_constraintStart_toEndOf="@+id/layout_last_name"
+                app:layout_constraintTop_toTopOf="@+id/layout_last_name">
+
+                <TextView
+                    android:id="@+id/et_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/btn_disabled_fill"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:paddingVertical="8dp"
+                    android:text="HEEJEONG"
+                    android:textColor="@color/main_black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#888888"
+                    app:layout_constraintTop_toBottomOf="@id/et_first_name" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_id_num_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="주민등록번호 앞 7자리"
+                android:textColor="@color/sub_text1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_last_name" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_id_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_id_num_label">
+
+                <TextView
+                    android:id="@+id/tv_masked_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:background="@color/btn_disabled_fill"
+                    android:letterSpacing="0.1"
+                    android:paddingVertical="8dp"
+                    android:text=" ●●●●●● - ●"
+                    android:textColor="@color/main_black"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#888888"
+                    app:layout_constraintTop_toBottomOf="@id/tv_masked_id" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="확인"
+            android:textColor="#5C78FF"
+            android:textSize="16sp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:backgroundTint="#FFFFFF"
+            app:cornerRadius="28dp"
+            app:strokeColor="#5C78FF"
+            app:strokeWidth="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -11,6 +11,11 @@ import com.stable.scoi.data.api.transfer.RecipientValidateAPI
 import com.stable.scoi.data.api.transfer.TransactionsDetailAPI
 import com.stable.scoi.data.api.transfer.TransactionsRemitAPI
 import com.stable.scoi.data.api.transfer.TransactionsTopupsAPI
+import com.stable.scoi.data.api.ChargeApi
+import com.stable.scoi.data.api.transfer.RecentListAPI
+import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
+import com.stable.scoi.data.api.UpbitQuotationRestApi
+import com.stable.scoi.data.api.MyPageApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -77,10 +82,20 @@ object ApiModule {
         return retrofit.create(BalancesAPI::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideChargeAPI(@AuthRetrofit retrofit: Retrofit): ChargeApi {
+        return retrofit.create(ChargeApi::class.java)
+    }
 
     @Provides
     @Singleton
     fun provideUpbitPrivateWsApi(client: OkHttpClient): OkHttpUpbitCandleWsApi =
         OkHttpUpbitCandleWsApi(client)
 
+    @Singleton
+    @Provides
+    fun provideMyPageApi(@AuthRetrofit retrofit: Retrofit): MyPageApi {
+        return retrofit.create(MyPageApi::class.java)
+    }
 }

@@ -36,10 +36,10 @@ abstract class BaseViewModel<STATE: UiState, EVENT : UiEvent>(
         }
     }
 
-    protected fun<D> resultResponse(response: ApiState<D>, successCallback : (D) -> Unit, errorCallback : ((FailState) -> Unit)? = null){
-        when (response){
+    protected fun<D> resultResponse(response: ApiState<D>, successCallback : (D) -> Unit, errorCallback : ((String) -> Unit)? = null){
+        when(response){
             is ApiState.Fail -> {
-                errorCallback?.invoke(response.failState)
+                errorCallback?.invoke(response.failState.code)
             }
             is ApiState.Success -> {
                 successCallback.invoke(response.data)
