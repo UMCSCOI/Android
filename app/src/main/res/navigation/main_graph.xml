@@ -44,7 +44,6 @@
         android:id="@+id/wallet_withdraw_complete_fragment"
         android:name="com.stable.scoi.presentation.ui.wallet.withdraw.WalletWithdrawCompleteFragment" />
 
-
     <fragment
         android:id="@+id/tansfer_fragment"
         android:name="com.stable.scoi.presentation.ui.transfer.TransferFragment">
@@ -335,6 +334,5 @@
         android:name="com.stable.scoi.presentation.ui.Auth.JoinCompleteFragment"
         tools:layout="@layout/fragment_reg_complete"
 />
-
 
 </navigation>
