@@ -38,6 +38,7 @@ class WithdrawFragment: BaseFragment<FragmentWalletWithdrawBinding, WalletState,
 
         binding.WalletWithdrawNextTV.setOnClickListener {
             viewModel.submitAmount(binding.WalletWithdrawAmountET.text.toString().replace(",","").toInt())
+            viewModel.withDraw()
             findNavController().navigate(R.id.wallet_withdraw_complete_fragment)
         }
 

@@ -1,5 +1,6 @@
 package com.stable.scoi.data.api.transfer
 
+import com.google.gson.annotations.SerializedName
 import com.stable.scoi.data.base.ApiResponse
 import com.stable.scoi.domain.model.transfer.BalancesResponse
 import com.stable.scoi.domain.model.transfer.DirectoryListResponse
@@ -20,6 +21,16 @@ interface DirectoryListAPI {
         @Query("exchangeType") exchange: String,
         @Query("coinType") coinType: String
     ) : ApiResponse<DirectoryListResponse>
+
+    @POST("/api/withdraws/krw")
+    suspend fun withdrawKrw(
+        @Body request: WithDrawRequest
+    ) : ApiResponse<TransactionResponse>
+
+    @POST("/api/deposits/krw")
+    suspend fun dipositsKrw(
+        @Body request: WithDrawRequest
+    ) : ApiResponse<TransactionResponse>
 }
 
 interface RecipientValidateAPI {
@@ -50,3 +61,18 @@ interface BalancesAPI {
         @Query("tradeType") tradeType: String
     ) : ApiResponse<BalancesResponse>
 }
+
+data class WithDrawRequest(
+    val exchangeType: String = "",
+    val amount: Int = 0,
+    val MFA: String = "",
+)
+
+data class TransactionResponse(
+    @SerializedName("currency")
+    val currency: String,
+    @SerializedName("uuid")
+    val uuid: String,
+    @SerializedName("txid")
+    val txid: String
+)

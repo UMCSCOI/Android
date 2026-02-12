@@ -2,9 +2,11 @@ package com.stable.scoi.domain.repository.wallet
 
 import com.stable.scoi.data.api.transfer.CancelOrderAPI
 import com.stable.scoi.data.api.transfer.DirectoryListAPI
+import com.stable.scoi.data.api.transfer.TransactionResponse
 import com.stable.scoi.data.api.transfer.TransactionsDetailAPI
 import com.stable.scoi.data.api.transfer.TransactionsRemitAPI
 import com.stable.scoi.data.api.transfer.TransactionsTopupsAPI
+import com.stable.scoi.data.api.transfer.WithDrawRequest
 import com.stable.scoi.data.base.ApiState
 import com.stable.scoi.data.base.apiCall
 import com.stable.scoi.domain.model.transfer.DirectoryListResponse
@@ -16,7 +18,10 @@ import com.stable.scoi.domain.model.wallet.TransactionsTopupsResponse
 import javax.inject.Inject
 
 
-class TransactionsRemitRepository @Inject constructor(private val api: TransactionsRemitAPI) {
+class TransactionsRemitRepository @Inject constructor(
+    private val api: TransactionsRemitAPI,
+    private val api2: DirectoryListAPI
+) {
     suspend fun loadTransactionsRemit(
         exchangeType: String,
         type: String,
@@ -25,6 +30,18 @@ class TransactionsRemitRepository @Inject constructor(private val api: Transacti
         limit: Int
     ): ApiState<TransactionsRemitResponse> {
         return apiCall { api.loadTransactionsRemit(exchangeType, type, period, order, limit) }
+    }
+
+    suspend fun withDraw(
+        request: WithDrawRequest
+    ): ApiState<TransactionResponse> {
+        return apiCall { api2.withdrawKrw(request) }
+    }
+
+    suspend fun diposit(
+        request: WithDrawRequest
+    ): ApiState<TransactionResponse> {
+        return apiCall { api2.dipositsKrw(request) }
     }
 }
 

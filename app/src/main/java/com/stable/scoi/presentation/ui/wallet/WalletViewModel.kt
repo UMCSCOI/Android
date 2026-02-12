@@ -6,6 +6,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.lifecycle.viewModelScope
+import com.stable.scoi.data.api.transfer.WithDrawRequest
 import com.stable.scoi.domain.model.wallet.CancelOrderRequest
 import com.stable.scoi.domain.repository.transfer.BalancesRepository
 import com.stable.scoi.domain.repository.wallet.CancelOrderRepository
@@ -237,6 +238,57 @@ class WalletViewModel @Inject constructor(
     fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    fun withDraw() {
+        val request = WithDrawRequest(
+            exchangeType = exType,
+            amount = amount.value,
+            MFA = "KAKAO"
+        )
+
+        viewModelScope.launch {
+            resultResponse(
+                response = transactionsRemitRepository.withDraw(request),
+
+                successCallback = { transactionResponse ->
+                    // 출금 성공 처리
+                    // 예: 완료 메시지 표시, 잔액 갱신, 화면 이동 등
+                    // emitEvent(WalletEvent.WithdrawSuccess)
+
+                    // 잔액 갱신
+                    balances(exType)
+                },
+
+                errorCallback = { failState ->
+                    // 실패 처리
+                    // emitEvent(WalletEvent.ShowToast(failState.message))
+                }
+            )
+        }
+    }
+
+    fun diposit() {
+        val request = WithDrawRequest(
+            exchangeType = exType,
+            amount = amount.value,
+            MFA = "KAKAO"
+        )
+
+        viewModelScope.launch {
+            resultResponse(
+                response = transactionsRemitRepository.diposit(request),
+
+                successCallback = { transactionResponse ->
+                    balances(exType)
+                },
+
+                errorCallback = { failState ->
+                    // 실패 처리
+                    // emitEvent(WalletEvent.ShowToast(failState.message))
+                }
+            )
+        }
     }
 }
 
