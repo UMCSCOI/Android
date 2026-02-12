@@ -76,7 +76,7 @@ class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: Rec
                 WalletListChargeStateTV.text = "$side $state"
                 WalletListAmountTV.text = amount
                 WalletListAssetSymbolTitleTV.text = coinType
-                WalletListTotalAssetSymbolTV.text = coinType
+               // WalletListTotalAssetSymbolTV.text = coinType
             }
         }
     }

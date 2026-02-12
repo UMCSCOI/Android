@@ -14,11 +14,6 @@ import com.stable.scoi.domain.repository.wallet.TransactionsRemitRepository
 import com.stable.scoi.domain.repository.wallet.TransactionsTopupsRepository
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.presentation.ui.transfer.Exchange
-import com.stable.scoi.presentation.ui.wallet.bottomsheet.ChargeCategory
-import com.stable.scoi.presentation.ui.wallet.bottomsheet.Period
-import com.stable.scoi.presentation.ui.wallet.bottomsheet.Sort
-import com.stable.scoi.presentation.ui.wallet.bottomsheet.Status
-import com.stable.scoi.presentation.ui.wallet.bottomsheet.TransferCategory
 import com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList.RecentChargeList
 import com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.RecentTransferList
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +21,6 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.nio.file.Files.copy
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -36,7 +30,8 @@ class WalletViewModel @Inject constructor(
     private val transactionsTopupsRepository: TransactionsTopupsRepository,
     private val transactionsDetailRepository: TransactionsDetailRepository,
     private val cancelOrderRepository: CancelOrderRepository,
-    private val balancesRepository: BalancesRepository): BaseViewModel<WalletState, WalletEvent>(WalletState()) {
+    private val balancesRepository: BalancesRepository
+): BaseViewModel<WalletState, WalletEvent>(WalletState()) {
 
     var exType: String = ""
     private val _exchangeType = MutableStateFlow<Exchange>(Exchange.Empty)
@@ -81,26 +76,32 @@ class WalletViewModel @Inject constructor(
         _amount.value = amount
     }
 
+    // [수정] copy를 사용하여 새로운 객체를 할당해야 StateFlow가 변경을 감지함
     fun submitArraySettingTransfer(
         sortType: String,
         categoryType: String,
         periodType: String
     ) {
-        _arraySettingTransfer.value.sortType = sortType
-        _arraySettingTransfer.value.periodType = periodType
-        _arraySettingTransfer.value.categoryType = categoryType
+        _arraySettingTransfer.value = _arraySettingTransfer.value.copy(
+            sortType = sortType,
+            categoryType = categoryType,
+            periodType = periodType
+        )
     }
 
+    // [수정] copy를 사용하여 새로운 객체를 할당해야 StateFlow가 변경을 감지함
     fun submitArraySettingCharge(
         sortType: String,
         categoryType: String,
         statusType: String,
         periodType: String
     ) {
-        _arraySettingCharge.value.sortType = sortType
-        _arraySettingCharge.value.periodType = periodType
-        _arraySettingCharge.value.categoryType = categoryType
-        _arraySettingCharge.value.statusType = statusType
+        _arraySettingCharge.value = _arraySettingCharge.value.copy(
+            sortType = sortType,
+            categoryType = categoryType,
+            statusType = statusType,
+            periodType = periodType
+        )
     }
 
     //API

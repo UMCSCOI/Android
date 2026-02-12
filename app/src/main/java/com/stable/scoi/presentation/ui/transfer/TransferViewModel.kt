@@ -42,7 +42,7 @@ class TransferViewModel @Inject constructor(
     val exchangeType = _exchangeType.asStateFlow()
 
     private val _assetSymbolType = MutableStateFlow<AssetSymbol>(AssetSymbol.Empty)
-    val assetSymbolType = _assetSymbolType.asStateFlow() // homeFragment의 선택 코인 입력
+    val assetSymbolType = _assetSymbolType.asStateFlow()
 
     private val _networkType = MutableStateFlow<Network>(Network.TRON)
     val netWorkType = _networkType.asStateFlow()
@@ -180,7 +180,7 @@ class TransferViewModel @Inject constructor(
             },
 
             errorCallback = { failState ->
-                emitEvent(TransferEvent.ShowError(failState.message))
+                emitEvent(TransferEvent.ShowError(failState))
             }
         )
     }
@@ -194,7 +194,7 @@ class TransferViewModel @Inject constructor(
             },
 
             errorCallback = { failState ->
-                emitEvent(TransferEvent.ShowError(failState.message))
+                emitEvent(TransferEvent.ShowError(failState))
             }
         )
     }
@@ -208,7 +208,7 @@ class TransferViewModel @Inject constructor(
             },
 
             errorCallback = { failState ->
-                emitEvent(TransferEvent.ShowError(failState.message))
+                emitEvent(TransferEvent.ShowError(failState))
             }
         )
     }

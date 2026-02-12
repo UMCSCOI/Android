@@ -99,10 +99,45 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
             WalletRecentArraySettingIV.setOnClickListener {
                 when (toggleState) {
                     ToggleState.Transfer -> {
-                        ArraySettingTransferBottomSheet().show(
-                            childFragmentManager,
-                            "bottomsheet"
-                        )
+                        val bottomSheet = ArraySettingTransferBottomSheet()
+
+                        // 콜백 설정
+                        bottomSheet.setCallback(object : SetArraySettingTransfer {
+                            override fun arraySettingTransfer(sort: String, category: String, period: String) {
+                                binding.apply {
+                                    WalletRecentArrayTV.text = when (sort) {
+                                        "desc" -> "최신순"
+                                        "asc" -> "과거순"
+                                        else -> "최신순"
+                                    }
+
+                                    WalletRecentLengthTV.text = when (period) {
+                                        "TODAY" -> "오늘"
+                                        "ONE_MONTH" -> "1개월"
+                                        "THREE_MONTHS" -> "3개월"
+                                        "SIX_MONTHS" -> "6개월"
+                                        else -> "기간"
+                                    }
+
+                                    WalletRecentSearchTypeTV.text = when (category) {
+                                        "ALL" -> "전체"
+                                        "DEPOSIT" -> "입금"
+                                        "WITHDRAW" -> "출금"
+                                        else -> "전체"
+                                    }
+
+                                    setToggleAction(category, period, sort, 20)
+
+                                    // 참고: Wallet_recent_state_TV (완료 등)는
+                                    // 현재 바텀시트에서 선택하는 값이 없으므로 업데이트하지 않습니다.
+                                }
+
+                                // TODO: 여기서 sort, category, period 값을 이용해 API 재호출 (리스트 갱신)
+                                // viewModel.getTransferList(sort, category, period)
+                            }
+                        })
+
+                        bottomSheet.show(parentFragmentManager, "ArraySettingTransferBottomSheet")
                     }
                     ToggleState.charge -> {
                         ArraySettingChargeBottomSheet().show(
@@ -112,19 +147,19 @@ class WalletFragment: SetArraySettingCharge, SetArraySettingTransfer, RecentChar
                     }
                 }
             }
-            setToggleAction()
+           // setToggleAction()
         }
     }
 
-   fun setToggleAction() {
+   fun setToggleAction(categoryType: String = "ALL", period: String = "ONE_MONTH", order: String = "desc", limit: Int = 20) {
         binding.apply {
             WalletRecentListVP.adapter = recentTransferListAdapter
             viewModel.transactionRemit(
                 exchangeType = viewModel.exType,
-                type = "ALL",
-                period = "ONE_MONTH",
-                order = "desc",
-                limit = 20
+                type = categoryType,
+                period = period,
+                order = order,
+                limit = limit
             )
             WalletRecentListVP.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 

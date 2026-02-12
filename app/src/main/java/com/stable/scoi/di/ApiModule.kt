@@ -1,7 +1,6 @@
 package com.stable.scoi.di
 
 import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
-import com.stable.scoi.data.api.UpbitQuotationRestApi
 import com.stable.scoi.data.api.transfer.BalancesAPI
 import com.stable.scoi.data.api.transfer.CancelOrderAPI
 import com.stable.scoi.data.api.transfer.DirectoryListAPI
@@ -12,9 +11,6 @@ import com.stable.scoi.data.api.transfer.TransactionsDetailAPI
 import com.stable.scoi.data.api.transfer.TransactionsRemitAPI
 import com.stable.scoi.data.api.transfer.TransactionsTopupsAPI
 import com.stable.scoi.data.api.ChargeApi
-import com.stable.scoi.data.api.transfer.RecentListAPI
-import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
-import com.stable.scoi.data.api.UpbitQuotationRestApi
 import com.stable.scoi.data.api.MyPageApi
 import dagger.Module
 import dagger.Provides
