@@ -59,6 +59,7 @@ class RecentTransferListRVAdapter(private val recentTransferListOnClickListener:
                 WalletListAssetSymbolTV.text = recentTransferList.currency
                 WalletListAmountTV.text = "$sign${recentTransferList.amount}"
                 WalletListAssetSymbolTitleTV.text = recentTransferList.currency
+                WalletListTitleAssetSymbolTV.text = recentTransferList.currency
                 WalletListStateTV.text = type
             }
         }

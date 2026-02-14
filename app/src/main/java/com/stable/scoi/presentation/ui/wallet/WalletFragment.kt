@@ -1,5 +1,7 @@
 package com.stable.scoi.presentation.ui.wallet
 
+import android.util.Log
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -46,9 +48,33 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
 
     override fun initView() {
 
-        viewModel.setExchangeUpbit()//기본 거래소
+        //리스트 초기값
+        binding.apply {
+            WalletRecentListVP.adapter = recentTransferListAdapter
+            viewModel.transactionRemit(
+                exchangeType = viewModel.exType,
+                type = "ALL",
+                period = "ONE_MONTH",
+                order = "desc",
+                limit = 20
+            )
+            WalletRecentListVP.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+            WalletRecentArrayTV.text = "최신순"
+            WalletRecentLengthTV.text = "1개월"
+            WalletRecentSearchTypeTV.text = "전체"
+            WalletRecentStateTV.visibility = View.GONE
+        }
+        setToggleAction()
+
+        //기본 거래소 설정
+        viewModel.setExchangeBithumb()
+
+        //보유 금액 불러오기
         viewModel.balances(viewModel.exType)
 
+        //마이페이지 이동
         binding.imageMyPage.setOnClickListener {
             findNavController().navigate(R.id.myPageFragment)
         }
@@ -61,11 +87,13 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                         Exchange.Upbit -> {
                             binding.WalletExchangeIV.setImageResource(R.drawable.upbit_logo)
                             binding.WalletExchangeTV.text = "업비트"
+                            viewModel.balances(viewModel.exType)
                         }
 
                         Exchange.Bithumb -> {
                             binding.WalletExchangeIV.setImageResource(R.drawable.bithumb_logo)
                             binding.WalletExchangeTV.text = "빗썸"
+                            viewModel.balances(viewModel.exType)
                         }
 
                         else -> Unit
@@ -82,7 +110,7 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                     }
 
                     if (amount != null) {
-                        binding.WalletAmountTV.text = amount.balance
+                        binding.WalletAmountTV.text = amount.balance.toDouble().toInt().toString()
                     }
                 }
             }
@@ -96,10 +124,12 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                 )
             }
 
+            //출금하기 (원화 교환)
             WalletWithdrawBT.setOnClickListener {
                 findNavController().navigate(R.id.wallet_withdraw_fragment)
             }
 
+            //입금하기 (충전)
             WalletDepositBT.setOnClickListener {
                 findNavController().navigate(R.id.wallet_deposit_fragment)
             }
@@ -112,18 +142,19 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                         // 콜백 설정
                         bottomSheet.setCallback(object : SetArraySettingTransfer {
                             override fun arraySettingTransfer(
-                                sort: String,
-                                category: String,
-                                period: String
+                                sortType: String,
+                                categoryType: String,
+                                periodType: String
                             ) {
+                                Log.d("debug_callback_transfer", periodType)
                                 binding.apply {
-                                    WalletRecentArrayTV.text = when (sort) {
+                                    WalletRecentArrayTV.text = when (sortType) {
                                         "desc" -> "최신순"
                                         "asc" -> "과거순"
                                         else -> "최신순"
                                     }
 
-                                    WalletRecentLengthTV.text = when (period) {
+                                    WalletRecentLengthTV.text = when (periodType) {
                                         "TODAY" -> "오늘"
                                         "ONE_MONTH" -> "1개월"
                                         "THREE_MONTHS" -> "3개월"
@@ -131,21 +162,20 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                                         else -> "기간"
                                     }
 
-                                    WalletRecentSearchTypeTV.text = when (category) {
+                                    WalletRecentSearchTypeTV.text = when (categoryType) {
                                         "ALL" -> "전체"
                                         "DEPOSIT" -> "입금"
                                         "WITHDRAW" -> "출금"
                                         else -> "전체"
                                     }
 
-                                    setToggleAction(category, period, sort, 20)
+                                    WalletRecentStateTV.visibility = View.GONE
 
                                     // 참고: Wallet_recent_state_TV (완료 등)는
                                     // 현재 바텀시트에서 선택하는 값이 없으므로 업데이트하지 않습니다.
                                 }
 
-                                // TODO: 여기서 sort, category, period 값을 이용해 API 재호출 (리스트 갱신)
-                                // viewModel.getTransferList(sort, category, period)
+                                setToggleAction(categoryType,periodType,"",sortType,"",20)
                             }
                         })
 
@@ -153,35 +183,68 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                     }
 
                     ToggleState.charge -> {
-                        ArraySettingChargeBottomSheet().show(
-                            childFragmentManager,
-                            "bottomsheet"
-                        )
+                        val bottomSheet = ArraySettingChargeBottomSheet()
+
+                        // 콜백 설정
+                        bottomSheet.setCallback(object : SetArraySettingCharge {
+                            override fun arraySettingCharge(
+                                sortType: String,
+                                categoryType: String,
+                                statusType: String,
+                                periodType: String
+                            ) {
+                                Log.d("debug_callback_charge", periodType)
+                                binding.apply {
+                                    WalletRecentArrayTV.text = when (sortType) {
+                                        "desc" -> "최신순"
+                                        "asc" -> "과거순"
+                                        else -> "최신순"
+                                    }
+
+                                    WalletRecentLengthTV.text = when (periodType) {
+                                        "TODAY" -> "오늘"
+                                        "ONE_MONTH" -> "1개월"
+                                        "THREE_MONTHS" -> "3개월"
+                                        "SIX_MONTHS" -> "6개월"
+                                        else -> "기간"
+                                    }
+
+                                    WalletRecentSearchTypeTV.text = when (categoryType) {
+                                        "ALL" -> "전체"
+                                        "CHARGE" -> "입금"
+                                        "CASH_EXCHANGE" -> "출금"
+                                        else -> "전체"
+                                    }
+
+                                    WalletRecentStateTV.visibility = View.VISIBLE
+                                    WalletRecentStateTV.text = when (statusType) {
+                                        "WAIT" -> "대기"
+                                        "DONE" -> "완료"
+                                        "CANCEL" -> "취소"
+                                        else -> "완료"
+                                    }
+                                }
+
+                                setToggleAction(categoryType,"",periodType,sortType, statusType,20)
+                            }
+                        })
+                        bottomSheet.show(parentFragmentManager,"bottomsheet")
                     }
                 }
             }
-            // setToggleAction()
         }
     }
 
+    //'입출금','충전' 토글
     fun setToggleAction(
         categoryType: String = "ALL",
-        period: String = "ONE_MONTH",
+        transferPeriod: String = "ONE_MONTH",
+        chargePeriod: String = "THREE_MONTHS",
         order: String = "desc",
+        state: String = "DONE",
         limit: Int = 20
     ) {
         binding.apply {
-            WalletRecentListVP.adapter = recentTransferListAdapter
-            viewModel.transactionRemit(
-                exchangeType = viewModel.exType,
-                type = categoryType,
-                period = period,
-                order = order,
-                limit = limit
-            )
-            WalletRecentListVP.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
             WalletRecentToggle1TV.setOnClickListener {
                 WalletRecentToggle1TV.apply {
                     setBackgroundResource(R.drawable.toggle_activated)
@@ -191,6 +254,21 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                     setBackgroundResource(R.drawable.toggle_disabled)
                     setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
                 }
+
+                //토글만 입력했을 때 초기값
+                viewModel.transactionRemit(
+                    exchangeType = viewModel.exType,
+                    type = categoryType,
+                    period = transferPeriod,
+                    order = order,
+                    limit = limit
+                )
+
+                WalletRecentArrayTV.text = "최신순"
+                WalletRecentLengthTV.text = "1개월"
+                WalletRecentSearchTypeTV.text = "전체"
+                WalletRecentStateTV.visibility = View.GONE
+
                 WalletRecentListVP.adapter = recentTransferListAdapter
                 WalletRecentListVP.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -207,11 +285,28 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                     setBackgroundResource(R.drawable.toggle_activated)
                     setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 }
+
+                //토글만 입력했을 때 초기값
+                viewModel.transactionTopups(
+                    exchangeType = viewModel.exType,
+                    type = categoryType,
+                    state = state,
+                    period = chargePeriod,
+                    order = order,
+                    limit = limit
+                )
+
+                WalletRecentArrayTV.text = "최신순"
+                WalletRecentLengthTV.text = "3개월"
+                WalletRecentSearchTypeTV.text = "전체"
+                WalletRecentStateTV.visibility = View.VISIBLE
+                WalletRecentStateTV.text = "완료"
+
                 WalletRecentListVP.adapter = recentChargeListAdapter
                 WalletRecentListVP.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                toggleState = ToggleState.Transfer
+                toggleState = ToggleState.charge
             }
         }
     }
@@ -228,6 +323,7 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
         viewModel.setExchange()
     }
 
+    //입출금 내역 클릭시 이벤트
     override fun RTLOnClickListener(recentTransferData: Transactions) {
         viewModel.transactionsDetail(
             viewModel.exType,
@@ -239,6 +335,7 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
         findNavController().navigate(R.id.wallet_transfer_detail_fragment)
     }
 
+    //충전 내역 클릭시 이벤트
     override fun RCLOnClickListener(recentChargeData: TransactionsCharge) {
         val currency = when (recentChargeData.market) {
             "KRW-USDT" -> "USDT"
@@ -255,13 +352,14 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
         findNavController().navigate(R.id.wallet_charge_detail_fragment)
     }
 
+    //충전 내역 취소하기 클릭 시 이벤트
     override fun cancelOnclickListener(cancelData: TransactionsCharge) {
-        val request = CancelOrderRequest(
+        viewModel.submitCancelOrder(
             viewModel.exType,
             cancelData.uuid,
             null
         )
-        viewModel.cancelOrder(request)
+        viewModel.submitCancelData(cancelData)
         ChargeCancelDialogFragment().show(
             childFragmentManager,
             "dialog"
@@ -292,6 +390,7 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
         periodType: String
     ) {
         viewModel.submitArraySettingTransfer(sortType, categoryType, periodType)
+        Log.d("debug_transfer", periodType)
 
         viewModel.transactionRemit(
             exchangeType = viewModel.exType,

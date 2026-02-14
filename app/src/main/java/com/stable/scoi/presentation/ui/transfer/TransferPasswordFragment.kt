@@ -1,9 +1,11 @@
 package com.stable.scoi.presentation.ui.transfer
 
 import android.content.Context
+import android.graphics.Rect
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
+import android.text.method.TransformationMethod
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -35,6 +37,17 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
 
         binding.TransferPasswordInputTV.isEnabled = false
 
+        //비밀번호 텍스트 변경 (암호화)
+        binding.apply {
+            TransferPasswordInputPassword1ET.applyBigDotMask()
+            TransferPasswordInputPassword2ET.applyBigDotMask()
+            TransferPasswordInputPassword3ET.applyBigDotMask()
+            TransferPasswordInputPassword4ET.applyBigDotMask()
+            TransferPasswordInputPassword5ET.applyBigDotMask()
+            TransferPasswordInputPassword6ET.applyBigDotMask()
+        }
+
+        //EditText focus 자동 이동
         moveNext(
             binding.TransferPasswordInputPassword1ET,
             binding.TransferPasswordInputPassword2ET) { password ->
@@ -71,12 +84,13 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
             passwordSixth = password
         }
 
-
+        //비밀번호 전송 + 출금
         binding.TransferPasswordInputTV.setOnClickListener {
             viewModel.submitPassword(passwordFirst, passwordSecond, passwordThird, passwordFourth, passwordFifth, passwordSixth)
             Log.d("password", viewModel.execute.value.simplePassword)
         }
 
+        //이전 화면을 돌아가기
         binding.TransferBackArrowIV.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -86,7 +100,17 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
                 viewModel.uiEvent.collect { event ->
                     when (event) {
                         TransferEvent.NavigateToNextPage -> findNavController().navigate(R.id.transfer_complete_fragment)
-                        else -> Unit
+                        is TransferEvent.ShowError -> {
+                            //경고 문구 표시
+                            binding.apply {
+                                resetEditText(TransferPasswordInputPassword1ET)
+                                resetEditText(TransferPasswordInputPassword2ET)
+                                resetEditText(TransferPasswordInputPassword3ET)
+                                resetEditText(TransferPasswordInputPassword4ET)
+                                resetEditText(TransferPasswordInputPassword5ET)
+                                resetEditText(TransferPasswordInputPassword6ET)
+                            }
+                        }
                     }
                 }
             }
@@ -107,6 +131,7 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
                     editText.transformationMethod = PasswordTransformationMethod.getInstance()
                     onPasswordEntered(p0.toString())
                     editText.clearFocus()
+                    editText.isFocusable = false
                     requestText.requestFocus()
 
                     if (requestText == binding.focusDummy) {
@@ -122,8 +147,48 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
         })
     }
 
+    fun resetEditText(
+        editText: EditText
+    ) {
+        editText.setText("")
+        editText.isFocusable = true
+    }
+
     fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    fun EditText.applyBigDotMask() {
+        this.transformationMethod = object : TransformationMethod {
+            override fun getTransformation(
+                source: CharSequence,
+                view: View?
+            ): CharSequence {
+                return BigDotCharSequence(source)
+            }
+
+            override fun onFocusChanged(
+                view: View?,
+                sourceText: CharSequence?,
+                focused: Boolean,
+                direction: Int,
+                previouslyFocusedRect: Rect?
+            ) {}
+        }
+    }
+
+}
+
+private class BigDotCharSequence(private val source: CharSequence) : CharSequence {
+    override val length: Int
+        get() = source.length
+
+    override fun get(index: Int): Char {
+        return '●'
+    }
+
+    override fun subSequence(startIndex: Int, endIndex: Int): CharSequence {
+        return BigDotCharSequence(source.subSequence(startIndex, endIndex))
     }
 }

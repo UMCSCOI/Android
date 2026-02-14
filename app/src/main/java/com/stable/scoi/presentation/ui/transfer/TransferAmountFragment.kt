@@ -25,8 +25,10 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
 
     override fun initView() {
 
+        //자산 불러오기 API 값 입력
         viewModel.balances(viewModel.myExchange.value)
 
+        //자산 불러오기
         repeatOnStarted(viewLifecycleOwner) {
             launch {
                 viewModel.uiState.collect { state ->
@@ -36,7 +38,8 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                 }
             }
         }
-        //input
+
+        //유효성 검사
         binding.TransferNextTV.setOnClickListener {
 
             val currentState = viewModel.uiState.value
@@ -57,31 +60,37 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
             viewModel.quote(request)
         }
 
+        //뒤로가기 버튼
         binding.TransferAmountBackArrowIV.setOnClickListener {
             findNavController().popBackStack()
         }
 
+        //keyboard 완료 버튼 클릭시 focus 해제
         viewModel.focusRemove(binding.TransferAmountET)
 
+        //다음 버튼 비활성화
         binding.TransferNextTV.isEnabled = false
 
+        //네트워크 팝업 open
         binding.TransferAmountNetworkIV.setOnClickListener {
             binding.TransferAmountNetworkPopupLL.visibility = View.VISIBLE
             binding.TransferAmountNetworkPopupIV.visibility = View.VISIBLE
         }
 
+        //네트워크 팝업 close
         binding.root.setOnClickListener {
             binding.TransferAmountNetworkPopupLL.visibility = View.GONE
             binding.TransferAmountNetworkPopupIV.visibility = View.GONE
         }
 
-        when (viewModel.assetSymbolType.value) {
-            AssetSymbol.USDT -> {
+        //네트워크 layout 설정
+        when (viewModel.myAssetSymbol.value) {
+            "USDT" -> {
                 binding.TransferAmountCoinTypeTV.text = "USDT"
                 binding.TransferAmountAvailableCoinTypeTV.text = "USDT"
                 binding.TransferAmountNetworkAssetSymbolTV.text = "USDT"
             }
-            AssetSymbol.USDC -> {
+            "USDC" -> {
                 binding.TransferAmountCoinTypeTV.text = "USDC"
                 binding.TransferAmountAvailableCoinTypeTV.text = "USDC"
                 binding.TransferAmountNetworkAssetSymbolTV.text = "USDC"
@@ -101,7 +110,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
 
 
 
-        //output
+        //수신자 정보 표시
         binding.TransferAmountReceiverNameTV.text = viewModel.receiver.value.recipientKoName
 
         val address = viewModel.receiver.value.walletAddress
@@ -116,6 +125,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
             else -> Unit
         }
 
+        //가격 입력 EditText
         binding.apply {
             val rawInt = 0
             TransferAmountAmountPlus1BT.setOnClickListener {

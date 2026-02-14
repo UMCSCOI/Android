@@ -19,13 +19,13 @@ class ArraySettingTransferBottomSheet : BottomSheetDialogFragment() {
 
     // 선택 상태 변수
     private var sortType: Sort? = null
-    private var sortTypeString: String = ""
+    private var sortTypeString: String = "desc"
 
     private var categoryType: TransferCategory? = null
-    private var categoryTypeString: String = ""
+    private var categoryTypeString: String = "ALL"
 
     private var periodType: Period? = null
-    private var periodTypeString: String = ""
+    private var periodTypeString: String = "ONE_MONTH"
 
     override fun onCreateView(
         inflater: LayoutInflater,
