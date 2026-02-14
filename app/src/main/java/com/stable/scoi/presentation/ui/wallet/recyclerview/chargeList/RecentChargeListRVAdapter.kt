@@ -1,6 +1,7 @@
 package com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.databinding.ItemMywalletChargeListBinding
@@ -51,6 +52,7 @@ class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: Rec
                 }
                 WalletListTimeTV.text = formatDate(recentChargeList.createdAt)
                 WalletListAssetSymbolTV.text = coinType
+                WalletListChargeAssetSymbolTV.text = coinType
 
                 val sign = when (recentChargeList.side) {
                     "bid" -> "+"
@@ -77,6 +79,10 @@ class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: Rec
                 WalletListAmountTV.text = amount
                 WalletListAssetSymbolTitleTV.text = coinType
                // WalletListTotalAssetSymbolTV.text = coinType
+
+                if (recentChargeList.state != "wait") {
+                    WalletListCancelTV.visibility = View.GONE
+                }
             }
         }
     }

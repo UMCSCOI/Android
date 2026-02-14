@@ -17,13 +17,13 @@ class ArraySettingChargeBottomSheet: BottomSheetDialogFragment() {
     private lateinit var setArraySettingCharge: SetArraySettingCharge
 
     private var sortType: Sort? = null
-    private var sortTypeString: String = ""
+    private var sortTypeString: String = "desc"
     private var categoryType: ChargeCategory? = null
-    private var categoryTypeString: String = ""
+    private var categoryTypeString: String = "ALL"
     private var statusType: Status? = null
-    private var statusTypeString: String = ""
+    private var statusTypeString: String = "DONE"
     private var periodType: Period? = null
-    private var periodTypeString: String = ""
+    private var periodTypeString: String = "THREE_MONTHS"
 
     override fun onCreateView(
         inflater: LayoutInflater,

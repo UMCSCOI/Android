@@ -2,6 +2,7 @@ package com.stable.scoi.presentation.ui.transfer
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
@@ -37,7 +38,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
 
         //발신인 정보 입력 (homeFragment 정보)
         viewModel.setMyInformation(args.myExchange, args.myAddress, args.myCoin)
-
+        Log.d("arg_info", viewModel.myExchange.value)
         //주소록 불러오기
         viewModel.setDirectoryList(viewModel.myExchange.value, viewModel.myAssetSymbol.value)
 

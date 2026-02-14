@@ -96,7 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="오늘"
-                android:textAppearance="@style/l18_sb"/>
+                android:textAppearance="@style/l18_rg"
+                android:textColor="@color/disabled"/>
 
             <Space
                 android:layout_width="14dp"
@@ -107,8 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1개월"
-                android:textAppearance="@style/l18_rg"
-                android:textColor="@color/disabled"/>
+                android:textAppearance="@style/l18_sb"/>
 
             <Space
                 android:layout_width="14dp"
@@ -149,7 +149,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="입금"
-                android:textAppearance="@style/l18_sb"/>
+                android:textAppearance="@style/l18_rg"
+                android:textColor="@color/disabled"/>
 
             <Space
                 android:layout_width="14dp"
@@ -172,8 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="전체"
-                android:textAppearance="@style/l18_rg"
-                android:textColor="@color/disabled"/>
+                android:textAppearance="@style/l18_sb"/>
         </LinearLayout>
 
         <FrameLayout

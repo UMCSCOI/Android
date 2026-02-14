@@ -41,8 +41,8 @@ class WalletTransferDetailFragment: BaseFragment<FragmentWalletTransferDetailBin
 
                             //title 금액
                             val amount = when (state.transactionsRemitDetailItem.type) {
-                                "deposit" -> "+" + state.transactionsTopupsDetailItem.volume
-                                "withdraw" -> "-" + state.transactionsTopupsDetailItem.volume
+                                "deposit" -> "+" + state.transactionsRemitDetailItem.amount
+                                "withdraw" -> "-" + state.transactionsRemitDetailItem.amount
                                 else -> ""
                             }
                             WalletDetailAmountTV.text = amount
@@ -63,6 +63,7 @@ class WalletTransferDetailFragment: BaseFragment<FragmentWalletTransferDetailBin
 
                             //거래 상태
                             WalletDetailTradeStateTV.text = when (state.transactionsRemitDetailItem.state) {
+                                "DEPOSIT_ACCEPTED" -> "완료"
                                 "DONE" -> "완료"
                                 else -> ""
                             }
