@@ -55,6 +55,26 @@
         <action
             android:id="@+id/action_tansfer_fragment_to_transfer_amount_fragment"
             app:destination="@id/transfer_amount_fragment" />
+
+        <action
+            android:id="@+id/action_transfer_fragemnt_backArrow"
+            app:destination="@id/homeFragment"/>
+
+        <argument
+            android:name="myCoin"
+            android:defaultValue=""
+            app:argType="string"/>
+
+        <argument
+            android:name="myAddress"
+            android:defaultValue=""
+            app:argType="string"/>
+
+        <argument
+            android:name="myExchange"
+            android:defaultValue=""
+            app:argType="string"/>
+
     </fragment>
 
     <fragment

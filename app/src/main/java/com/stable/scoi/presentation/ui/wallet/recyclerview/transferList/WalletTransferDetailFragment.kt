@@ -27,12 +27,47 @@ class WalletTransferDetailFragment: BaseFragment<FragmentWalletTransferDetailBin
             repeatOnStarted(viewLifecycleOwner) {
                 launch {
                     viewModel.uiState.collect { state ->
-                        if (state.isLoading == false) {
+                        if (!state.isLoading) {
+
+                            //title 코인 종류
+                            WalletDetailAssetSymbolTV.text = state.transactionsRemitDetailItem.currency
+
+                            //title 거래 종류
+                            WalletDetailWorkTypeTV.text = when (state.transactionsRemitDetailItem.type) {
+                                "withdraw" -> "출금"
+                                "deposit" -> "입금"
+                                else -> ""
+                            }
+
+                            //title 금액
+                            val amount = when (state.transactionsRemitDetailItem.type) {
+                                "deposit" -> "+" + state.transactionsTopupsDetailItem.volume
+                                "withdraw" -> "-" + state.transactionsTopupsDetailItem.volume
+                                else -> ""
+                            }
+                            WalletDetailAmountTV.text = amount
+
+                            //title 금액 코인 종류
+                            WalletDetailAmountAssetSymbolTV.text = state.transactionsRemitDetailItem.currency
+
+                            //title 금액 색 변화
+                            when (state.transactionsRemitDetailItem.type) {
+                                "deposit" -> WalletDetailAmountTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.active))
+                                "withdraw" -> WalletDetailAmountTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
+                                else -> Unit
+                            }
+
+
+                            //거래 일시
                             WalletDetailTradeTimeTV.text = formatDate(state.transactionsRemitDetailItem.createdAt)
+
+                            //거래 상태
                             WalletDetailTradeStateTV.text = when (state.transactionsRemitDetailItem.state) {
                                 "DONE" -> "완료"
                                 else -> ""
                             }
+
+                            //이체 네트워크 -> API 명세서 수정 필요
                             WalletDetailTransferNetworkTV.text = when (state.transactionsRemitDetailItem.netType) {
                                 "TRX" -> "트론"
                                 "KAIA" -> "카이아"
@@ -40,30 +75,22 @@ class WalletTransferDetailFragment: BaseFragment<FragmentWalletTransferDetailBin
                                 "APT" -> "앱토스"
                                 else -> ""
                             }
-                            val amount = when (state.transactionsRemitDetailItem.type) {
-                                "deposit" -> "+" + state.transactionsTopupsDetailItem.volume
-                                "withdraw" -> "-" + state.transactionsTopupsDetailItem.volume
-                                else -> ""
-                            }
-                            WalletDetailAmountTV.text = amount
+
+                            //이체 수량
                             WalletDetailTransferAmountTV.text = state.transactionsRemitDetailItem.amount
-                            WalletDetailAmountAssetSymbolTV.text = state.transactionsRemitDetailItem.currency
+
+                            //이체 수량 코인 종류
+                            WalletDetailConcludeAmountAssetSymbolTV.text = state.transactionsRemitDetailItem.currency
+
+                            //수수료
                             WalletDetailChargeTV.text = state.transactionsRemitDetailItem.fee
+
+                            //수수료 코인 종류
                             WalletDetailConcludeFeeAssetSymbolTV.text = state.transactionsRemitDetailItem.currency
-                            WalletDetailWorkTypeTV.text = when (state.transactionsRemitDetailItem.type) {
-                                "withdraw" -> "출금"
-                                "deposit" -> "입금"
-                                else -> ""
-                            }
-                            WalletDetailAssetSymbolTV.text = state.transactionsRemitDetailItem.currency
 
-                            when (state.transactionsRemitDetailItem.type) {
-                                "deposit" -> WalletDetailAmountTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.active))
-                                "withdraw" -> WalletDetailAmountTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                                else -> Unit
-                            }
+
                         }
-
+                        else Unit
                     }
                 }
             }

@@ -27,45 +27,36 @@ class WalletChargeDetailFragment: BaseFragment<FragmentWalletChargeDetailBinding
             repeatOnStarted(viewLifecycleOwner) {
                 launch {
                     viewModel.uiState.collect { state ->
-                        if (state.isLoading == false) {
-                            WalletDetailTradeTimeTV.text =
-                                formatDate(state.transactionsTopupsDetailItem.createAt)
-                            WalletDetailTradeStateTV.text =
-                                when (state.transactionsTopupsDetailItem.state) {
-                                    "done" -> "완료"
-                                    "wait" -> "대기"
-                                    "canceled" -> "취소"
-                                    else -> ""
+                        if (!state.isLoading) {
+                            //title 거래소 표시
+                            when (viewModel.exType) {
+                                "UPBIT" -> {
+                                    WalletDetailExchageIV.setImageResource(R.drawable.upbit_logo)
+                                    WalletDetailExchageTV.text = "업비트"
                                 }
-                            WalletDetailChargeTV.text = state.transactionsTopupsDetailItem.paidFee
-                            WalletDetailChargeAssetSymbolTV.text =
-                                when (state.transactionsTopupsDetailItem.market) {
-                                    "KRW-USDT" -> "USDT"
-                                    "KRW-USDC" -> "USDC"
-                                    else -> ""
+                                "BITHUMB" -> {
+                                    WalletDetailExchageIV.setImageResource(R.drawable.bithumb_logo)
+                                    WalletDetailExchageTV.text = "빗썸"
                                 }
-                            val amount = when (state.transactionsTopupsDetailItem.side) {
-                                "bid" -> "+" + state.transactionsTopupsDetailItem.volume
-                                "ask" -> "-" + state.transactionsTopupsDetailItem.volume
-                                else -> ""
                             }
-                            WalletDetailAmountTV.text = amount
-                            WalletDetailConcludeAmountTV.text =
-                                state.transactionsTopupsDetailItem.volume
-                            WalletDetailConcludePriceTV.text =
-                                state.transactionsTopupsDetailItem.price
-                            WalletDetailAmountAssetSymbolTV.text =
+
+                            //title 코인 종류
+                            WalletDetailAssetSymbolTV.text =
                                 when (state.transactionsTopupsDetailItem.market) {
                                     "KRW-USDT" -> "USDT"
                                     "KRW-USDC" -> "USDC"
                                     else -> ""
                                 }
+
+                            //title 거래 종류
                             WalletDetailWorkTypeTV.text =
                                 when (state.transactionsTopupsDetailItem.side) {
                                     "bid" -> "충전"
                                     "ask" -> "현금 교환"
                                     else -> ""
                                 }
+
+                            //title 거래 상태
                             WalletDetailWorkResultTV.text =
                                 when (state.transactionsTopupsDetailItem.state) {
                                     "done" -> "완료"
@@ -73,20 +64,76 @@ class WalletChargeDetailFragment: BaseFragment<FragmentWalletChargeDetailBinding
                                     "canceled" -> "취소"
                                     else -> ""
                                 }
-                            WalletDetailAssetSymbolTV.text =
+
+                            //title 금액
+                            val amount = when (state.transactionsTopupsDetailItem.side) {
+                                "bid" -> "+" + state.transactionsTopupsDetailItem.volume
+                                "ask" -> "-" + state.transactionsTopupsDetailItem.volume
+                                else -> ""
+                            }
+                            WalletDetailAmountTV.text = amount
+
+                            //title 금액 코인 종류
+                            WalletDetailAmountAssetSymbolTV.text =
                                 when (state.transactionsTopupsDetailItem.market) {
                                     "KRW-USDT" -> "USDT"
                                     "KRW-USDC" -> "USDC"
                                     else -> ""
                                 }
-                            WalletDetailConcludeTotalPriceTV.text =
-                                state.transactionsTopupsDetailItem.trades.funds
 
+                            //title 금액 색 변화
                             when (state.transactionsTopupsDetailItem.state) {
                                 "canceled" -> WalletDetailAmountTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
                                 else -> Unit
                             }
+
+
+                            //거래 일시
+                            WalletDetailTradeTimeTV.text =
+                                formatDate(state.transactionsTopupsDetailItem.createAt)
+
+                            //거래 상태
+                            WalletDetailTradeStateTV.text =
+                                when (state.transactionsTopupsDetailItem.state) {
+                                    "done" -> "완료"
+                                    "wait" -> "대기"
+                                    "canceled" -> "취소"
+                                    else -> ""
+                                }
+
+                            //거래 방식 -> API 명세서 수정 필요
+                            WalletDetailTradeWayTV.text =
+                                    when (state.transactionsTopupsDetailItem.ordType) {
+                                        "limit" -> ""
+                                        else -> ""
+                                    }
+
+                            //체결 가격
+                            WalletDetailConcludePriceTV.text =
+                                viewModel.addComma(state.transactionsTopupsDetailItem.price)
+
+                            //체결 수량
+                            WalletDetailConcludeAmountTV.text =
+                                state.transactionsTopupsDetailItem.volume
+                            WalletDetailConcludeAmountAssetSymbolTV.text =
+                                when (state.transactionsTopupsDetailItem.market) {
+                                    "KRW-USDT" -> "USDT"
+                                    "KRW-USDC" -> "USDC"
+                                    else -> ""
+                                }
+
+                            //체결 금액
+                            WalletDetailConcludeTotalPriceTV.text =
+                                viewModel.addComma(state.transactionsTopupsDetailItem.trades.funds)
+
+                            //수수료
+                            WalletDetailChargeTV.text = state.transactionsTopupsDetailItem.paidFee
+
+                            //총 결제 금액
+                            val totalAmount = state.transactionsTopupsDetailItem.trades.funds.toInt() + state.transactionsTopupsDetailItem.paidFee.toInt()
+                            WalletDetailTotalTV.text = viewModel.addComma(totalAmount.toString())
                         }
+                        else Unit
                     }
                 }
             }

@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.R
@@ -30,10 +31,17 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
     ) {
     override val viewModel: TransferViewModel by activityViewModels()
 
+    val args: TransferFragmentArgs by navArgs()
+
     override fun initView() {
 
+        //발신인 정보 입력 (homeFragment 정보)
+        viewModel.setMyInformation(args.myExchange, args.myAddress, args.myCoin)
+
+        //주소록 불러오기
         viewModel.setDirectoryList(viewModel.myExchange.value, viewModel.myAssetSymbol.value)
 
+        //버튼 비활성화
         binding.TransferNextTV.isEnabled = false
 
         val watcher = object : TextWatcher {
@@ -79,6 +87,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             }
         }
 
+        //EditText 삭제 버튼
         binding.apply {
             TransferInputNameET.textRemover(binding.TransferInputNameRemoveIV)
             TransferInputName1ENGET.textRemover(binding.TransferInputName1ENGRemoveIV)
@@ -86,22 +95,25 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             TransferInputAddressET.textRemover(binding.TransferInputAddressRemoveIV)
         }
 
-
+        //주소록 팝업 on
         binding.TransferDirectoryIcIV.setOnClickListener {
             binding.TransferDirectoryIcPopupTV.visibility = View.VISIBLE
             binding.TransferDirectoryIcPopupIV.visibility = View.VISIBLE
         }
 
+        //주소록 팝업 off
         binding.cd.setOnClickListener {
             binding.TransferDirectoryIcPopupTV.visibility = View.GONE
             binding.TransferDirectoryIcPopupIV.visibility = View.GONE
         }
 
+        //EditText 내용 입력 확인
         binding.TransferInputNameET.addTextChangedListener(watcher)
         binding.TransferInputName1ENGET.addTextChangedListener(watcher)
         binding.TransferInputName2ENGET.addTextChangedListener(watcher)
         binding.TransferInputAddressET.addTextChangedListener(addressWatcher)
 
+        //거래소 입력 버튼
         binding.TransferInputExchangeET.isFocusable = false
         binding.TransferInputExchangeET.setOnClickListener {
             ExchangeBottomSheet().show(
@@ -110,6 +122,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             )
         }
 
+        //다음 버튼
         binding.TransferNextTV.setOnClickListener {
             val nameKOR: String = binding.TransferInputNameET.text.toString()
             val nameENG: String =
@@ -120,15 +133,17 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
         }
 
         binding.TransferBackArrowIV.setOnClickListener {
-            //main으로 이동
+            findNavController().navigate(R.id.homeFragment)
         }
 
+        //keyboard '완료' 클릭 시 focus 해제
         viewModel.focusRemove(binding.TransferInputNameET)
         viewModel.focusRemove(binding.TransferInputAddressET)
         viewModel.focusRemove(binding.TransferCorpNameENGET)
         viewModel.focusRemove(binding.TransferCorpNameKORET)
 
-        //RecyclerView
+
+        // 주소록 RecyclerView
         val directoryRVAdapter = DirectoryRVAdapter(this)
         binding.TransferBookmarkRV.adapter = directoryRVAdapter
         binding.TransferBookmarkRV.layoutManager =

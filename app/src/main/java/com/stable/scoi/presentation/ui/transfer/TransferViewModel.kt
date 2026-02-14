@@ -83,6 +83,12 @@ class TransferViewModel @Inject constructor(
         _exchangeType.value = Exchange.Unselected
     }
 
+    fun setMyInformation(myExchange: String, myAddress: String, myCoin: String) {
+        _myExchange.value = myExchange
+        _myAddress.value = myAddress
+        _myAssetSymbol.value = myCoin
+    }
+
 
     //NextButton
     fun onClickNextButton() {
@@ -108,13 +114,6 @@ class TransferViewModel @Inject constructor(
             walletAddress = receiverAddress,
             exchangeType = exType,
             coinType = asSymb
-        )
-    }
-
-    //Information
-    fun submitInformation(amount: String) {
-        _information.value = _information.value.copy(
-            amount
         )
     }
 
