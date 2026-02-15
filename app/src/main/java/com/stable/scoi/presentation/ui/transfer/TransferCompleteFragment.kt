@@ -23,7 +23,7 @@ class TransferCompleteFragment :
             findNavController().navigate(R.id.wallet_fragment)
         }
         binding.TransferCompleteCompleteTV.setOnClickListener {
-            //홈으로 이동
+            findNavController().navigate(R.id.homeFragment)
         }
     }
 }
