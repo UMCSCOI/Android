@@ -1,6 +1,7 @@
 package com.stable.scoi.presentation.ui.transfer
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Rect
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,10 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -101,8 +106,16 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
                     when (event) {
                         TransferEvent.NavigateToNextPage -> findNavController().navigate(R.id.transfer_complete_fragment)
                         is TransferEvent.ShowError -> {
-                            //경고 문구 표시
+                            binding.TransferPasswordErrorTV.visibility = View.VISIBLE
+                            binding.TransferPasswordErrorTV.text = event.message
                             binding.apply {
+                                TransferPasswordInputPassword1ET.setBackgroundDrawableRes(R.drawable.bg_pin_underline_error)
+                                TransferPasswordInputPassword2ET.setBackgroundDrawableRes(R.drawable.bg_pin_underline_error)
+                                TransferPasswordInputPassword3ET.setBackgroundDrawableRes(R.drawable.bg_pin_underline_error)
+                                TransferPasswordInputPassword4ET.setBackgroundDrawableRes(R.drawable.bg_pin_underline_error)
+                                TransferPasswordInputPassword5ET.setBackgroundDrawableRes(R.drawable.bg_pin_underline_error)
+                                TransferPasswordInputPassword6ET.setBackgroundDrawableRes(R.drawable.bg_pin_underline_error)
+
                                 resetEditText(TransferPasswordInputPassword1ET)
                                 resetEditText(TransferPasswordInputPassword2ET)
                                 resetEditText(TransferPasswordInputPassword3ET)
@@ -137,6 +150,16 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
                     if (requestText == binding.focusDummy) {
                         Log.d("action", "action")
                         binding.focusDummy.hideKeyboard()
+                        binding.apply {
+                            TransferPasswordInputPassword1ET.setBackgroundDrawableRes(R.drawable.selector_pin_background)
+                            TransferPasswordInputPassword2ET.setBackgroundDrawableRes(R.drawable.selector_pin_background)
+                            TransferPasswordInputPassword3ET.setBackgroundDrawableRes(R.drawable.selector_pin_background)
+                            TransferPasswordInputPassword4ET.setBackgroundDrawableRes(R.drawable.selector_pin_background)
+                            TransferPasswordInputPassword5ET.setBackgroundDrawableRes(R.drawable.selector_pin_background)
+                            TransferPasswordInputPassword6ET.setBackgroundDrawableRes(R.drawable.selector_pin_background)
+
+                        }
+                        binding.TransferPasswordErrorTV.visibility = View.GONE
                         binding.TransferPasswordInputTV.isEnabled = true
                     }
                 }
@@ -176,6 +199,10 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
                 previouslyFocusedRect: Rect?
             ) {}
         }
+    }
+
+    fun EditText.setBackgroundDrawableRes(@DrawableRes drawableResId: Int) {
+        this.setBackgroundResource(drawableResId)
     }
 
 }

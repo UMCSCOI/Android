@@ -167,8 +167,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
         }
     }
 
-    private fun navigateToTransfer() {
-        val action = HomeFragmentDirections.actionHomeFragmentToTansferFragment()
+    private fun navigateToTransfer(myCoin: String, myAddress: String, myExchange: String) {
+        val action = HomeFragmentDirections.actionHomeFragmentToTansferFragment(
+            myCoin = myCoin,
+            myAddress = myAddress,
+            myExchange = myExchange
+        )
         findNavController().navigate(action)
     }
 
@@ -332,7 +336,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
             val result = bundle.getString("bundleKey_coin")
             //TODO 데이터 담아서 보내기
-            navigateToTransfer()
+            navigateToTransfer("","","")
         }
         SelectStableDialogFragment().show(childFragmentManager, "")
     }
