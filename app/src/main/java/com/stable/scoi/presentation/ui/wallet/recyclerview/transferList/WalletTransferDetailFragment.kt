@@ -105,7 +105,7 @@ class WalletTransferDetailFragment: BaseFragment<FragmentWalletTransferDetailBin
                 Locale.getDefault()
             )
             val output = SimpleDateFormat(
-                "MM.dd HH:mm:ss",
+                "yyyy.MM.dd HH:mm:ss",
                 Locale.getDefault()
             )
             val date = input.parse(dateString)

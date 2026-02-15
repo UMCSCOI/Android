@@ -103,10 +103,12 @@ class WalletChargeDetailFragment: BaseFragment<FragmentWalletChargeDetailBinding
 
                             //거래 방식 -> API 명세서 수정 필요
                             WalletDetailTradeWayTV.text =
-                                    when (state.transactionsTopupsDetailItem.ordType) {
-                                        "limit" -> ""
-                                        else -> ""
-                                    }
+                                when (state.transactionsTopupsDetailItem.ordType) {
+                                    "limit" -> "지정가 매매"
+                                    "market" -> "시장가 매도"
+                                    "price" -> "시장가 매수"
+                                    else -> ""
+                                }
 
                             //체결 가격
                             WalletDetailConcludePriceTV.text =
@@ -147,7 +149,7 @@ class WalletChargeDetailFragment: BaseFragment<FragmentWalletChargeDetailBinding
                 Locale.getDefault()
             )
             val output = SimpleDateFormat(
-                "MM.dd HH:mm:ss",
+                "yyyy.MM.dd HH:mm:ss",
                 Locale.getDefault()
             )
             val date = input.parse(dateString)
