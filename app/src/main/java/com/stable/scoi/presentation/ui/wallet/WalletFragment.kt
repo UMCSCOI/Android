@@ -71,6 +71,7 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
             WalletRecentLengthTV.text = "1개월"
             WalletRecentSearchTypeTV.text = "전체"
             WalletRecentStateTV.visibility = View.GONE
+            WalletRecentMonthDetailTV.text = getCalculatedData("ONE_MONTH")
         }
         setToggleAction()
 
@@ -305,6 +306,7 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                 WalletRecentLengthTV.text = "1개월"
                 WalletRecentSearchTypeTV.text = "전체"
                 WalletRecentStateTV.visibility = View.GONE
+                WalletRecentMonthDetailTV.text = getCalculatedData("ONE_MONTH")
 
                 WalletRecentListVP.adapter = recentTransferListAdapter
                 WalletRecentListVP.layoutManager =
@@ -338,6 +340,7 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                 WalletRecentSearchTypeTV.text = "전체"
                 WalletRecentStateTV.visibility = View.VISIBLE
                 WalletRecentStateTV.text = "완료"
+                WalletRecentMonthDetailTV.text = getCalculatedData("THREE_MONTHS")
 
                 WalletRecentListVP.adapter = recentChargeListAdapter
                 WalletRecentListVP.layoutManager =

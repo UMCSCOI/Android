@@ -89,7 +89,26 @@ class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: Rec
                 when (recentChargeList.state) {
                     "done" -> WalletListAmountTV.setTextColor(ContextCompat.getColor(itemView.context, R.color.active))
                     "wait" -> WalletListAmountTV.setTextColor(ContextCompat.getColor(itemView.context, R.color.main_black))
-                    "cancel" -> WalletListAmountTV.setTextColor(ContextCompat.getColor(itemView.context, R.color.disabled))
+                    "cancel" -> {
+                        WalletListAmountTV.setTextColor(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.disabled
+                            )
+                        )
+                        WalletListChargeStateTV.setTextColor(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.disabled
+                            )
+                        )
+                        WalletListChargeAssetSymbolTV.setTextColor(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.disabled
+                            )
+                        )
+                    }
                 }
             }
         }
