@@ -87,6 +87,7 @@ class TransferViewModel @Inject constructor(
         _myExchange.value = myExchange
         _myAddress.value = myAddress
         _myAssetSymbol.value = myCoin
+        asSymb = myCoin
     }
 
 
