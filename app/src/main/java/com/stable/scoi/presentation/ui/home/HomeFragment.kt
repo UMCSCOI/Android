@@ -336,7 +336,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
             val result = bundle.getString("bundleKey_coin")
             //TODO 데이터 담아서 보내기
-            navigateToTransfer("","","")
+            navigateToTransfer("USDT","txEEkdHskdlkgSIDdfsdf","BITHUMB") //임시값
         }
         SelectStableDialogFragment().show(childFragmentManager, "")
     }

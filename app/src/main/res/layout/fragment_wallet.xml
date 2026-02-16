@@ -291,7 +291,7 @@
             android:layout_marginEnd="16dp">
 
             <TextView
-                android:id="@+id/Wallet_recent_mounth_TV"
+                android:id="@+id/Wallet_recent_month_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2025. 12"
@@ -303,7 +303,7 @@
                 android:layout_weight="1"/>
 
             <TextView
-                android:id="@+id/Wallet_recent_mounth_detail_TV"
+                android:id="@+id/Wallet_recent_month_detail_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2025.11.21~2025.12.21"

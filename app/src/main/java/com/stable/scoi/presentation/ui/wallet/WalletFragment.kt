@@ -30,6 +30,12 @@ import com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.RecentTr
 import com.stable.scoi.presentation.ui.wallet.recyclerview.transferList.RecentTransferListRVAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -78,6 +84,10 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
         binding.imageMyPage.setOnClickListener {
             findNavController().navigate(R.id.myPageFragment)
         }
+
+        //오늘 날짜 설정
+        binding.WalletRecentMonthTV.text = getTodayDate()
+
 
         repeatOnStarted(viewLifecycleOwner) {
             launch {
@@ -169,6 +179,8 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                                         else -> "전체"
                                     }
 
+                                    WalletRecentMonthDetailTV.text = getCalculatedData(periodType)
+
                                     WalletRecentStateTV.visibility = View.GONE
 
                                     // 참고: Wallet_recent_state_TV (완료 등)는
@@ -223,6 +235,8 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                                         "CANCEL" -> "취소"
                                         else -> "완료"
                                     }
+
+                                    WalletRecentMonthDetailTV.text = getCalculatedData(periodType)
                                 }
 
                                 setToggleAction(categoryType,"",periodType,sortType, statusType,20)
@@ -233,6 +247,29 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                 }
             }
         }
+    }
+
+    //오늘 날짜
+    fun getTodayDate(): String {
+        val formatter = SimpleDateFormat("yyyy.MM", Locale.getDefault())
+        return formatter.format(Date())
+    }
+
+    //period 계산한 날짜
+    fun getCalculatedData(period: String): String {
+        val months = when (period) {
+            "TODAY" -> 0
+            "ONE_MONTH" -> 1
+            "THREE_MONTHS" -> 3
+            "SIX_MONTHS" -> 6
+            else -> 0
+        }
+        val today = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.MONTH, -months)
+
+        val formatter = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
+        return formatter.format(calendar.time) + "~" + formatter.format(today.time)
     }
 
     //'입출금','충전' 토글

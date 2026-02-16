@@ -97,11 +97,11 @@ class WalletChargeDetailFragment: BaseFragment<FragmentWalletChargeDetailBinding
                                 when (state.transactionsTopupsDetailItem.state) {
                                     "done" -> "완료"
                                     "wait" -> "대기"
-                                    "canceled" -> "취소"
+                                    "cancel" -> "취소"
                                     else -> ""
                                 }
 
-                            //거래 방식 -> API 명세서 수정 필요
+                            //거래 방식
                             WalletDetailTradeWayTV.text =
                                 when (state.transactionsTopupsDetailItem.ordType) {
                                     "limit" -> "지정가 매매"
