@@ -8,6 +8,7 @@ import android.widget.EditText
 import androidx.lifecycle.viewModelScope
 import com.stable.scoi.data.api.transfer.WithDrawRequest
 import com.stable.scoi.domain.model.wallet.CancelOrderRequest
+import com.stable.scoi.domain.model.wallet.TransactionsCharge
 import com.stable.scoi.domain.repository.transfer.BalancesRepository
 import com.stable.scoi.domain.repository.wallet.CancelOrderRepository
 import com.stable.scoi.domain.repository.wallet.TransactionsDetailRepository
@@ -44,14 +45,15 @@ class WalletViewModel @Inject constructor(
     private val _arraySettingCharge = MutableStateFlow(ArraySettingCharge())
     val arraySettingCharge = _arraySettingCharge.asStateFlow()
 
-    private val _transferDetail = MutableStateFlow<RecentTransferList>(RecentTransferList())
-    val transferDetail = _transferDetail.asStateFlow()
-
-    private val _chargeDetail = MutableStateFlow<RecentChargeList>(RecentChargeList())
-    val chargeDetail = _chargeDetail.asStateFlow()
 
     private val _amount = MutableStateFlow(0)
     val amount = _amount.asStateFlow()
+
+    private val _cancelRequest = MutableStateFlow(CancelOrderRequest())
+    val cancelRequest = _cancelRequest.asStateFlow()
+
+    private val _cancelData = MutableStateFlow(TransactionsCharge())
+    val cancelData = _cancelData.asStateFlow()
 
     fun setExchangeUpbit() {
         _exchangeType.value = Exchange.Upbit
@@ -65,12 +67,16 @@ class WalletViewModel @Inject constructor(
         _exchangeType.value = Exchange.Unselected
     }
 
-    fun submitTransferDetails(detail: RecentTransferList) {
-        _transferDetail.value = detail
+    fun submitCancelOrder(tradeType: String, uuid: String, txid: String?) {
+        _cancelRequest.value = _cancelRequest.value.copy(
+            tradeType = tradeType,
+            uuid = uuid,
+            txid = txid
+        )
     }
 
-    fun submitChargeDetails(detail: RecentChargeList) {
-        _chargeDetail.value = detail
+    fun submitCancelData(cancelData: TransactionsCharge) {
+        _cancelData.value = cancelData
     }
 
     fun submitAmount(amount: Int) {

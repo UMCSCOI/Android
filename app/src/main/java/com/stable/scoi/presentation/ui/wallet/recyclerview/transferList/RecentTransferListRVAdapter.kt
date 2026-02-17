@@ -2,7 +2,10 @@ package com.stable.scoi.presentation.ui.wallet.recyclerview.transferList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.stable.scoi.R
 import com.stable.scoi.databinding.ItemMywalletListBinding
 import com.stable.scoi.domain.model.wallet.Transactions
 import com.stable.scoi.domain.model.wallet.TransactionsCharge
@@ -59,7 +62,13 @@ class RecentTransferListRVAdapter(private val recentTransferListOnClickListener:
                 WalletListAssetSymbolTV.text = recentTransferList.currency
                 WalletListAmountTV.text = "$sign${recentTransferList.amount}"
                 WalletListAssetSymbolTitleTV.text = recentTransferList.currency
+                WalletListTitleAssetSymbolTV.text = recentTransferList.currency
                 WalletListStateTV.text = type
+
+                when (recentTransferList.type) {
+                    "WITHDRAW" -> WalletListAmountTV.setTextColor(ContextCompat.getColor(itemView.context, R.color.main_black))
+                    "DEPOSIT" -> WalletListAmountTV.setTextColor(ContextCompat.getColor(itemView.context, R.color.active))
+                }
             }
         }
     }

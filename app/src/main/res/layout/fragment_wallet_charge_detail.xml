@@ -33,11 +33,35 @@
             android:textAppearance="@style/t1_sb"/>
 
         <LinearLayout
+            android:id="@+id/Wallet_detail_exchage_LL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/Wallet_detail_title_TV"
+            android:layout_marginTop="34dp"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp">
+
+            <ImageView
+                android:id="@+id/Wallet_detail_exchage_IV"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/bithumb_logo"/>
+
+            <TextView
+                android:id="@+id/Wallet_detail_exchage_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="빗썸"
+                android:textAppearance="@style/f4m"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_exchage_LL"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="16dp">
 
             <TextView
@@ -314,47 +338,45 @@
                 android:textAppearance="@style/b3"/>
 
             <TextView
-                android:id="@+id/Wallet_detail_charge_assetSymbol_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="USDT"
-                android:layout_marginStart="4dp"
+                android:text="원"
                 android:textAppearance="@style/b3"/>
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/Wallet_detail_total_LL"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_charge_LL"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginEnd="16dp">-->
+        <LinearLayout
+            android:id="@+id/Wallet_detail_total_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_charge_LL"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="총 결제 금액"-->
-<!--                android:textAppearance="@style/b3"/>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="총 결제 금액"
+                android:textAppearance="@style/b3"/>
 
-<!--            <Space-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_weight="1"/>-->
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
-<!--            <TextView-->
-<!--                android:id="@+id/Wallet_detail_total_TV"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="146,000"-->
-<!--                android:textAppearance="@style/b3"/>-->
+            <TextView
+                android:id="@+id/Wallet_detail_total_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="146,000"
+                android:textAppearance="@style/b3"/>
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="원"-->
-<!--                android:textAppearance="@style/b3"/>-->
-<!--        </LinearLayout>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원"
+                android:textAppearance="@style/b3"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
