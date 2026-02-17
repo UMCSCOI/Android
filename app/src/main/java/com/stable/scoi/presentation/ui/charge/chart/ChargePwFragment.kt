@@ -1,47 +1,22 @@
 package com.stable.scoi.presentation.ui.charge.chart
 
-import android.content.Context
+import android.graphics.Rect
 import android.os.Build
+import android.text.method.TransformationMethod
 import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.stable.scoi.R
-import com.stable.scoi.databinding.FragmentChargeBinding
 import com.stable.scoi.databinding.FragmentChargePwBinding
-import com.stable.scoi.domain.model.CandleStreamEvent
-import com.stable.scoi.domain.model.RecentTrade
-import com.stable.scoi.domain.model.UpbitTicker
-import com.stable.scoi.domain.model.enums.ChargeInputType
-import com.stable.scoi.extension.gone
-import com.stable.scoi.extension.setupTvChart
-import com.stable.scoi.extension.tvSetData
-import com.stable.scoi.extension.tvUpdate
-import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.base.BaseFragment
-import com.stable.scoi.presentation.ui.charge.adapter.ChargePriceAdapter
-import com.stable.scoi.presentation.ui.charge.adapter.ChargeRecentTradeAdapter
-import com.stable.scoi.presentation.ui.charge.adapter.PriceItem
-import com.stable.scoi.presentation.ui.charge.bottomSheet.ChargeBottomSheet
-import com.stable.scoi.presentation.ui.charge.bottomSheet.ExceedBottomSheet
-import com.stable.scoi.presentation.ui.charge.bottomSheet.LackMoneyBottomSheet
-import com.stable.scoi.presentation.ui.charge.complete.ChargeCompleteFragmentDirections
-import com.stable.scoi.util.Format.formatWon
-import com.stable.scoi.util.Format.unformatWon
 import com.stable.scoi.util.SLOG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
-import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @AndroidEntryPoint
@@ -61,6 +36,9 @@ class ChargePwFragment :
         val pinEditTexts = with(binding) {
             listOf(loginPinReg1Et, loginPinReg2Et, loginPinReg3Et, loginPinReg4Et, loginPinReg5Et, loginPinReg6Et)
         }
+
+        // 비밀번호 텍스트 변경 (암호화 - ● 표시)
+        pinEditTexts.forEach { it.applyBigDotMask() }
 
         pinEditTexts.forEachIndexed { index, editText ->
             editText.doOnTextChanged { text, _, _, _ ->
@@ -105,6 +83,7 @@ class ChargePwFragment :
                 viewModel.uiEvent.collect {
                     when(it) {
                         ChargeEvent.Complete -> navigateToChargeComplete()
+                        ChargeEvent.MoveToBack -> findNavController().popBackStack()
                         else -> {}
                     }
                 }
@@ -121,5 +100,37 @@ class ChargePwFragment :
     private fun navigateToChargeComplete() {
         val action = ChargePwFragmentDirections.actionChargePwComplete(coin = viewModel.uiState.value.currentMarket, viewModel.uiState.value.count)
         findNavController().navigate(action)
+    }
+
+    private fun EditText.applyBigDotMask() {
+        this.transformationMethod = object : TransformationMethod {
+            override fun getTransformation(
+                source: CharSequence,
+                view: View?
+            ): CharSequence {
+                return BigDotCharSequence(source)
+            }
+
+            override fun onFocusChanged(
+                view: View?,
+                sourceText: CharSequence?,
+                focused: Boolean,
+                direction: Int,
+                previouslyFocusedRect: Rect?
+            ) {}
+        }
+    }
+}
+
+private class BigDotCharSequence(private val source: CharSequence) : CharSequence {
+    override val length: Int
+        get() = source.length
+
+    override fun get(index: Int): Char {
+        return '●'
+    }
+
+    override fun subSequence(startIndex: Int, endIndex: Int): CharSequence {
+        return BigDotCharSequence(source.subSequence(startIndex, endIndex))
     }
 }

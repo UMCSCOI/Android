@@ -93,21 +93,38 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <WebView
-                android:id="@+id/tvChartWebView"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="83dp"
-                android:layout_marginBottom="159dp" />
+                android:layout_marginBottom="159dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/sub_gray_2"/>
+
+                <WebView
+                    android:id="@+id/tvChartWebView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/sub_gray_2"/>
+
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/persistent_bottom_sheet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_bottom_nav_white_radius20"
-                android:elevation="12dp"
                 android:orientation="vertical"
-                app:behavior_expandedOffset="35dp"
                 app:behavior_fitToContents="false"
                 app:behavior_peekHeight="96dp"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
