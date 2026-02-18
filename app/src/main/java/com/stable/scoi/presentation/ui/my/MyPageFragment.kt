@@ -21,6 +21,9 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageUiState, MyPage
         viewModel.loadUserInfo()
 
         binding.apply {
+            ivBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
             menuAccountInfo.setOnClickListener {
                 findNavController().navigate(R.id.action_mypage_to_accountInfo)
             }
