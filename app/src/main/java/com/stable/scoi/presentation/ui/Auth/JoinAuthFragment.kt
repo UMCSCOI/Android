@@ -221,8 +221,7 @@ class JoinAuthFragment :
                 binding.phoneAuthCodeActiveTimerTv.visibility = View.GONE
                 binding.phoneAuthCodeActiveCheckIv.visibility = View.VISIBLE
                 binding.phoneAuthCodeCheckIv.visibility = View.GONE
-
-                findNavController().navigate(R.id.action_joinAuthFragment_to_joinFragment)
+                findNavController().navigate(R.id.action_joinAuthFragment_to_loginFragment)
             }
 
             is JoinEvent.ShowError -> {

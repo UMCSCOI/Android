@@ -295,7 +295,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding, JoinState, JoinEvent, Joi
         if (isAllComplete) {
             binding.joinInputActiveCv.visibility = View.VISIBLE
             binding.joinInputInactiveCv.visibility = View.GONE
-            viewModel.updateResidentNumber(resFront + resRear)
+            viewModel.updateResidentNumber(resFront +resRear)
         } else {
             binding.joinInputActiveCv.visibility = View.GONE
             binding.joinInputInactiveCv.visibility = View.VISIBLE

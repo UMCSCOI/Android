@@ -31,6 +31,11 @@ interface AuthApi {
 
     @POST("/auth/logout")
     suspend fun logout(): ApiResponse<Unit>
+
+    @POST("/auth/password/reset")
+    suspend fun reset(
+        @Body request: PasswordResetRequest
+    ): ApiResponse<PasswordResetResponse>
 }
 
 
@@ -53,13 +58,14 @@ data class SmsVerifyRequest(
 data class PinLoginRequest(
     val phoneNumber: String = "",
     val simplePassword: String = "",
-    val keepLoggedIn: Boolean = false
+    val verificationToken: String=""
 )
 
 @Serializable
 data class TokenRetryRequest(
     val refreshToken: String = ""
 )
+
 
 //response
 @Serializable
@@ -71,6 +77,8 @@ data class SmsResponse(
 data class SmsVerifyResponse(
     val verificationToken: String = ""
 )
+
+
 
 
 
@@ -88,4 +96,9 @@ data class TokenRetryResponse(
     val accessToken: String = "",
     val refreshToken: String = "",
     val accessTokenExpiresIn: Long = -1
+)
+
+@Serializable
+data class PasswordResetResponse(
+    val password:String=""
 )

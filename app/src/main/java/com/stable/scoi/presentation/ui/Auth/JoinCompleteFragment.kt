@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentRegCompleteBinding
 import com.stable.scoi.presentation.MainActivity
 
@@ -35,7 +36,7 @@ class JoinCompleteFragment : Fragment() {
         }
 
         binding.guideActiveCv.setOnClickListener {
-            navigateToMain()
+            navigateToPin()
         }
     }
 
@@ -49,4 +50,8 @@ class JoinCompleteFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    private fun navigateToPin() {
+        findNavController().navigate(R.id.action_joinCompleteFragment_to_pinFragment)
+    }
 }
+

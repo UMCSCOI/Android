@@ -77,7 +77,8 @@ class JoinViewModel @Inject constructor(
             authRepository.verifySms(phone, code)
                 .onSuccess { response ->
                     stopTimer()
-
+                    preferenceManager.savePhoneNumber(phone)
+                    preferenceManager.saveVerificationToken(response.verificationToken)
                     preferenceManager.saveVerificationSuccess()
 
                     updateState {

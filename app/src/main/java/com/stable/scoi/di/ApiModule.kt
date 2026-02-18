@@ -1,6 +1,8 @@
 package com.stable.scoi.di
 
 import com.stable.scoi.data.api.OkHttpUpbitCandleWsApi
+import com.stable.scoi.data.api.AuthApi
+import com.stable.scoi.data.api.auth.SignUpApi
 import com.stable.scoi.data.api.transfer.BalancesAPI
 import com.stable.scoi.data.api.transfer.CancelOrderAPI
 import com.stable.scoi.data.api.transfer.DirectoryListAPI
@@ -12,8 +14,6 @@ import com.stable.scoi.data.api.transfer.TransactionsRemitAPI
 import com.stable.scoi.data.api.transfer.TransactionsTopupsAPI
 import com.stable.scoi.data.api.ChargeApi
 import com.stable.scoi.data.api.MyPageApi
-import com.stable.scoi.data.api.AuthApi
-import com.stable.scoi.data.api.auth.SignUpApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -97,7 +97,7 @@ object ApiModule {
     fun provideAuthApi(
         @NormalRetrofit retrofit: Retrofit
     ): AuthApi {
-     return retrofit.create(AuthApi::class.java)
+        return retrofit.create(AuthApi::class.java)
     }
 
     @Provides
@@ -113,4 +113,5 @@ object ApiModule {
     fun provideMyPageApi(@AuthRetrofit retrofit: Retrofit): MyPageApi {
         return retrofit.create(MyPageApi::class.java)
     }
+
 }

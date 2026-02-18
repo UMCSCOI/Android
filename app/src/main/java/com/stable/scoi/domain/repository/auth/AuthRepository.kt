@@ -1,6 +1,9 @@
 package com.stable.scoi.domain.repository.auth
 
+import com.auth0.jwt.interfaces.Verification
 import com.stable.scoi.data.api.AuthApi
+import com.stable.scoi.data.api.PasswordResetRequest
+import com.stable.scoi.data.api.PasswordResetResponse
 import com.stable.scoi.data.api.PinLoginRequest
 import com.stable.scoi.data.api.PinLoginResponse
 import com.stable.scoi.data.api.SmsRequest
@@ -74,24 +77,28 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    // PIN 로그인
     suspend fun pinLogin(
         phoneNumber: String,
-        simplePassword: String
+        simplePassword: String,
+        verificationToken: String
     ): Result<PinLoginResponse> {
         return try {
             val request = PinLoginRequest(
                 phoneNumber = phoneNumber,
-                simplePassword = simplePassword
+                simplePassword = simplePassword,
+                verificationToken = verificationToken
             )
+
             val response = authApi.pinLogin(request)
 
             if (response.isSuccess && response.result != null) {
+
                 preferenceManager.saveAccessToken(response.result.accessToken)
                 preferenceManager.saveRefreshToken(response.result.refreshToken)
+
                 Result.success(response.result)
             } else {
-                Result.failure(Exception(response.message))
+                Result.failure(Exception(response.message ?: "알 수 없는 오류가 발생했습니다."))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -120,12 +127,12 @@ class AuthRepository @Inject constructor(
             Result.failure(e)
         }
     }
+
     suspend fun logout(): Result<Unit> {
         return try {
             val response = authApi.logout()
 
             if (response.isSuccess) {
-                preferenceManager.clear()
                 Result.success(Unit)
             } else {
                 Result.failure(Exception(response.message))
@@ -134,4 +141,28 @@ class AuthRepository @Inject constructor(
             Result.failure(e)
         }
     }
+
+//    suspend fun reset(
+//        verificationToken: String,
+//        phoneNumber: String,
+//        newPassword:String
+//    ): Result<PasswordResetResponse> {
+//        return try{
+//            val request=PasswordResetRequest(
+//                verificationToken = verificationToken,
+//                phoneNumber = phoneNumber,
+//                simplePassword = newPassword
+//            )
+//            val response=authApi.reset(request)
+//            if(response.isSuccess&&response.result!=null){
+//                Result.success(response.result)
+//            }
+//            else{
+//                Result.failure(Exception(response.message))
+//            }
+//        }
+//        catch(e:Exception){
+//            Result.failure(e)
+//        }
+
 }
