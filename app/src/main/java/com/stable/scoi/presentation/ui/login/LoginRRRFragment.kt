@@ -13,6 +13,7 @@ import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.Auth.JoinEvent
 import com.stable.scoi.presentation.ui.Auth.JoinState
 import com.stable.scoi.presentation.ui.Auth.JoinViewModel
+import com.stable.scoi.util.SLOG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -38,7 +39,6 @@ class LoginRRRFragment : BaseFragment<FragmentLoginPinRegBinding, LoginState, Lo
                         hideKeyboard()
                     }
                 }
-
                 val currentPin = pinEditTexts.joinToString("") { it.text.toString() }
                 viewModel.onPinChanged(currentPin)
             }
@@ -48,7 +48,7 @@ class LoginRRRFragment : BaseFragment<FragmentLoginPinRegBinding, LoginState, Lo
                     if (editText.text.isEmpty() && index > 0) {
                         val prevEt = pinEditTexts[index - 1]
                         prevEt.requestFocus()
-                        prevEt.text = null
+                        prevEt.setText("")
                         return@setOnKeyListener true
                     }
                 }
@@ -96,6 +96,7 @@ class LoginRRRFragment : BaseFragment<FragmentLoginPinRegBinding, LoginState, Lo
 
         }
             is LoginEvent.NavigationToLogin -> {
+                SLOG.D("비밀번호 재설정 성공")
                 findNavController().navigate(R.id.action_loginRRRFragment_to_ReloginRegDoneFragment)
             }
             is LoginEvent.ShowError -> {

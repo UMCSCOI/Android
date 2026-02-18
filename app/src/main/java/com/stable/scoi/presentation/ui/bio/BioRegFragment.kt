@@ -39,7 +39,7 @@ class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, 
         }
 
         binding.bioScanInputInactiveCv.setOnClickListener {
-            findNavController().navigate(R.id.action_bioRegFragment_to_pinFragment)
+            findNavController().navigate(R.id.action_bioRegFragment_to_explainFragment)
         }
 
         binding.loginPinInputActiveCv.setOnClickListener {

@@ -6,6 +6,7 @@ import com.stable.scoi.data.local.PreferenceManager
 import com.stable.scoi.data.util.EncryptionUtil
 import com.stable.scoi.domain.repository.auth.AuthRepository
 import com.stable.scoi.presentation.base.BaseViewModel
+import com.stable.scoi.util.SLOG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -111,22 +112,20 @@ class LoginViewModel @Inject constructor(
             )
 
             authRepository.resetPW(request)
-                .onSuccess { response ->
+                .onSuccess {
+                    SLOG.D("비밀번호 재설정 성공")
+                    updateState { copy(isLoading = false) }
                     emitEvent(LoginEvent.NavigationToLogin)
                 }
                 .onFailure { e ->
-                    val errorMsg = if (e is retrofit2.HttpException) {
-                        val errorJson = e.response()?.errorBody()?.string()
-                        JSONObject(errorJson ?: "").optString("message", "재설정 실패")
-                    } else {
-                        e.message ?: "네트워크 오류가 발생했습니다."
+                    SLOG.D("onFailure 진입! 원인: ${e.message}")
+                    e.printStackTrace()
+
+                    updateState {
+                        copy(isLoading = false, simplePassword = "", isButtonEnabled = false)
                     }
-
-                    emitEvent(LoginEvent.ShowError(errorMsg))
-                    updateState { this.copy(simplePassword = "", isButtonEnabled = false) }
+                    emitEvent(LoginEvent.ShowError(e.message ?: "재설정 실패"))
                 }
-
-            updateState { this.copy(isLoading = false) }
         }
     }
 
@@ -138,7 +137,6 @@ class LoginViewModel @Inject constructor(
             )
         }
     }
-
     fun onAuthChanged(input: String) {
         this.updateState {
             this.copy(

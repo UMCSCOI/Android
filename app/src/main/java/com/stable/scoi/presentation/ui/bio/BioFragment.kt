@@ -41,12 +41,8 @@ class BioFragment : BaseFragment<FragmentBioLoginBinding, BioState, BioEvent, Bi
     override fun initView() {
         observeEvents()
 
-
-
-        // 1. 실행자 초기화
         executor = ContextCompat.getMainExecutor(requireContext())
 
-        // 2. 콜백 정의
         biometricPrompt = BiometricPrompt(this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
 

@@ -1,5 +1,6 @@
 package com.stable.scoi.presentation.ui.login
 
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
@@ -38,8 +39,11 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             binding.loginPin1Et, binding.loginPin2Et, binding.loginPin3Et,
             binding.loginPin4Et, binding.loginPin5Et, binding.loginPin6Et
         )
+        val bigDotMethod = BigDotTransformationMethod()
 
         pinEditTexts.forEachIndexed { index, editText ->
+
+            editText.transformationMethod = bigDotMethod
             editText.doOnTextChanged { text, _, _, _ ->
                 resetErrorState(pinEditTexts)
 
@@ -60,7 +64,20 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
                 val currentPin = pinEditTexts.joinToString("") { it.text.toString() }
                 viewModel.onPinChanged(currentPin)
             }
+            editText.setOnKeyListener { _, keyCode, event ->
+                if (keyCode == android.view.KeyEvent.KEYCODE_DEL && event.action == android.view.KeyEvent.ACTION_DOWN) {
+                    if (editText.text.isEmpty() && index > 0) {
+                        val prevEt = pinEditTexts[index - 1]
+                        prevEt.requestFocus()
+                        prevEt.setText("")
+                        return@setOnKeyListener true
+                    }
+                }
+                false
+            }
         }
+
+
 
         binding.loginPinInputActiveCv.setOnClickListener {
             SLOG.D("버튼이 입력되었습니다.")
@@ -203,5 +220,19 @@ private fun showKeyboard(view: View) {
         }
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
+    }
+
+}
+class BigDotTransformationMethod : PasswordTransformationMethod() {
+    override fun getTransformation(source: CharSequence, view: View): CharSequence {
+        return PasswordCharSequence(source)
+    }
+
+    private inner class PasswordCharSequence(private val source: CharSequence) : CharSequence {
+        override val length: Int get() = source.length
+        override fun get(index: Int): Char = '●'
+        override fun subSequence(startIndex: Int, endIndex: Int): CharSequence {
+            return source.subSequence(startIndex, endIndex)
+        }
     }
 }

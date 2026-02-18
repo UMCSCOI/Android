@@ -174,12 +174,10 @@ class JoinFragment : BaseFragment<FragmentJoinBinding, JoinState, JoinEvent, Joi
         binding.regNumRearEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
         binding.regNumFrontEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
 
-        // 눈 아이콘 초기화
         binding.regEyeIv.setImageResource(R.drawable.eye_off)
         binding.regEyeIv.alpha = 1.0f
         binding.regEyeIv.visibility = View.INVISIBLE
 
-        // Front EditText
         binding.regNumFrontEt.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 binding.regNumFrontLine.visibility = View.INVISIBLE
@@ -234,13 +232,13 @@ class JoinFragment : BaseFragment<FragmentJoinBinding, JoinState, JoinEvent, Joi
             isRearNumberVisible = !isRearNumberVisible
 
             if (isRearNumberVisible) {
-                binding.regNumRearEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                binding.regNumFrontEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                binding.regNumRearEt.transformationMethod = BigDotTransformationMethod()
+                binding.regNumFrontEt.transformationMethod = BigDotTransformationMethod()
                 binding.regEyeIv.alpha = 1.0f
                 binding.regEyeIv.setImageResource(R.drawable.eye)
             } else {
-                binding.regNumRearEt.transformationMethod = BigDotTransformationMethod()
-                binding.regNumFrontEt.transformationMethod = BigDotTransformationMethod()
+                binding.regNumRearEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                binding.regNumFrontEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 binding.regEyeIv.alpha = 0.5f
                 binding.regEyeIv.setImageResource(R.drawable.eye_off)
             }

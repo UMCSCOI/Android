@@ -377,6 +377,9 @@
         <action
             android:id="@+id/action_bioRegFragment_to_explainFragment"
             app:destination="@id/explain_fragment" />
+        <action
+            android:id="@+id/acton_bioRegFragment_to_explainFragment"
+            app:destination="@id/explain_fragment" />
     </fragment>
 
     <fragment

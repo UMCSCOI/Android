@@ -6,5 +6,6 @@ data class GuideStep(
     val description:String,
     val imageRes:Int,
     val noticeText:String?=null,
-    val ipAddress: String?=null
+    val ipAddress: String?=null,
+    val exchangeType:String
 )
