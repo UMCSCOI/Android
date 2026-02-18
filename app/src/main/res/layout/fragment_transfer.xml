@@ -96,7 +96,8 @@
                 android:layout_marginEnd="16dp"
                 android:inputType="text"
                 android:maxLines="1"
-                android:imeOptions="actionDone"/>
+                android:imeOptions="actionDone"
+                android:background ="@drawable/selector_pin_background"/>
 
             <ImageView
                 android:id="@+id/Transfer_inputName_remove_IV"
@@ -146,7 +147,8 @@
                 android:maxLines="1"
                 android:imeOptions="actionDone"
                 android:inputType="textCapCharacters"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:background ="@drawable/selector_pin_background"/>
 
             <ImageView
                 android:id="@+id/Transfer_inputName1ENG_remove_IV"
@@ -170,7 +172,8 @@
                 android:maxLines="1"
                 android:imeOptions="actionDone"
                 android:inputType="textCapCharacters"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:background ="@drawable/selector_pin_background"/>
 
             <ImageView
                 android:id="@+id/Transfer_inputName2ENG_remove_IV"
@@ -227,6 +230,7 @@
                 android:id="@+id/Transfer_inputAddress_ET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="48dp"
 
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
@@ -240,7 +244,8 @@
 
                 app:layout_constraintTop_toBottomOf="@+id/Transfer_address_TV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background ="@drawable/selector_pin_background"/>
 
             <ImageView
                 android:id="@+id/Transfer_inputAddress_remove_IV"
@@ -327,6 +332,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="거래소"
+                android:paddingVertical="12dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:textSize="20sp"
                 android:textColor="@color/disabled"
@@ -335,7 +341,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="14dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginEnd="16dp"
+                android:background ="@drawable/selector_pin_background"/>
 
             <TextView
                 android:id="@+id/Transfer_inputExchange_warning_TV"
@@ -348,7 +355,8 @@
                 app:layout_constraintTop_toBottomOf="@id/Transfer_inputExchange_ET"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:background ="@drawable/selector_pin_background"/>
             
             <LinearLayout
                 android:layout_width="match_parent"
