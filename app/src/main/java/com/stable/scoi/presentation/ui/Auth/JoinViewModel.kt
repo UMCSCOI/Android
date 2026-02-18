@@ -88,6 +88,13 @@ class JoinViewModel @Inject constructor(
                         )
                     }
 
+                    if(response.isExistingMember){
+                        emitEvent(JoinEvent.NavigateToLogin)
+                    }
+                    else{
+                        emitEvent(JoinEvent.NavigateToJoin)
+                    }
+
                     // 2. Fragment로 성공 이벤트 전송 (필요시 토큰을 담아서 전송 가능)
                     emitEvent(JoinEvent.VerifySuccess(response.verificationToken))
                 }
@@ -169,7 +176,6 @@ class JoinViewModel @Inject constructor(
                     verificationToken = currentState.verificationToken
                 )
 
-                // 4. 서버로 전송
                 authRepository.signUp(request)
                     .onSuccess {
                         android.util.Log.d("JOIN_DEBUG", "회원가입 성공!")

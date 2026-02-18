@@ -29,6 +29,9 @@ class JoinAuthFragment :
 
     override fun initView() {
 
+        val white = ContextCompat.getColor(requireActivity(), R.color.white)
+        requireActivity().findViewById<View>(R.id.main).setBackgroundColor(white)
+
         binding.phoneAuthBackBtn.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -221,13 +224,18 @@ class JoinAuthFragment :
                 binding.phoneAuthCodeActiveTimerTv.visibility = View.GONE
                 binding.phoneAuthCodeActiveCheckIv.visibility = View.VISIBLE
                 binding.phoneAuthCodeCheckIv.visibility = View.GONE
-                findNavController().navigate(R.id.action_joinAuthFragment_to_loginFragment)
             }
 
             is JoinEvent.ShowError -> {
                 binding.phoneAuthHelperTv.visibility = View.GONE
                 binding.phoneAuthErrorTv.visibility = View.VISIBLE
                 inputUi(isActive = false)
+            }
+            is JoinEvent.NavigateToJoin -> {
+                findNavController().navigate(R.id.action_joinAuthFragment_to_joinFragment)
+            }
+            is JoinEvent.NavigateToLogin -> {
+                findNavController().navigate(R.id.action_joinAuthFragment_to_loginFragment)
             }
 
             else -> {}

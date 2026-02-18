@@ -202,7 +202,6 @@ private fun showKeyboard(view: View) {
 
         }
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
         dialog.show()
     }
 }

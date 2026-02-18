@@ -70,6 +70,9 @@ class KeyFragment : BaseFragment<FragmentKeyBinding, JoinState, JoinEvent, JoinV
             is JoinEvent.NavigateToPinRegister -> {
 
             }
+            is JoinEvent.NavigateToJoin -> {
+
+            }
         }
     }
 

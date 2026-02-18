@@ -25,4 +25,6 @@ sealed interface JoinEvent : UiEvent {
     object NavigateToLogin: JoinEvent
 
     object NavigateToJoinComplete:JoinEvent
+
+    object NavigateToJoin: JoinEvent
 }

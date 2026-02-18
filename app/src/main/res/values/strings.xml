@@ -3,7 +3,7 @@
     <string name="phone_auth_intro"><b>휴대폰 번호 인증</b>을 진행해주세요.</string>
 
     <string name="scoi_pin_intro">당신에게 가장 편리한\n스테이블 코인 결제, <b>스코이</b></string>
-    <string name="join_intro">"반가워요! \n<b>회원가입</b>을 진행해주세요. "</string>
+    <string name="join_intro">반가워요! \n<b>회원가입</b>을 진행해주세요.</string>
     <string name="login_expired_intro">안전한 이용을 위해\n<b>인증이 만료</b>되었어요.</string>
     <string name="re_login">휴대폰 번호 인증 후 <b><font color='#2569F2'>다시 로그인해</font></b> 주세요.</string>
     <string name="bio_scan_intro">간편한 이용을 위해 \n<b>생체인증</b>을 등록해주세요.</string>
@@ -16,11 +16,44 @@
     <string name="guide_intro"><b>거래소 연결</b>하는 방법을\n가이드와 함께 알아보아요</string>
     <string name="guide_detail">이 과정에서 <b><font color='#2569F2'>API 키</font></b>를 사용해요\n 거래소와 연결하기 위한 간단한 인증이에요</string>
 
-    <string name="guide_1"><b>빗썸 PC 홈페이지에서 API 관리 페이지 접속 방법</b>
+    <string name="bithumb_1"><b>빗썸 PC 홈페이지에서 API 관리 페이지 접속 방법</b>
         \n1. 빗썸 PC 홈페이지에서 접속한 뒤 로그인해 주세요.
         \n2. 로그인 후 화면 우측 상단에 표시되는 <b>OO님 환영합니다</b> 영역을 확인해주세요.
         \n3. 해당 영역을 클릭하면 계정 카드가 펼쳐집니다.
         \n4. 계정 카드 상단에 있는 <b>OO님 > (이름 영역)</b>을 클릭해 주세요.</string>
+    <string name="bithumb_2">마이페이지로 이동한 후, 좌측에 있는 계정 관리 메뉴에서 API 관리
+        를 선택해 주세요.
+        선택 시 API 관리 페이지로 이동합니다.</string>
+    <string name="guide_2">
+        서비스 이용을 위해 아래 <b>API 활성</b> 항목을 모두 선택해 주세요.
+    </string>
+    <string name="guide_3">
+        아래 IP 주소를 IP 주소 등록 칸에 입력해 주세요.
+    </string>
+    <string name="guide_4">
+        \'모두 동의\' 항목을 체크한 후, <b>API KEY 생성 버튼</b>을 클릭해 주세요.
+        개인정보 수집 빛 이용 동의, API 이용 주의사항 확인에 동의하게 됩
+        니다.
+    </string>
+    <string name="guide_5">
+        1. 휴대폰 인증 팝업에서 인증 요청 버튼을 클릭합니다.
+        \n2. 카카오톡으로 전송된 거래소 인증 숫자 번호를 입력합니다.
+        \n3. 인증 완료 버튼을 누르면 API KEY(Access KEY)와 SECRET
+        \nKEY가 화면에 표시됩니다.
+        \n4. 표시된 <b>API KEY(Access KEY)</b>와 <b>SECRET KEY</b>를 모두 복사
+        \n하여 메모장 등의 안전한 곳에 보관해 주세요.
+    </string>
+    <string name="upbit_1">
+        <b>업비트 PC 홈페이지에서 API 관리 페이지 접속 방법</b>
+        \n1. 업비트 PC 홈페이지에서 접속한 뒤 로그인해 주세요.
+        \n2. 로그인 후 화면 우측 상단에 있는 <b>\'고객센터\'</b>를 클릭해 주세요.
+        \n4. 해당 영역을 클릭하면 메뉴가 펼쳐집니다.
+        \n4. \'이용 안내\' 메뉴 하단에 있는 <b>\'Open API 안내\'</b>를 클릭해 주세요.
+    </string>
+    <string name="upbit_2">
+        화면 하단에 위치한 Open API 사용하기 버튼을 클릭해주세요.\n
+        선택 시 Open API 관리 페이지로이동합니다.
+    </string>
     <string name="API_Input"><b>거래소 API KEY</b>를 \n입력해주세요.</string>
     <string name="join_done">축하해요!\n<b>가입이 완료</b>되었어요</string>
     <string name="join_detail">이제 <b><font color='#2569F2'>스코이</font></b>를 시작해볼까요?</string>
