@@ -17,16 +17,14 @@ class TransferCompleteFragment :
 
         binding.TransferCompleteAmountTV.text = viewModel.information.value.amount
         binding.TransferCompleteExchangeTV.text = viewModel.exchangeToString(viewModel.exchangeType.value)
-        binding.TransferCompleteAssetSymbolTV.text = when (viewModel.receiver.value.coinType) {
-            "UPBIT" -> "업비트"
-            "BITHUMB" -> "빗썸"
-            else -> ""
-        }
+        binding.TransferCompleteAssetSymbolTV.text = viewModel.receiver.value.coinType
 
         binding.TransferCompleteCheckTransferTV.setOnClickListener {
+            viewModel.removeInformation()
             findNavController().navigate(R.id.wallet_fragment)
         }
         binding.TransferCompleteCompleteTV.setOnClickListener {
+            viewModel.removeInformation()
             findNavController().navigate(R.id.homeFragment)
         }
     }

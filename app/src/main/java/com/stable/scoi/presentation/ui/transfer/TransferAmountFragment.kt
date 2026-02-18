@@ -32,7 +32,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
         repeatOnStarted(viewLifecycleOwner) {
             launch {
                 viewModel.uiState.collect { state ->
-                    val myAssetAmount = state.balances.find { it.currency == "KRW" }
+                    val myAssetAmount = state.balances.find { it.currency == viewModel.myAssetSymbol.value }
                     if (myAssetAmount != null )
                     binding.TransferAmountAvailableAmountTV.text = myAssetAmount.balance
                 }
@@ -41,6 +41,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
 
         //유효성 검사
         binding.TransferNextTV.setOnClickListener {
+            viewModel.information.value.amount = binding.TransferAmountET.text.toString().replace(",", "")
 
             val currentState = viewModel.uiState.value
 
@@ -183,7 +184,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                 if (amount == null) {
                     binding.TransferAmountWarningTV.visibility = View.GONE
                     binding.TransferNextTV.isEnabled = false
-                } else if (amount <= 2) {
+                } else if (amount <= 3) {
                     binding.TransferAmountWarningTV.visibility = View.VISIBLE
                     binding.TransferNextTV.isEnabled = false
                 } else {
@@ -202,11 +203,11 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                     when (network) {
                         Network.TRON -> {
                             binding.TransferAmountNetworkTypeTV.text = "트론"
-                            binding.TransferAmountNetworkFeeTV.text = "FREE"
+                            binding.TransferAmountNetworkFeeTV.text = "0"
                         }
                         Network.ETHEREUM -> {
                             binding.TransferAmountNetworkTypeTV.text = "이더리움"
-                            binding.TransferAmountNetworkFeeTV.text = "1"
+                            binding.TransferAmountNetworkFeeTV.text = "4"
                         }
                         Network.KAIA -> {
                             binding.TransferAmountNetworkTypeTV.text = "카이아"
@@ -216,6 +217,7 @@ class TransferAmountFragment : SetNetworkType, BaseFragment<FragmentTransferAmou
                             binding.TransferAmountNetworkTypeTV.text = "앱토스"
                             binding.TransferAmountNetworkFeeTV.text = "0.1"
                         }
+                        else -> Unit
                     }
                 }
             }

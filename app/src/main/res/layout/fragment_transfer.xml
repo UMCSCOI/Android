@@ -226,14 +226,21 @@
             <EditText
                 android:id="@+id/Transfer_inputAddress_ET"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                android:inputType="textMultiLine"
+                android:gravity="top|start"
+                android:maxLines="5"
+                android:scrollbars="vertical"
+
+                android:imeOptions="actionDone"
+
                 app:layout_constraintTop_toBottomOf="@+id/Transfer_address_TV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="16dp"
-                android:inputType="text"
-                android:layout_marginEnd="16dp"
-                android:imeOptions="actionDone"/>
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <ImageView
                 android:id="@+id/Transfer_inputAddress_remove_IV"

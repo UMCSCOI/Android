@@ -61,18 +61,18 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
         }
 
         val addressWatcher = object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
+            override fun afterTextChanged(editable: Editable?) {
                 binding.TransferInputAddressET.removeTextChangedListener(this)
 
-                val text = p0.toString().replace("\n", "")
-                val builder = StringBuilder()
+                val text = editable.toString().replace("\n", "")
+                val formatted = text.chunked(24).joinToString("\n")
 
-                text.chunked(24).forEachIndexed { index, chunk ->
-                    builder.append(chunk)
-                    if (index != text.chunked(24).lastIndex) {
-                        builder.append("\n")
-                    }
+                if (formatted != editable.toString()) {
+                    binding.TransferInputAddressET.setText(formatted)
+                    binding.TransferInputAddressET.setSelection(formatted.length)
                 }
+
+                binding.TransferInputAddressET.addTextChangedListener(this)
 
             }
 
@@ -128,7 +128,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             val nameKOR: String = binding.TransferInputNameET.text.toString()
             val nameENG: String =
                 binding.TransferInputName1ENGET.text.toString() + " " + binding.TransferInputName2ENGET.text.toString()
-            val address: String = binding.TransferInputAddressET.text.toString()
+            val address: String = binding.TransferInputAddressET.text.toString().replace("\n", "")
             viewModel.submitReceiver(nameKOR, nameENG, address)
             viewModel.onClickNextButton()
         }

@@ -6,6 +6,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.lifecycle.viewModelScope
+import com.stable.scoi.data.util.EncryptionUtil
 import com.stable.scoi.presentation.base.BaseViewModel
 import com.stable.scoi.domain.model.transfer.ExecuteRequest
 import com.stable.scoi.domain.model.transfer.QuoteRequest
@@ -90,6 +91,10 @@ class TransferViewModel @Inject constructor(
         asSymb = myCoin
     }
 
+    fun removeInformation() {
+        _exchangeType.value = Exchange.Empty
+        _networkType.value = Network.Empty
+    }
 
     //NextButton
     fun onClickNextButton() {
@@ -122,11 +127,14 @@ class TransferViewModel @Inject constructor(
     fun submitPassword(
         first: String, second: String, third:String, fourth: String, fifth: String, sixth: String) {
         val simplePassword = first + second + third + fourth + fifth + sixth
+        val encryptionUtil = EncryptionUtil.encrypt(simplePassword)
+
         val network = when (netWorkType.value) {
             Network.TRON -> "TRX"
             Network.KAIA -> "KAIA"
             Network.APTOS -> "APT"
             Network.ETHEREUM -> "ETH"
+            else -> ""
         }
         val idempotencyKey = UUID.randomUUID().toString()
 
@@ -136,10 +144,11 @@ class TransferViewModel @Inject constructor(
             information.value.amount,
             receiver.value.walletAddress,
             receiver.value.exchangeType,
+            myExchange.value,
             "INDIVIDUAL",
             receiver.value.recipientKoName,
             receiver.value.recipientEnName,
-            simplePassword,
+            encryptionUtil,
             idempotencyKey
         )
         execute(execute.value)
@@ -298,6 +307,7 @@ class TransferViewModel @Inject constructor(
                 val string = "앱토스"
                 return string
             }
+            else -> return ""
         }
     }
 
@@ -307,8 +317,7 @@ class TransferViewModel @Inject constructor(
             Network.KAIA -> "KAIA"
             Network.APTOS -> "APT"
             Network.ETHEREUM -> "ETH"
+            else -> ""
         }
     }
-
-
 }

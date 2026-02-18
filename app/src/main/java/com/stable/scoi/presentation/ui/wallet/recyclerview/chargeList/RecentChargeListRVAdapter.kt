@@ -10,6 +10,7 @@ import com.stable.scoi.databinding.ItemMywalletChargeListBinding
 import com.stable.scoi.domain.model.wallet.Transactions
 import com.stable.scoi.domain.model.wallet.TransactionsCharge
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: RecentChargeListOnClickListener): RecyclerView.Adapter<RecentChargeListRVAdapter.ViewHolder>() {
@@ -125,7 +126,12 @@ class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: Rec
                 Locale.getDefault()
             )
             val date = input.parse(dateString)
-            output.format(date!!)
+
+            val calendar = Calendar.getInstance()
+            calendar.time = date!!
+            calendar.add(Calendar.HOUR_OF_DAY, 9)
+
+            output.format(calendar.time)
         } catch (e: Exception) {
             dateString
         }
