@@ -1,6 +1,5 @@
 package com.stable.scoi.presentation.ui.login
 
-import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
@@ -12,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentLoginPinBinding
 import com.stable.scoi.presentation.base.BaseFragment
-import com.stable.scoi.presentation.ui.Auth.JoinViewModel
+import com.stable.scoi.util.SLOG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -21,8 +20,6 @@ import kotlinx.coroutines.launch
 class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEvent, LoginViewModel>(
     FragmentLoginPinBinding::inflate
 ) {
-
-
     override val viewModel: LoginViewModel by activityViewModels()
 
 
@@ -50,35 +47,32 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
                         pinEditTexts[index + 1].requestFocus()
                     } else {
                         hideKeyboard()
+
+                        val completePin = pinEditTexts.joinToString("") { it.text.toString() }
+                        SLOG.D("현재 입력된 PIN: $completePin (길이: ${completePin.length})")
+                        if (completePin.length == 6) {
+                            viewModel.onPinChanged(completePin)
+
+                        }
                     }
                 }
 
+                // 평상시 입력 중 상태 업데이트
                 val currentPin = pinEditTexts.joinToString("") { it.text.toString() }
                 viewModel.onPinChanged(currentPin)
-
             }
-
-            editText.setOnKeyListener { _, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN) {
-                    if (editText.text.isEmpty() && index > 0) {
-                        val prevEt = pinEditTexts[index - 1]
-                        prevEt.requestFocus()
-                        prevEt.text = null
-                        return@setOnKeyListener true
-                    }
-                }
-                false
-            }
-        }
-
-        binding.loginPinBioTv.setOnClickListener {
-            viewModel.onBiometricLogin()
         }
 
         binding.loginPinInputActiveCv.setOnClickListener {
+            SLOG.D("버튼이 입력되었습니다.")
+            viewModel.onCompleteClicked()
+        }
+        binding.loginPinInputInactiveCv.setOnClickListener {
+            SLOG.D("버튼이 입력되었습니다.")
             viewModel.onCompleteClicked()
         }
     }
+
     private fun resetErrorState(pinEditTexts: List<EditText>) {
         // 에러 메시지가 떠있다면 안 보이게 처리
         if (binding.loginPinErrorTv.visibility == View.VISIBLE) {
@@ -136,7 +130,6 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
 
                 binding.loginPinErrorTv.visibility = View.VISIBLE
 
-
                 pinEditTexts.forEach { editText ->
                     editText.setBackgroundResource(R.drawable.bg_pin_underline_error)
 
@@ -181,8 +174,6 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             showKeyboard(targetEt)
         }, 300)
     }
-
-
 
 private fun showKeyboard(view: View) {
     if (view.requestFocus()) {

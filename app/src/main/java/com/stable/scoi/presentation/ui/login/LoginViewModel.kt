@@ -2,16 +2,19 @@ package com.stable.scoi.presentation.ui.login
 
 import androidx.lifecycle.viewModelScope
 import com.stable.scoi.data.local.PreferenceManager
+import com.stable.scoi.data.util.EncryptionUtil
 import com.stable.scoi.domain.repository.auth.AuthRepository
 import com.stable.scoi.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.json.JSONObject // ★ JSON 파싱용
+import retrofit2.HttpException // ★ 에러 처리용
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository,      // 1. API 통신용
-    private val preferenceManager: PreferenceManager // 2. 저장된 전화번호 가져오기용
+    private val authRepository: AuthRepository,
+    private val preferenceManager: PreferenceManager // ★ 대문자로 수정됨
 ) : BaseViewModel<LoginState, LoginEvent>(LoginState()) {
 
     init {
@@ -19,88 +22,91 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun checkAutoLoginStatus() {
-        // 토큰이 있는지 확인 (자동 로그인 여부)
         val token = preferenceManager.getAccessToken()
         if (token.isEmpty()) {
-            // 토큰 없으면 만료 처리(또는 로그인 화면 유지)
-            // emitEvent(LoginEvent.NavigationToExpired) // 기획에 따라 결정
+            // 자동 로그인 로직 필요 시 추가
         }
     }
 
-
-    // 완료 버튼 눌렀을 때
     fun onCompleteClicked() {
-        if (!uiState.value.isLoading && uiState.value.isButtonEnabled) {
             tryLogin(uiState.value.simplePassword)
-        }
     }
 
-    // 생체 인증 버튼 클릭
     fun onBiometricLogin() {
         emitEvent(LoginEvent.NavigationToBiometric)
     }
 
     private fun tryLogin(pin: String) {
         viewModelScope.launch {
-            // 1. 로딩 시작
-            updateState { this.copy(isLoading = true) }
+            // 로딩 시작
+            updateState { copy(isLoading = true) }
 
             val savedPhoneNumber = preferenceManager.getPhoneNumber()
+            val verificationToken = preferenceManager.getVerificationToken()
 
-            if (savedPhoneNumber.isEmpty()) {
-                updateState { this.copy(isLoading = false) }
-                emitEvent(LoginEvent.ShowError("저장된 사용자 정보가 없습니다. 다시 가입해주세요."))
-                return@launch
-            }
+            val encryptedPin = EncryptionUtil.encrypt(pin)
 
-            // 3. Repository를 통해 서버 API 호출
-            val result = authRepository.pinLogin(
+            authRepository.pinLogin(
                 phoneNumber = savedPhoneNumber,
-                simplePassword = pin
-            )
+                simplePassword = encryptedPin,
+                verificationToken = verificationToken
+            ).onSuccess { response ->
 
-            // 4. 결과 처리
-            if (result.isSuccess) {
-                // 성공 시 메인으로 이동
                 emitEvent(LoginEvent.NavigationToMain)
-            } else {
-                // 실패 시 에러 메시지 띄우기
-                val errorMsg = result.exceptionOrNull()?.message ?: "로그인에 실패했습니다."
-                emitEvent(LoginEvent.ShowError(errorMsg))
+            }.onFailure { e ->
 
-                // (선택) 비밀번호 틀렸으니 입력 초기화
-                updateState { this.copy(simplePassword = "", isButtonEnabled = false) }
+                val errorMessage = parseErrorResponse(e)
+                emitEvent(LoginEvent.ShowError(errorMessage))
+                updateState { copy(simplePassword = "", isButtonEnabled = false) }
             }
 
-            // 5. 로딩 종료
-            updateState { this.copy(isLoading = false) }
+            updateState { copy(isLoading = false) }
         }
     }
 
-    fun onPhoneAuthNumberChanged(input: String) {
-        updateState {
-            this.copy(
-                phoneNumber = input,
-                isCodeSendEnabled = true
-            )
+    // --- 에러 응답 파싱 (남은 횟수 추출) ---
+    private fun parseErrorResponse(e: Throwable): String {
+        return try {
+            if (e is HttpException) {
+                val errorJson = e.response()?.errorBody()?.string()
+
+                if (!errorJson.isNullOrEmpty()) {
+                    val jsonObject = JSONObject(errorJson)
+                    val code = jsonObject.optString("code")
+                    val message = jsonObject.optString("message")
+
+                    // 비밀번호 불일치 에러 코드 확인
+                    if (code == "AUTH401_1") {
+                        val resultObj = jsonObject.optJSONObject("result")
+                        val remain = resultObj?.optInt("remainingAttempts") ?: 0
+                        return "$message (남은 기회: ${remain}회)"
+                    } else {
+                        return message
+                    }
+                }
+            }
+            e.message ?: "로그인에 실패했습니다."
+        } catch (ex: Exception) {
+            "로그인 중 오류가 발생했습니다."
         }
     }
 
-    fun onAuthChanged(input: String) {
-        this.updateState {
-            this.copy(
-                verificationCode = input,
-                isCodeEnabled = true
-            )
-        }
-    }
-    fun onPinChanged(input:String){
+    // --- 입력 핸들러 ---
+    fun onPinChanged(input: String) {
         this.updateState {
             this.copy(
                 simplePassword = input,
                 isButtonEnabled = input.length == 6
             )
         }
+    }
+
+    fun onPhoneAuthNumberChanged(input: String) {
+        updateState { this.copy(phoneNumber = input, isCodeSendEnabled = true) }
+    }
+
+    fun onAuthChanged(input: String) {
+        this.updateState { this.copy(verificationCode = input, isCodeEnabled = true) }
     }
 
     fun onSendClicked() {
@@ -110,7 +116,7 @@ class LoginViewModel @Inject constructor(
     private fun verification(code: String) {
         val currentState = uiState.value
         viewModelScope.launch {
-           authRepository.verifySms(currentState.phoneNumber,code)
+            authRepository.verifySms(currentState.phoneNumber, code)
         }
     }
 }
