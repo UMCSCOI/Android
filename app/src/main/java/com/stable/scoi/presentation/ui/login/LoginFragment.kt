@@ -9,6 +9,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
+import com.stable.scoi.databinding.DialogAdmitLimitBinding
 import com.stable.scoi.databinding.FragmentLoginPinBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.util.SLOG
@@ -49,7 +50,6 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
                         hideKeyboard()
 
                         val completePin = pinEditTexts.joinToString("") { it.text.toString() }
-                        SLOG.D("현재 입력된 PIN: $completePin (길이: ${completePin.length})")
                         if (completePin.length == 6) {
                             viewModel.onPinChanged(completePin)
 
@@ -57,17 +57,12 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
                     }
                 }
 
-                // 평상시 입력 중 상태 업데이트
                 val currentPin = pinEditTexts.joinToString("") { it.text.toString() }
                 viewModel.onPinChanged(currentPin)
             }
         }
 
         binding.loginPinInputActiveCv.setOnClickListener {
-            SLOG.D("버튼이 입력되었습니다.")
-            viewModel.onCompleteClicked()
-        }
-        binding.loginPinInputInactiveCv.setOnClickListener {
             SLOG.D("버튼이 입력되었습니다.")
             viewModel.onCompleteClicked()
         }
@@ -132,12 +127,16 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
 
                 pinEditTexts.forEach { editText ->
                     editText.setBackgroundResource(R.drawable.bg_pin_underline_error)
-
                 }
+
+                pinEditTexts.forEach { it.text = null }
 
             }
             is LoginEvent.NavigationToExpired -> {
                 findNavController().navigate(R.id.action_loginFragment_to_loginExpiredFragment)
+            }
+            is LoginEvent.ShowAccountLockedDialog -> {
+                showAdmitLimitDialog()
             }
 
             is LoginEvent.VerifySuccess -> {
@@ -185,5 +184,25 @@ private fun showKeyboard(view: View) {
     private fun hideKeyboard() {
         val window = requireActivity().window
         WindowInsetsControllerCompat(window, binding.root).hide(WindowInsetsCompat.Type.ime())
+    }
+
+    private fun showAdmitLimitDialog() {
+        val dialogBinding = DialogAdmitLimitBinding.inflate(layoutInflater)
+
+        val builder =
+            com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setView(dialogBinding.root)
+                .setCancelable(false)
+
+        val dialog = builder.create()
+
+        dialogBinding.admitLimitButtonTv.setOnClickListener {
+            dialog.dismiss()
+            findNavController().navigate(R.id.action_loginFragment_to_re_join_fragment)
+
+        }
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialog.show()
     }
 }

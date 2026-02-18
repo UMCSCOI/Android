@@ -185,6 +185,15 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_joinAuthFragment"
+            app:destination="@id/joinAuthFragment" />
+        <action
+            app:destination="@id/login_re_fragment"
+            android:id="@+id/action_loginFragment_to_loginRRRFragment"/>
+        <action
+            android:id="@+id/action_loginFragment_to_re_join_fragment"
+            app:destination="@id/re_join_auth_fragment"/>
     </fragment>
 
     <fragment
@@ -414,6 +423,38 @@
             android:id="@+id/action_joinCompleteFragment_to_pinFragment"
             app:destination="@id/login_pin_fragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/login_re_fragment"
+        android:name="com.stable.scoi.presentation.ui.login.LoginRRRFragment"
+        tools:layout="@layout/fragment_login_pin_reg">
+        <action
+            android:id="@+id/action_loginRRRFragment_to_ReloginRegDoneFragment"
+            app:destination="@id/re_reg_done_fragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/re_join_auth_fragment"
+        android:name="com.stable.scoi.presentation.ui.Auth.ReJoinAuthFragment">
+
+        <action
+            android:id="@+id/action_joinAuthFragment_to_loginRRRFragment"
+            app:destination="@id/login_re_fragment" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/re_reg_done_fragment"
+        android:name="com.stable.scoi.presentation.ui.login.ReLoginRegDoneFragment"
+        tools:layout="@layout/fragment_login_pin_done">
+        <action
+            android:id="@+id/action_ReLoginRegDoneFragment_to_LoginFragment"
+            app:destination="@id/login_pin_fragment"/>
+    </fragment>
+
+
 
 
 </navigation>
