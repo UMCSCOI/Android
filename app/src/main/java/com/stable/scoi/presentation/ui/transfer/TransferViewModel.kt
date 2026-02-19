@@ -114,7 +114,7 @@ class TransferViewModel @Inject constructor(
 
 
     //Receiver
-    fun submitReceiver(receiverKORName: String, receiverENGName: String, receiverAddress: String) {
+    fun submitReceiver(receiverKORName: String, receiverENGName: String?, receiverAddress: String) {
         _receiver.value = _receiver.value.copy(
             recipientKoName = receiverKORName,
             recipientEnName = receiverENGName,

@@ -12,7 +12,7 @@ data class ExecuteRequest (
     val exchangeType: String = "",
     val receiverType: String = "",
     val receiverKoName: String = "",
-    val receiverEnName: String = "",
+    val receiverEnName: String? = "",
     val simplePassword: String = "",
     val idempotentKey: String = ""
 )
