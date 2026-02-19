@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferBinding
-import com.stable.scoi.domain.model.transfer.DirectoryResult
+import com.stable.scoi.domain.model.transfer.DirectoryListResponse
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.ExchangeBottomSheet
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetExchangeType
@@ -39,8 +39,9 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
         //발신인 정보 입력 (homeFragment 정보)
         viewModel.setMyInformation(args.myExchange, args.myAddress, args.myCoin)
         Log.d("arg_info", viewModel.myExchange.value)
+
         //주소록 불러오기
-        viewModel.setDirectoryList(viewModel.myExchange.value, viewModel.myAssetSymbol.value)
+        viewModel.setDirectoryList(args.myExchange, args.myCoin)
 
         //버튼 비활성화
         binding.TransferNextTV.isEnabled = false
@@ -208,6 +209,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             launch {
                 viewModel.uiState.collectLatest { state ->
                     directoryRVAdapter.setItems(state.directoryList)
+                    Log.d("state_check", "size=${state.directoryList.size}")
                 }
             }
         }
@@ -231,7 +233,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
 
 
     //RVAdatper
-    override fun dtOnclickListener(result: DirectoryResult) {
+    override fun dtOnclickListener(result: DirectoryListResponse) {
         viewModel.submitReceiver(result.recipientKoName,result.recipientEnName,result.walletAddress) //APi 변경 필요
         changeStringToExchangeType(result.exchangeType)
         findNavController().navigate(R.id.transfer_amount_fragment)

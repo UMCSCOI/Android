@@ -1,6 +1,7 @@
 package com.stable.scoi.presentation.ui.transfer
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -162,15 +163,20 @@ class TransferViewModel @Inject constructor(
 
     //API
     fun setDirectoryList(exchange: String, coinType: String) = viewModelScope.launch {
+        Log.d("activated", "activated")
         resultResponse(
             response = directoryRepository.loadDirectoryList(exchange, coinType),
 
             successCallback = { directoryListResponse ->
                 updateState {
                     copy(
-                        directoryList = directoryListResponse.result,
+                        directoryList = directoryListResponse,
                     )
                 }
+            },
+
+            errorCallback = {
+                Log.d("errer", "errer")
             }
         )
     }
