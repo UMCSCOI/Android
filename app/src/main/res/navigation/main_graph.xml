@@ -17,6 +17,12 @@
             android:id="@+id/action_splash_fragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
+<<<<<<< SI-bong
+=======
+            android:id="@+id/action_splash_fragment_to_joinFragment"
+            app:destination="@id/join_fragment" />
+        <action
+>>>>>>> SI-NEWNEW
             android:id="@+id/action_splash_fragment_to_join_auth_fragment"
             app:destination="@id/joinAuthFragment"/>
         <action
@@ -261,6 +267,9 @@
         <action
             android:id="@+id/action_joinFragment_to_loginRegFragment"
             app:destination="@id/login_reg_fragment" />
+        <action
+            android:id="@+id/action_joinAuthFragment_to_loginFragment"
+            app:destination="@id/login_pin_fragment"/>
     </fragment>
 
     <fragment
@@ -301,6 +310,18 @@
         <action
             android:id="@+id/action_loginFragment_to_loginExpiredFragment"
             app:destination="@id/login_expired_fragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_bioFragment"
+            app:destination="@id/bio_fragment"/>
+        <action
+            android:id="@+id/action_loginFragment_to_joinAuthFragment"
+            app:destination="@id/joinAuthFragment" />
+        <action
+            app:destination="@id/login_re_fragment"
+            android:id="@+id/action_loginFragment_to_loginRRRFragment"/>
+        <action
+            android:id="@+id/action_loginFragment_to_re_join_fragment"
+            app:destination="@id/re_join_auth_fragment"/>
         <action
             android:id="@+id/action_loginFragment_to_bioFragment"
             app:destination="@id/bio_fragment"/>
