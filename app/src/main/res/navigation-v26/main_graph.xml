@@ -477,6 +477,9 @@
         <action
             android:id="@+id/action_KeyFragment_to_joinCompleteFragment"
             app:destination="@id/join_complete_fragment"/>
+        <action
+            android:id="@+id/action_KeyFragment_to_homeFragment"
+            app:destination="@id/homeFragment"/>
 
     </fragment>
 
