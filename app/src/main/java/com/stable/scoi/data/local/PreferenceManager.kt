@@ -29,38 +29,49 @@ class PreferenceManager @Inject constructor(
         prefs.edit().putString(KEY_REFRESH_TOKEN, token).apply()
     }
 
+    fun getVerificationToken(): String = prefs.getString(KEY_VERIFICATION_TOKEN, "") ?: ""
+
+
     fun getRefreshToken(): String? = prefs.getString(KEY_REFRESH_TOKEN, null)
 
-    fun saveSmsExpiredAt(expiredAt: String) {
-        prefs.edit().putString(KEY_SMS_EXPIRED_AT, expiredAt).apply()
-    }
-
-    fun getSmsExpiredAt(): String? = prefs.getString(KEY_SMS_EXPIRED_AT, null)
-
+    // --- Verification Token (로그인/가입용) ---
     fun saveVerificationToken(token: String) {
         prefs.edit().putString(KEY_VERIFICATION_TOKEN, token).apply()
     }
 
-    fun getVerificationToken(): String? = prefs.getString(KEY_VERIFICATION_TOKEN, null)
-
+    // --- Phone Number (로그인 시 필수!) ---
+    // ★ 누락되었던 저장 함수를 추가했습니다.
+    fun savePhoneNumber(number: String) {
+        prefs.edit().putString(KEY_PHONE_NUMBER, number).apply()
+    }
     fun getPhoneNumber(): String = prefs.getString(KEY_PHONE_NUMBER, "") ?: ""
 
+    // --- SMS Expired ---
+    fun saveSmsExpiredAt(expiredAt: String) {
+        prefs.edit().putString(KEY_SMS_EXPIRED_AT, expiredAt).apply()
+    }
+    fun getSmsExpiredAt(): String = prefs.getString(KEY_SMS_EXPIRED_AT, "") ?: ""
 
     fun saveVerificationSuccess() {
         val currentTime = System.currentTimeMillis()
-        val tenMinutesInMillis = 10 * 60 * 1000 // 10분
+        val tenMinutesInMillis = 10 * 60 * 1000
         val expireTime = currentTime + tenMinutesInMillis
         prefs.edit().putLong(KEY_VERIFY_EXPIRE_TIME, expireTime).apply()
     }
-
 
     fun isVerificationValid(): Boolean {
         val expireTime = prefs.getLong(KEY_VERIFY_EXPIRE_TIME, 0)
         val currentTime = System.currentTimeMillis()
 
         if (expireTime == 0L) return false
-        return currentTime < expireTime // 현재 시간이 만료 전이면 true
+        return currentTime < expireTime
     }
+    fun saveSimplePassword(password: String) {
+        prefs.edit().putString("SIMPLE_PASSWORD", password).apply()
+    }
+
+    fun getSimplePassword(): String = prefs.getString("SIMPLE_PASSWORD", "") ?: ""
+
 
     // 데이터 초기화
     fun clear() {

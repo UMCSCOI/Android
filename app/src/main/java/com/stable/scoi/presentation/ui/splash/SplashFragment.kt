@@ -30,7 +30,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashUiState, Splash
 
                 override fun onAnimationEnd(animation: Animator) {
                     SLOG.D("하이?")
-                    navigateToHome()
+                   findNavController().navigate(R.id.action_splash_fragment_to_join_auth_fragment)
+//                    findNavController().navigate(R.id.action_splash_fragment_to_loginFragment)
+                   // findNavController().navigate(R.id.action_splash_fragment_to_joinFragment)
                 }
 
                 override fun onAnimationRepeat(animation: Animator) {

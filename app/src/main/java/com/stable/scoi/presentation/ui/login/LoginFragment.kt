@@ -1,6 +1,6 @@
 package com.stable.scoi.presentation.ui.login
 
-import android.view.KeyEvent
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
@@ -10,9 +10,9 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
+import com.stable.scoi.databinding.DialogAdmitLimitBinding
 import com.stable.scoi.databinding.FragmentLoginPinBinding
 import com.stable.scoi.presentation.base.BaseFragment
-import com.stable.scoi.presentation.ui.Auth.JoinViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -21,8 +21,6 @@ import kotlinx.coroutines.launch
 class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEvent, LoginViewModel>(
     FragmentLoginPinBinding::inflate
 ) {
-
-
     override val viewModel: LoginViewModel by activityViewModels()
 
 
@@ -41,7 +39,26 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             binding.loginPin4Et, binding.loginPin5Et, binding.loginPin6Et
         )
 
+//        pinEditTexts.forEach { editText ->
+//            editText.setOnFocusChangeListener { _, hasFocus ->
+//                if (hasFocus) {
+//                    binding.loginPinInputInactiveCv.visibility = View.INVISIBLE
+//                    binding.loginPinInputActiveCv.visibility = View.INVISIBLE
+//                } else {
+//                     binding.loginPinInputInactiveCv.postDelayed({
+//                        val anyFocused = pinEditTexts.any { it.hasFocus() }
+//                        if (!anyFocused) {
+//                            binding.loginPinInputInactiveCv.visibility = View.INVISIBLE
+//                        }
+//                    }, 50)
+//                }
+//            }
+//        }
+        val bigDotMethod = BigDotTransformationMethod()
+
         pinEditTexts.forEachIndexed { index, editText ->
+
+            editText.transformationMethod = bigDotMethod
             editText.doOnTextChanged { text, _, _, _ ->
                 resetErrorState(pinEditTexts)
 
@@ -55,15 +72,13 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
 
                 val currentPin = pinEditTexts.joinToString("") { it.text.toString() }
                 viewModel.onPinChanged(currentPin)
-
             }
-
             editText.setOnKeyListener { _, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN) {
+                if (keyCode == android.view.KeyEvent.KEYCODE_DEL && event.action == android.view.KeyEvent.ACTION_DOWN) {
                     if (editText.text.isEmpty() && index > 0) {
                         val prevEt = pinEditTexts[index - 1]
                         prevEt.requestFocus()
-                        prevEt.text = null
+                        prevEt.setText("")
                         return@setOnKeyListener true
                     }
                 }
@@ -71,14 +86,16 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             }
         }
 
-        binding.loginPinBioTv.setOnClickListener {
-            viewModel.onBiometricLogin()
-        }
+
 
         binding.loginPinInputActiveCv.setOnClickListener {
             viewModel.onCompleteClicked()
         }
+        binding.loginPinBioTv.setOnClickListener {
+           viewModel.onBiometricLogin()
+        }
     }
+
     private fun resetErrorState(pinEditTexts: List<EditText>) {
         // 에러 메시지가 떠있다면 안 보이게 처리
         if (binding.loginPinErrorTv.visibility == View.VISIBLE) {
@@ -136,15 +153,19 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
 
                 binding.loginPinErrorTv.visibility = View.VISIBLE
 
-
                 pinEditTexts.forEach { editText ->
                     editText.setBackgroundResource(R.drawable.bg_pin_underline_error)
-
                 }
+
+                val lastEt = pinEditTexts.last()
+                lastEt.requestFocus()
 
             }
             is LoginEvent.NavigationToExpired -> {
                 findNavController().navigate(R.id.action_loginFragment_to_loginExpiredFragment)
+            }
+            is LoginEvent.ShowAccountLockedDialog -> {
+                showAdmitLimitDialog()
             }
 
             is LoginEvent.VerifySuccess -> {
@@ -182,8 +203,6 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
         }, 300)
     }
 
-
-
 private fun showKeyboard(view: View) {
     if (view.requestFocus()) {
         val window = requireActivity().window
@@ -194,5 +213,38 @@ private fun showKeyboard(view: View) {
     private fun hideKeyboard() {
         val window = requireActivity().window
         WindowInsetsControllerCompat(window, binding.root).hide(WindowInsetsCompat.Type.ime())
+    }
+
+    private fun showAdmitLimitDialog() {
+        val dialogBinding = DialogAdmitLimitBinding.inflate(layoutInflater)
+
+        val builder =
+            com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setView(dialogBinding.root)
+                .setCancelable(false)
+
+        val dialog = builder.create()
+
+        dialogBinding.admitLimitButtonTv.setOnClickListener {
+            dialog.dismiss()
+            findNavController().navigate(R.id.action_loginFragment_to_re_join_fragment)
+
+        }
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+
+}
+class BigDotTransformationMethod : PasswordTransformationMethod() {
+    override fun getTransformation(source: CharSequence, view: View): CharSequence {
+        return PasswordCharSequence(source)
+    }
+
+    private inner class PasswordCharSequence(private val source: CharSequence) : CharSequence {
+        override val length: Int get() = source.length
+        override fun get(index: Int): Char = '●'
+        override fun subSequence(startIndex: Int, endIndex: Int): CharSequence {
+            return source.subSequence(startIndex, endIndex)
+        }
     }
 }

@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class JoinAuthFragment :
+class ReJoinAuthFragment :
     BaseFragment<FragmentPhoneAuthBinding, JoinState, JoinEvent, JoinViewModel>(
         FragmentPhoneAuthBinding::inflate
     ) {
@@ -29,9 +29,6 @@ class JoinAuthFragment :
 
     override fun initView() {
 
-        val white = ContextCompat.getColor(requireActivity(), R.color.white)
-        requireActivity().findViewById<View>(R.id.main).setBackgroundColor(white)
-
         binding.phoneAuthBackBtn.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -41,16 +38,25 @@ class JoinAuthFragment :
 
         binding.phoneAuthNumberEt.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.phoneAuthSelectedNumberLine.visibility = View.VISIBLE
+                binding.phoneAuthInputInactiveCv.visibility = View.INVISIBLE
             } else {
-                binding.phoneAuthSelectedNumberLine.visibility = View.INVISIBLE
+                binding.phoneAuthInputInactiveCv.visibility = View.VISIBLE
             }
         }
         binding.phoneAuthCodeEt.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.phoneAuthSelectedCodeLine.visibility = View.VISIBLE
-            } else {
-                binding.phoneAuthSelectedCodeLine.visibility = View.INVISIBLE
+            binding.phoneAuthNumberEt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.phoneAuthSelectedNumberLine.visibility = View.VISIBLE
+                } else {
+                    binding.phoneAuthSelectedNumberLine.visibility = View.INVISIBLE
+                }
+            }
+            binding.phoneAuthCodeEt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.phoneAuthSelectedCodeLine.visibility = View.VISIBLE
+                } else {
+                    binding.phoneAuthSelectedCodeLine.visibility = View.INVISIBLE
+                }
             }
         }
 
@@ -58,6 +64,8 @@ class JoinAuthFragment :
         binding.phoneAuthNumberEt.doOnTextChanged { text, _, _, _ ->
             val input = text.toString()
             val rawNumber = input.replace("-", "")
+
+            binding.phoneAuthSelectedNumberLine.visibility = View.VISIBLE
 
             if (rawNumber.length == 11) {
                 val formatted = input.toPhoneNumber()
@@ -222,18 +230,13 @@ class JoinAuthFragment :
                 binding.phoneAuthCodeActiveTimerTv.visibility = View.GONE
                 binding.phoneAuthCodeActiveCheckIv.visibility = View.VISIBLE
                 binding.phoneAuthCodeCheckIv.visibility = View.GONE
+                findNavController().navigate(R.id.action_joinAuthFragment_to_loginRRRFragment)
             }
 
             is JoinEvent.ShowError -> {
                 binding.phoneAuthHelperTv.visibility = View.GONE
                 binding.phoneAuthErrorTv.visibility = View.VISIBLE
                 inputUi(isActive = false)
-            }
-            is JoinEvent.NavigateToJoin -> {
-                findNavController().navigate(R.id.action_joinAuthFragment_to_joinFragment)
-            }
-            is JoinEvent.NavigateToLogin -> {
-                findNavController().navigate(R.id.action_joinAuthFragment_to_loginFragment)
             }
 
             else -> {}

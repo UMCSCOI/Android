@@ -149,6 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="49dp"
+            android:layout_marginTop="4dp"
             android:text="잘못된 비밀번호입니다."
             android:textColor="@color/error"
             android:textSize="13sp"

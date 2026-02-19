@@ -41,12 +41,8 @@ class BioFragment : BaseFragment<FragmentBioLoginBinding, BioState, BioEvent, Bi
     override fun initView() {
         observeEvents()
 
-
-
-        // 1. 실행자 초기화
         executor = ContextCompat.getMainExecutor(requireContext())
 
-        // 2. 콜백 정의
         biometricPrompt = BiometricPrompt(this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
 
@@ -59,8 +55,9 @@ class BioFragment : BaseFragment<FragmentBioLoginBinding, BioState, BioEvent, Bi
                     binding.loginBioErrorIv.visibility = View.GONE
                     binding.loginBioPinTv.visibility=View.GONE
                     binding.loginBioUncheckIv.visibility= View.GONE
+
                     handler.postDelayed({
-                        viewModel.onBiometricSuccess()
+                        viewModel.tryLogin()
                     },2000)
 
 
@@ -178,7 +175,7 @@ class BioFragment : BaseFragment<FragmentBioLoginBinding, BioState, BioEvent, Bi
         dialog.findViewById<TextView>(R.id.no_biometric_reg_tv)?.setOnClickListener {
             dialog.dismiss()
 
-            findNavController().navigate(R.id.action_bioFragment_to_bioRegFragment)
+            findNavController().navigate(R.id.action_bioFragment_to_RebioRegFragment)
         }
 
         dialog.findViewById<TextView>(R.id.no_biometric_close_tv)?.setOnClickListener {

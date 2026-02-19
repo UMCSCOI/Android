@@ -14,7 +14,6 @@ import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentBioScanBinding
 import com.stable.scoi.presentation.base.BaseFragment
@@ -25,7 +24,7 @@ import kotlinx.coroutines.launch
 import kotlin.getValue
 
 @AndroidEntryPoint
-class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, BioViewModel>(
+class BioReRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, BioViewModel>(
     FragmentBioScanBinding::inflate
 ){
     override val viewModel: BioViewModel by activityViewModels()
@@ -39,7 +38,7 @@ class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, 
         }
 
         binding.bioScanInputInactiveCv.setOnClickListener {
-            findNavController().navigate(R.id.action_bioRegFragment_to_explainFragment)
+            findNavController().navigate(R.id.action_bioReRegFragment_to_homeFragment)
         }
 
         binding.loginPinInputActiveCv.setOnClickListener {
@@ -73,21 +72,9 @@ class BioRegFragment : BaseFragment<FragmentBioScanBinding, BioState, BioEvent, 
                 binding.bottomBtnLayout.visibility = View.GONE // 버튼 숨기기
                 viewLifecycleOwner.lifecycleScope.launch {
                     delay(2000)
-//                when (args.bioRegType) {
-//                    "JOIN" -> {// 가이드 화면으로 이동
-//                        handler.postDelayed({
-//                            findNavController().navigate(R.id.action_bioRegFragment_to_pinFragment)
-//                        }, 2000)
-//                    }
-//                    "LOGIN" -> {
-//                        handler.postDelayed({
-//                            findNavController().navigate(R.id.action_bioRegFragment_to_pinFragment)
-//                        }, 2000)
-//                    }
-//                }
                     if (isAdded) {
                         try {
-                            findNavController().navigate(R.id.action_bioRegFragment_to_explainFragment)
+                            findNavController().navigate(R.id.action_bioReRegFragment_to_loginFragment)
                         } catch (e: Exception) {
                             e.printStackTrace()
                             Toast.makeText(
