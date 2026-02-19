@@ -2,6 +2,7 @@ package com.stable.scoi.presentation.ui.transfer
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
@@ -9,11 +10,12 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.R
 import com.stable.scoi.databinding.FragmentTransferBinding
-import com.stable.scoi.domain.model.transfer.DirectoryResult
+import com.stable.scoi.domain.model.transfer.DirectoryListResponse
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.ExchangeBottomSheet
 import com.stable.scoi.presentation.ui.transfer.bottomsheet.SetExchangeType
@@ -26,34 +28,53 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class TransferFragment : DirectoryOnClickListener, SetExchangeType,
     BaseFragment<FragmentTransferBinding, TransferState, TransferEvent, TransferViewModel>(
-    FragmentTransferBinding::inflate
-) {
+        FragmentTransferBinding::inflate
+    ) {
     override val viewModel: TransferViewModel by activityViewModels()
+
+    val args: TransferFragmentArgs by navArgs()
 
     override fun initView() {
 
-        viewModel.setDirectoryList(viewModel.myExchange.value, viewModel.myAssetSymbol.value)
+        //발신인 정보 입력 (homeFragment 정보)
+        viewModel.setMyInformation(args.myExchange, args.myAddress, args.myCoin)
+        Log.d("arg_info", viewModel.myExchange.value)
 
+        //주소록 불러오기
+        viewModel.setDirectoryList(args.myExchange, args.myCoin)
+
+        //버튼 비활성화
         binding.TransferNextTV.isEnabled = false
 
         val watcher = object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
+            override fun afterTextChanged(p0: Editable?) {}
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val value1 = binding.TransferInputNameET.text.toString()
+                val value2 = binding.TransferInputName1ENGET.text.toString()
+                val value3 = binding.TransferInputName2ENGET.text.toString()
+                val value4 = binding.TransferInputAddressET.text.toString()
+
+                updateButtonState(value1, value2, value3, value4, viewModel.exchangeType.value)
+            }
+        }
+
+        val addressWatcher = object : TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
                 binding.TransferInputAddressET.removeTextChangedListener(this)
 
-                val text = p0.toString().replace("\n", "")
-                val builder = StringBuilder()
+                val text = editable.toString().replace("\n", "")
+                val formatted = text.chunked(24).joinToString("\n")
 
-                text.chunked(24).forEachIndexed { index, chunk ->
-                    builder.append(chunk)
-                    if (index != text.chunked(24).lastIndex) {
-                        builder.append("\n")
-                    }
+                if (formatted != editable.toString()) {
+                    binding.TransferInputAddressET.setText(formatted)
+                    binding.TransferInputAddressET.setSelection(formatted.length)
                 }
 
-                binding.TransferInputAddressET.setText(builder.toString())
-                binding.TransferInputAddressET.setSelection(binding.TransferInputAddressET.text.length)
-
                 binding.TransferInputAddressET.addTextChangedListener(this)
+
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -68,6 +89,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             }
         }
 
+        //EditText 삭제 버튼
         binding.apply {
             TransferInputNameET.textRemover(binding.TransferInputNameRemoveIV)
             TransferInputName1ENGET.textRemover(binding.TransferInputName1ENGRemoveIV)
@@ -75,22 +97,25 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             TransferInputAddressET.textRemover(binding.TransferInputAddressRemoveIV)
         }
 
-
+        //주소록 팝업 on
         binding.TransferDirectoryIcIV.setOnClickListener {
             binding.TransferDirectoryIcPopupTV.visibility = View.VISIBLE
             binding.TransferDirectoryIcPopupIV.visibility = View.VISIBLE
         }
 
+        //주소록 팝업 off
         binding.cd.setOnClickListener {
             binding.TransferDirectoryIcPopupTV.visibility = View.GONE
             binding.TransferDirectoryIcPopupIV.visibility = View.GONE
         }
 
+        //EditText 내용 입력 확인
         binding.TransferInputNameET.addTextChangedListener(watcher)
         binding.TransferInputName1ENGET.addTextChangedListener(watcher)
         binding.TransferInputName2ENGET.addTextChangedListener(watcher)
-        binding.TransferInputAddressET.addTextChangedListener(watcher)
+        binding.TransferInputAddressET.addTextChangedListener(addressWatcher)
 
+        //거래소 입력 버튼
         binding.TransferInputExchangeET.isFocusable = false
         binding.TransferInputExchangeET.setOnClickListener {
             ExchangeBottomSheet().show(
@@ -99,25 +124,28 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             )
         }
 
+        //다음 버튼
         binding.TransferNextTV.setOnClickListener {
             val nameKOR: String = binding.TransferInputNameET.text.toString()
             val nameENG: String =
                 binding.TransferInputName1ENGET.text.toString() + " " + binding.TransferInputName2ENGET.text.toString()
-            val address: String = binding.TransferInputAddressET.text.toString()
+            val address: String = binding.TransferInputAddressET.text.toString().replace("\n", "")
             viewModel.submitReceiver(nameKOR, nameENG, address)
             viewModel.onClickNextButton()
         }
 
         binding.TransferBackArrowIV.setOnClickListener {
-            //main으로 이동
+            findNavController().navigate(R.id.homeFragment)
         }
 
+        //keyboard '완료' 클릭 시 focus 해제
         viewModel.focusRemove(binding.TransferInputNameET)
         viewModel.focusRemove(binding.TransferInputAddressET)
         viewModel.focusRemove(binding.TransferCorpNameENGET)
         viewModel.focusRemove(binding.TransferCorpNameKORET)
 
-        //RecyclerView
+
+        // 주소록 RecyclerView
         val directoryRVAdapter = DirectoryRVAdapter(this)
         binding.TransferBookmarkRV.adapter = directoryRVAdapter
         binding.TransferBookmarkRV.layoutManager =
@@ -181,6 +209,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
             launch {
                 viewModel.uiState.collectLatest { state ->
                     directoryRVAdapter.setItems(state.directoryList)
+                    Log.d("state_check", "size=${state.directoryList.size}")
                 }
             }
         }
@@ -204,7 +233,7 @@ class TransferFragment : DirectoryOnClickListener, SetExchangeType,
 
 
     //RVAdatper
-    override fun dtOnclickListener(result: DirectoryResult) {
+    override fun dtOnclickListener(result: DirectoryListResponse) {
         viewModel.submitReceiver(result.recipientKoName,result.recipientEnName,result.walletAddress) //APi 변경 필요
         changeStringToExchangeType(result.exchangeType)
         findNavController().navigate(R.id.transfer_amount_fragment)

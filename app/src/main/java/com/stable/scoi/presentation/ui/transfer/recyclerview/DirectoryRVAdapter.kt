@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.stable.scoi.R
 import com.stable.scoi.databinding.ItemDirectoryBinding
-import com.stable.scoi.domain.model.transfer.DirectoryResult
+import com.stable.scoi.domain.model.transfer.DirectoryListResponse
 
 class DirectoryRVAdapter(private val directoryOnClickListener: DirectoryOnClickListener): RecyclerView.Adapter<DirectoryRVAdapter.ViewHolder>() {
 
-    private val items = ArrayList<DirectoryResult>()
+    private val items = ArrayList<DirectoryListResponse>()
 
-    fun setItems(newList: List<DirectoryResult>) {
+    fun setItems(newList: List<DirectoryListResponse>) {
         items.clear()
         items.addAll(newList)
         notifyDataSetChanged()
@@ -39,7 +39,7 @@ class DirectoryRVAdapter(private val directoryOnClickListener: DirectoryOnClickL
 
     inner class ViewHolder(val binding: ItemDirectoryBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(result: DirectoryResult) {
+        fun bind(result: DirectoryListResponse) {
             binding.apply {
                 directoryReceiverNameTV.text = result.recipientKoName
                 directoryReceiverAddressTV.text = formatWalletAddress(result.walletAddress)

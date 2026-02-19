@@ -42,7 +42,9 @@ class ChargeMainFragment : BaseFragment<FragmentChargeMainBinding, ChargeMainUiS
         repeatOnStarted(viewLifecycleOwner) {
             launch {
                 viewModel.uiEvent.collect {
-
+                    when (it) {
+                        ChargeMainEvent.MoveToMyPage -> findNavController().navigate(R.id.myPageFragment)
+                    }
                 }
             }
 

@@ -186,7 +186,7 @@ class ChartRepository @Inject constructor(
         val volume = obj.optDouble("trade_volume", Double.NaN)
         val askBid = obj.optString("ask_bid")
         if (price.isNaN() || volume.isNaN() || askBid.isBlank()) return null
-        val color = if (askBid == "BID") "#EF2B2A" else "#2569F2"
+        val color = if (askBid == "BID") "#EF2B2A" else "#4A4AFA"
 
         return RecentTrade(
             market = market, timestampMs = tsMs, price = price,

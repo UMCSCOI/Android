@@ -64,6 +64,26 @@
         <action
             android:id="@+id/action_tansfer_fragment_to_transfer_amount_fragment"
             app:destination="@id/transfer_amount_fragment" />
+
+        <action
+            android:id="@+id/action_transfer_fragemnt_backArrow"
+            app:destination="@id/homeFragment"/>
+
+        <argument
+            android:name="myCoin"
+            android:defaultValue=""
+            app:argType="string"/>
+
+        <argument
+            android:name="myAddress"
+            android:defaultValue=""
+            app:argType="string"/>
+
+        <argument
+            android:name="myExchange"
+            android:defaultValue=""
+            app:argType="string"/>
+
     </fragment>
 
     <fragment
@@ -88,6 +108,10 @@
         <action
             android:id="@+id/action_transfer_complete_to_wallet"
             app:destination="@id/wallet_fragment"/>
+
+        <action
+            android:id="@+id/action_transfer_complete_to_home"
+            app:destination="@id/homeFragment"/>
     </fragment>
 
     <fragment
@@ -280,6 +304,15 @@
         <action
             android:id="@+id/action_loginFragment_to_bioFragment"
             app:destination="@id/bio_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@id/login_expired_fragment"
+        android:name="com.stable.scoi.presentation.ui.login.LoginExpiredFragment"
+        tools:layout="@layout/fragment_login_expired">
+        <action
+            android:id="@id/action_loginExpiredFragment_to_loginFragment"
+            app:destination="@id/login_pin_fragment" />
     </fragment>
 
     <fragment
@@ -484,5 +517,9 @@
 
 
 
+        <action
+            android:id="@+id/action_charge_pw_complete"
+            app:destination="@id/chargeCompleteFragment"/>
+    </fragment>
 
 </navigation>

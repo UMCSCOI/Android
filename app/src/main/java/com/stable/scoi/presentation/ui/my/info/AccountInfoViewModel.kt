@@ -18,6 +18,7 @@ data class MyPageUiState(
 ) : UiState
 
 sealed class MyPageEvent : UiEvent {
+    object Back : MyPageEvent()
     object SaveSuccess : MyPageEvent()
     object DeleteSuccess : MyPageEvent()
     object PasswordChangeSuccess : MyPageEvent()

@@ -13,17 +13,27 @@ class TransferCompleteFragment :
 
     override fun initView() {
         binding.TransferCompleteReceiverNameTV.text = viewModel.receiver.value.recipientKoName
-        binding.TransferCompleteAddressTV.text = viewModel.receiver.value.walletAddress
+        binding.TransferCompleteAddressTV.text = formatWalletAddress(viewModel.receiver.value.walletAddress)
 
         binding.TransferCompleteAmountTV.text = viewModel.information.value.amount
         binding.TransferCompleteExchangeTV.text = viewModel.exchangeToString(viewModel.exchangeType.value)
         binding.TransferCompleteAssetSymbolTV.text = viewModel.receiver.value.coinType
 
         binding.TransferCompleteCheckTransferTV.setOnClickListener {
+            viewModel.removeInformation()
             findNavController().navigate(R.id.wallet_fragment)
         }
         binding.TransferCompleteCompleteTV.setOnClickListener {
-            //홈으로 이동
+            viewModel.removeInformation()
+            findNavController().navigate(R.id.homeFragment)
+        }
+    }
+
+    fun formatWalletAddress(address: String): String {
+        return if (address.length > 18) {
+            address.take(18) + "..."
+        } else {
+            address
         }
     }
 }

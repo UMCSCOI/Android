@@ -18,6 +18,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageUiState, MyPage
     override val viewModel: MyPageViewModel by viewModels()
 
     override fun initView() {
+        binding.vm = viewModel
         viewModel.loadUserInfo()
 
         binding.apply {
@@ -42,6 +43,14 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageUiState, MyPage
                 viewModel.uiState.collectLatest { state ->
                     state.userInfo?.let { user ->
                         binding.tvUserName.text = user.koreanName
+                    }
+                }
+            }
+            launch {
+                viewModel.uiEvent.collect { event ->
+                    when (event) {
+                        MyPageEvent.Back -> findNavController().popBackStack()
+                        else -> {}
                     }
                 }
             }

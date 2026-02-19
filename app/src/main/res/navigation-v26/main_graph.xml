@@ -235,6 +235,9 @@
         android:name="com.stable.scoi.presentation.ui.Auth.JoinFragment"
         tools:layout="@layout/fragment_join">
         <action
+            android:id="@+id/action_joinFragment_to_joinAuthFragment"
+            app:destination="@id/joinAuthFragment" />
+        <action
             android:id="@+id/action_joinFragment_to_loginRegFragment"
             app:destination="@id/login_reg_fragment" />
     </fragment>
@@ -280,6 +283,15 @@
         <action
             android:id="@+id/action_loginFragment_to_bioFragment"
             app:destination="@id/bio_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@id/login_expired_fragment"
+        android:name="com.stable.scoi.presentation.ui.login.LoginExpiredFragment"
+        tools:layout="@layout/fragment_login_expired">
+        <action
+            android:id="@id/action_loginExpiredFragment_to_loginFragment"
+            app:destination="@id/login_pin_fragment" />
     </fragment>
 
     <fragment
