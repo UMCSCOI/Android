@@ -66,6 +66,12 @@ class PreferenceManager @Inject constructor(
         if (expireTime == 0L) return false
         return currentTime < expireTime
     }
+    fun saveSimplePassword(password: String) {
+        prefs.edit().putString("SIMPLE_PASSWORD", password).apply()
+    }
+
+    fun getSimplePassword(): String = prefs.getString("SIMPLE_PASSWORD", "") ?: ""
+
 
     // 데이터 초기화
     fun clear() {

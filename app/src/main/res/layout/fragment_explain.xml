@@ -81,15 +81,17 @@
     <TextView
         android:id="@+id/explain_skip_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
         android:textSize="14sp"
         android:text="건너뛰기"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/disabled"
         android:background="@drawable/bg_pin_full_underline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/guide_active_cv"/>
 
 
 

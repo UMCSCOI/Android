@@ -44,10 +44,19 @@ class ReJoinAuthFragment :
             }
         }
         binding.phoneAuthCodeEt.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.phoneAuthInputInactiveCv.visibility = View.INVISIBLE
-            } else {
-                binding.phoneAuthInputInactiveCv.visibility = View.VISIBLE
+            binding.phoneAuthNumberEt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.phoneAuthSelectedNumberLine.visibility = View.VISIBLE
+                } else {
+                    binding.phoneAuthSelectedNumberLine.visibility = View.INVISIBLE
+                }
+            }
+            binding.phoneAuthCodeEt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.phoneAuthSelectedCodeLine.visibility = View.VISIBLE
+                } else {
+                    binding.phoneAuthSelectedCodeLine.visibility = View.INVISIBLE
+                }
             }
         }
 

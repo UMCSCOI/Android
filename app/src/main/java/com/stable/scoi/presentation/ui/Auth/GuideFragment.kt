@@ -74,14 +74,13 @@ class GuideFragment : Fragment() {
                 GuideStep("01", "거래소 API 페이지 접속", getString(R.string.upbit_1), R.drawable.upbit_1, "* API 설정은 보안상 PC 웹 환경에서만 가능합니다.",null,"UPBIT"),
                 GuideStep("01", "거래소 API 페이지 접속", getString(R.string.upbit_2), R.drawable.upbit_2, "* API 설정은 보안상 PC 웹 환경에서만 가능합니다.",null,"UPBIT"),
                 GuideStep("02", "API 활성 항목 선택", getString(R.string.guide_2), R.drawable.r_2, "* 스코이는 사용자의 자산 보호를 최우선으로 합니다.",null,"UPBIT"),
-                GuideStep("03", "IP 주소 등록", getString(R.string.guide_3), R.drawable.r_3, "* 해당 주소는 스코이 서버 IP 주소로 등록이 필요합니다.", "13.209.12.10","UPBIT"),
+                GuideStep("03", "IP 주소 등록", getString(R.string.guide_3), R.drawable.r_3, null, "13.209.12.10","UPBIT"),
                 GuideStep("04", "동의하기", getString(R.string.guide_4), R.drawable.r_4,null,null,"UPBIT"),
                 GuideStep("05", "API KEY 발급", getString(R.string.guide_5), R.drawable.r_5, "* SECRET KEY는 최초 1회만 확인 가능하므로 꼭 보관해 주세요.",null,"UPBIT")
             )
         }
 
         guideAdapter.submitList(data)
-        // 데이터를 바꾼 후에는 첫 페이지로 돌아가게 해줘
         binding.guideViewPager.post { binding.guideViewPager.setCurrentItem(0, false) }
     }
 

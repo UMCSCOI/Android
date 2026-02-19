@@ -80,6 +80,9 @@ class LoginViewModel @Inject constructor(
                         code == "AUTH403_1" && smsRequired == "true" -> {
                             emitEvent(LoginEvent.ShowAccountLockedDialog)
                         }
+                        else->{
+                            emitEvent(LoginEvent.ShowError(e.message ?: "로그인 실패"))
+                        }
                     }
                     updateState { copy(isLoading=false) }
                     updateState { copy(simplePassword = "", isButtonEnabled = false) }
@@ -114,6 +117,7 @@ class LoginViewModel @Inject constructor(
             authRepository.resetPW(request)
                 .onSuccess {
                     SLOG.D("비밀번호 재설정 성공")
+                    preferenceManager.saveSimplePassword(newPin)
                     updateState { copy(isLoading = false) }
                     emitEvent(LoginEvent.NavigationToLogin)
                 }

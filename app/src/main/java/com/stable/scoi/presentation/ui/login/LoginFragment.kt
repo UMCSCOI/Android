@@ -13,7 +13,6 @@ import com.stable.scoi.R
 import com.stable.scoi.databinding.DialogAdmitLimitBinding
 import com.stable.scoi.databinding.FragmentLoginPinBinding
 import com.stable.scoi.presentation.base.BaseFragment
-import com.stable.scoi.util.SLOG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -39,6 +38,22 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             binding.loginPin1Et, binding.loginPin2Et, binding.loginPin3Et,
             binding.loginPin4Et, binding.loginPin5Et, binding.loginPin6Et
         )
+
+//        pinEditTexts.forEach { editText ->
+//            editText.setOnFocusChangeListener { _, hasFocus ->
+//                if (hasFocus) {
+//                    binding.loginPinInputInactiveCv.visibility = View.INVISIBLE
+//                    binding.loginPinInputActiveCv.visibility = View.INVISIBLE
+//                } else {
+//                     binding.loginPinInputInactiveCv.postDelayed({
+//                        val anyFocused = pinEditTexts.any { it.hasFocus() }
+//                        if (!anyFocused) {
+//                            binding.loginPinInputInactiveCv.visibility = View.INVISIBLE
+//                        }
+//                    }, 50)
+//                }
+//            }
+//        }
         val bigDotMethod = BigDotTransformationMethod()
 
         pinEditTexts.forEachIndexed { index, editText ->
@@ -52,12 +67,6 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
                         pinEditTexts[index + 1].requestFocus()
                     } else {
                         hideKeyboard()
-
-                        val completePin = pinEditTexts.joinToString("") { it.text.toString() }
-                        if (completePin.length == 6) {
-                            viewModel.onPinChanged(completePin)
-
-                        }
                     }
                 }
 
@@ -80,8 +89,10 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
 
 
         binding.loginPinInputActiveCv.setOnClickListener {
-            SLOG.D("버튼이 입력되었습니다.")
             viewModel.onCompleteClicked()
+        }
+        binding.loginPinBioTv.setOnClickListener {
+           viewModel.onBiometricLogin()
         }
     }
 
@@ -146,7 +157,8 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
                     editText.setBackgroundResource(R.drawable.bg_pin_underline_error)
                 }
 
-                pinEditTexts.forEach { it.text = null }
+                val lastEt = pinEditTexts.last()
+                lastEt.requestFocus()
 
             }
             is LoginEvent.NavigationToExpired -> {

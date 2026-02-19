@@ -151,19 +151,17 @@ class JoinViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                // 1. 보안이 필요한 필드들을 AES/CBC/PKCS5로 암호화
                 val encryptedSecretKey = EncryptionUtil.encrypt(secretKey)
                 val encryptedSimplePassword = EncryptionUtil.encrypt(currentState.simplePassword)
 
                 SLOG.D(encryptedSimplePassword.toString())
-                // 2. 개별 API 키 정보 포장
+
                 val newApiKey = ApiKeyInfo(
                     exchangeType = exchange,
-                    publicKey = apiKey,              // 퍼블릭 키는 보통 평문 전송
-                    secretKey = encryptedSecretKey   // 시크릿 키는 암호화!
+                    publicKey = apiKey,
+                    secretKey = encryptedSecretKey
                 )
 
-                // 3. 전체 회원가입 요청 객체 조립
                 val request = SignUpRequest(
                     koreanName = currentState.koreanName,
                     englishName = currentState.englishName,
@@ -178,7 +176,7 @@ class JoinViewModel @Inject constructor(
 
                 authRepository.signUp(request)
                     .onSuccess {
-                        android.util.Log.d("JOIN_DEBUG", "회원가입 성공!")
+                        preferenceManager.saveSimplePassword(currentState.simplePassword)
                         emitEvent(JoinEvent.NavigateToRegDone)
                     }
                     .onFailure { e ->

@@ -41,16 +41,16 @@ class JoinAuthFragment :
 
         binding.phoneAuthNumberEt.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.phoneAuthInputInactiveCv.visibility = View.INVISIBLE
+                binding.phoneAuthSelectedNumberLine.visibility = View.VISIBLE
             } else {
-                binding.phoneAuthInputInactiveCv.visibility = View.VISIBLE
+                binding.phoneAuthSelectedNumberLine.visibility = View.INVISIBLE
             }
         }
         binding.phoneAuthCodeEt.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.phoneAuthInputInactiveCv.visibility = View.INVISIBLE
+                binding.phoneAuthSelectedCodeLine.visibility = View.VISIBLE
             } else {
-                binding.phoneAuthInputInactiveCv.visibility = View.VISIBLE
+                binding.phoneAuthSelectedCodeLine.visibility = View.INVISIBLE
             }
         }
 
@@ -58,8 +58,6 @@ class JoinAuthFragment :
         binding.phoneAuthNumberEt.doOnTextChanged { text, _, _, _ ->
             val input = text.toString()
             val rawNumber = input.replace("-", "")
-
-            binding.phoneAuthSelectedNumberLine.visibility = View.VISIBLE
 
             if (rawNumber.length == 11) {
                 val formatted = input.toPhoneNumber()

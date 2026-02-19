@@ -33,8 +33,9 @@ class AuthRepository @Inject constructor(
         return try {
             val response = authApi.reset(request)
 
-            if (response.isSuccess && response.result != null) {
-                Result.success(response.result)
+            if (response.isSuccess) {
+
+                Result.success(response.result ?: PasswordResetResponse())
             } else {
                 Result.failure(Exception(response.message ?: "비밀번호 재설정에 실패했습니다."))
             }
