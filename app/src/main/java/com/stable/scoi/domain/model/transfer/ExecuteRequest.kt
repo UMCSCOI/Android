@@ -8,10 +8,11 @@ data class ExecuteRequest (
     val netType: String = "",
     val amount: String = "",
     val address: String = "",
+    val exchangeName: String = "",
     val exchangeType: String = "",
     val receiverType: String = "",
     val receiverKoName: String = "",
-    val receiverEnName: String = "",
+    val receiverEnName: String? = "",
     val simplePassword: String = "",
     val idempotentKey: String = ""
 )

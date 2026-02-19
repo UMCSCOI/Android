@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class ValidateRequest(
     val memberType: String = "INDIVIDUAL",
     val recipientKoName: String = "",
-    val recipientEnName: String = "",
+    val recipientEnName: String? = "",
     val walletAddress: String = "",
     val exchangeType: String = "",
     val coinType: String = "",

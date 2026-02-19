@@ -121,7 +121,7 @@ class WalletFragment : SetArraySettingCharge, SetArraySettingTransfer,
                     }
 
                     if (amount != null) {
-                        binding.WalletAmountTV.text = amount.balance.toDouble().toInt().toString()
+                        binding.WalletAmountTV.text = viewModel.addComma(amount.balance.toDouble().toInt().toString())
                     }
                 }
             }

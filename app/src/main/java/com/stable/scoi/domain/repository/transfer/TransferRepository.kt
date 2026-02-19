@@ -18,7 +18,7 @@ import com.stable.scoi.domain.model.transfer.ValidateResponse
 import javax.inject.Inject
 
 class DirectoryRepository @Inject constructor(private val api: DirectoryListAPI) {
-    suspend fun loadDirectoryList(exchangeType: String, coinType: String): ApiState<DirectoryListResponse> {
+    suspend fun loadDirectoryList(exchangeType: String, coinType: String): ApiState<List<DirectoryListResponse>> {
         return apiCall { api.loadDirectoryList(exchangeType, coinType) }
     }
 }

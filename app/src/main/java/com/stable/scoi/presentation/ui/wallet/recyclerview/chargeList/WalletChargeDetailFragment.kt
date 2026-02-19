@@ -11,6 +11,7 @@ import com.stable.scoi.presentation.ui.wallet.WalletState
 import com.stable.scoi.presentation.ui.wallet.WalletViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class WalletChargeDetailFragment: BaseFragment<FragmentWalletChargeDetailBinding, WalletState, WalletEvent, WalletViewModel>(
@@ -153,7 +154,12 @@ class WalletChargeDetailFragment: BaseFragment<FragmentWalletChargeDetailBinding
                 Locale.getDefault()
             )
             val date = input.parse(dateString)
-            output.format(date!!)
+
+            val calendar = Calendar.getInstance()
+            calendar.time = date!!
+            calendar.add(Calendar.HOUR_OF_DAY, 9)
+
+            output.format(calendar.time)
         } catch (e: Exception) {
             dateString
         }
