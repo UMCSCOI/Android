@@ -122,6 +122,8 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
                                 resetEditText(TransferPasswordInputPassword4ET)
                                 resetEditText(TransferPasswordInputPassword5ET)
                                 resetEditText(TransferPasswordInputPassword6ET)
+
+                                binding.TransferPasswordInputPassword1ET.requestFocus()
                             }
                         }
                     }
@@ -141,7 +143,6 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
             {
                 if (!p0.isNullOrEmpty())
                 {
-                    editText.transformationMethod = PasswordTransformationMethod.getInstance()
                     onPasswordEntered(p0.toString())
                     editText.clearFocus()
                     editText.isFocusable = false
@@ -175,6 +176,8 @@ class TransferPasswordFragment: BaseFragment<FragmentTransferPasswordBinding, Tr
     ) {
         editText.setText("")
         editText.isFocusable = true
+        editText.isFocusableInTouchMode = true
+        editText.isEnabled = true
     }
 
     fun View.hideKeyboard() {

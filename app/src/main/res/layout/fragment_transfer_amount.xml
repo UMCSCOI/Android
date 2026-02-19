@@ -108,7 +108,8 @@
                 android:maxLines="1"
                 android:textSize="32sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/Transfer_title_LL" />
+                app:layout_constraintTop_toBottomOf="@id/Transfer_title_LL"
+                android:background ="@drawable/selector_pin_background"/>
 
             <TextView
                 android:id="@+id/Transfer_amount_warning_TV"
@@ -117,7 +118,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:textSize="13sp"
                 android:textColor="@color/error"
-                android:text="출금은 최소 3개 이상부터 가능해요."
+                android:text="출금은 최소 4개 이상부터 가능해요."
                 app:layout_constraintTop_toBottomOf="@id/Transfer_amount_ET"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"

@@ -65,5 +65,5 @@ class NetworkBottomSheet: BottomSheetDialogFragment() {
 }
 
 enum class Network {
-    TRON, ETHEREUM, KAIA, APTOS
+    TRON, ETHEREUM, KAIA, APTOS, Empty
 }

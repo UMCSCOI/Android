@@ -11,6 +11,7 @@ import com.stable.scoi.domain.model.wallet.Transactions
 import com.stable.scoi.domain.model.wallet.TransactionsCharge
 import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
+import java.util.Calendar
 import java.util.Locale
 
 class RecentTransferListRVAdapter(private val recentTransferListOnClickListener: RecentTransferListOnClickListener): RecyclerView.Adapter<RecentTransferListRVAdapter.ViewHolder>() {
@@ -84,7 +85,12 @@ class RecentTransferListRVAdapter(private val recentTransferListOnClickListener:
                 Locale.getDefault()
             )
             val date = input.parse(dateString)
-            output.format(date!!)
+
+            val calendar = Calendar.getInstance()
+            calendar.time = date!!
+            calendar.add(Calendar.HOUR_OF_DAY, 9)
+
+            output.format(calendar.time)
         } catch (e: Exception) {
             dateString
         }
