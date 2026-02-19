@@ -16,11 +16,11 @@ constructor(
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val accessToken = preferenceManager.getAccessToken()
-//        val testToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMTAxMjM0MTIzNCIsInR5cGUiOiJBQ0NFU1MiLCJpYXQiOjE3NzA4ODkwODcsImV4cCI6MTk1MDg4OTA4N30.mlpIoIk95c0vvo0rtLpjaObQ5K0rFG6uR1cRTBxTykxmHA0Tr2D8BLhJPwjzGgragvqaol90Q1fblyjO_yjixg"
+        val testToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMTAxMjM0MTIzNCIsInR5cGUiOiJBQ0NFU1MiLCJpYXQiOjE3NzA4ODkwODcsImV4cCI6MTk1MDg4OTA4N30.mlpIoIk95c0vvo0rtLpjaObQ5K0rFG6uR1cRTBxTykxmHA0Tr2D8BLhJPwjzGgragvqaol90Q1fblyjO_yjixg"
 
         val request =
             chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer ${accessToken}").build()
+                .addHeader("Authorization", "Bearer ${testToken}").build()
 
         Log.d(
             "RETROFIT",

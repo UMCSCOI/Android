@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -17,12 +17,6 @@
             android:id="@+id/action_splash_fragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-<<<<<<< SI-bong
-=======
-            android:id="@+id/action_splash_fragment_to_joinFragment"
-            app:destination="@id/join_fragment" />
-        <action
->>>>>>> SI-NEWNEW
             android:id="@+id/action_splash_fragment_to_join_auth_fragment"
             app:destination="@id/joinAuthFragment"/>
         <action
@@ -322,9 +316,6 @@
         <action
             android:id="@+id/action_loginFragment_to_re_join_fragment"
             app:destination="@id/re_join_auth_fragment"/>
-        <action
-            android:id="@+id/action_loginFragment_to_bioFragment"
-            app:destination="@id/bio_fragment"/>
     </fragment>
 
     <fragment
@@ -537,6 +528,10 @@
     </fragment>
 
 
+    <fragment
+        android:id="@+id/charge_pw_fragment"
+        android:name="com.stable.scoi.presentation.ui.charge.chart.ChargePwFragment"
+        tools:layout="@layout/fragment_charge_pw" >
 
         <action
             android:id="@+id/action_charge_pw_complete"
