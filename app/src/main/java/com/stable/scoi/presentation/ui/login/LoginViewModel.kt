@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(
             updateState { this.copy(isLoading = true) }
 
             val savedPhoneNumber = preferenceManager.getPhoneNumber()
-            val verificationToken = preferenceManager.getVerificationToken()
+            val currentToken = preferenceManager.getVerificationToken()
 
             if (savedPhoneNumber.isEmpty()) {
                 updateState { this.copy(isLoading = false) }
@@ -60,9 +60,8 @@ class LoginViewModel @Inject constructor(
             authRepository.pinLogin(
                 phoneNumber = savedPhoneNumber,
                 simplePassword = encryptedPin,
-                verificationToken = verificationToken
+                verificationToken = currentToken
             ).onSuccess {
-
                 emitEvent(LoginEvent.NavigationToMain)
             }.onFailure { e ->
 
@@ -98,7 +97,7 @@ class LoginViewModel @Inject constructor(
 
             val phoneNumber = preferenceManager.getPhoneNumber()
             val verificationToken = preferenceManager.getVerificationToken()
-            val newPin = uiState.value.simplePassword
+            val newPin = preferenceManager.getSimplePassword()
 
             if (phoneNumber.isEmpty() || verificationToken.isEmpty()) {
                 updateState { this.copy(isLoading = false) }
