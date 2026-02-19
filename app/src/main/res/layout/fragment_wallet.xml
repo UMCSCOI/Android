@@ -24,6 +24,7 @@
             android:textAppearance="@style/t1_sb"/>
 
         <ImageView
+            android:id="@+id/image_my_page"
             android:layout_width="28dp"
             android:layout_height="28dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -290,7 +291,7 @@
             android:layout_marginEnd="16dp">
 
             <TextView
-                android:id="@+id/Wallet_recent_mounth_TV"
+                android:id="@+id/Wallet_recent_month_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2025. 12"
@@ -302,7 +303,7 @@
                 android:layout_weight="1"/>
 
             <TextView
-                android:id="@+id/Wallet_recent_mounth_detail_TV"
+                android:id="@+id/Wallet_recent_month_detail_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2025.11.21~2025.12.21"

@@ -31,32 +31,35 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="5dp"
             android:textAppearance="@style/t1_sb"/>
-        
-        <ImageView
-            android:id="@+id/Wallet_detail_exchange_IV"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/bithumb_logo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="101dp"
-            android:layout_marginStart="16dp"/>
 
-        <TextView
-            android:id="@+id/Wallet_detail_exchange_TV"
+        <LinearLayout
+            android:id="@+id/Wallet_detail_exchage_LL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="빗썸"
-            app:layout_constraintStart_toEndOf="@id/Wallet_detail_exchange_IV"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="101dp"
-            android:layout_marginStart="5dp"
-            android:textAppearance="@style/l4"/>
+            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_title_TV"
+            android:layout_marginTop="34dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp">
+
+            <ImageView
+                android:id="@+id/Wallet_detail_exchage_IV"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/bithumb_logo"/>
+
+            <TextView
+                android:id="@+id/Wallet_detail_exchage_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="빗썸"
+                android:textAppearance="@style/f4m"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_exchange_IV"
+            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_exchage_LL"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="10dp"
             android:layout_marginStart="16dp">

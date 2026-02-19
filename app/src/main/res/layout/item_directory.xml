@@ -68,7 +68,7 @@
                 android:id="@+id/directory_receiver_assetSymbol_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="코인"
+                android:text="USDT"
                 android:fontFamily="@font/pretendard_regular"
                 android:textSize="14sp"
                 android:textColor="@color/sub_gray_2"/>
@@ -84,7 +84,7 @@
                 android:id="@+id/directory_receiver_network_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="네트워크"
+                android:text="이더리움"
                 android:fontFamily="@font/pretendard_regular"
                 android:textSize="14sp"
                 android:textColor="@color/sub_gray_2"/>
@@ -98,9 +98,11 @@
 
             <TextView
                 android:id="@+id/directory_receiverAddress_TV"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:text="주소"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:fontFamily="@font/pretendard_regular"
                 android:textSize="14sp"
                 android:textColor="@color/sub_gray_2"/>

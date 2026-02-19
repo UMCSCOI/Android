@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.stable.scoi.presentation.ui.charge.chart.ChargeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp">
+
+        <com.stable.scoi.presentation.base.component.ScoiTitleBar
+            android:id="@+id/layout_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftClick="@{()->vm.back()}"
+            app:title="충전" />
+
+        <TextView
+            android:id="@+id/login_pin_reg_intro_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="34dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="간편 비밀번호 6자리를"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_top" />
+
+        <TextView
+            android:id="@+id/login_pin_reg_intro_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="입력해주세요."
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_pin_reg_intro_tv" />
+
+        <LinearLayout
+            android:id="@+id/login_pin_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="45dp"
+            android:weightSum="6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_pin_reg_intro_tv">
+
+
+            <EditText
+                android:id="@+id/login_pin_reg_1_et"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_pin_background"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:textColor="@color/main_black"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/login_pin_reg_2_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_pin_background"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:textColor="@color/main_black"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/login_pin_reg_3_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_pin_background"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:textColor="@color/main_black"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/login_pin_reg_4_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_pin_background"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:textColor="@color/main_black"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/login_pin_reg_5_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_pin_background"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:textColor="@color/main_black"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/login_pin_reg_6_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_pin_background"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:textColor="@color/main_black"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/login_pin_reg_input_active_cv"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginHorizontal="16dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/active_fill"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="다음"
+                android:textColor="@color/active"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -4,10 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DirectoryListResponse(
-    val result: ArrayList<DirectoryResult>
-)
-
-data class DirectoryResult (
     val memberType: String = "INDIVIDUAL",
     val recipientKoName: String = "",
     val recipientEnName: String = "",

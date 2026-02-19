@@ -26,7 +26,10 @@ class ChargeCompleteFragment : BaseFragment<FragmentChargeCompleteBinding, UiSta
             val countVal = args.coinCount.replace(",", "").toDoubleOrNull() ?: 0.0
             val formattedCount = java.text.DecimalFormat("#,###.##").format(countVal)
 
-            textCount.text = "$formattedCount ${args.coin}"
+            // "-" 뒷부분만 가져오기 (만약 "-"가 없으면 원래 문자열 그대로 반환됨)
+            val coinSymbol = args.coin.substringAfter("-")
+
+            textCount.text = "$formattedCount $coinSymbol"
         }
     }
 

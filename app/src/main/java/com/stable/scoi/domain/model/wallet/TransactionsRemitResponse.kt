@@ -1,5 +1,8 @@
 package com.stable.scoi.domain.model.wallet
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class TransactionsRemitResponse (
     val transactions: List<Transactions>,
     val totalCount: Int

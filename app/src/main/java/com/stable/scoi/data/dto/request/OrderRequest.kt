@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class OrderRequest(
-    val tradeType: String,  // 거래소 타입 (BITHUMB, UPBIT)
+    val exchangeType: String,  // 거래소 타입 (BITHUMB, UPBIT)
     val market: String,     // 마켓 타입 (ex. KRW-BTC)
     val side: String,       // 주문 타입 (bid: 매수, ask: 매도)
     val orderType: String,  // 주문 방식 (limit, price, market)
