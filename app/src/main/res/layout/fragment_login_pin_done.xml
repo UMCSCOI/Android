@@ -38,7 +38,7 @@
             android:id="@+id/login_pin_done_success_iv"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="117dp"
             android:src="@drawable/bio_success"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"

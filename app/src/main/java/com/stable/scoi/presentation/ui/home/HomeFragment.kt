@@ -19,12 +19,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 import com.stable.scoi.databinding.FragmentHomeBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.stable.scoi.R
+import com.stable.scoi.domain.model.enums.AccountType
 import com.stable.scoi.extension.inVisible
 import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.ui.home.adapter.AccountCardAdapter
@@ -82,20 +82,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
             imgMyBlack.setOnClickListener {
                 findNavController().navigate(R.id.myPageFragment)
             }
-            val boldFont = ResourcesCompat.getFont(requireActivity(), R.font.pretendard_semibold)
-
-            textTitle.text = buildSpannedString {
-                inSpans(CustomTypefaceSpan(boldFont!!)) {
-                    append(viewModel.uiState.value.userInfo.koreanName)
-                }
-                append("님!\n송금을 시작해볼까요?")
-            }
-            textTitle2.text = buildSpannedString {
-                inSpans(CustomTypefaceSpan(boldFont!!)) {
-                    append(viewModel.uiState.value.userInfo.koreanName)
-                }
-                append("님!\n어떤 자산을 보내시겠어요?")
-            }
 
             setupViewPager()
 
@@ -151,6 +137,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
 
             launch {
                 viewModel.uiState.collect {
+                    binding.apply {
+                        val boldFont = ResourcesCompat.getFont(requireActivity(), R.font.pretendard_semibold)
+
+                        textTitle.text = buildSpannedString {
+                            inSpans(CustomTypefaceSpan(boldFont!!)) {
+                                append(viewModel.uiState.value.userInfo.koreanName)
+                            }
+                            append("님!\n송금을 시작해볼까요?")
+                        }
+                        textTitle2.text = buildSpannedString {
+                            inSpans(CustomTypefaceSpan(boldFont!!)) {
+                                append(viewModel.uiState.value.userInfo.koreanName)
+                            }
+                            append("님!\n어떤 자산을 보내시겠어요?")
+                        }
+                    }
                     accountCardAdapter.submitList(it.accountList)
                 }
             }
@@ -165,8 +167,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
         }
     }
 
-    private fun navigateToTransfer() {
-        val action = HomeFragmentDirections.actionHomeFragmentToTansferFragment()
+    private fun navigateToTransfer(myCoin: String, myAddress: String, myExchange: String) {
+        val action = HomeFragmentDirections.actionHomeFragmentToTansferFragment(
+            myCoin = myCoin,
+            myAddress = myAddress,
+            myExchange = myExchange
+        )
         findNavController().navigate(action)
     }
 
@@ -329,8 +335,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeEvent, H
         childFragmentManager.setFragmentResultListener("requestKey_coin", viewLifecycleOwner) { requestKey, bundle ->
 
             val result = bundle.getString("bundleKey_coin")
-            //TODO 데이터 담아서 보내기
-            navigateToTransfer()
+            val currentPosition = viewModel.uiState.value.selectPosition
+            val selectedAccount = viewModel.uiState.value.accountList[currentPosition]
+
+            val myAddress = selectedAccount.key
+            val myExchange = when (selectedAccount.type) {
+                AccountType.BITSUM -> "BITHUMB"
+                AccountType.UPBIT -> "UPBIT"
+            }
+
+            result?.let { coin ->
+                navigateToTransfer(coin, myAddress, myExchange)
+            }
         }
         SelectStableDialogFragment().show(childFragmentManager, "")
     }

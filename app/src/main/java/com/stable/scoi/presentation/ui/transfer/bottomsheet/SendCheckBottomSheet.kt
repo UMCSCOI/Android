@@ -39,7 +39,11 @@ class SendCheckBottomSheet: BottomSheetDialogFragment() {
         binding.bottomsheetSendCheckReceiverNameTV.text = viewModel.receiver.value.recipientKoName
         binding.bottomsheetSendCheckAssetSymbolTV.text = viewModel.receiver.value.coinType
         binding.bottomsheetSendCheckAmountTV.text = viewModel.information.value.amount
-        binding.bottomsheetSendCheckMyWalletExchangeTV.text = viewModel.myExchange.value
+        binding.bottomsheetSendCheckMyWalletExchangeTV.text = when (viewModel.myExchange.value) {
+            "UPBIT" -> "업비트"
+            "BITHUMB" -> "빗썸"
+            else -> ""
+        }
         binding.bottomsheetSendCheckMyWalletAddressTV.text = formatWalletAddress(viewModel.myAddress.value)
         binding.bottomsheetSendCheckNetworkTV.text = viewModel.networkToString(viewModel.netWorkType.value)
 

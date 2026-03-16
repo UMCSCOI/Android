@@ -4,6 +4,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.stable.scoi.data.util.EncryptionUtil
 import com.stable.scoi.databinding.FragmentApiEditBinding
 import com.stable.scoi.presentation.base.BaseFragment
 import com.stable.scoi.presentation.ui.my.MyPageViewModel
@@ -30,9 +31,9 @@ class ApiEditFragment :
 
             btnSaveChanges.setOnClickListener {
                 val bithumbPublic = etBithumbPublic.text.toString().trim()
-                val bithumbSecret = etBithumbSecret.text.toString().trim()
+                val bithumbSecret = EncryptionUtil.encrypt(etBithumbSecret.text.toString()).trim()
                 val upbitPublic = etUpbitPublic.text.toString().trim()
-                val upbitSecret = etUpbitSecret.text.toString().trim()
+                val upbitSecret = EncryptionUtil.encrypt(etUpbitSecret.text.toString()).trim()
 
                 // ViewModel의 저장 함수 호출
                 viewModel.saveApiKeys(

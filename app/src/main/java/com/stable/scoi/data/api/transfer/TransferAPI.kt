@@ -20,7 +20,7 @@ interface DirectoryListAPI {
     suspend fun loadDirectoryList(
         @Query("exchangeType") exchange: String,
         @Query("coinType") coinType: String
-    ) : ApiResponse<DirectoryListResponse>
+    ) : ApiResponse<List<DirectoryListResponse>>
 
     @POST("/api/withdraws/krw")
     suspend fun withdrawKrw(

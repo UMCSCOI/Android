@@ -8,12 +8,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/disabled">
+        android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="321dp"
+            android:layout_height="301dp"
             android:layout_marginHorizontal="16dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="20dp"
@@ -33,7 +32,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginTop="50dp"
-                    android:src="@drawable/login_expired_clock"
+                    android:src="@drawable/lock"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -54,10 +53,11 @@
                 <TextView
                     android:id="@+id/admit_limit_detail_tv"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:textAlignment="center"
+                    android:gravity="center"
                     android:text="비밀번호를 5회 연속 잘못 입력하였습니다.\n보안을 위해 다시 인증해 주세요."
                     android:textColor="@color/sub_gray_1"
                     android:textSize="14sp"

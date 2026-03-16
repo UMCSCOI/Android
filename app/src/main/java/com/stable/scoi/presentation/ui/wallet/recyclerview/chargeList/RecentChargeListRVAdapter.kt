@@ -1,12 +1,16 @@
 package com.stable.scoi.presentation.ui.wallet.recyclerview.chargeList
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.stable.scoi.R
 import com.stable.scoi.databinding.ItemMywalletChargeListBinding
 import com.stable.scoi.domain.model.wallet.Transactions
 import com.stable.scoi.domain.model.wallet.TransactionsCharge
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: RecentChargeListOnClickListener): RecyclerView.Adapter<RecentChargeListRVAdapter.ViewHolder>() {
@@ -51,6 +55,7 @@ class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: Rec
                 }
                 WalletListTimeTV.text = formatDate(recentChargeList.createdAt)
                 WalletListAssetSymbolTV.text = coinType
+                WalletListChargeAssetSymbolTV.text = coinType
 
                 val sign = when (recentChargeList.side) {
                     "bid" -> "+"
@@ -67,7 +72,7 @@ class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: Rec
                 val state = when (recentChargeList.state) {
                     "done" -> "완료"
                     "wait" -> "대기"
-                    "canceled" -> "취소"
+                    "cancel" -> "취소"
                     else -> ""
                 }
 
@@ -77,6 +82,35 @@ class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: Rec
                 WalletListAmountTV.text = amount
                 WalletListAssetSymbolTitleTV.text = coinType
                // WalletListTotalAssetSymbolTV.text = coinType
+
+                if (recentChargeList.state != "wait") {
+                    WalletListCancelTV.visibility = View.GONE
+                }
+
+                when (recentChargeList.state) {
+                    "done" -> WalletListAmountTV.setTextColor(ContextCompat.getColor(itemView.context, R.color.active))
+                    "wait" -> WalletListAmountTV.setTextColor(ContextCompat.getColor(itemView.context, R.color.main_black))
+                    "cancel" -> {
+                        WalletListAmountTV.setTextColor(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.disabled
+                            )
+                        )
+                        WalletListChargeStateTV.setTextColor(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.disabled
+                            )
+                        )
+                        WalletListChargeAssetSymbolTV.setTextColor(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.disabled
+                            )
+                        )
+                    }
+                }
             }
         }
     }
@@ -92,7 +126,12 @@ class RecentChargeListRVAdapter(private val recentChargeListOnClickListener: Rec
                 Locale.getDefault()
             )
             val date = input.parse(dateString)
-            output.format(date!!)
+
+            val calendar = Calendar.getInstance()
+            calendar.time = date!!
+            calendar.add(Calendar.HOUR_OF_DAY, 9)
+
+            output.format(calendar.time)
         } catch (e: Exception) {
             dateString
         }

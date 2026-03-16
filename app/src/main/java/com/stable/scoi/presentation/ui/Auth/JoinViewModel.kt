@@ -88,6 +88,13 @@ class JoinViewModel @Inject constructor(
                         )
                     }
 
+                    if(response.isExistingMember){
+                        emitEvent(JoinEvent.NavigateToLogin)
+                    }
+                    else{
+                        emitEvent(JoinEvent.NavigateToJoin)
+                    }
+
                     // 2. Fragment로 성공 이벤트 전송 (필요시 토큰을 담아서 전송 가능)
                     emitEvent(JoinEvent.VerifySuccess(response.verificationToken))
                 }
@@ -138,53 +145,50 @@ class JoinViewModel @Inject constructor(
         }
     }
 
-    fun submitSignUp(exchange: String, apiKey: String, secretKey: String) {
-        val currentState = uiState.value
-        updateState { copy(isLoading = true) }
-
-        viewModelScope.launch {
-            try {
-                // 1. 보안이 필요한 필드들을 AES/CBC/PKCS5로 암호화
-                val encryptedSecretKey = EncryptionUtil.encrypt(secretKey)
-                val encryptedSimplePassword = EncryptionUtil.encrypt(currentState.simplePassword)
-
-                SLOG.D(encryptedSimplePassword.toString())
-                // 2. 개별 API 키 정보 포장
-                val newApiKey = ApiKeyInfo(
-                    exchangeType = exchange,
-                    publicKey = apiKey,              // 퍼블릭 키는 보통 평문 전송
-                    secretKey = encryptedSecretKey   // 시크릿 키는 암호화!
-                )
-
-                // 3. 전체 회원가입 요청 객체 조립
-                val request = SignUpRequest(
-                    koreanName = currentState.koreanName,
-                    englishName = currentState.englishName,
-                    residentNumber = currentState.residentNumber,
-                    phoneNumber = currentState.phoneNumber,
-                    simplePassword = encryptedSimplePassword,
-                    apiKeys = listOf(newApiKey),
-                    memberType = "INDIVIDUAL",
-                    isBioRegistered = currentState.isBioRegistered,
-                    verificationToken = currentState.verificationToken
-                )
-
-                // 4. 서버로 전송
-                authRepository.signUp(request)
-                    .onSuccess {
-                        android.util.Log.d("JOIN_DEBUG", "회원가입 성공!")
-                        emitEvent(JoinEvent.NavigateToRegDone)
-                    }
-                    .onFailure { e ->
-                        android.util.Log.e("JOIN_DEBUG", "회원가입 실패: ${e.message}")
-                        emitEvent(JoinEvent.ShowError(e.message ?: "회원가입 실패"))
-                    }
-            } catch (e: Exception) {
-                android.util.Log.e("JOIN_DEBUG", "암호화 중 오류 발생: ${e.message}")
-                emitEvent(JoinEvent.ShowError("보안 처리 중 오류가 발생했습니다."))
-            } finally {
-                updateState { copy(isLoading = false) }
-            }
-        }
-    }
+//    fun submitSignUp(exchange: String, apiKey: String, secretKey: String) {
+//        val currentState = uiState.value
+//        updateState { copy(isLoading = true) }
+//
+//        viewModelScope.launch {
+//            try {
+//                val encryptedSecretKey = EncryptionUtil.encrypt(secretKey)
+//                val encryptedSimplePassword = EncryptionUtil.encrypt(currentState.simplePassword)
+//
+//                SLOG.D(encryptedSimplePassword.toString())
+//
+//                val newApiKey = ApiKeyInfo(
+//                    exchangeType = exchange,
+//                    publicKey = apiKey,
+//                    secretKey = encryptedSecretKey
+//                )
+//
+//                val request = SignUpRequest(
+//                    koreanName = currentState.koreanName,
+//                    englishName = currentState.englishName,
+//                    residentNumber = currentState.residentNumber,
+//                    phoneNumber = currentState.phoneNumber,
+//                    simplePassword = encryptedSimplePassword,
+//                    apiKeys = listOf(newApiKey),
+//                    memberType = "INDIVIDUAL",
+//                    isBioRegistered = currentState.isBioRegistered,
+//                    verificationToken = currentState.verificationToken
+//                )
+//
+//                authRepository.signUp(request)
+//                    .onSuccess {
+//                        preferenceManager.saveSimplePassword(currentState.simplePassword)
+//                        emitEvent(JoinEvent.NavigateToRegDone)
+//                    }
+//                    .onFailure { e ->
+//                        android.util.Log.e("JOIN_DEBUG", "회원가입 실패: ${e.message}")
+//                        emitEvent(JoinEvent.ShowError(e.message ?: "회원가입 실패"))
+//                    }
+//            } catch (e: Exception) {
+//                android.util.Log.e("JOIN_DEBUG", "암호화 중 오류 발생: ${e.message}")
+//                emitEvent(JoinEvent.ShowError("보안 처리 중 오류가 발생했습니다."))
+//            } finally {
+//                updateState { copy(isLoading = false) }
+//            }
+//        }
+//    }
 }

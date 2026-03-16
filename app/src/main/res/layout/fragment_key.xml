@@ -68,20 +68,35 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="API KEY"
-            android:textColor="@color/main_black"
+            android:textColor="#505050"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/key_exchange_line" />
 
         <EditText
             android:id="@+id/api_key_input_et"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:backgroundTint="@color/gray300"
             android:inputType="text"
             android:maxLines="1"
+            android:paddingEnd="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/api_key_input_label_tv" />
+
+        <ImageView
+            android:id="@+id/api_key_input_iv"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/no_m"
+            app:layout_constraintBottom_toBottomOf="@id/api_key_input_et"
+            app:layout_constraintEnd_toEndOf="@id/api_key_input_et"
+            app:layout_constraintTop_toTopOf="@id/api_key_input_et"
+            app:layout_constraintVertical_bias="0.5"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/api_key_secret_label_tv"
@@ -91,21 +106,35 @@
             android:layout_marginTop="14dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="SECRET KEY"
-            android:textColor="@color/main_black"
-            android:textSize="14sp"
+            android:textColor="#505050"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/api_key_input_et" />
 
         <EditText
             android:id="@+id/secret_key_input_et"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:backgroundTint="@color/gray300"
             android:inputType="text"
             android:maxLines="1"
+            android:paddingEnd="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/api_key_secret_label_tv" />
 
+        <ImageView
+            android:id="@+id/secret_key_input_iv"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/no_m"
+            app:layout_constraintBottom_toBottomOf="@id/secret_key_input_et"
+            app:layout_constraintEnd_toEndOf="@id/secret_key_input_et"
+            app:layout_constraintTop_toTopOf="@id/secret_key_input_et"
+            app:layout_constraintVertical_bias="0.5"
+            android:visibility="gone"
+            />
         <FrameLayout
             android:id="@+id/api_key_next_fl"
             android:layout_width="match_parent"

@@ -29,6 +29,9 @@ class JoinAuthFragment :
 
     override fun initView() {
 
+        val white = ContextCompat.getColor(requireActivity(), R.color.white)
+        requireActivity().findViewById<View>(R.id.main).setBackgroundColor(white)
+
         binding.phoneAuthBackBtn.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -38,16 +41,16 @@ class JoinAuthFragment :
 
         binding.phoneAuthNumberEt.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.phoneAuthInputInactiveCv.visibility = View.INVISIBLE
+                binding.phoneAuthSelectedNumberLine.visibility = View.VISIBLE
             } else {
-                binding.phoneAuthInputInactiveCv.visibility = View.VISIBLE
+                binding.phoneAuthSelectedNumberLine.visibility = View.INVISIBLE
             }
         }
         binding.phoneAuthCodeEt.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.phoneAuthInputInactiveCv.visibility = View.INVISIBLE
+                binding.phoneAuthSelectedCodeLine.visibility = View.VISIBLE
             } else {
-                binding.phoneAuthInputInactiveCv.visibility = View.VISIBLE
+                binding.phoneAuthSelectedCodeLine.visibility = View.INVISIBLE
             }
         }
 
@@ -55,8 +58,6 @@ class JoinAuthFragment :
         binding.phoneAuthNumberEt.doOnTextChanged { text, _, _, _ ->
             val input = text.toString()
             val rawNumber = input.replace("-", "")
-
-            binding.phoneAuthSelectedNumberLine.visibility = View.VISIBLE
 
             if (rawNumber.length == 11) {
                 val formatted = input.toPhoneNumber()
@@ -221,13 +222,18 @@ class JoinAuthFragment :
                 binding.phoneAuthCodeActiveTimerTv.visibility = View.GONE
                 binding.phoneAuthCodeActiveCheckIv.visibility = View.VISIBLE
                 binding.phoneAuthCodeCheckIv.visibility = View.GONE
-                findNavController().navigate(R.id.action_joinAuthFragment_to_loginFragment)
             }
 
             is JoinEvent.ShowError -> {
                 binding.phoneAuthHelperTv.visibility = View.GONE
                 binding.phoneAuthErrorTv.visibility = View.VISIBLE
                 inputUi(isActive = false)
+            }
+            is JoinEvent.NavigateToJoin -> {
+                findNavController().navigate(R.id.action_joinAuthFragment_to_joinFragment)
+            }
+            is JoinEvent.NavigateToLogin -> {
+                findNavController().navigate(R.id.action_joinAuthFragment_to_loginFragment)
             }
 
             else -> {}

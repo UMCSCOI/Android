@@ -10,6 +10,8 @@ sealed interface LoginEvent : UiEvent{
     object VerifySuccess : LoginEvent
     object NavigationToBiometric : LoginEvent
 
+    object ShowAccountLockedDialog : LoginEvent
+
     data class ShowError(val message: String) : LoginEvent
 
 

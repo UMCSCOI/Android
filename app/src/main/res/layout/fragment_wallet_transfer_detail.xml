@@ -31,43 +31,30 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="5dp"
             android:textAppearance="@style/t1_sb"/>
-        
-        <ImageView
-            android:id="@+id/Wallet_detail_exchange_IV"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/bithumb_logo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="101dp"
-            android:layout_marginStart="16dp"/>
 
-        <TextView
-            android:id="@+id/Wallet_detail_exchange_TV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="빗썸"
-            app:layout_constraintStart_toEndOf="@id/Wallet_detail_exchange_IV"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="101dp"
-            android:layout_marginStart="5dp"
-            android:textAppearance="@style/l4"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_exchange_IV"
+            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_title_TV"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="34dp"
             android:layout_marginStart="16dp">
 
             <TextView
-                android:id="@+id/Wallet_detail_name_TV"
+                android:id="@+id/Wallet_detail_assetSymbol_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="홍길동"
+                android:text="USDT"
                 android:textAppearance="@style/f2_sb"/>
 
+            <TextView
+                android:id="@+id/Wallet_detail_workType_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="충전"
+                android:layout_marginStart="4dp"
+                android:textAppearance="@style/f2_sb"/>
         </LinearLayout>
 
         <LinearLayout
@@ -161,38 +148,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/Wallet_detail_trade_way_LL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_trade_state_LL"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="거래 방식"
-                android:textAppearance="@style/b3"/>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:id="@+id/Wallet_detail_trade_way_TV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="목표 가격 충전"
-                android:textAppearance="@style/b3"/>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/Wallet_detail_conclude_price_LL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_trade_way_LL"
+            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_trade_state_LL"
             android:layout_marginTop="20dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp">
@@ -282,43 +241,11 @@
                 android:textAppearance="@style/b3"/>
 
             <TextView
+                android:id="@+id/Wallet_detail_conclude_fee_assetSymbol_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="원"
-                android:textAppearance="@style/b3"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/Wallet_detail_total_LL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/Wallet_detail_charge_LL"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="총 결제 금액"
-                android:textAppearance="@style/b3"/>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:id="@+id/Wallet_detail_total_TV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="146,000"
-                android:textAppearance="@style/b3"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="원"
+                android:text="USDT"
+                android:layout_marginStart="4dp"
                 android:textAppearance="@style/b3"/>
         </LinearLayout>
 

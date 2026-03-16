@@ -2,6 +2,7 @@ package com.stable.scoi.domain.repository.auth
 
 import com.auth0.jwt.interfaces.Verification
 import com.stable.scoi.data.api.AuthApi
+import com.stable.scoi.data.api.PasswordReResetRequest
 import com.stable.scoi.data.api.PasswordResetRequest
 import com.stable.scoi.data.api.PasswordResetResponse
 import com.stable.scoi.data.api.PinLoginRequest
@@ -25,6 +26,23 @@ class AuthRepository @Inject constructor(
     private val signUpApi: SignUpApi,
     private val preferenceManager: PreferenceManager
 ) {
+
+    suspend fun resetPW(
+        request: PasswordReResetRequest
+    ): Result<PasswordResetResponse> {
+        return try {
+            val response = authApi.reset(request)
+
+            if (response.isSuccess) {
+
+                Result.success(response.result ?: PasswordResetResponse())
+            } else {
+                Result.failure(Exception(response.message ?: "비밀번호 재설정에 실패했습니다."))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
     // SMS 발송 요청
     suspend fun sendSms(phoneNumber: String): Result<SmsResponse> {

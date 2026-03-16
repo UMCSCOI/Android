@@ -26,6 +26,10 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
+    fun back() {
+        emitEvent(MyPageEvent.Back)
+    }
+
     // API 설정 화면에서 호출
     fun loadApiSettings() {
         viewModelScope.launch {

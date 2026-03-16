@@ -11,27 +11,33 @@ import com.stable.scoi.databinding.FragmentArraySettingChargeBottomsheetBinding
 import com.stable.scoi.databinding.FragmentArraySettingTransferBottomsheetBinding
 
 class ArraySettingChargeBottomSheet: BottomSheetDialogFragment() {
-
-    private lateinit var binding: FragmentArraySettingChargeBottomsheetBinding
+    private var _binding: FragmentArraySettingChargeBottomsheetBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var setArraySettingCharge: SetArraySettingCharge
 
-    var sortType: Sort? = null
-    lateinit var sortTypeString: String
-    var categoryType: ChargeCategory? = null
-    lateinit var categoryTypeString: String
-    var statusType: Status? = null
-    lateinit var statusTypeString: String
-    var periodType: Period? = null
-    lateinit var periodTypeString: String
+    private var sortType: Sort? = null
+    private var sortTypeString: String = "desc"
+    private var categoryType: ChargeCategory? = null
+    private var categoryTypeString: String = "ALL"
+    private var statusType: Status? = null
+    private var statusTypeString: String = "DONE"
+    private var periodType: Period? = null
+    private var periodTypeString: String = "THREE_MONTHS"
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentArraySettingChargeBottomsheetBinding.inflate(inflater,container,false)
+        _binding = FragmentArraySettingChargeBottomsheetBinding.inflate(inflater,container,false)
         return binding.root
+    }
+
+
+    // [핵심] 외부(Fragment/Activity)에서 리스너를 연결해주는 함수
+    fun setCallback(listener: SetArraySettingCharge) {
+        this.setArraySettingCharge = listener
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,8 +98,16 @@ class ArraySettingChargeBottomSheet: BottomSheetDialogFragment() {
 
             bottomsheetArraySettingSubmitBT.setOnClickListener {
                 arraySetToString(sortType,categoryType,statusType,periodType)
-                setArraySettingCharge.arraySettingCharge(sortTypeString,categoryTypeString,statusTypeString,periodTypeString)
-                dismiss()
+                // [안전 장치] 리스너가 연결되어 있는지 확인
+                if (::setArraySettingCharge.isInitialized) {
+                    setArraySettingCharge.arraySettingCharge(
+                        sortTypeString,
+                        categoryTypeString,
+                        statusTypeString,
+                        periodTypeString
+                    )
+                }
+                dismiss() // 창 닫기
             }
         }
     }
@@ -101,142 +115,91 @@ class ArraySettingChargeBottomSheet: BottomSheetDialogFragment() {
     private fun arraySettingUpdate() {
         when (categoryType) {
             ChargeCategory.EXCHANGE -> {
-                binding.apply {
-                    bottomsheetArraySettingArrayTypeWithdrawTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingArrayTypeWithdrawTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                    bottomsheetArraySettingArrayTypeAllTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayTypeAllTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayTypeDepositTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayTypeDepositTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                }
+                setTextStyle(binding.bottomsheetArraySettingArrayTypeWithdrawTV, true)
+                setTextStyle(binding.bottomsheetArraySettingArrayTypeAllTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayTypeDepositTV, false)
             }
             ChargeCategory.ALL -> {
-                binding.apply {
-                    bottomsheetArraySettingArrayTypeWithdrawTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayTypeWithdrawTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayTypeAllTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingArrayTypeAllTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                    bottomsheetArraySettingArrayTypeDepositTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayTypeDepositTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                }
+                setTextStyle(binding.bottomsheetArraySettingArrayTypeWithdrawTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayTypeAllTV, true)
+                setTextStyle(binding.bottomsheetArraySettingArrayTypeDepositTV, false)
             }
             ChargeCategory.TOPUP -> {
-                binding.apply {
-                    bottomsheetArraySettingArrayTypeWithdrawTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayTypeWithdrawTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayTypeAllTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayTypeAllTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayTypeDepositTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingArrayTypeDepositTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                }
+                setTextStyle(binding.bottomsheetArraySettingArrayTypeWithdrawTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayTypeAllTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayTypeDepositTV, true)
             }
             else -> Unit
         }
 
         when (periodType) {
             Period.TODAY -> {
-                binding.apply {
-                    bottomsheetArraySettingArrayPeriodTodayTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingArrayPeriodTodayTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                    bottomsheetArraySettingArrayPeriod1monthTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriod1monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPeriod3monthTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriod3monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPeriod6monthTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriod6monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                }
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriodTodayTV, true)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod1monthTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod3monthTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod6monthTV, false)
             }
             Period.ONEMONTH -> {
-                binding.apply {
-                    bottomsheetArraySettingArrayPeriodTodayTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriodTodayTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPeriod1monthTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingArrayPeriod1monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                    bottomsheetArraySettingArrayPeriod3monthTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriod3monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPeriod6monthTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriod6monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                }
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriodTodayTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod1monthTV, true)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod3monthTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod6monthTV, false)
             }
             Period.SIXMONTH -> {
-                binding.apply {
-                    bottomsheetArraySettingArrayPeriodTodayTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriodTodayTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPeriod1monthTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriod1monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPeriod3monthTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriod3monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPeriod6monthTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingArrayPeriod6monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                }
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriodTodayTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod1monthTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod3monthTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod6monthTV, true)
             }
             Period.THREEMONTH -> {
-                binding.apply {
-                    bottomsheetArraySettingArrayPeriodTodayTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriodTodayTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPeriod1monthTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriod1monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPeriod3monthTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingArrayPeriod3monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                    bottomsheetArraySettingArrayPeriod6monthTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPeriod6monthTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                }
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriodTodayTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod1monthTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod3monthTV, true)
+                setTextStyle(binding.bottomsheetArraySettingArrayPeriod6monthTV, false)
             }
             else -> Unit
         }
 
         when (sortType) {
             Sort.ASC -> {
-                binding.apply {
-                    bottomsheetArraySettingArrayRecentTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayRecentTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingArrayPastTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingArrayPastTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                }
+                setTextStyle(binding.bottomsheetArraySettingArrayRecentTV, false)
+                setTextStyle(binding.bottomsheetArraySettingArrayPastTV, true)
             }
             Sort.DESC -> {
-                binding.apply {
-                    bottomsheetArraySettingArrayRecentTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingArrayRecentTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                    bottomsheetArraySettingArrayPastTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingArrayPastTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                }
+                setTextStyle(binding.bottomsheetArraySettingArrayRecentTV, true)
+                setTextStyle(binding.bottomsheetArraySettingArrayPastTV, false)
             }
             else -> Unit
         }
 
         when (statusType) {
             Status.PENDING -> {
-                binding.apply {
-                    bottomsheetArraySettingStateStandbyTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingStateStandbyTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                    bottomsheetArraySettingStateCancelTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingStateCancelTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingStateCompleteTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingStateCompleteTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                }
+                setTextStyle(binding.bottomsheetArraySettingStateStandbyTV, true)
+                setTextStyle(binding.bottomsheetArraySettingStateCancelTV, false)
+                setTextStyle(binding.bottomsheetArraySettingStateCompleteTV, false)
             }
             Status.CANCELED -> {
-                binding.apply {
-                    bottomsheetArraySettingStateStandbyTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingStateStandbyTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingStateCancelTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingStateCancelTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                    bottomsheetArraySettingStateCompleteTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingStateCompleteTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                }
+                setTextStyle(binding.bottomsheetArraySettingStateStandbyTV, false)
+                setTextStyle(binding.bottomsheetArraySettingStateCancelTV, true)
+                setTextStyle(binding.bottomsheetArraySettingStateCompleteTV, false)
             }
             Status.COMPLETED -> {
-                binding.apply {
-                    bottomsheetArraySettingStateStandbyTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingStateStandbyTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingStateCancelTV.setTextAppearance(R.style.l18_rg)
-                    bottomsheetArraySettingStateCancelTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
-                    bottomsheetArraySettingStateCompleteTV.setTextAppearance(R.style.l18_sb)
-                    bottomsheetArraySettingStateCompleteTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
-                }
+                setTextStyle(binding.bottomsheetArraySettingStateStandbyTV, false)
+                setTextStyle(binding.bottomsheetArraySettingStateCancelTV, false)
+                setTextStyle(binding.bottomsheetArraySettingStateCompleteTV, true)
             }
             else -> Unit
+        }
+    }
+
+    // 텍스트 스타일 변경 헬퍼 함수 (코드 중복 제거용)
+    private fun setTextStyle(textView: android.widget.TextView, isSelected: Boolean) {
+        if (isSelected) {
+            textView.setTextAppearance(R.style.l18_sb)
+            textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_black))
+        } else {
+            textView.setTextAppearance(R.style.l18_rg)
+            textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabled))
         }
     }
 
@@ -269,5 +232,10 @@ class ArraySettingChargeBottomSheet: BottomSheetDialogFragment() {
             Period.THREEMONTH -> "THREE_MONTHS"
             else -> ""
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
