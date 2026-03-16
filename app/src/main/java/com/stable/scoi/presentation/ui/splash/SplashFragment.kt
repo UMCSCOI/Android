@@ -9,6 +9,7 @@ import com.stable.scoi.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.stable.scoi.R
+import com.stable.scoi.data.local.PreferenceManager
 import com.stable.scoi.databinding.FragmentSplashBinding
 import com.stable.scoi.util.SLOG
 
@@ -16,7 +17,9 @@ import com.stable.scoi.util.SLOG
 class SplashFragment : BaseFragment<FragmentSplashBinding, SplashUiState, SplashUiEvent, SplashViewModel>(
     FragmentSplashBinding::inflate,
 ) {
+    private val preferenceManager: PreferenceManager by lazy { PreferenceManager(requireContext()) }
     override val viewModel: SplashViewModel by viewModels()
+    private var isRegistered=preferenceManager.getJoinStatus()
 
     override fun initView() {
         binding.apply {
@@ -30,9 +33,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashUiState, Splash
 
                 override fun onAnimationEnd(animation: Animator) {
                     SLOG.D("하이?")
-                   findNavController().navigate(R.id.action_splash_fragment_to_join_auth_fragment)
-//                    findNavController().navigate(R.id.action_splash_fragment_to_loginFragment)
-                   // findNavController().navigate(R.id.action_splash_fragment_to_joinFragment)
+                    if(isRegistered==true){
+                        navigateToLogin()
+                    }
+                    else{
+                        navigateToJoinAuth()
+                    }
                 }
 
                 override fun onAnimationRepeat(animation: Animator) {
@@ -72,5 +78,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashUiState, Splash
 
     private fun navigateToHome() {
         findNavController().navigate(R.id.homeFragment)
+    }
+    private fun navigateToLogin(){
+        findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+    }
+    private fun navigateToJoinAuth(){
+        findNavController().navigate(R.id.action_splash_fragment_to_join_auth_fragment)
     }
 }

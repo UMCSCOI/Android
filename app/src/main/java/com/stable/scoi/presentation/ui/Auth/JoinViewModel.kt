@@ -145,50 +145,50 @@ class JoinViewModel @Inject constructor(
         }
     }
 
-//    fun submitSignUp(exchange: String, apiKey: String, secretKey: String) {
-//        val currentState = uiState.value
-//        updateState { copy(isLoading = true) }
-//
-//        viewModelScope.launch {
-//            try {
-//                val encryptedSecretKey = EncryptionUtil.encrypt(secretKey)
-//                val encryptedSimplePassword = EncryptionUtil.encrypt(currentState.simplePassword)
-//
-//                SLOG.D(encryptedSimplePassword.toString())
-//
-//                val newApiKey = ApiKeyInfo(
-//                    exchangeType = exchange,
-//                    publicKey = apiKey,
-//                    secretKey = encryptedSecretKey
-//                )
-//
-//                val request = SignUpRequest(
-//                    koreanName = currentState.koreanName,
-//                    englishName = currentState.englishName,
-//                    residentNumber = currentState.residentNumber,
-//                    phoneNumber = currentState.phoneNumber,
-//                    simplePassword = encryptedSimplePassword,
-//                    apiKeys = listOf(newApiKey),
-//                    memberType = "INDIVIDUAL",
-//                    isBioRegistered = currentState.isBioRegistered,
-//                    verificationToken = currentState.verificationToken
-//                )
-//
-//                authRepository.signUp(request)
-//                    .onSuccess {
-//                        preferenceManager.saveSimplePassword(currentState.simplePassword)
-//                        emitEvent(JoinEvent.NavigateToRegDone)
-//                    }
-//                    .onFailure { e ->
-//                        android.util.Log.e("JOIN_DEBUG", "회원가입 실패: ${e.message}")
-//                        emitEvent(JoinEvent.ShowError(e.message ?: "회원가입 실패"))
-//                    }
-//            } catch (e: Exception) {
-//                android.util.Log.e("JOIN_DEBUG", "암호화 중 오류 발생: ${e.message}")
-//                emitEvent(JoinEvent.ShowError("보안 처리 중 오류가 발생했습니다."))
-//            } finally {
-//                updateState { copy(isLoading = false) }
-//            }
-//        }
-//    }
+    fun submitSignUp(exchange: String, apiKey: String, secretKey: String) {
+        val currentState = uiState.value
+        updateState { copy(isLoading = true) }
+
+        viewModelScope.launch {
+            try {
+                val encryptedSecretKey = EncryptionUtil.encrypt(secretKey)
+                val encryptedSimplePassword = EncryptionUtil.encrypt(currentState.simplePassword)
+
+                SLOG.D(encryptedSimplePassword.toString())
+
+                val newApiKey = ApiKeyInfo(
+                    exchangeType = exchange,
+                    publicKey = apiKey,
+                    secretKey = encryptedSecretKey
+                )
+
+                val request = SignUpRequest(
+                    koreanName = currentState.koreanName,
+                    englishName = currentState.englishName,
+                    residentNumber = currentState.residentNumber,
+                    phoneNumber = currentState.phoneNumber,
+                    simplePassword = encryptedSimplePassword,
+                    apiKeys = listOf(newApiKey),
+                    memberType = "INDIVIDUAL",
+                    isBioRegistered = currentState.isBioRegistered,
+                    verificationToken = currentState.verificationToken
+                )
+
+                authRepository.signUp(request)
+                    .onSuccess {
+                        preferenceManager.saveSimplePassword(currentState.simplePassword)
+                        emitEvent(JoinEvent.NavigateToRegDone)
+                    }
+                    .onFailure { e ->
+                        android.util.Log.e("JOIN_DEBUG", "회원가입 실패: ${e.message}")
+                        emitEvent(JoinEvent.ShowError(e.message ?: "회원가입 실패"))
+                    }
+            } catch (e: Exception) {
+                android.util.Log.e("JOIN_DEBUG", "암호화 중 오류 발생: ${e.message}")
+                emitEvent(JoinEvent.ShowError("보안 처리 중 오류가 발생했습니다."))
+            } finally {
+                updateState { copy(isLoading = false) }
+            }
+        }
+    }
 }

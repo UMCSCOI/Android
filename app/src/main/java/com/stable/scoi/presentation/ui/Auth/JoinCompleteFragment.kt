@@ -6,15 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.stable.scoi.R
+import com.stable.scoi.data.local.PreferenceManager
 import com.stable.scoi.databinding.FragmentRegCompleteBinding
 import com.stable.scoi.presentation.MainActivity
 
 class JoinCompleteFragment : Fragment() {
-
+    private val preferenceManager: PreferenceManager by lazy { PreferenceManager(requireContext()) }
     private var _binding: FragmentRegCompleteBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: JoinViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -40,18 +45,14 @@ class JoinCompleteFragment : Fragment() {
         }
     }
 
-    private fun navigateToMain() {
-        val intent = Intent(requireContext(), MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
     private fun navigateToPin() {
-        findNavController().navigate(R.id.action_joinCompleteFragment_to_pinFragment)
+        preferenceManager.setJoinStatus(true)
+        findNavController().navigate(R.id.action_joinCompleteFragment_to_homeFragment)
     }
 }
 
