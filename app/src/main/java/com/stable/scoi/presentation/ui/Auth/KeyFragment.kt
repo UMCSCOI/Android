@@ -78,8 +78,8 @@ class KeyFragment : BaseFragment<FragmentKeyBinding, JoinState, JoinEvent, JoinV
                 "업비트" -> "UPBIT"
                 else -> ""
             }
-//            viewModel.submitSignUp(exchangeType, binding.apiKeyInputEt.text.toString(), binding.secretKeyInputEt.text.toString())
-            findNavController().navigate(R.id.action_KeyFragment_to_homeFragment)
+            viewModel.submitSignUp(exchangeType, binding.apiKeyInputEt.text.toString(), binding.secretKeyInputEt.text.toString())
+            findNavController().navigate(R.id.action_KeyFragment_to_joinCompleteFragment)
         }
     }
 

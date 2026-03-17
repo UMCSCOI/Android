@@ -20,7 +20,7 @@
             android:id="@+id/action_splash_fragment_to_join_auth_fragment"
             app:destination="@id/joinAuthFragment"/>
         <action
-            android:id="@+id/action_splash_fragment_to_loginFragment"
+            android:id="@+id/action_splashFragment_to_loginFragment"
             app:destination="@id/login_pin_fragment"/>
     </fragment>
 
@@ -259,9 +259,6 @@
         android:name="com.stable.scoi.presentation.ui.Auth.JoinFragment"
         tools:layout="@layout/fragment_join">
         <action
-            android:id="@+id/action_joinFragment_to_joinAuthFragment"
-            app:destination="@id/joinAuthFragment" />
-        <action
             android:id="@+id/action_joinFragment_to_loginRegFragment"
             app:destination="@id/login_reg_fragment" />
         <action
@@ -319,9 +316,6 @@
         <action
             android:id="@+id/action_loginFragment_to_re_join_fragment"
             app:destination="@id/re_join_auth_fragment"/>
-        <action
-            android:id="@+id/action_loginFragment_to_bioFragment"
-            app:destination="@id/bio_fragment"/>
     </fragment>
 
     <fragment
@@ -491,6 +485,10 @@
         <action
             android:id="@+id/action_joinCompleteFragment_to_pinFragment"
             app:destination="@id/login_pin_fragment" />
+        <action
+            android:id="@+id/action_joinCompleteFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            />
     </fragment>
 
     <fragment
@@ -536,6 +534,7 @@
             app:destination="@id/login_pin_fragment" />
     </fragment>
 
+
     <fragment
         android:id="@+id/charge_pw_fragment"
         android:name="com.stable.scoi.presentation.ui.charge.chart.ChargePwFragment"
@@ -545,8 +544,5 @@
             android:id="@+id/action_charge_pw_complete"
             app:destination="@id/chargeCompleteFragment"/>
     </fragment>
-
-
-
 
 </navigation>

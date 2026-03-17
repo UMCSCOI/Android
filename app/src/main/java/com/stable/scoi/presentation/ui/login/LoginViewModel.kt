@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(
             updateState { this.copy(isLoading = true) }
 
             val savedPhoneNumber = preferenceManager.getPhoneNumber()
-            val currentToken = preferenceManager.getVerificationToken()
+            val currentToken = preferenceManager.getVerificationToken() // 원래는 null 값으로 되게끔 한다.
 
             if (savedPhoneNumber.isEmpty()) {
                 updateState { this.copy(isLoading = false) }

@@ -8,12 +8,14 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.stable.scoi.R
+import com.stable.scoi.data.local.PreferenceManager
 import com.stable.scoi.databinding.ActivityMainBinding
 import com.stable.scoi.extension.gone
 import com.stable.scoi.extension.visible
 import com.stable.scoi.presentation.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, MainActivityEvent, MainActivityViewModel>(
@@ -21,6 +23,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
 ) {
     override val viewModel: MainActivityViewModel by viewModels()
     private lateinit var navController: NavController
+
+    @Inject lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +46,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityUiState, Main
         repeatOnStarted {
             launch {
                 viewModel.uiEvent.collect{
-                    // TODO 이벤트 처리
                 }
             }
 

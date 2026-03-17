@@ -72,8 +72,14 @@ class PreferenceManager @Inject constructor(
 
     fun getSimplePassword(): String = prefs.getString("SIMPLE_PASSWORD", "") ?: ""
 
+    fun setJoinStatus(isJoined:Boolean){
+        prefs.edit().putBoolean("JOIN_STATUS", isJoined).apply()
+    }
 
-    // 데이터 초기화
+    fun getJoinStatus(): Boolean {
+        return prefs.getBoolean("JOIN_STATUS", false)
+    }
+
     fun clear() {
         prefs.edit().clear().apply()
     }

@@ -4,6 +4,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.widget.doOnTextChanged
@@ -38,6 +39,8 @@ class LoginFragment : BaseFragment<FragmentLoginPinBinding, LoginState, LoginEve
             binding.loginPin1Et, binding.loginPin2Et, binding.loginPin3Et,
             binding.loginPin4Et, binding.loginPin5Et, binding.loginPin6Et
         )
+        val white = ContextCompat.getColor(requireActivity(), R.color.white)
+        requireActivity().findViewById<View>(R.id.main).setBackgroundColor(white)
 
 //        pinEditTexts.forEach { editText ->
 //            editText.setOnFocusChangeListener { _, hasFocus ->
