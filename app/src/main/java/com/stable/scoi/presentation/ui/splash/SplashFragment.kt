@@ -19,7 +19,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashUiState, Splash
 ) {
     private val preferenceManager: PreferenceManager by lazy { PreferenceManager(requireContext()) }
     override val viewModel: SplashViewModel by viewModels()
-    private var isRegistered=preferenceManager.getJoinStatus()
+
 
     override fun initView() {
         binding.apply {
@@ -33,6 +33,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashUiState, Splash
 
                 override fun onAnimationEnd(animation: Animator) {
                     SLOG.D("하이?")
+                    val isRegistered=preferenceManager.getJoinStatus()
+
                     if(isRegistered==true){
                         navigateToLogin()
                     }

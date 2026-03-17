@@ -46,6 +46,7 @@ class JoinViewModel @Inject constructor(
         viewModelScope.launch {
             authRepository.sendSms(phone)
                 .onSuccess { response ->
+                    SLOG.D("전송 성공!")
                     val remainingSeconds = calculateRemainingSeconds(response.expiredAt)
                     startTimer(remainingSeconds)
 
@@ -53,6 +54,7 @@ class JoinViewModel @Inject constructor(
                     emitEvent(JoinEvent.ShowError("인증번호가 발송되었습니다."))
                 }
                 .onFailure { e ->
+                    SLOG.D("전송 실패함 ㅋ")
                     emitEvent(JoinEvent.ShowError(e.message ?: "전송 실패"))
                 }
         }
